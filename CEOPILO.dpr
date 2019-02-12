@@ -2,7 +2,7 @@ program CEOPILO;
 
 uses
   Vcl.Forms,
-  uMenu in 'uMenu.pas' {Form1},
+  uMenu in 'uMenu.pas' {fMenu},
   UData in 'UData.pas' {dmData: TDataModule},
   uTipoProducto in 'uTipoProducto.pas' {fTipoProducto},
   uAhorro in 'uAhorro.pas' {fAhorro},
@@ -20,29 +20,15 @@ uses
   uReporteCrediticio in 'uReporteCrediticio.pas' {fReporteCrediticio},
   uResolucion in 'uResolucion.pas' {fResolucion},
   uRol in 'uRol.pas' {fRol},
-  uLineaCredito in 'uLineaCredito.pas' {fLineaCredito};
+  uLineaCredito in 'uLineaCredito.pas' {fLineaCredito},
+  uHelpers in 'uHelpers.pas';
 
 {$R *.res}
 
 begin
   Application.Initialize;
   Application.MainFormOnTaskbar := True;
-  Application.CreateForm(TForm1, Form1);
   Application.CreateForm(TdmData, dmData);
-  Application.CreateForm(TfAhorro, fAhorro);
-  Application.CreateForm(TfAuditoria, fAuditoria);
-  Application.CreateForm(TfCliente, fCliente);
-  Application.CreateForm(TfEmpleado, fEmpleado);
-  Application.CreateForm(TfGarantia, fGarantia);
-  Application.CreateForm(TfGiroNegocio, fGiroNegocio);
-  Application.CreateForm(TfMenu1, fMenu1);
-  Application.CreateForm(TfModulo, fModulo);
-  Application.CreateForm(TfPerfilCliente, fPerfilCliente);
-  Application.CreateForm(TfPermiso, fPermiso);
-  Application.CreateForm(TfReporteCeop, fReporteCeop);
-  Application.CreateForm(TfReporteCrediticio, fReporteCrediticio);
-  Application.CreateForm(TfResolucion, fResolucion);
-  Application.CreateForm(TfRol, fRol);
-  Application.CreateForm(TfLineaCredito, fLineaCredito);
+  Application.CreateForm(TfMenu, fMenu);
   Application.Run;
 end.

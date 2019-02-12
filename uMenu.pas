@@ -9,7 +9,7 @@ uses
   Vcl.ActnCtrls, Vcl.ActnMenus, Vcl.Menus, System.ImageList, Vcl.ImgList;
 
 type
-  TForm1 = class(TForm)
+  TfMenu = class(TForm)
     ActionToolBar1: TActionToolBar;
     ImageList1: TImageList;
     actManager: TActionManager;
@@ -39,7 +39,7 @@ type
   end;
 
 var
-  Form1: TForm1;
+  fMenu: TfMenu;
 
 implementation
 
@@ -48,12 +48,12 @@ uses
 
 {$R *.dfm}
 
-procedure TForm1.actArchivoExecute(Sender: TObject);
+procedure TfMenu.actArchivoExecute(Sender: TObject);
 begin
     ShowMessage('hola');
 end;
 
-procedure TForm1.actLineaCreditoExecute(Sender: TObject);
+procedure TfMenu.actLineaCreditoExecute(Sender: TObject);
     var ResultsForm:TfLineaCredito;
 begin
    ResultsForm := TfLineaCredito.Create(nil);
@@ -64,7 +64,7 @@ begin
   end;
 end;
 
-procedure TForm1.actPerfilClienteExecute(Sender: TObject);
+procedure TfMenu.actPerfilClienteExecute(Sender: TObject);
  var ResultsForm:TfPerfilCLiente;
 begin
    ResultsForm := TfPerfilCLiente.Create(nil);
@@ -75,7 +75,7 @@ begin
   end;
 end;
 
-procedure TForm1.actTipoProductoExecute(Sender: TObject);
+procedure TfMenu.actTipoProductoExecute(Sender: TObject);
 
 var ResultsForm:TfTipoProducto;
 begin

@@ -76,9 +76,9 @@ begin
 
    if Fvariables.TryGetValue('variables', variable) then
       begin
+         request.AddPair('variables',variable);
          if variable.TryGetValue('limit',limit) then
-            request.AddPair('variables',variable);
-         end;
+      end;
 
    ARESTRequest.AddParameter('body',request.ToString,TRESTRequestParameterKind.pkREQUESTBODY);
    ARESTRequest.Params.ParameterByName('body').ContentType:=TRESTContentType.ctAPPLICATION_JSON;
@@ -101,8 +101,9 @@ begin
                   SetTotalPag(1);
             end;
     end;
+   Result:=queryRest;
   // Result:=TJsonObject(ARESTRequest.Response.JSONValue);
-  Result:=request;
+  //Result:=request;
 end;
 
 function TGraph.GetQuery: string;

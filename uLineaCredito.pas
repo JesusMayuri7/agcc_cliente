@@ -22,8 +22,8 @@ type
     pnCabecera: TPanel;
     pnDetalle: TPanel;
     PageControl1: TPageControl;
-    TabSheet1: TTabSheet;
-    TabSheet2: TTabSheet;
+    tabFormulario: TTabSheet;
+    tabLIstado: TTabSheet;
     GroupBox1: TGroupBox;
     Label1: TLabel;
     Label2: TLabel;
@@ -48,16 +48,16 @@ type
     cxGrid1DBTableView1monto_maximo: TcxGridDBColumn;
     cxGrid1DBTableView1activo: TcxGridDBColumn;
     fdLineaCreditotipo_interes: TStringField;
-    edtDescripcion: TEdit;
+    edLineaCredito: TEdit;
     cbbInteres: TComboBox;
-    spnMinimo: TcxSpinEdit;
-    spnMaximo: TcxSpinEdit;
+    spbMinimo: TcxSpinEdit;
+    spbMaximo: TcxSpinEdit;
     chkActivo: TCheckBox;
     Panel1: TPanel;
     btnNuevo: TButton;
-    Button1: TButton;
-    Button2: TButton;
-    Button3: TButton;
+    btnEditar: TButton;
+    btnCancelar: TButton;
+    btnGuardar: TButton;
     Label3: TLabel;
     spbPagSiguiente: TSpeedButton;
     spbPaginaAnteriorrr: TSpeedButton;
@@ -74,15 +74,21 @@ type
     Panel4: TPanel;
     cbbRegistros: TComboBox;
     Label11: TLabel;
+    spbActualizar: TSpeedButton;
     procedure FormCreate(Sender: TObject);
     procedure cbbRegistrosChange(Sender: TObject);
     procedure spbPagSiguienteClick(Sender: TObject);
     procedure spbPaginaAnteriorrrClick(Sender: TObject);
     procedure btnBuscarClick(Sender: TObject);
+    procedure spbActualizarClick(Sender: TObject);
+    procedure btnNuevoClick(Sender: TObject);
+    procedure btnCancelarClick(Sender: TObject);
+    procedure btnGuardarClick(Sender: TObject);
   private
     { Private declarations }
     var paginaActual:integer;
     procedure listar;
+    procedure NuevaLinea(desc_linea_credito,tipo_interes:string;monto_minimo,monto_maximo:integer;activo:boolean);
   public
     { Public declarations }
   end;
@@ -93,7 +99,7 @@ var
 implementation
 
 uses
-  UGraph, UData;
+  UGraph, UData, uHelpers;
 
 
 {$R *.dfm}
@@ -104,6 +110,40 @@ procedure TfLineaCredito.btnBuscarClick(Sender: TObject);
 begin
 paginaActual:=1;
 listar();
+end;
+
+procedure TfLineaCredito.btnNuevoClick(Sender: TObject);
+begin
+//TODO limpiar campos
+btnNuevo.Enabled:=true;
+tabListado.TabVisible:=false;
+tabFormulario.TabVisible:=true;
+btnCancelar.Enabled:=true;
+btnGuardar.Enabled:=true;
+end;
+
+procedure TfLineaCredito.btnCancelarClick(Sender: TObject);
+begin
+  btnCancelar.Enabled:=false;
+  edLineaCredito.Text:='';
+  cbbInteres.ItemIndex:=0;
+  spbMinimo.Value:=0;
+  spbMaximo.Value:=0;
+  chkActivo.Checked:=false;
+  tabFormulario.TabVisible:=false;
+  tabListado.TabVisible:=true;
+  btnNuevo.Enabled:=true;
+  btnGuardar.Enabled:=false;
+end;
+
+procedure TfLineaCredito.btnGuardarClick(Sender: TObject);
+begin
+  btnGuardar.Enabled:=false;
+  nuevalinea(edlineaCredito.Text,cbbInteres.items[cbbInteres.itemindex],spbMinimo.value,spbMaximo.value,chkActivo.checked);
+  tabFormulario.TabVisible:=false;
+  tabListado.TabVisible:=true;
+  btnNuevo.Enabled:=true;
+  btnCancelar.Enabled:=false;
 end;
 
 procedure TfLineaCredito.cbbRegistrosChange(Sender: TObject);
@@ -148,6 +188,43 @@ begin
     // NO variar
     lblPaginaActual.Caption:=paginaActual.ToString;
     lblTotalPagina.Caption:= graph.totalPag.ToString;
+   // showmessage(resultado.ToString);
+    finally
+       FreeAndNil(resultado);
+       FreeAndNil(graph);
+    end;
+end;
+
+procedure TfLineaCredito.NuevaLinea(desc_linea_credito,tipo_interes:string;monto_minimo,monto_maximo:integer;activo:boolean);
+var graph:Tgraph;
+var variables:TJSONObject;
+var dataVar,dataRest,query:TJSONObject;
+var resultado:TJsonObject;
+var I:byte;
+begin
+    resultado:=TJSONObject.Create;
+    graph:=TGraph.Create(dmdata.RESTClient1);
+    try  // Cambiar por el query a consultar, hacer pruebas en Insomnia
+    graph.query:='mutation postLineaCredito($desc_linea_credito:String,$tipo_interes:String,'+
+    '$monto_maximo:Float,$monto_minimo:Float,$activo:Int)'+
+    ' { linea_creditoMutation(desc_linea_credito:$desc_linea_credito,tipo_interes:$tipo_interes,'+
+    ' monto_maximo:$monto_maximo,monto_minimo:$monto_minimo,activo:$activo)'+
+    ' {id,desc_linea_credito,tipo_interes,monto_minimo,monto_maximo,activo}  } ';
+
+    //NO variar
+    variables:=TJSONObject.Create;
+    dataVar:=TJSONObject.Create;
+    dataVar.AddPair('desc_linea_credito',TJSONString.Create(desc_linea_credito));
+    dataVar.AddPair('tipo_interes',TJSONString.Create(tipo_interes));
+    dataVar.AddPair('monto_minimo',TJSONNumber.Create(monto_minimo));
+    dataVar.AddPair('monto_maximo',TJSONNumber.Create(monto_maximo));
+    dataVar.AddPair('activo',TJSONNumber.Create(activo.ToInteger));
+    variables.AddPair('variables',dataVar);
+    graph.variables:=variables;
+
+    resultado:=graph.ejecutar('linea_creditoMutation');  // cambiar por el nombre del Query que buscas linea_creditoQuery
+    uHelpers.InsertarRegistroDataset(resultado,fdLineaCredito);
+//    showmessage(resultado.ToString);
     finally
        FreeAndNil(resultado);
        FreeAndNil(graph);
@@ -161,6 +238,12 @@ begin
        paginaActual:=paginaActual+1;
        listar();
        end;
+end;
+
+procedure TfLineaCredito.spbActualizarClick(Sender: TObject);
+begin
+  paginaActual:=1;
+  listar();
 end;
 
 procedure TfLineaCredito.spbPaginaAnteriorrrClick(Sender: TObject);

@@ -31,8 +31,8 @@ object fLineaCredito: TfLineaCredito
     Align = alTop
     TabOrder = 0
     object Label1: TLabel
-      Left = 105
-      Top = 8
+      Left = 207
+      Top = 6
       Width = 112
       Height = 16
       Alignment = taCenter
@@ -71,6 +71,18 @@ object fLineaCredito: TfLineaCredito
       ExplicitLeft = 680
       ExplicitTop = 5
       ExplicitHeight = 22
+    end
+    object spbActualizar: TSpeedButton
+      AlignWithMargins = True
+      Left = 4
+      Top = 4
+      Width = 23
+      Height = 25
+      Align = alLeft
+      Caption = '<'
+      OnClick = spbActualizarClick
+      ExplicitLeft = 46
+      ExplicitTop = 5
     end
     object Panel3: TPanel
       AlignWithMargins = True
@@ -175,11 +187,12 @@ object fLineaCredito: TfLineaCredito
       Top = 1
       Width = 726
       Height = 377
-      ActivePage = TabSheet2
+      ActivePage = tabLIstado
       Align = alClient
       TabOrder = 0
-      object TabSheet1: TTabSheet
+      object tabFormulario: TTabSheet
         Caption = 'Formulario'
+        TabVisible = False
         object GroupBox1: TGroupBox
           Left = 51
           Top = 31
@@ -222,23 +235,27 @@ object fLineaCredito: TfLineaCredito
             Height = 13
             Caption = 'Interes'
           end
-          object edtDescripcion: TEdit
+          object edLineaCredito: TEdit
             Left = 112
             Top = 37
             Width = 353
             Height = 21
             TabOrder = 0
-            Text = 'edtDescripcion'
           end
           object cbbInteres: TComboBox
             Left = 112
             Top = 80
             Width = 129
             Height = 21
+            Style = csDropDownList
+            ItemIndex = 0
             TabOrder = 1
-            Text = 'cbbInteres'
+            Text = 'SIMPLE'
+            Items.Strings = (
+              'SIMPLE'
+              'REBATIR')
           end
-          object spnMinimo: TcxSpinEdit
+          object spbMinimo: TcxSpinEdit
             Left = 112
             Top = 128
             Properties.Alignment.Horz = taRightJustify
@@ -246,7 +263,7 @@ object fLineaCredito: TfLineaCredito
             TabOrder = 2
             Width = 121
           end
-          object spnMaximo: TcxSpinEdit
+          object spbMaximo: TcxSpinEdit
             Left = 112
             Top = 178
             Properties.Alignment.Horz = taRightJustify
@@ -264,7 +281,7 @@ object fLineaCredito: TfLineaCredito
           end
         end
       end
-      object TabSheet2: TTabSheet
+      object tabLIstado: TTabSheet
         Caption = 'Listado'
         ImageIndex = 1
         object cxGrid1: TcxGrid
@@ -365,8 +382,9 @@ object fLineaCredito: TfLineaCredito
         Height = 25
         Caption = 'Nuevo'
         TabOrder = 0
+        OnClick = btnNuevoClick
       end
-      object Button1: TButton
+      object btnEditar: TButton
         Left = 168
         Top = 6
         Width = 75
@@ -375,7 +393,7 @@ object fLineaCredito: TfLineaCredito
         Enabled = False
         TabOrder = 1
       end
-      object Button2: TButton
+      object btnCancelar: TButton
         Left = 288
         Top = 6
         Width = 75
@@ -383,8 +401,9 @@ object fLineaCredito: TfLineaCredito
         Caption = 'Cancelar'
         Enabled = False
         TabOrder = 2
+        OnClick = btnCancelarClick
       end
-      object Button3: TButton
+      object btnGuardar: TButton
         Left = 408
         Top = 6
         Width = 75
@@ -392,6 +411,7 @@ object fLineaCredito: TfLineaCredito
         Caption = 'Guardar'
         Enabled = False
         TabOrder = 3
+        OnClick = btnGuardarClick
       end
     end
   end
@@ -409,24 +429,30 @@ object fLineaCredito: TfLineaCredito
     Left = 597
     Top = 162
     object fdLineaCreditoid: TIntegerField
+      DisplayLabel = '#'
       FieldName = 'id'
     end
     object fdLineaCreditodesc_linea_credito: TStringField
+      DisplayLabel = 'Linea de credito'
       FieldName = 'desc_linea_credito'
       Size = 45
     end
     object fdLineaCreditomonto_minimo: TFloatField
+      DisplayLabel = 'Monto minimo'
       FieldName = 'monto_minimo'
       DisplayFormat = '#,##0.00'
     end
     object fdLineaCreditomonto_maximo: TFloatField
+      DisplayLabel = 'Monto maximo'
       FieldName = 'monto_maximo'
       DisplayFormat = '#,##0.00'
     end
     object fdLineaCreditoactivo: TBooleanField
+      DisplayLabel = 'Activo'
       FieldName = 'activo'
     end
     object fdLineaCreditotipo_interes: TStringField
+      DisplayLabel = 'Tipo Interes'
       FieldName = 'tipo_interes'
       Size = 10
     end
@@ -437,6 +463,8 @@ object fLineaCredito: TfLineaCredito
     Top = 226
   end
   object cxStyleRepository1: TcxStyleRepository
+    Left = 96
+    Top = 248
     PixelsPerInch = 96
     object cxStyle1: TcxStyle
       AssignedValues = [svColor]

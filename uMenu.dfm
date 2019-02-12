@@ -1,4 +1,4 @@
-object Form1: TForm1
+object fMenu: TfMenu
   Left = 0
   Top = 0
   BorderIcons = [biSystemMenu, biMinimize]
