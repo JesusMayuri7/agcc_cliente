@@ -16,7 +16,9 @@ begin
         Open();
     if Active then
       begin
-        Open();
+        if  datajson.TryGetValue('id',I) then
+           Edit
+        else
         Insert;
           for I := 0 to FieldCount-1 do
           begin

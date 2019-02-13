@@ -3,7 +3,7 @@ object fLineaCredito: TfLineaCredito
   Top = 0
   Caption = 'Linea Credito'
   ClientHeight = 459
-  ClientWidth = 728
+  ClientWidth = 682
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -26,12 +26,13 @@ object fLineaCredito: TfLineaCredito
     AlignWithMargins = True
     Left = 3
     Top = 3
-    Width = 722
+    Width = 676
     Height = 33
     Align = alTop
     TabOrder = 0
+    ExplicitWidth = 722
     object Label1: TLabel
-      Left = 207
+      Left = 129
       Top = 6
       Width = 112
       Height = 16
@@ -48,7 +49,7 @@ object fLineaCredito: TfLineaCredito
     end
     object spbPagSiguiente: TSpeedButton
       AlignWithMargins = True
-      Left = 695
+      Left = 649
       Top = 4
       Width = 23
       Height = 25
@@ -61,7 +62,7 @@ object fLineaCredito: TfLineaCredito
     end
     object spbPaginaAnteriorrr: TSpeedButton
       AlignWithMargins = True
-      Left = 666
+      Left = 620
       Top = 4
       Width = 23
       Height = 25
@@ -86,12 +87,13 @@ object fLineaCredito: TfLineaCredito
     end
     object Panel3: TPanel
       AlignWithMargins = True
-      Left = 515
+      Left = 469
       Top = 4
       Width = 145
       Height = 25
       Align = alRight
       TabOrder = 0
+      ExplicitLeft = 515
       object Label12: TLabel
         Left = 6
         Top = 6
@@ -142,12 +144,13 @@ object fLineaCredito: TfLineaCredito
     end
     object Panel4: TPanel
       AlignWithMargins = True
-      Left = 375
+      Left = 329
       Top = 4
       Width = 134
       Height = 25
       Align = alRight
       TabOrder = 1
+      ExplicitLeft = 375
       object Label11: TLabel
         Left = 17
         Top = 6
@@ -178,21 +181,24 @@ object fLineaCredito: TfLineaCredito
   object pnDetalle: TPanel
     Left = 0
     Top = 39
-    Width = 728
+    Width = 682
     Height = 420
     Align = alClient
     TabOrder = 1
+    ExplicitWidth = 728
     object PageControl1: TPageControl
       Left = 1
       Top = 1
-      Width = 726
+      Width = 680
       Height = 377
       ActivePage = tabLIstado
       Align = alClient
       TabOrder = 0
+      ExplicitWidth = 726
       object tabFormulario: TTabSheet
         Caption = 'Formulario'
         TabVisible = False
+        ExplicitWidth = 718
         object GroupBox1: TGroupBox
           Left = 51
           Top = 31
@@ -259,7 +265,7 @@ object fLineaCredito: TfLineaCredito
             Left = 112
             Top = 128
             Properties.Alignment.Horz = taRightJustify
-            Properties.DisplayFormat = '#,##0.00'
+            Properties.DisplayFormat = '#,##0'
             TabOrder = 2
             Width = 121
           end
@@ -267,7 +273,7 @@ object fLineaCredito: TfLineaCredito
             Left = 112
             Top = 178
             Properties.Alignment.Horz = taRightJustify
-            Properties.DisplayFormat = '#,##0.00'
+            Properties.DisplayFormat = '#,##0'
             TabOrder = 3
             Width = 121
           end
@@ -284,15 +290,17 @@ object fLineaCredito: TfLineaCredito
       object tabLIstado: TTabSheet
         Caption = 'Listado'
         ImageIndex = 1
-        object cxGrid1: TcxGrid
+        ExplicitWidth = 718
+        object gridLIneaCredito: TcxGrid
           Left = 0
           Top = 41
-          Width = 718
+          Width = 672
           Height = 308
           Align = alClient
           TabOrder = 0
           LookAndFeel.NativeStyle = False
-          object cxGrid1DBTableView1: TcxGridDBTableView
+          ExplicitWidth = 718
+          object gridLIneaCreditoDBTableView1: TcxGridDBTableView
             Navigator.Buttons.CustomButtons = <>
             DataController.DataSource = dsLineaCredito
             DataController.Summary.DefaultGroupSummaryItems = <>
@@ -308,46 +316,47 @@ object fLineaCredito: TfLineaCredito
             OptionsView.GroupByBox = False
             OptionsView.GroupRowStyle = grsOffice11
             Styles.ContentOdd = cxStyle1
-            object cxGrid1DBTableView1id: TcxGridDBColumn
+            object gridLIneaCreditoDBTableView1id: TcxGridDBColumn
               DataBinding.FieldName = 'id'
               HeaderAlignmentHorz = taCenter
               Width = 58
             end
-            object cxGrid1DBTableView1desc_linea_credito: TcxGridDBColumn
+            object gridLIneaCreditoDBTableView1desc_linea_credito: TcxGridDBColumn
               DataBinding.FieldName = 'desc_linea_credito'
               HeaderAlignmentHorz = taCenter
               Width = 271
             end
-            object cxGrid1DBTableView1interes: TcxGridDBColumn
+            object gridLIneaCreditoDBTableView1interes: TcxGridDBColumn
               DataBinding.FieldName = 'tipo_interes'
               HeaderAlignmentHorz = taCenter
             end
-            object cxGrid1DBTableView1monto_minimo: TcxGridDBColumn
+            object gridLIneaCreditoDBTableView1monto_minimo: TcxGridDBColumn
               DataBinding.FieldName = 'monto_minimo'
               HeaderAlignmentHorz = taCenter
               Width = 83
             end
-            object cxGrid1DBTableView1monto_maximo: TcxGridDBColumn
+            object gridLIneaCreditoDBTableView1monto_maximo: TcxGridDBColumn
               DataBinding.FieldName = 'monto_maximo'
               HeaderAlignmentHorz = taCenter
               Width = 80
             end
-            object cxGrid1DBTableView1activo: TcxGridDBColumn
+            object gridLIneaCreditoDBTableView1activo: TcxGridDBColumn
               DataBinding.FieldName = 'activo'
               HeaderAlignmentHorz = taCenter
             end
           end
-          object cxGrid1Level1: TcxGridLevel
-            GridView = cxGrid1DBTableView1
+          object gridLIneaCreditoLevel1: TcxGridLevel
+            GridView = gridLIneaCreditoDBTableView1
           end
         end
         object Panel2: TPanel
           Left = 0
           Top = 0
-          Width = 718
+          Width = 672
           Height = 41
           Align = alTop
           TabOrder = 1
+          ExplicitWidth = 718
           object edCriterio: TEdit
             Left = 12
             Top = 10
@@ -371,12 +380,13 @@ object fLineaCredito: TfLineaCredito
     object Panel1: TPanel
       Left = 1
       Top = 378
-      Width = 726
+      Width = 680
       Height = 41
       Align = alBottom
       TabOrder = 1
+      ExplicitWidth = 726
       object btnNuevo: TButton
-        Left = 48
+        Left = 55
         Top = 6
         Width = 75
         Height = 25
@@ -390,8 +400,8 @@ object fLineaCredito: TfLineaCredito
         Width = 75
         Height = 25
         Caption = 'Editar'
-        Enabled = False
         TabOrder = 1
+        OnClick = btnEditarClick
       end
       object btnCancelar: TButton
         Left = 288
@@ -404,7 +414,7 @@ object fLineaCredito: TfLineaCredito
         OnClick = btnCancelarClick
       end
       object btnGuardar: TButton
-        Left = 408
+        Left = 403
         Top = 6
         Width = 75
         Height = 25
