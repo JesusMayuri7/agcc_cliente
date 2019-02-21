@@ -6,30 +6,70 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ToolWin, Vcl.ComCtrls,
   Vcl.PlatformDefaultStyleActnCtrls, System.Actions, Vcl.ActnList, Vcl.ActnMan,
-  Vcl.ActnCtrls, Vcl.ActnMenus, Vcl.Menus, System.ImageList, Vcl.ImgList;
+  Vcl.ActnCtrls, Vcl.ActnMenus, Vcl.Menus, System.ImageList, Vcl.ImgList,
+  dxGDIPlusClasses, Vcl.ExtCtrls;
 
 type
   TfMenu = class(TForm)
+    menu: TMainMenu;
+    actManager: TActionManager;
+    actArchivo1: TMenuItem;
+    actSalir1: TMenuItem;
     ActionToolBar1: TActionToolBar;
     ImageList1: TImageList;
-    actManager: TActionManager;
-    actArchivo: TAction;
-    actSalir: TAction;
     actLineaCredito: TAction;
-    actPerfilCliente: TAction;
-    actTipoProducto: TAction;
-    actCliente: TAction;
-    menu: TMainMenu;
-    actArchivo1: TMenuItem;
     actLineaCredito1: TMenuItem;
+    actPerfilCliente: TAction;
     actPerfilCliente1: TMenuItem;
+    actTipoProducto: TAction;
     actTipoProducto1: TMenuItem;
+    actCliente: TAction;
     actCliente1: TMenuItem;
-    actSalir1: TMenuItem;
+    actAhorro: TAction;
+    actAhorro1: TMenuItem;
+    actReporteCeop: TAction;
+    actReporteCeop1: TMenuItem;
+    actReporteCrediticio: TAction;
+    actReporteCrediticio1: TMenuItem;
+    actGiroNegocio: TAction;
+    GiroNegocio1: TMenuItem;
+    actTipoPrestamo: TAction;
+    ipoPrestamo1: TMenuItem;
+    actTipoInfo: TAction;
+    ipoInfo1: TMenuItem;
+    actTipoInfoDetalle: TAction;
+    ipoInfoDetalle1: TMenuItem;
+    actGarantia: TAction;
+    Garantia1: TMenuItem;
+    actSolicitud: TAction;
+    Solicitud1: TMenuItem;
+    actEmpleado: TAction;
+    Empleado1: TMenuItem;
+    actAuditoria: TAction;
+    Auditoria1: TMenuItem;
+    actResolucion: TAction;
+    Resolucion1: TMenuItem;
+    Image1: TImage;
     procedure actArchivoExecute(Sender: TObject);
     procedure actLineaCreditoExecute(Sender: TObject);
     procedure actPerfilClienteExecute(Sender: TObject);
     procedure actTipoProductoExecute(Sender: TObject);
+    procedure actClienteExecute(Sender: TObject);
+    procedure actAhorroExecute(Sender: TObject);
+    procedure actReporteCeopExecute(Sender: TObject);
+    procedure actReporteCrediticioExecute(Sender: TObject);
+    procedure actGiroNegocioExecute(Sender: TObject);
+    procedure actTipoPrestamoExecute(Sender: TObject);
+    procedure actTipoInfoExecute(Sender: TObject);
+    procedure actTipoInfoDetalleExecute(Sender: TObject);
+    procedure actGarantiaExecute(Sender: TObject);
+    procedure actSolicitudExecute(Sender: TObject);
+    procedure actEmpleadoExecute(Sender: TObject);
+    procedure actAuditoriaExecute(Sender: TObject);
+    procedure actResolucionExecute(Sender: TObject);
+
+
+
   private
     { Private declarations }
 
@@ -44,7 +84,9 @@ var
 implementation
 
 uses
-  uLineaCredito, UData, uPerfilCliente, uTipoProducto;
+  uLineaCredito, UData, uPerfilCliente, uTipoProducto, uCliente, uAhorro,uReporteCeop,
+  uReporteCrediticio,uGiroNegocio,uTipoPrestamo,uTipoInfo,uTipoInfoDetalle,uGarantia,
+  uEmpleado,uSolicitud,uAuditoria,uResolucion;
 
 {$R *.dfm}
 
@@ -53,8 +95,54 @@ begin
     ShowMessage('hola');
 end;
 
+procedure TfMenu.actAuditoriaExecute(Sender: TObject);
+var ResultsForm:TfAuditoria;
+begin
+      ResultsForm := TfAuditoria.Create(nil);
+      try
+        ResultsForm.ShowModal;
+      finally
+        ResultsForm.Free;
+end;
+end;
+
+procedure TfMenu.actAhorroExecute(Sender: TObject);
+var ResultsForm:TfAhorro;
+begin
+      ResultsForm := TfAhorro.Create(nil);
+      try
+        ResultsForm.ShowModal;
+      finally
+        ResultsForm.Free;
+end;
+
+end;
+
+procedure TfMenu.actClienteExecute(Sender: TObject);
+var ResultsForm:TfCliente;
+begin
+      ResultsForm := TfCliente.Create(nil);
+      try
+        ResultsForm.ShowModal;
+      finally
+        ResultsForm.Free;
+end;
+
+end;
+
+procedure TfMenu.actEmpleadoExecute(Sender: TObject);
+var ResultsForm:TfEmpleado;
+begin
+      ResultsForm := TfEmpleado.Create(nil);
+      try
+        ResultsForm.ShowModal;
+      finally
+        ResultsForm.Free;
+end;
+end;
+
 procedure TfMenu.actLineaCreditoExecute(Sender: TObject);
-    var ResultsForm:TfLineaCredito;
+var ResultsForm:TfLineaCredito;
 begin
    ResultsForm := TfLineaCredito.Create(nil);
   try
@@ -75,6 +163,86 @@ begin
   end;
 end;
 
+procedure TfMenu.actReporteCeopExecute(Sender: TObject);
+var ResultsForm:TfReporteCeop;
+begin
+      ResultsForm := TfReporteCeop.Create(nil);
+      try
+        ResultsForm.ShowModal;
+      finally
+        ResultsForm.Free;
+end;
+
+end;
+
+procedure TfMenu.actReporteCrediticioExecute(Sender: TObject);
+var ResultsForm:TfReporteCrediticio;
+begin
+      ResultsForm := TfReporteCrediticio.Create(nil);
+      try
+        ResultsForm.ShowModal;
+      finally
+        ResultsForm.Free;
+end;
+
+end;
+
+procedure TfMenu.actResolucionExecute(Sender: TObject);
+var ResultsForm:TfResolucion;
+begin
+      ResultsForm := TfResolucion.Create(nil);
+      try
+        ResultsForm.ShowModal;
+      finally
+        ResultsForm.Free;
+end;
+end;
+
+procedure TfMenu.actSolicitudExecute(Sender: TObject);
+ var ResultsForm:TfSolicitud;
+begin
+      ResultsForm := TfSolicitud.Create(nil);
+      try
+        ResultsForm.ShowModal;
+      finally
+        ResultsForm.Free;
+end;
+end;
+
+procedure TfMenu.actTipoInfoDetalleExecute(Sender: TObject);
+var ResultsForm:TfTipoInfoDetalle;
+begin
+      ResultsForm := TfTipoInfoDetalle.Create(nil);
+      try
+        ResultsForm.ShowModal;
+      finally
+        ResultsForm.Free;
+end;
+end;
+
+procedure TfMenu.actTipoInfoExecute(Sender: TObject);
+var ResultsForm:TfTipoInfo;
+begin
+      ResultsForm := TfTipoInfo.Create(nil);
+      try
+        ResultsForm.ShowModal;
+      finally
+        ResultsForm.Free;
+end;
+
+end;
+
+procedure TfMenu.actTipoPrestamoExecute(Sender: TObject);
+var ResultsForm:TfTipoPrestamo;
+begin
+      ResultsForm := TfTipoPrestamo.Create(nil);
+      try
+        ResultsForm.ShowModal;
+      finally
+        ResultsForm.Free;
+end;
+end;
+
 procedure TfMenu.actTipoProductoExecute(Sender: TObject);
 
 var ResultsForm:TfTipoProducto;
@@ -85,6 +253,29 @@ begin
   finally
     ResultsForm.Free;
   end;
+
+end;
+
+procedure TfMenu.actGarantiaExecute(Sender: TObject);
+var ResultsForm:TfGarantia;
+begin
+      ResultsForm := TfGarantia.Create(nil);
+      try
+        ResultsForm.ShowModal;
+      finally
+        ResultsForm.Free;
+end;
+end;
+
+procedure TfMenu.actGiroNegocioExecute(Sender: TObject);
+var ResultsForm:TfGiroNegocio;
+begin
+      ResultsForm := TfGiroNegocio.Create(nil);
+      try
+        ResultsForm.ShowModal;
+      finally
+        ResultsForm.Free;
+end;
 
 end;
 
