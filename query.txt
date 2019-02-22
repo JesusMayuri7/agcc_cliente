@@ -1,0 +1,1 @@
+{"query":"query calcular {linea_creditoQuery { data { id,desc_linea_credito,tipo_interes,monto_minimo,monto_maximo,perfil_cliente {id,desc_perfil_cliente,tipo_producto {id,desc_tipo_producto,interes,mora,plazo_minimo,plazo_maximo}} } } }"}
