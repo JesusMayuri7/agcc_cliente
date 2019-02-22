@@ -175,7 +175,7 @@ object fTipoProducto: TfTipoProducto
       Top = 1
       Width = 726
       Height = 377
-      ActivePage = TabSheet2
+      ActivePage = TabSheet1
       Align = alClient
       TabOrder = 0
       object TabSheet1: TTabSheet
@@ -275,7 +275,6 @@ object fTipoProducto: TfTipoProducto
           Align = alClient
           TabOrder = 0
           LookAndFeel.NativeStyle = False
-          ExplicitTop = 39
           object cxGrid1DBTableView1: TcxGridDBTableView
             Navigator.Buttons.CustomButtons = <>
             DataController.DataSource = dsTipoProducto

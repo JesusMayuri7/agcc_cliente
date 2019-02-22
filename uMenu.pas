@@ -13,7 +13,6 @@ type
   TfMenu = class(TForm)
     menu: TMainMenu;
     actManager: TActionManager;
-    actArchivo1: TMenuItem;
     actSalir1: TMenuItem;
     ActionToolBar1: TActionToolBar;
     ImageList1: TImageList;
@@ -24,7 +23,6 @@ type
     actTipoProducto: TAction;
     actTipoProducto1: TMenuItem;
     actCliente: TAction;
-    actCliente1: TMenuItem;
     actAhorro: TAction;
     actAhorro1: TMenuItem;
     actReporteCeop: TAction;
@@ -37,19 +35,26 @@ type
     ipoPrestamo1: TMenuItem;
     actTipoInfo: TAction;
     ipoInfo1: TMenuItem;
-    actTipoInfoDetalle: TAction;
-    ipoInfoDetalle1: TMenuItem;
     actGarantia: TAction;
     Garantia1: TMenuItem;
     actSolicitud: TAction;
     Solicitud1: TMenuItem;
     actEmpleado: TAction;
-    Empleado1: TMenuItem;
     actAuditoria: TAction;
-    Auditoria1: TMenuItem;
     actResolucion: TAction;
     Resolucion1: TMenuItem;
     Image1: TImage;
+    Historial1: TMenuItem;
+    Gestion1: TMenuItem;
+    Negocio1: TMenuItem;
+    Credito1: TMenuItem;
+    Seguidad1: TMenuItem;
+    Empleado1: TMenuItem;
+    Cliente1: TMenuItem;
+    Auditoria1: TMenuItem;
+    Reportes1: TMenuItem;
+    actCalcular: TAction;
+    Simulador1: TMenuItem;
     procedure actArchivoExecute(Sender: TObject);
     procedure actLineaCreditoExecute(Sender: TObject);
     procedure actPerfilClienteExecute(Sender: TObject);
@@ -60,13 +65,12 @@ type
     procedure actReporteCrediticioExecute(Sender: TObject);
     procedure actGiroNegocioExecute(Sender: TObject);
     procedure actTipoPrestamoExecute(Sender: TObject);
-    procedure actTipoInfoExecute(Sender: TObject);
-    procedure actTipoInfoDetalleExecute(Sender: TObject);
     procedure actGarantiaExecute(Sender: TObject);
     procedure actSolicitudExecute(Sender: TObject);
     procedure actEmpleadoExecute(Sender: TObject);
     procedure actAuditoriaExecute(Sender: TObject);
     procedure actResolucionExecute(Sender: TObject);
+    procedure actCalcularExecute(Sender: TObject);
 
 
 
@@ -85,8 +89,8 @@ implementation
 
 uses
   uLineaCredito, UData, uPerfilCliente, uTipoProducto, uCliente, uAhorro,uReporteCeop,
-  uReporteCrediticio,uGiroNegocio,uTipoPrestamo,uTipoInfo,uTipoInfoDetalle,uGarantia,
-  uEmpleado,uSolicitud,uAuditoria,uResolucion;
+  uReporteCrediticio,uGiroNegocio,uTipoPrestamo,uTipoInfo,uGarantia,
+  uEmpleado,uSolicitud,uAuditoria,uResolucion, uCalcular;
 
 {$R *.dfm}
 
@@ -116,6 +120,17 @@ begin
         ResultsForm.Free;
 end;
 
+end;
+
+procedure TfMenu.actCalcularExecute(Sender: TObject);
+var ResultsForm:TfCalcular;
+begin
+      ResultsForm := TfCalcular.Create(nil);
+      try
+        ResultsForm.ShowModal;
+      finally
+        ResultsForm.Free;
+end;
 end;
 
 procedure TfMenu.actClienteExecute(Sender: TObject);
@@ -207,29 +222,6 @@ begin
       finally
         ResultsForm.Free;
 end;
-end;
-
-procedure TfMenu.actTipoInfoDetalleExecute(Sender: TObject);
-var ResultsForm:TfTipoInfoDetalle;
-begin
-      ResultsForm := TfTipoInfoDetalle.Create(nil);
-      try
-        ResultsForm.ShowModal;
-      finally
-        ResultsForm.Free;
-end;
-end;
-
-procedure TfMenu.actTipoInfoExecute(Sender: TObject);
-var ResultsForm:TfTipoInfo;
-begin
-      ResultsForm := TfTipoInfo.Create(nil);
-      try
-        ResultsForm.ShowModal;
-      finally
-        ResultsForm.Free;
-end;
-
 end;
 
 procedure TfMenu.actTipoPrestamoExecute(Sender: TObject);

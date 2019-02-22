@@ -495,57 +495,71 @@ object fMenu: TfMenu
   object menu: TMainMenu
     Left = 96
     Top = 104
-    object actArchivo1: TMenuItem
-      Caption = 'Archivo'
-      ImageIndex = 0
+    object Gestion1: TMenuItem
+      Caption = 'Gestion'
       object actLineaCredito1: TMenuItem
         Action = actLineaCredito
-      end
-      object actPerfilCliente1: TMenuItem
-        Action = actPerfilCliente
       end
       object actTipoProducto1: TMenuItem
         Action = actTipoProducto
       end
-      object actCliente1: TMenuItem
-        Action = actCliente
+      object ipoPrestamo1: TMenuItem
+        Action = actTipoPrestamo
+      end
+      object actPerfilCliente1: TMenuItem
+        Action = actPerfilCliente
       end
       object actAhorro1: TMenuItem
         Action = actAhorro
       end
+      object Negocio1: TMenuItem
+        Caption = 'Negocio'
+        object ipoInfo1: TMenuItem
+          Action = actTipoInfo
+        end
+        object GiroNegocio1: TMenuItem
+          Action = actGiroNegocio
+        end
+      end
+      object Garantia1: TMenuItem
+        Action = actGarantia
+      end
+      object Cliente1: TMenuItem
+        Action = actCliente
+      end
+    end
+    object Historial1: TMenuItem
+      Caption = 'Historial'
       object actReporteCeop1: TMenuItem
         Action = actReporteCeop
       end
       object actReporteCrediticio1: TMenuItem
         Action = actReporteCrediticio
       end
-      object GiroNegocio1: TMenuItem
-        Action = actGiroNegocio
-      end
-      object ipoPrestamo1: TMenuItem
-        Action = actTipoPrestamo
-      end
-      object ipoInfo1: TMenuItem
-        Action = actTipoInfo
-      end
-      object ipoInfoDetalle1: TMenuItem
-        Action = actTipoInfoDetalle
-      end
-      object Garantia1: TMenuItem
-        Action = actGarantia
-      end
+    end
+    object Credito1: TMenuItem
+      Caption = 'Credito'
       object Solicitud1: TMenuItem
         Action = actSolicitud
       end
+      object Resolucion1: TMenuItem
+        Action = actResolucion
+      end
+      object Simulador1: TMenuItem
+        Action = actCalcular
+      end
+    end
+    object Seguidad1: TMenuItem
+      Caption = 'Seguidad'
       object Empleado1: TMenuItem
         Action = actEmpleado
       end
       object Auditoria1: TMenuItem
         Action = actAuditoria
       end
-      object Resolucion1: TMenuItem
-        Action = actResolucion
-      end
+    end
+    object Reportes1: TMenuItem
+      Caption = 'Reportes'
     end
     object actSalir1: TMenuItem
       Caption = 'Salir'
@@ -619,6 +633,7 @@ object fMenu: TfMenu
           end
           item
             Action = actGiroNegocio
+            Caption = '&GiroNegocio'
             ImageIndex = 25
             ShowCaption = False
           end
@@ -630,12 +645,6 @@ object fMenu: TfMenu
           end
           item
             Caption = '-'
-          end
-          item
-            Action = actTipoInfoDetalle
-            Caption = 'Tip&oInfoDetalle'
-            ImageIndex = 21
-            ShowCaption = False
           end
           item
             Action = actTipoInfo
@@ -748,14 +757,6 @@ object fMenu: TfMenu
       Caption = 'TipoInfo'
       Hint = 'Tipo Info'
       ImageIndex = 20
-      OnExecute = actTipoInfoExecute
-    end
-    object actTipoInfoDetalle: TAction
-      Category = 'informacio negocio'
-      Caption = 'TipoInfoDetalle'
-      Hint = 'Tipo Info Detalle'
-      ImageIndex = 21
-      OnExecute = actTipoInfoDetalleExecute
     end
     object actGarantia: TAction
       Category = 'prestamo'
@@ -774,6 +775,7 @@ object fMenu: TfMenu
     object actEmpleado: TAction
       Category = 'autorizacion'
       Caption = 'Empleado'
+      Enabled = False
       Hint = 'Empleado'
       ImageIndex = 16
       OnExecute = actEmpleadoExecute
@@ -789,6 +791,11 @@ object fMenu: TfMenu
       Hint = 'Resolucion'
       ImageIndex = 4
       OnExecute = actResolucionExecute
+    end
+    object actCalcular: TAction
+      Category = 'credito'
+      Caption = 'Simulador'
+      OnExecute = actCalcularExecute
     end
   end
   object ImageList1: TImageList

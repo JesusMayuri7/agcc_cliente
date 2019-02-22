@@ -75,6 +75,7 @@ type
     cbbRegistros: TComboBox;
     Label11: TLabel;
     spbActualizar: TSpeedButton;
+    Button1: TButton;
     procedure FormCreate(Sender: TObject);
     procedure cbbRegistrosChange(Sender: TObject);
     procedure spbPagSiguienteClick(Sender: TObject);
@@ -85,6 +86,7 @@ type
     procedure btnCancelarClick(Sender: TObject);
     procedure btnGuardarClick(Sender: TObject);
     procedure btnEditarClick(Sender: TObject);
+    procedure Button1Click(Sender: TObject);
   private
     { Private declarations }
     var paginaActual:integer;
@@ -140,7 +142,7 @@ begin
     graph.variables:=variables;
 
     resultado:=graph.ejecutar('linea_creditoMutation');  // cambiar por el nombre del Query que buscas linea_creditoQuery
-      showmessage(resultado.ToString);
+     // showmessage(resultado.ToString);
     uHelpers.InsertarRegistroDataset(resultado,fdLineaCredito);
 
     finally
@@ -153,6 +155,7 @@ procedure TfLineaCredito.btnBuscarClick(Sender: TObject);
 begin
 paginaActual:=1;
 listar();
+//gridLIneaCreditoDBTableView1.Controller.ApplyFindFilterText(edCriterio.Text);
 end;
 
 procedure TfLineaCredito.btnNuevoClick(Sender: TObject);
@@ -164,6 +167,14 @@ tabListado.TabVisible:=false;
 tabFormulario.TabVisible:=true;
 btnCancelar.Enabled:=true;
 btnGuardar.Enabled:=true;
+end;
+
+procedure TfLineaCredito.Button1Click(Sender: TObject);
+begin
+   //gridLIneaCreditoDBTableView1.Controller.ClearFindFilterText;
+   edCriterio.Text:='';
+   paginaActual:=1;
+   listar();
 end;
 
 procedure TfLineaCredito.btnCancelarClick(Sender: TObject);
