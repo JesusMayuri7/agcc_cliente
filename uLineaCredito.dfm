@@ -47,6 +47,7 @@ object fLineaCredito: TfLineaCredito
       ParentFont = False
     end
     object spbPagSiguiente: TSpeedButton
+      Tag = 1
       AlignWithMargins = True
       Left = 695
       Top = 4
@@ -60,6 +61,7 @@ object fLineaCredito: TfLineaCredito
       ExplicitHeight = 22
     end
     object spbPaginaAnteriorrr: TSpeedButton
+      Tag = 1
       AlignWithMargins = True
       Left = 666
       Top = 4
@@ -73,6 +75,7 @@ object fLineaCredito: TfLineaCredito
       ExplicitHeight = 22
     end
     object spbActualizar: TSpeedButton
+      Tag = 1
       AlignWithMargins = True
       Left = 4
       Top = 4
@@ -156,6 +159,7 @@ object fLineaCredito: TfLineaCredito
         Caption = 'Registros:'
       end
       object cbbRegistros: TComboBox
+        Tag = 1
         Left = 72
         Top = 1
         Width = 49
@@ -376,6 +380,7 @@ object fLineaCredito: TfLineaCredito
       Align = alBottom
       TabOrder = 1
       object btnNuevo: TButton
+        Tag = 2
         Left = 48
         Top = 6
         Width = 75
@@ -385,6 +390,7 @@ object fLineaCredito: TfLineaCredito
         OnClick = btnNuevoClick
       end
       object btnEditar: TButton
+        Tag = 3
         Left = 168
         Top = 6
         Width = 75
@@ -394,6 +400,7 @@ object fLineaCredito: TfLineaCredito
         TabOrder = 1
       end
       object btnCancelar: TButton
+        Tag = 2
         Left = 288
         Top = 6
         Width = 75
@@ -404,6 +411,7 @@ object fLineaCredito: TfLineaCredito
         OnClick = btnCancelarClick
       end
       object btnGuardar: TButton
+        Tag = 3
         Left = 408
         Top = 6
         Width = 75
