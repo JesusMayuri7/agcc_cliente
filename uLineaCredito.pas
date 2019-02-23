@@ -31,22 +31,22 @@ type
     Label5: TLabel;
     Label6: TLabel;
     Label7: TLabel;
-    cxGrid1DBTableView1: TcxGridDBTableView;
-    cxGrid1Level1: TcxGridLevel;
-    cxGrid1: TcxGrid;
+    gridLIneaCreditoDBTableView1: TcxGridDBTableView;
+    gridLIneaCreditoLevel1: TcxGridLevel;
+    gridLIneaCredito: TcxGrid;
     fdLineaCredito: TFDMemTable;
     dsLineaCredito: TDataSource;
     fdLineaCreditoid: TIntegerField;
     fdLineaCreditodesc_linea_credito: TStringField;
-    cxGrid1DBTableView1id: TcxGridDBColumn;
-    cxGrid1DBTableView1desc_linea_credito: TcxGridDBColumn;
+    gridLIneaCreditoDBTableView1id: TcxGridDBColumn;
+    gridLIneaCreditoDBTableView1desc_linea_credito: TcxGridDBColumn;
     fdLineaCreditomonto_minimo: TFloatField;
     fdLineaCreditomonto_maximo: TFloatField;
     fdLineaCreditoactivo: TBooleanField;
-    cxGrid1DBTableView1interes: TcxGridDBColumn;
-    cxGrid1DBTableView1monto_minimo: TcxGridDBColumn;
-    cxGrid1DBTableView1monto_maximo: TcxGridDBColumn;
-    cxGrid1DBTableView1activo: TcxGridDBColumn;
+    gridLIneaCreditoDBTableView1interes: TcxGridDBColumn;
+    gridLIneaCreditoDBTableView1monto_minimo: TcxGridDBColumn;
+    gridLIneaCreditoDBTableView1monto_maximo: TcxGridDBColumn;
+    gridLIneaCreditoDBTableView1activo: TcxGridDBColumn;
     fdLineaCreditotipo_interes: TStringField;
     edLineaCredito: TEdit;
     cbbInteres: TComboBox;
@@ -75,6 +75,7 @@ type
     cbbRegistros: TComboBox;
     Label11: TLabel;
     spbActualizar: TSpeedButton;
+    Button1: TButton;
     procedure FormCreate(Sender: TObject);
     procedure cbbRegistrosChange(Sender: TObject);
     procedure spbPagSiguienteClick(Sender: TObject);
@@ -84,10 +85,14 @@ type
     procedure btnNuevoClick(Sender: TObject);
     procedure btnCancelarClick(Sender: TObject);
     procedure btnGuardarClick(Sender: TObject);
+    procedure btnEditarClick(Sender: TObject);
+    procedure Button1Click(Sender: TObject);
   private
     { Private declarations }
     var paginaActual:integer;
     procedure listar;
+    procedure Limpiar();
+    procedure EditarLinea(desc_linea_credito,tipo_interes:string;id,monto_minimo,monto_maximo:integer;activo:boolean);
     procedure NuevaLinea(desc_linea_credito,tipo_interes:string;monto_minimo,monto_maximo:integer;activo:boolean);
   public
     { Public declarations }
@@ -106,15 +111,57 @@ uses
 
 { TfLineaCredito }
 
+procedure TfLineaCredito.EditarLinea(desc_linea_credito,
+  tipo_interes: string; id, monto_minimo, monto_maximo: integer;
+  activo: boolean);
+var graph:Tgraph;
+var variables:TJSONObject;
+var dataVar,dataRest,query:TJSONObject;
+var resultado:TJsonObject;
+var I:byte;
+begin
+    resultado:=TJSONObject.Create;
+    graph:=TGraph.Create(dmdata.RESTClient1);
+    try  // Cambiar por el query a consultar, hacer pruebas en Insomnia
+    graph.query:='mutation postLineaCredito($id:Int,$desc_linea_credito:String,$tipo_interes:String,'+
+    '$monto_maximo:Float,$monto_minimo:Float,$activo:Int)'+
+    ' { linea_creditoMutation(id:$id,desc_linea_credito:$desc_linea_credito,tipo_interes:$tipo_interes,'+
+    ' monto_maximo:$monto_maximo,monto_minimo:$monto_minimo,activo:$activo)'+
+    ' {id,desc_linea_credito,tipo_interes,monto_minimo,monto_maximo,activo}  } ';
+
+    //NO variar
+    variables:=TJSONObject.Create;
+    dataVar:=TJSONObject.Create;
+    dataVar.AddPair('id',TJSONNumber.Create(id));
+    dataVar.AddPair('desc_linea_credito',TJSONString.Create(desc_linea_credito));
+    dataVar.AddPair('tipo_interes',TJSONString.Create(tipo_interes));
+    dataVar.AddPair('monto_minimo',TJSONNumber.Create(monto_minimo));
+    dataVar.AddPair('monto_maximo',TJSONNumber.Create(monto_maximo));
+    dataVar.AddPair('activo',TJSONNumber.Create(activo.ToInteger));
+    variables.AddPair('variables',dataVar);
+    graph.variables:=variables;
+
+    resultado:=graph.ejecutar('linea_creditoMutation');  // cambiar por el nombre del Query que buscas linea_creditoQuery
+     // showmessage(resultado.ToString);
+    uHelpers.InsertarRegistroDataset(resultado,fdLineaCredito);
+
+    finally
+       FreeAndNil(resultado);
+       FreeAndNil(graph);
+    end;
+end;
+
 procedure TfLineaCredito.btnBuscarClick(Sender: TObject);
 begin
 paginaActual:=1;
 listar();
+//gridLIneaCreditoDBTableView1.Controller.ApplyFindFilterText(edCriterio.Text);
 end;
 
 procedure TfLineaCredito.btnNuevoClick(Sender: TObject);
 begin
 //TODO limpiar campos
+Limpiar();
 btnNuevo.Enabled:=true;
 tabListado.TabVisible:=false;
 tabFormulario.TabVisible:=true;
@@ -122,27 +169,58 @@ btnCancelar.Enabled:=true;
 btnGuardar.Enabled:=true;
 end;
 
+procedure TfLineaCredito.Button1Click(Sender: TObject);
+begin
+   //gridLIneaCreditoDBTableView1.Controller.ClearFindFilterText;
+   edCriterio.Text:='';
+   paginaActual:=1;
+   listar();
+end;
+
 procedure TfLineaCredito.btnCancelarClick(Sender: TObject);
 begin
   btnCancelar.Enabled:=false;
-  edLineaCredito.Text:='';
-  cbbInteres.ItemIndex:=0;
-  spbMinimo.Value:=0;
-  spbMaximo.Value:=0;
-  chkActivo.Checked:=false;
+  Limpiar();
   tabFormulario.TabVisible:=false;
   tabListado.TabVisible:=true;
   btnNuevo.Enabled:=true;
+  btnEditar.Enabled:=True;
   btnGuardar.Enabled:=false;
+end;
+
+procedure TfLineaCredito.btnEditarClick(Sender: TObject);
+begin
+  Limpiar();
+  if gridLIneaCreditoDBTableView1.Controller.SelectedRowCount=1 then
+  begin
+     Tag:=gridLIneaCreditoDBTableView1.DataController.Values[gridLIneaCreditoDBTableView1.Controller.FocusedRecordIndex , 0];
+     if Tag>0 then
+     begin
+         btnEditar.Enabled:=false;
+         tabListado.TabVisible:=false;
+         tabFormulario.TabVisible:=true;
+         btnCancelar.Enabled:=true;
+         btnGuardar.Enabled:=true;
+         edLineaCredito.Text:=gridLIneaCreditoDBTableView1.DataController.Values[gridLIneaCreditoDBTableView1.Controller.FocusedRecordIndex , 1];
+         cbbInteres.ItemIndex:=cbbInteres.Items.IndexOf(gridLIneaCreditoDBTableView1.DataController.Values[gridLIneaCreditoDBTableView1.Controller.FocusedRecordIndex , 2]);
+         spbMinimo.Value:=gridLIneaCreditoDBTableView1.DataController.Values[gridLIneaCreditoDBTableView1.Controller.FocusedRecordIndex , 3];
+         spbMaximo.Value:=gridLIneaCreditoDBTableView1.DataController.Values[gridLIneaCreditoDBTableView1.Controller.FocusedRecordIndex , 4];
+         chkActivo.Checked:=gridLIneaCreditoDBTableView1.DataController.Values[gridLIneaCreditoDBTableView1.Controller.FocusedRecordIndex , 5];
+     end;
+  end;
 end;
 
 procedure TfLineaCredito.btnGuardarClick(Sender: TObject);
 begin
   btnGuardar.Enabled:=false;
-  nuevalinea(edlineaCredito.Text,cbbInteres.items[cbbInteres.itemindex],spbMinimo.value,spbMaximo.value,chkActivo.checked);
+  if Tag>0 then
+     EditarLinea(edlineaCredito.Text,cbbInteres.items[cbbInteres.itemindex],Tag,spbMinimo.value,spbMaximo.value,chkActivo.checked)
+  else
+     nuevalinea(edlineaCredito.Text,cbbInteres.items[cbbInteres.itemindex],spbMinimo.value,spbMaximo.value,chkActivo.checked);
   tabFormulario.TabVisible:=false;
   tabListado.TabVisible:=true;
   btnNuevo.Enabled:=true;
+  btnEditar.Enabled:=True;
   btnCancelar.Enabled:=false;
 end;
 
@@ -156,6 +234,16 @@ procedure TfLineaCredito.FormCreate(Sender: TObject);
 begin
 paginaActual:=1;
 listar();
+end;
+
+procedure TfLineaCredito.Limpiar;
+begin
+Tag:=0;
+edLineaCredito.Text:='';
+cbbInteres.ItemIndex:=0;
+spbMinimo.Value:=0;
+spbMaximo.Value:=0;
+chkActivo.Checked:=False;
 end;
 
 procedure TfLineaCredito.listar;

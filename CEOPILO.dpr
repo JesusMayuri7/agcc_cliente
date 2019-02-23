@@ -2,7 +2,6 @@ program CEOPILO;
 
 uses
   Vcl.Forms,
-  uMenu in 'uMenu.pas' {fMenu},
   UData in 'UData.pas' {dmData: TDataModule},
   uTipoProducto in 'uTipoProducto.pas' {fTipoProducto},
   uAhorro in 'uAhorro.pas' {fAhorro},
@@ -20,8 +19,13 @@ uses
   uReporteCrediticio in 'uReporteCrediticio.pas' {fReporteCrediticio},
   uResolucion in 'uResolucion.pas' {fResolucion},
   uRol in 'uRol.pas' {fRol},
+  uSolicitud in 'uSolicitud.pas' {fSolicitud},
+  uHelpers in 'uHelpers.pas',
+  uMenu in 'uMenu.pas' {fMenu},
+  uTipoInfo in 'uTipoInfo.pas' {fTipoInfo},
+  uTipoPrestamo in 'uTipoPrestamo.pas' {fTipoPrestamo},
   uLineaCredito in 'uLineaCredito.pas' {fLineaCredito},
-  uHelpers in 'uHelpers.pas';
+  uCalcular in 'uCalcular.pas' {fCalcular};
 
 {$R *.res}
 
