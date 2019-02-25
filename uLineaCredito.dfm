@@ -288,7 +288,7 @@ object fLineaCredito: TfLineaCredito
       object tabLIstado: TTabSheet
         Caption = 'Listado'
         ImageIndex = 1
-        object cxGrid1: TcxGrid
+        object gridLineaCredito: TcxGrid
           Left = 0
           Top = 41
           Width = 718
@@ -296,7 +296,7 @@ object fLineaCredito: TfLineaCredito
           Align = alClient
           TabOrder = 0
           LookAndFeel.NativeStyle = False
-          object cxGrid1DBTableView1: TcxGridDBTableView
+          object gridLIneaCreditoDBTableView1: TcxGridDBTableView
             Navigator.Buttons.CustomButtons = <>
             DataController.DataSource = dsLineaCredito
             DataController.Summary.DefaultGroupSummaryItems = <>
@@ -312,37 +312,37 @@ object fLineaCredito: TfLineaCredito
             OptionsView.GroupByBox = False
             OptionsView.GroupRowStyle = grsOffice11
             Styles.ContentOdd = cxStyle1
-            object cxGrid1DBTableView1id: TcxGridDBColumn
+            object gridLIneaCreditoDBTableView1id: TcxGridDBColumn
               DataBinding.FieldName = 'id'
               HeaderAlignmentHorz = taCenter
               Width = 58
             end
-            object cxGrid1DBTableView1desc_linea_credito: TcxGridDBColumn
+            object gridLIneaCreditoDBTableView1desc_linea_credito: TcxGridDBColumn
               DataBinding.FieldName = 'desc_linea_credito'
               HeaderAlignmentHorz = taCenter
               Width = 271
             end
-            object cxGrid1DBTableView1interes: TcxGridDBColumn
+            object gridLIneaCreditoDBTableView1interes: TcxGridDBColumn
               DataBinding.FieldName = 'tipo_interes'
               HeaderAlignmentHorz = taCenter
             end
-            object cxGrid1DBTableView1monto_minimo: TcxGridDBColumn
+            object gridLIneaCreditoDBTableView1monto_minimo: TcxGridDBColumn
               DataBinding.FieldName = 'monto_minimo'
               HeaderAlignmentHorz = taCenter
               Width = 83
             end
-            object cxGrid1DBTableView1monto_maximo: TcxGridDBColumn
+            object gridLIneaCreditoDBTableView1monto_maximo: TcxGridDBColumn
               DataBinding.FieldName = 'monto_maximo'
               HeaderAlignmentHorz = taCenter
               Width = 80
             end
-            object cxGrid1DBTableView1activo: TcxGridDBColumn
+            object gridLIneaCreditoDBTableView1activo: TcxGridDBColumn
               DataBinding.FieldName = 'activo'
               HeaderAlignmentHorz = taCenter
             end
           end
-          object cxGrid1Level1: TcxGridLevel
-            GridView = cxGrid1DBTableView1
+          object gridLineaCreditoLevel1: TcxGridLevel
+            GridView = gridLIneaCreditoDBTableView1
           end
         end
         object Panel2: TPanel
@@ -396,8 +396,8 @@ object fLineaCredito: TfLineaCredito
         Width = 75
         Height = 25
         Caption = 'Editar'
-        Enabled = False
         TabOrder = 1
+        OnClick = btnEditarClick
       end
       object btnCancelar: TButton
         Tag = 2

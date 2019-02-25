@@ -59,11 +59,7 @@ type
     procedure actReporteCeopExecute(Sender: TObject);
     procedure actReporteCrediticioExecute(Sender: TObject);
     procedure actGiroNegocioExecute(Sender: TObject);
-    procedure actTipoPrestamoExecute(Sender: TObject);
-    procedure actTipoInfoExecute(Sender: TObject);
-    procedure actTipoInfoDetalleExecute(Sender: TObject);
     procedure actGarantiaExecute(Sender: TObject);
-    procedure actSolicitudExecute(Sender: TObject);
     procedure actEmpleadoExecute(Sender: TObject);
     procedure actAuditoriaExecute(Sender: TObject);
     procedure actResolucionExecute(Sender: TObject);
@@ -85,8 +81,8 @@ implementation
 
 uses
   uLineaCredito, UData, uPerfilCliente, uTipoProducto, uCliente, uAhorro,uReporteCeop,
-  uReporteCrediticio,uGiroNegocio,uTipoPrestamo,uTipoInfo,uTipoInfoDetalle,uGarantia,
-  uEmpleado,uSolicitud,uAuditoria,uResolucion;
+  uReporteCrediticio,uGiroNegocio,uGarantia,
+  uEmpleado,uAuditoria,uResolucion, uCalcular;
 
 {$R *.dfm}
 
@@ -131,9 +127,9 @@ end;
 end;
 
 procedure TfMenu.actEmpleadoExecute(Sender: TObject);
-var ResultsForm:TfEmpleado;
+var ResultsForm:TfCalcular;
 begin
-      ResultsForm := TfEmpleado.Create(nil);
+      ResultsForm := TfCalcular.Create(nil);
       try
         ResultsForm.ShowModal;
       finally
@@ -191,51 +187,6 @@ procedure TfMenu.actResolucionExecute(Sender: TObject);
 var ResultsForm:TfResolucion;
 begin
       ResultsForm := TfResolucion.Create(nil);
-      try
-        ResultsForm.ShowModal;
-      finally
-        ResultsForm.Free;
-end;
-end;
-
-procedure TfMenu.actSolicitudExecute(Sender: TObject);
- var ResultsForm:TfSolicitud;
-begin
-      ResultsForm := TfSolicitud.Create(nil);
-      try
-        ResultsForm.ShowModal;
-      finally
-        ResultsForm.Free;
-end;
-end;
-
-procedure TfMenu.actTipoInfoDetalleExecute(Sender: TObject);
-var ResultsForm:TfTipoInfoDetalle;
-begin
-      ResultsForm := TfTipoInfoDetalle.Create(nil);
-      try
-        ResultsForm.ShowModal;
-      finally
-        ResultsForm.Free;
-end;
-end;
-
-procedure TfMenu.actTipoInfoExecute(Sender: TObject);
-var ResultsForm:TfTipoInfo;
-begin
-      ResultsForm := TfTipoInfo.Create(nil);
-      try
-        ResultsForm.ShowModal;
-      finally
-        ResultsForm.Free;
-end;
-
-end;
-
-procedure TfMenu.actTipoPrestamoExecute(Sender: TObject);
-var ResultsForm:TfTipoPrestamo;
-begin
-      ResultsForm := TfTipoPrestamo.Create(nil);
       try
         ResultsForm.ShowModal;
       finally

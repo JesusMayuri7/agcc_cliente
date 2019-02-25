@@ -67,6 +67,7 @@ function TGraph.ejecutar(query:string):TJSONObject;
 var request,variable,dataRest,queryRest:TJSONObject;
 var total,limit:string;
 begin
+  limit:='0';
    // si es existe el token
    // if token
   // ARESTRequest.addParameter('Authorization','Bearer aaa',TRESTRequestParameterKind.pkHTTPHEADER);
@@ -90,6 +91,8 @@ begin
          queryRest:=dataRest.GetValue(query) as TJsonObject;
          if queryRest.TryGetValue('total',total) then
             begin
+              if limit.ToInteger>0 then
+              begin
                 if total.ToInteger>limit.ToInteger then
                    begin
                       if (total.ToInteger mod limit.ToInteger) = 0 then
@@ -99,11 +102,12 @@ begin
                    end
                 else
                   SetTotalPag(1);
+              end;
             end;
     end;
-   Result:=queryRest;
+  // Result:=queryRest;
    //Result:=TJsonObject(ARESTRequest.Response.JSONValue);
-  //Result:=request;
+  Result:=request;
 end;
 
 function TGraph.GetQuery: string;

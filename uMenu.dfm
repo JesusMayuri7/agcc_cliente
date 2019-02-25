@@ -619,6 +619,7 @@ object fMenu: TfMenu
           end
           item
             Action = actGiroNegocio
+            Caption = '&GiroNegocio'
             ImageIndex = 25
             ShowCaption = False
           end
@@ -741,21 +742,18 @@ object fMenu: TfMenu
       Caption = 'TipoPrestamo'
       Hint = 'Tipo Prestamo'
       ImageIndex = 18
-      OnExecute = actTipoPrestamoExecute
     end
     object actTipoInfo: TAction
       Category = 'informacio negocio'
       Caption = 'TipoInfo'
       Hint = 'Tipo Info'
       ImageIndex = 20
-      OnExecute = actTipoInfoExecute
     end
     object actTipoInfoDetalle: TAction
       Category = 'informacio negocio'
       Caption = 'TipoInfoDetalle'
       Hint = 'Tipo Info Detalle'
       ImageIndex = 21
-      OnExecute = actTipoInfoDetalleExecute
     end
     object actGarantia: TAction
       Category = 'prestamo'
@@ -769,7 +767,6 @@ object fMenu: TfMenu
       Caption = 'Solicitud'
       Hint = 'Solicitud'
       ImageIndex = 6
-      OnExecute = actSolicitudExecute
     end
     object actEmpleado: TAction
       Category = 'autorizacion'

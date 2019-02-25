@@ -3,7 +3,7 @@ object fTipoProducto: TfTipoProducto
   Top = 0
   Caption = 'Tipo Producto'
   ClientHeight = 459
-  ClientWidth = 728
+  ClientWidth = 944
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -26,13 +26,13 @@ object fTipoProducto: TfTipoProducto
     AlignWithMargins = True
     Left = 3
     Top = 3
-    Width = 722
+    Width = 938
     Height = 33
     Align = alTop
     TabOrder = 0
     object Label1: TLabel
-      Left = 105
-      Top = 8
+      Left = 129
+      Top = 6
       Width = 89
       Height = 16
       Alignment = taCenter
@@ -48,7 +48,7 @@ object fTipoProducto: TfTipoProducto
     end
     object spbPagSiguiente: TSpeedButton
       AlignWithMargins = True
-      Left = 695
+      Left = 911
       Top = 4
       Width = 23
       Height = 25
@@ -61,7 +61,7 @@ object fTipoProducto: TfTipoProducto
     end
     object spbPaginaAnteriorrr: TSpeedButton
       AlignWithMargins = True
-      Left = 666
+      Left = 882
       Top = 4
       Width = 23
       Height = 25
@@ -72,9 +72,21 @@ object fTipoProducto: TfTipoProducto
       ExplicitTop = 5
       ExplicitHeight = 22
     end
+    object spbActualizar: TSpeedButton
+      AlignWithMargins = True
+      Left = 4
+      Top = 4
+      Width = 23
+      Height = 25
+      Align = alLeft
+      Caption = '<'
+      OnClick = spbActualizarClick
+      ExplicitLeft = 46
+      ExplicitTop = 5
+    end
     object Panel3: TPanel
       AlignWithMargins = True
-      Left = 515
+      Left = 731
       Top = 4
       Width = 145
       Height = 25
@@ -130,7 +142,7 @@ object fTipoProducto: TfTipoProducto
     end
     object Panel4: TPanel
       AlignWithMargins = True
-      Left = 375
+      Left = 591
       Top = 4
       Width = 134
       Height = 25
@@ -166,26 +178,27 @@ object fTipoProducto: TfTipoProducto
   object pnDetalle: TPanel
     Left = 0
     Top = 39
-    Width = 728
+    Width = 944
     Height = 420
     Align = alClient
     TabOrder = 1
     object PageControl1: TPageControl
       Left = 1
       Top = 1
-      Width = 726
+      Width = 942
       Height = 377
-      ActivePage = TabSheet1
+      ActivePage = tabLIstado
       Align = alClient
       TabOrder = 0
-      object TabSheet1: TTabSheet
+      object tabFormulario: TTabSheet
         Caption = 'Formulario'
+        TabVisible = False
         object GroupBox1: TGroupBox
           Left = 51
           Top = 31
           Width = 550
-          Height = 274
-          Caption = 'Linea de Credito'
+          Height = 316
+          Caption = 'Tipo Producto'
           TabOrder = 0
           object Label2: TLabel
             Left = 33
@@ -196,21 +209,21 @@ object fTipoProducto: TfTipoProducto
           end
           object Label4: TLabel
             Left = 55
-            Top = 131
+            Top = 171
             Width = 32
             Height = 13
             Caption = 'Minimo'
           end
           object Label6: TLabel
             Left = 55
-            Top = 181
+            Top = 221
             Width = 36
             Height = 13
             Caption = 'Maximo'
           end
           object Label7: TLabel
             Left = 55
-            Top = 221
+            Top = 261
             Width = 30
             Height = 13
             Caption = 'Activo'
@@ -222,60 +235,85 @@ object fTipoProducto: TfTipoProducto
             Height = 13
             Caption = 'Interes'
           end
-          object edtDescripcion: TEdit
+          object Label8: TLabel
+            Left = 55
+            Top = 128
+            Width = 24
+            Height = 13
+            Caption = 'Mora'
+          end
+          object edDescripcion: TEdit
             Left = 112
             Top = 37
             Width = 353
             Height = 21
             TabOrder = 0
-            Text = 'edtDescripcion'
           end
-          object cbbInteres: TComboBox
+          object spbMinimo: TcxSpinEdit
             Left = 112
-            Top = 80
-            Width = 129
-            Height = 21
+            Top = 168
+            Properties.Alignment.Horz = taRightJustify
+            Properties.DisplayFormat = '#,##0'
             TabOrder = 1
-            Text = 'cbbInteres'
+            Width = 89
           end
-          object spnMinimo: TcxSpinEdit
-            Left = 112
-            Top = 128
+          object spbMaximo: TcxSpinEdit
+            Left = 111
+            Top = 221
             Properties.Alignment.Horz = taRightJustify
-            Properties.DisplayFormat = '#,##0.00'
+            Properties.DisplayFormat = '#,##0'
             TabOrder = 2
-            Width = 121
-          end
-          object spnMaximo: TcxSpinEdit
-            Left = 112
-            Top = 178
-            Properties.Alignment.Horz = taRightJustify
-            Properties.DisplayFormat = '#,##0.00'
-            TabOrder = 3
-            Width = 121
+            Width = 89
           end
           object chkActivo: TCheckBox
             Left = 112
-            Top = 220
+            Top = 260
             Width = 25
             Height = 17
             Alignment = taLeftJustify
+            TabOrder = 3
+          end
+          object spbInteres: TcxSpinEdit
+            Left = 112
+            Top = 80
+            Properties.Alignment.Horz = taRightJustify
+            Properties.DisplayFormat = '#,##0.00'
+            Properties.ValueType = vtFloat
             TabOrder = 4
+            Width = 88
+          end
+          object spbMora: TcxSpinEdit
+            Left = 113
+            Top = 125
+            Properties.Alignment.Horz = taRightJustify
+            Properties.DisplayFormat = '#,##0.00'
+            Properties.ValueType = vtFloat
+            TabOrder = 5
+            Width = 89
           end
         end
+        object Memo1: TMemo
+          Left = 672
+          Top = 32
+          Width = 231
+          Height = 314
+          Lines.Strings = (
+            '')
+          TabOrder = 1
+        end
       end
-      object TabSheet2: TTabSheet
+      object tabLIstado: TTabSheet
         Caption = 'Listado'
         ImageIndex = 1
-        object cxGrid1: TcxGrid
+        object gridTipoProducto: TcxGrid
           Left = 0
           Top = 41
-          Width = 718
+          Width = 934
           Height = 308
           Align = alClient
           TabOrder = 0
           LookAndFeel.NativeStyle = False
-          object cxGrid1DBTableView1: TcxGridDBTableView
+          object gridTipoProductoDBTableView1: TcxGridDBTableView
             Navigator.Buttons.CustomButtons = <>
             DataController.DataSource = dsTipoProducto
             DataController.Summary.DefaultGroupSummaryItems = <>
@@ -291,39 +329,48 @@ object fTipoProducto: TfTipoProducto
             OptionsView.GroupByBox = False
             OptionsView.GroupRowStyle = grsOffice11
             Styles.ContentOdd = cxStyle1
-            object cxGrid1DBTableView1id: TcxGridDBColumn
+            object gridTipoProductoDBTableView1id: TcxGridDBColumn
               DataBinding.FieldName = 'id'
-              Width = 54
+              HeaderAlignmentHorz = taCenter
+              Width = 58
             end
-            object cxGrid1DBTableView1desc_tipo_producto: TcxGridDBColumn
+            object gridTipoProductoDBTableView1desc_tipo_producto: TcxGridDBColumn
               DataBinding.FieldName = 'desc_tipo_producto'
-              Width = 256
+              HeaderAlignmentHorz = taCenter
+              Width = 225
             end
-            object cxGrid1DBTableView1interes: TcxGridDBColumn
+            object gridTipoProductoDBTableView1interes: TcxGridDBColumn
               DataBinding.FieldName = 'interes'
+              HeaderAlignmentHorz = taCenter
             end
-            object cxGrid1DBTableView1mora: TcxGridDBColumn
+            object gridTipoProductoDBTableView1mora: TcxGridDBColumn
               DataBinding.FieldName = 'mora'
+              HeaderAlignmentHorz = taCenter
+              Width = 83
             end
-            object cxGrid1DBTableView1plazo_minimo: TcxGridDBColumn
+            object gridTipoProductoDBTableView1plazo_minimo: TcxGridDBColumn
               DataBinding.FieldName = 'plazo_minimo'
+              HeaderAlignmentHorz = taCenter
+              Width = 80
             end
-            object cxGrid1DBTableView1plazo_maximo: TcxGridDBColumn
-              DataBinding.FieldName = 'plazo_maximo'
+            object gridTipoProductoDBTableView1plazo_maximo: TcxGridDBColumn
+              Caption = 'plazo_maximo'
+              DataBinding.FieldName = 'plazo_minimo'
+              HeaderAlignmentHorz = taCenter
+              Width = 86
             end
-            object cxGrid1DBTableView1activo: TcxGridDBColumn
+            object gridTipoProductoDBTableView1activo: TcxGridDBColumn
               DataBinding.FieldName = 'activo'
-              Width = 36
             end
           end
-          object cxGrid1Level1: TcxGridLevel
-            GridView = cxGrid1DBTableView1
+          object gridTipoProductoLevel1: TcxGridLevel
+            GridView = gridTipoProductoDBTableView1
           end
         end
         object Panel2: TPanel
           Left = 0
           Top = 0
-          Width = 718
+          Width = 934
           Height = 41
           Align = alTop
           TabOrder = 1
@@ -333,7 +380,7 @@ object fTipoProducto: TfTipoProducto
             Width = 305
             Height = 21
             TabOrder = 0
-            TextHint = 'Tipo de Producto'
+            TextHint = 'Tipo Producto'
           end
           object btnBuscar: TButton
             Left = 330
@@ -350,28 +397,29 @@ object fTipoProducto: TfTipoProducto
     object Panel1: TPanel
       Left = 1
       Top = 378
-      Width = 726
+      Width = 942
       Height = 41
       Align = alBottom
       TabOrder = 1
       object btnNuevo: TButton
-        Left = 48
+        Left = 55
         Top = 6
         Width = 75
         Height = 25
         Caption = 'Nuevo'
         TabOrder = 0
+        OnClick = btnNuevoClick
       end
-      object Button1: TButton
+      object btnEditar: TButton
         Left = 168
         Top = 6
         Width = 75
         Height = 25
         Caption = 'Editar'
-        Enabled = False
         TabOrder = 1
+        OnClick = btnEditarClick
       end
-      object Button2: TButton
+      object btnCancelar: TButton
         Left = 288
         Top = 6
         Width = 75
@@ -379,50 +427,22 @@ object fTipoProducto: TfTipoProducto
         Caption = 'Cancelar'
         Enabled = False
         TabOrder = 2
+        OnClick = btnCancelarClick
       end
-      object Button3: TButton
-        Left = 408
+      object btnGuardar: TButton
+        Left = 403
         Top = 6
         Width = 75
         Height = 25
         Caption = 'Guardar'
         Enabled = False
         TabOrder = 3
+        OnClick = btnGuardarClick
       end
     end
   end
   object fdTipoProducto: TFDMemTable
-    Active = True
-    FieldDefs = <
-      item
-        Name = 'id'
-        DataType = ftInteger
-      end
-      item
-        Name = 'desc_tipo_producto'
-        DataType = ftString
-        Size = 100
-      end
-      item
-        Name = 'interes'
-        DataType = ftFloat
-      end
-      item
-        Name = 'mora'
-        DataType = ftFloat
-      end
-      item
-        Name = 'plazo_minimo'
-        DataType = ftInteger
-      end
-      item
-        Name = 'plazo_maximo'
-        DataType = ftInteger
-      end
-      item
-        Name = 'activo'
-        DataType = ftBoolean
-      end>
+    FieldDefs = <>
     IndexDefs = <>
     FetchOptions.AssignedValues = [evMode]
     FetchOptions.Mode = fmAll
@@ -435,11 +455,11 @@ object fTipoProducto: TfTipoProducto
     Left = 597
     Top = 162
     object fdTipoProductoid: TIntegerField
+      DisplayLabel = '#'
       FieldName = 'id'
     end
     object fdTipoProductodesc_tipo_producto: TStringField
       FieldName = 'desc_tipo_producto'
-      Size = 100
     end
     object fdTipoProductointeres: TFloatField
       FieldName = 'interes'
@@ -463,8 +483,8 @@ object fTipoProducto: TfTipoProducto
     Top = 226
   end
   object cxStyleRepository1: TcxStyleRepository
-    Left = 112
-    Top = 216
+    Left = 608
+    Top = 288
     PixelsPerInch = 96
     object cxStyle1: TcxStyle
       AssignedValues = [svColor]

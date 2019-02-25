@@ -1,9 +1,9 @@
 object fPerfilCliente: TfPerfilCliente
   Left = 0
   Top = 0
-  Caption = 'Linea Credito'
-  ClientHeight = 359
-  ClientWidth = 996
+  Caption = 'PerfilCliente'
+  ClientHeight = 459
+  ClientWidth = 682
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -11,6 +11,8 @@ object fPerfilCliente: TfPerfilCliente
   Font.Name = 'Tahoma'
   Font.Style = []
   OldCreateOrder = False
+  Position = poMainFormCenter
+  OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
   object Label5: TLabel
@@ -20,227 +22,350 @@ object fPerfilCliente: TfPerfilCliente
     Height = 13
     Caption = 'Label3'
   end
-  object Label9: TLabel
-    Left = 56
-    Top = 40
-    Width = 67
-    Height = 13
-    Caption = 'Reporte Ceop'
-  end
   object pnCabecera: TPanel
-    Left = 0
-    Top = 0
-    Width = 996
+    AlignWithMargins = True
+    Left = 3
+    Top = 3
+    Width = 676
     Height = 33
     Align = alTop
     TabOrder = 0
-    ExplicitTop = -5
     object Label1: TLabel
-      Left = 193
-      Top = 8
-      Width = 106
-      Height = 21
+      Left = 129
+      Top = 6
+      Width = 81
+      Height = 16
       Alignment = taCenter
       Caption = 'Perfil Cliente'
-      Color = 13395456
-      Font.Charset = ANSI_CHARSET
-      Font.Color = clBlue
-      Font.Height = -19
-      Font.Name = 'Britannic Bold'
-      Font.Style = []
+      Color = clHotLight
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clNavy
+      Font.Height = -13
+      Font.Name = 'Tahoma'
+      Font.Style = [fsBold, fsItalic]
       ParentColor = False
       ParentFont = False
-      Transparent = True
+    end
+    object spbPagSiguiente: TSpeedButton
+      AlignWithMargins = True
+      Left = 649
+      Top = 4
+      Width = 23
+      Height = 25
+      Align = alRight
+      Caption = '>'
+      OnClick = spbPagSiguienteClick
+      ExplicitLeft = 680
+      ExplicitTop = 5
+      ExplicitHeight = 22
+    end
+    object spbPaginaAnteriorrr: TSpeedButton
+      AlignWithMargins = True
+      Left = 620
+      Top = 4
+      Width = 23
+      Height = 25
+      Align = alRight
+      Caption = '<'
+      OnClick = spbPaginaAnteriorrrClick
+      ExplicitLeft = 680
+      ExplicitTop = 5
+      ExplicitHeight = 22
+    end
+    object spbActualizar: TSpeedButton
+      AlignWithMargins = True
+      Left = 4
+      Top = 4
+      Width = 23
+      Height = 25
+      Align = alLeft
+      Caption = '<'
+      OnClick = spbActualizarClick
+      ExplicitLeft = 46
+      ExplicitTop = 5
+    end
+    object Panel3: TPanel
+      AlignWithMargins = True
+      Left = 469
+      Top = 4
+      Width = 145
+      Height = 25
+      Align = alRight
+      TabOrder = 0
+      object Label12: TLabel
+        Left = 6
+        Top = 6
+        Width = 36
+        Height = 13
+        Caption = 'Pagina:'
+      end
+      object lblPaginaActual: TLabel
+        Left = 56
+        Top = 4
+        Width = 8
+        Height = 16
+        Alignment = taRightJustify
+        Caption = '0'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -13
+        Font.Name = 'Tahoma'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
+      object Label10: TLabel
+        Left = 82
+        Top = 4
+        Width = 16
+        Height = 16
+        Caption = 'de'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -13
+        Font.Name = 'Tahoma'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
+      object lblTotalPagina: TLabel
+        Left = 116
+        Top = 4
+        Width = 8
+        Height = 16
+        Caption = '0'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -13
+        Font.Name = 'Tahoma'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
+    end
+    object Panel4: TPanel
+      AlignWithMargins = True
+      Left = 329
+      Top = 4
+      Width = 134
+      Height = 25
+      Align = alRight
+      TabOrder = 1
+      object Label11: TLabel
+        Left = 17
+        Top = 6
+        Width = 49
+        Height = 13
+        Caption = 'Registros:'
+      end
+      object cbbRegistros: TComboBox
+        Left = 72
+        Top = 1
+        Width = 49
+        Height = 21
+        Style = csDropDownList
+        ItemIndex = 0
+        TabOrder = 0
+        Text = '5'
+        OnChange = cbbRegistrosChange
+        Items.Strings = (
+          '5'
+          '10'
+          '20'
+          '30'
+          '50'
+          '100')
+      end
     end
   end
   object pnDetalle: TPanel
     Left = 0
-    Top = 33
-    Width = 996
-    Height = 326
+    Top = 39
+    Width = 682
+    Height = 420
     Align = alClient
     TabOrder = 1
-    ExplicitHeight = 513
     object PageControl1: TPageControl
       Left = 1
       Top = 1
-      Width = 994
-      Height = 324
-      ActivePage = TabSheet1
+      Width = 680
+      Height = 287
+      ActivePage = tabLIstado
       Align = alClient
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWindowText
-      Font.Height = -11
-      Font.Name = 'Tahoma'
-      Font.Style = []
-      ParentFont = False
       TabOrder = 0
-      ExplicitHeight = 511
-      object TabSheet1: TTabSheet
+      object tabFormulario: TTabSheet
         Caption = 'Formulario'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clDefault
-        Font.Height = -11
-        Font.Name = 'Tahoma'
-        Font.Style = []
-        ParentFont = False
-        ExplicitLeft = 0
-        ExplicitTop = 1
-        ExplicitHeight = 483
-        object pnPieForm: TPanel
-          Left = 0
-          Top = 224
-          Width = 986
-          Height = 72
-          Align = alBottom
-          TabOrder = 0
-          ExplicitTop = 411
-          object btnNuevo: TButton
-            Left = 51
-            Top = 24
-            Width = 75
-            Height = 25
-            Caption = 'Nuevo'
-            TabOrder = 0
-          end
-          object Button1: TButton
-            Left = 196
-            Top = 24
-            Width = 75
-            Height = 25
-            Caption = 'Editar'
-            Enabled = False
-            TabOrder = 1
-          end
-          object Button2: TButton
-            Left = 462
-            Top = 24
-            Width = 75
-            Height = 25
-            Caption = 'Cancelar'
-            Enabled = False
-            TabOrder = 2
-          end
-          object Button3: TButton
-            Left = 320
-            Top = 24
-            Width = 75
-            Height = 25
-            Caption = 'Guardar'
-            Enabled = False
-            TabOrder = 3
-          end
-        end
+        TabVisible = False
         object GroupBox1: TGroupBox
-          Left = 11
-          Top = 23
-          Width = 526
-          Height = 194
+          Left = 51
+          Top = 31
+          Width = 550
+          Height = 162
           Caption = 'Perfil Cliente'
-          Color = clGradientActiveCaption
-          Font.Charset = ANSI_CHARSET
-          Font.Color = clBlack
-          Font.Height = -15
-          Font.Name = 'Britannic Bold'
-          Font.Style = []
-          ParentBackground = False
-          ParentColor = False
-          ParentFont = False
-          TabOrder = 1
+          TabOrder = 0
           object Label2: TLabel
             Left = 33
             Top = 40
-            Width = 76
-            Height = 16
+            Width = 54
+            Height = 13
             Caption = 'Descripcion'
-            Font.Charset = ANSI_CHARSET
-            Font.Color = clNavy
-            Font.Height = -15
-            Font.Name = 'Britannic Bold'
-            Font.Style = []
-            ParentFont = False
-          end
-          object Label11: TLabel
-            Left = 33
-            Top = 288
-            Width = 56
-            Height = 16
-            Caption = 'Garantia'
           end
           object Label3: TLabel
-            Left = 39
-            Top = 136
-            Width = 76
-            Height = 16
-            Caption = 'Descripcion'
-            Font.Charset = ANSI_CHARSET
-            Font.Color = clNavy
-            Font.Height = -15
-            Font.Name = 'Britannic Bold'
-            Font.Style = []
-            ParentFont = False
+            Left = 33
+            Top = 83
+            Width = 63
+            Height = 13
+            Caption = 'Linea Credito'
           end
-          object DBEdit3: TDBEdit
-            Left = 130
+          object edDescripcion: TEdit
+            Left = 112
             Top = 37
-            Width = 351
-            Height = 34
+            Width = 161
+            Height = 21
+            CharCase = ecUpperCase
             TabOrder = 0
           end
-          object cxDBDateEdit2: TcxDBDateEdit
-            Left = 138
-            Top = 133
+          object cbbLineaCredito: TcxLookupComboBox
+            Left = 113
+            Top = 80
+            Properties.KeyFieldNames = 'id'
+            Properties.ListColumns = <
+              item
+                FieldName = 'desc_linea_credito'
+              end>
+            Properties.ListSource = dsLineaCredito
             TabOrder = 1
-            Width = 351
+            Width = 160
           end
         end
-        object Button4: TButton
-          Left = 832
-          Top = 411
-          Width = 75
-          Height = 25
-          Caption = 'Button4'
-          TabOrder = 2
-          OnClick = Button4Click
-        end
       end
-      object TabSheet2: TTabSheet
+      object tabLIstado: TTabSheet
         Caption = 'Listado'
         ImageIndex = 1
-        ExplicitHeight = 483
-        object pnPieLLista: TPanel
+        object gridPerfilCliente: TcxGrid
           Left = 0
-          Top = 255
-          Width = 986
-          Height = 41
-          Align = alBottom
-          TabOrder = 0
-          ExplicitTop = 442
-        end
-        object cxGrid1: TcxGrid
-          Left = 0
-          Top = 0
-          Width = 986
-          Height = 255
+          Top = 41
+          Width = 672
+          Height = 218
           Align = alClient
-          TabOrder = 1
-          ExplicitLeft = -5
-          ExplicitTop = 152
-          ExplicitHeight = 442
-          object cxGrid1DBTableView1: TcxGridDBTableView
+          TabOrder = 0
+          LookAndFeel.NativeStyle = False
+          object gridPerfilClienteDBTableView1: TcxGridDBTableView
             Navigator.Buttons.CustomButtons = <>
+            DataController.DataSource = dsPerfilCliente
             DataController.Summary.DefaultGroupSummaryItems = <>
             DataController.Summary.FooterSummaryItems = <>
             DataController.Summary.SummaryGroups = <>
+            OptionsData.CancelOnExit = False
+            OptionsData.Deleting = False
+            OptionsData.DeletingConfirmation = False
+            OptionsData.Editing = False
+            OptionsData.Inserting = False
+            OptionsSelection.CellSelect = False
+            OptionsView.Footer = True
+            OptionsView.GroupByBox = False
+            OptionsView.GroupRowStyle = grsOffice11
+            Styles.ContentOdd = cxStyle1
+            object gridPerfilClienteDBTableView1id: TcxGridDBColumn
+              DataBinding.FieldName = 'id'
+              HeaderAlignmentHorz = taCenter
+              Width = 58
+            end
+            object gridPerfilClienteDBTableView1desc_perfil_cliente: TcxGridDBColumn
+              DataBinding.FieldName = 'desc_perfil_cliente'
+              HeaderAlignmentHorz = taCenter
+              Width = 271
+            end
+            object gridPerfilClienteDBTableView1Column1: TcxGridDBColumn
+              DataBinding.FieldName = 'linea_credito_id'
+              PropertiesClassName = 'TcxLookupComboBoxProperties'
+              Properties.KeyFieldNames = 'id'
+              Properties.ListColumns = <
+                item
+                  FieldName = 'desc_linea_credito'
+                end>
+              Properties.ListSource = dsLineaCredito
+              Width = 139
+            end
           end
-          object cxGrid1Level1: TcxGridLevel
-            GridView = cxGrid1DBTableView1
+          object gridPerfilClienteLevel1: TcxGridLevel
+            GridView = gridPerfilClienteDBTableView1
+          end
+        end
+        object Panel2: TPanel
+          Left = 0
+          Top = 0
+          Width = 672
+          Height = 41
+          Align = alTop
+          TabOrder = 1
+          object edCriterio: TEdit
+            Left = 12
+            Top = 10
+            Width = 305
+            Height = 21
+            TabOrder = 0
+            TextHint = 'Perfil Cliente'
+          end
+          object btnBuscar: TButton
+            Left = 330
+            Top = 8
+            Width = 75
+            Height = 25
+            Caption = 'Buscar'
+            TabOrder = 1
+            OnClick = btnBuscarClick
           end
         end
       end
     end
+    object Panel1: TPanel
+      Left = 1
+      Top = 288
+      Width = 680
+      Height = 131
+      Align = alBottom
+      TabOrder = 1
+      object btnNuevo: TButton
+        Left = 55
+        Top = 6
+        Width = 75
+        Height = 25
+        Caption = 'Nuevo'
+        TabOrder = 0
+        OnClick = btnNuevoClick
+      end
+      object btnEditar: TButton
+        Left = 168
+        Top = 6
+        Width = 75
+        Height = 25
+        Caption = 'Editar'
+        TabOrder = 1
+        OnClick = btnEditarClick
+      end
+      object btnCancelar: TButton
+        Left = 288
+        Top = 6
+        Width = 75
+        Height = 25
+        Caption = 'Cancelar'
+        Enabled = False
+        TabOrder = 2
+        OnClick = btnCancelarClick
+      end
+      object btnGuardar: TButton
+        Left = 403
+        Top = 6
+        Width = 75
+        Height = 25
+        Caption = 'Guardar'
+        Enabled = False
+        TabOrder = 3
+        OnClick = btnGuardarClick
+      end
+    end
   end
-  object fdLineaCredito: TFDMemTable
+  object fdPerfilCliente: TFDMemTable
+    FieldDefs = <>
+    IndexDefs = <>
     FetchOptions.AssignedValues = [evMode]
     FetchOptions.Mode = fmAll
     ResourceOptions.AssignedValues = [rvSilentMode]
@@ -248,7 +373,79 @@ object fPerfilCliente: TfPerfilCliente
     UpdateOptions.AssignedValues = [uvCheckRequired, uvAutoCommitUpdates]
     UpdateOptions.CheckRequired = False
     UpdateOptions.AutoCommitUpdates = True
-    Left = 725
-    Top = 458
+    StoreDefs = True
+    Left = 605
+    Top = 114
+    object fdPerfilClienteid: TIntegerField
+      DisplayLabel = '#'
+      FieldName = 'id'
+    end
+    object fdPerfilClientelinea_credito_id: TIntegerField
+      FieldName = 'linea_credito_id'
+    end
+    object fdPerfilClientedesc_perfil_cliente: TStringField
+      FieldName = 'desc_perfil_cliente'
+    end
+  end
+  object dsPerfilCliente: TDataSource
+    DataSet = fdPerfilCliente
+    Left = 605
+    Top = 186
+  end
+  object cxStyleRepository1: TcxStyleRepository
+    Left = 608
+    Top = 256
+    PixelsPerInch = 96
+    object cxStyle1: TcxStyle
+      AssignedValues = [svColor]
+      Color = clInfoBk
+    end
+  end
+  object fdLineaCredito: TFDMemTable
+    FieldDefs = <>
+    IndexDefs = <>
+    FetchOptions.AssignedValues = [evMode]
+    FetchOptions.Mode = fmAll
+    ResourceOptions.AssignedValues = [rvSilentMode]
+    ResourceOptions.SilentMode = True
+    UpdateOptions.AssignedValues = [uvCheckRequired, uvAutoCommitUpdates]
+    UpdateOptions.CheckRequired = False
+    UpdateOptions.AutoCommitUpdates = True
+    StoreDefs = True
+    Left = 317
+    Top = 210
+    object fdLineaCreditoid: TIntegerField
+      DisplayLabel = '#'
+      FieldName = 'id'
+    end
+    object fdLineaCreditodesc_linea_credito: TStringField
+      DisplayLabel = 'Linea de credito'
+      FieldName = 'desc_linea_credito'
+      Size = 45
+    end
+    object fdLineaCreditomonto_minimo: TFloatField
+      DisplayLabel = 'Monto minimo'
+      FieldName = 'monto_minimo'
+      DisplayFormat = '#,##0.00'
+    end
+    object fdLineaCreditomonto_maximo: TFloatField
+      DisplayLabel = 'Monto maximo'
+      FieldName = 'monto_maximo'
+      DisplayFormat = '#,##0.00'
+    end
+    object fdLineaCreditoactivo: TBooleanField
+      DisplayLabel = 'Activo'
+      FieldName = 'activo'
+    end
+    object fdLineaCreditotipo_interes: TStringField
+      DisplayLabel = 'Tipo Interes'
+      FieldName = 'tipo_interes'
+      Size = 10
+    end
+  end
+  object dsLineaCredito: TDataSource
+    DataSet = fdLineaCredito
+    Left = 317
+    Top = 264
   end
 end

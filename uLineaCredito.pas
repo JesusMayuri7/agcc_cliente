@@ -32,21 +32,16 @@ type
     Label6: TLabel;
     Label7: TLabel;
     gridLIneaCreditoDBTableView1: TcxGridDBTableView;
-    gridLIneaCreditoLevel1: TcxGridLevel;
-    gridLIneaCredito: TcxGrid;
+    gridLIneaCreditoDBTableView1id: TcxGridDBColumn;
+    gridLIneaCreditoDBTableView1desc_linea_credito: TcxGridDBColumn;
+    gridLineaCredito:Tcxgrid;
     fdLineaCredito: TFDMemTable;
     dsLineaCredito: TDataSource;
     fdLineaCreditoid: TIntegerField;
     fdLineaCreditodesc_linea_credito: TStringField;
-    gridLIneaCreditoDBTableView1id: TcxGridDBColumn;
-    gridLIneaCreditoDBTableView1desc_linea_credito: TcxGridDBColumn;
     fdLineaCreditomonto_minimo: TFloatField;
     fdLineaCreditomonto_maximo: TFloatField;
     fdLineaCreditoactivo: TBooleanField;
-    gridLIneaCreditoDBTableView1interes: TcxGridDBColumn;
-    gridLIneaCreditoDBTableView1monto_minimo: TcxGridDBColumn;
-    gridLIneaCreditoDBTableView1monto_maximo: TcxGridDBColumn;
-    gridLIneaCreditoDBTableView1activo: TcxGridDBColumn;
     fdLineaCreditotipo_interes: TStringField;
     edLineaCredito: TEdit;
     cbbInteres: TComboBox;
@@ -75,7 +70,6 @@ type
     cbbRegistros: TComboBox;
     Label11: TLabel;
     spbActualizar: TSpeedButton;
-    Button1: TButton;
     procedure FormCreate(Sender: TObject);
     procedure cbbRegistrosChange(Sender: TObject);
     procedure spbPagSiguienteClick(Sender: TObject);
@@ -194,6 +188,7 @@ begin
   if gridLIneaCreditoDBTableView1.Controller.SelectedRowCount=1 then
   begin
      Tag:=gridLIneaCreditoDBTableView1.DataController.Values[gridLIneaCreditoDBTableView1.Controller.FocusedRecordIndex , 0];
+     showmessage(tag.ToString);
      if Tag>0 then
      begin
          btnEditar.Enabled:=false;

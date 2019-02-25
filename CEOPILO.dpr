@@ -19,13 +19,11 @@ uses
   uReporteCrediticio in 'uReporteCrediticio.pas' {fReporteCrediticio},
   uResolucion in 'uResolucion.pas' {fResolucion},
   uRol in 'uRol.pas' {fRol},
-  uSolicitud in 'uSolicitud.pas' {fSolicitud},
   uHelpers in 'uHelpers.pas',
-  uMenu in 'uMenu.pas' {fMenu},
-  uTipoInfo in 'uTipoInfo.pas' {fTipoInfo},
-  uTipoPrestamo in 'uTipoPrestamo.pas' {fTipoPrestamo},
   uLineaCredito in 'uLineaCredito.pas' {fLineaCredito},
-  uCalcular in 'uCalcular.pas' {fCalcular};
+  uCalcular in 'uCalcular.pas' {fCalcular},
+  uMenu in 'uMenu.pas' {fMenu},
+  uAdapterJson in 'uAdapterJson.pas';
 
 {$R *.res}
 
