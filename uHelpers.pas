@@ -4,7 +4,7 @@ interface
 uses FireDAC.Comp.Client,Data.DB,Json,SysUtils,Rest.Json,System.Math;
 
 procedure InsertarRegistroDataset(datajson:TJsonObject;dataset:TFDmemtable);
-function calcularCuota(interes:real=0;monto:real=0;plazo:real=0):TJsonArray;
+function calcularTotales(interes:real=0;monto:real=0;plazo:real=0):TJsonArray;
 
 implementation
 
@@ -37,7 +37,7 @@ begin
   end;
 end;
 
-function calcularCuota(interes:real=0;monto:real=0;plazo:real=0):TJsonArray;
+function calcularTotales(interes:real=0;monto:real=0;plazo:real=0):TJsonArray;
 var i_anual,i_acumulado,i_soles,i_soles_mensual,capital_mensual:real;item:TJsonObject;
 begin
   i_anual:=interes*12;

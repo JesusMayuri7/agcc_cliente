@@ -47,7 +47,6 @@ object fCalcular: TfCalcular
     Height = 41
     Align = alBottom
     TabOrder = 1
-    ExplicitTop = 676
   end
   object Panel3: TPanel
     Left = 0
@@ -63,7 +62,6 @@ object fCalcular: TfCalcular
       Height = 652
       Align = alLeft
       TabOrder = 0
-      ExplicitHeight = 633
       object Panel5: TPanel
         Left = 1
         Top = 1
@@ -109,7 +107,7 @@ object fCalcular: TfCalcular
             end>
           Properties.ListFieldIndex = 1
           Properties.ListOptions.SyncMode = True
-          Properties.ListSource = dsLineaCredito
+          Properties.ListSource = dmData.dsLineaCredito
           Properties.OnChange = cbbLineaCreditoPropertiesChange
           TabOrder = 0
           Width = 231
@@ -131,7 +129,7 @@ object fCalcular: TfCalcular
             end>
           Properties.ListFieldIndex = 1
           Properties.ListOptions.SyncMode = True
-          Properties.ListSource = dsPerfilCliente
+          Properties.ListSource = dmData.dsPerfilCliente
           Properties.OnChange = cbbPerfilClientePropertiesChange
           TabOrder = 1
           Width = 231
@@ -153,7 +151,7 @@ object fCalcular: TfCalcular
             end>
           Properties.ListFieldIndex = 1
           Properties.ListOptions.SyncMode = True
-          Properties.ListSource = dsTipoProducto
+          Properties.ListSource = dmData.dsTipoProducto
           TabOrder = 2
           Width = 231
         end
@@ -165,7 +163,6 @@ object fCalcular: TfCalcular
         Height = 128
         Align = alTop
         TabOrder = 1
-        ExplicitTop = 209
         object Label1: TLabel
           Left = 55
           Top = 6
@@ -248,9 +245,6 @@ object fCalcular: TfCalcular
         Height = 354
         Align = alClient
         TabOrder = 2
-        ExplicitLeft = 25
-        ExplicitTop = 392
-        ExplicitHeight = 224
         object Label11: TLabel
           Left = 10
           Top = 60
@@ -439,16 +433,41 @@ object fCalcular: TfCalcular
           Font.Style = []
           ParentFont = False
         end
+        object Label6: TLabel
+          Left = 12
+          Top = 210
+          Width = 85
+          Height = 16
+          Caption = 'Cuota mensual'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -13
+          Font.Name = 'Tahoma'
+          Font.Style = []
+          ParentFont = False
+        end
+        object lblCuota: TLabel
+          Left = 127
+          Top = 210
+          Width = 4
+          Height = 16
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -13
+          Font.Name = 'Tahoma'
+          Font.Style = []
+          ParentFont = False
+        end
         object cxGrid4: TcxGrid
           Left = 12
-          Top = 216
+          Top = 240
           Width = 245
           Height = 81
           Enabled = False
           TabOrder = 0
           object cxGrid4DBBandedTableView1: TcxGridDBBandedTableView
             Navigator.Buttons.CustomButtons = <>
-            DataController.DataSource = dsAhorro
+            DataController.DataSource = dmData.dsAhorro
             DataController.Summary.DefaultGroupSummaryItems = <>
             DataController.Summary.FooterSummaryItems = <>
             DataController.Summary.SummaryGroups = <>
@@ -537,7 +556,6 @@ object fCalcular: TfCalcular
         end>
       ShowCaption = False
       TabOrder = 1
-      ExplicitHeight = 647
       object grid3: TcxGrid
         Left = 21
         Top = 319
@@ -551,10 +569,6 @@ object fCalcular: TfCalcular
         Font.Style = [fsBold]
         ParentFont = False
         TabOrder = 0
-        ExplicitLeft = 510
-        ExplicitTop = 63
-        ExplicitWidth = 250
-        ExplicitHeight = 200
         object gridCuota: TcxGridBandedTableView
           Navigator.Buttons.CustomButtons = <>
           DataController.Summary.DefaultGroupSummaryItems = <>
@@ -622,10 +636,6 @@ object fCalcular: TfCalcular
         Font.Style = [fsBold]
         ParentFont = False
         TabOrder = 1
-        ExplicitLeft = 510
-        ExplicitTop = 63
-        ExplicitWidth = 250
-        ExplicitHeight = 200
         object gridTotales: TcxGridBandedTableView
           Navigator.Buttons.CustomButtons = <>
           DataController.Summary.DefaultGroupSummaryItems = <>
@@ -685,10 +695,6 @@ object fCalcular: TfCalcular
         Font.Style = [fsBold]
         ParentFont = False
         TabOrder = 2
-        ExplicitLeft = 510
-        ExplicitTop = 63
-        ExplicitWidth = 250
-        ExplicitHeight = 200
         object gridAhorro: TcxGridBandedTableView
           Navigator.Buttons.CustomButtons = <>
           DataController.Summary.DefaultGroupSummaryItems = <>
@@ -748,10 +754,6 @@ object fCalcular: TfCalcular
         Font.Style = [fsBold]
         ParentFont = False
         TabOrder = 3
-        ExplicitLeft = 510
-        ExplicitTop = 63
-        ExplicitWidth = 250
-        ExplicitHeight = 200
         object gridRendicion: TcxGridBandedTableView
           Navigator.Buttons.CustomButtons = <>
           DataController.Summary.DefaultGroupSummaryItems = <
@@ -816,162 +818,8 @@ object fCalcular: TfCalcular
       end
     end
   end
-  object fdLineaCredito: TFDMemTable
-    FieldDefs = <>
-    IndexDefs = <>
-    FetchOptions.AssignedValues = [evMode]
-    FetchOptions.Mode = fmAll
-    ResourceOptions.AssignedValues = [rvSilentMode]
-    ResourceOptions.SilentMode = True
-    UpdateOptions.AssignedValues = [uvCheckRequired, uvAutoCommitUpdates]
-    UpdateOptions.CheckRequired = False
-    UpdateOptions.AutoCommitUpdates = True
-    StoreDefs = True
-    Left = 457
-    Top = 122
-    object fdLineaCreditoid: TWideStringField
-      FieldName = 'id'
-      Size = 255
-    end
-    object fdLineaCreditodesc_linea_credito: TWideStringField
-      FieldName = 'desc_linea_credito'
-      Size = 255
-    end
-    object fdLineaCreditotipo_interes: TWideStringField
-      FieldName = 'tipo_interes'
-      Size = 255
-    end
-    object fdLineaCreditomonto_minimo: TWideStringField
-      FieldName = 'monto_minimo'
-      Size = 255
-    end
-    object fdLineaCreditomonto_maximo: TWideStringField
-      FieldName = 'monto_maximo'
-      Size = 255
-    end
-    object fdLineaCreditoperfil_cliente: TMemoField
-      FieldName = 'perfil_cliente'
-      BlobType = ftMemo
-    end
-  end
-  object RESTResponseDataSetAdapter2: TRESTResponseDataSetAdapter
-    Dataset = fdPerfilCliente
-    FieldDefs = <>
-    Left = 312
-    Top = 152
-  end
-  object RESTResponseDataSetAdapter3: TRESTResponseDataSetAdapter
-    Dataset = fdTipoProducto
-    FieldDefs = <>
-    ResponseJSON = RESTResponse1
-    Left = 312
-    Top = 208
-  end
-  object RESTResponse1: TRESTResponse
-    ContentType = 'application/json'
-    Left = 809
-    Top = 154
-  end
-  object RESTRequest1: TRESTRequest
-    Client = dmData.RESTClient1
-    Params = <
-      item
-        Kind = pkREQUESTBODY
-        Name = 'body'
-        Value = 
-          '[{"query":"query calcular {linea_creditoQuery { data { id,desc_l' +
-          'inea_credito,tipo_interes,monto_minimo,monto_maximo,perfil_clien' +
-          'te {id,desc_perfil_cliente,tipo_producto {id,desc_tipo_producto,' +
-          'interes,mora,plazo_minimo,plazo_maximo}}}}}"},{"query":"query ah' +
-          'orro {ahorroQuery {data {id,desc_ahorro,porcentaje}}}"}]'
-        ContentType = ctAPPLICATION_JSON
-      end>
-    Response = RESTResponse1
-    SynchronizedEvents = False
-    Left = 817
-    Top = 90
-  end
-  object RESTResponseDataSetAdapter1: TRESTResponseDataSetAdapter
-    Dataset = fdLineaCredito
-    FieldDefs = <>
-    Response = RESTResponse1
-    RootElement = '[0].data.linea_creditoQuery.data'
-    Left = 312
-    Top = 88
-  end
-  object fdPerfilCliente: TFDMemTable
-    FieldDefs = <>
-    IndexDefs = <>
-    FetchOptions.AssignedValues = [evMode]
-    FetchOptions.Mode = fmAll
-    ResourceOptions.AssignedValues = [rvSilentMode]
-    ResourceOptions.SilentMode = True
-    UpdateOptions.AssignedValues = [uvCheckRequired, uvAutoCommitUpdates]
-    UpdateOptions.CheckRequired = False
-    UpdateOptions.AutoCommitUpdates = True
-    StoreDefs = True
-    Left = 425
-    Top = 154
-    object fdPerfilClienteid: TIntegerField
-      FieldName = 'id'
-    end
-    object fdPerfilClientedesc_perfil_cliente: TStringField
-      FieldName = 'desc_perfil_cliente'
-    end
-    object fdPerfilClientetipo_producto: TMemoField
-      FieldName = 'tipo_producto'
-      BlobType = ftMemo
-    end
-  end
-  object dsLineaCredito: TDataSource
-    DataSet = fdLineaCredito
-    Left = 553
-    Top = 82
-  end
-  object dsPerfilCliente: TDataSource
-    DataSet = fdPerfilCliente
-    Left = 553
-    Top = 146
-  end
-  object fdTipoProducto: TFDMemTable
-    FieldDefs = <>
-    IndexDefs = <>
-    FetchOptions.AssignedValues = [evMode]
-    FetchOptions.Mode = fmAll
-    ResourceOptions.AssignedValues = [rvSilentMode]
-    ResourceOptions.SilentMode = True
-    UpdateOptions.AssignedValues = [uvCheckRequired, uvAutoCommitUpdates]
-    UpdateOptions.CheckRequired = False
-    UpdateOptions.AutoCommitUpdates = True
-    StoreDefs = True
-    Left = 457
-    Top = 218
-    object IntegerField1: TIntegerField
-      FieldName = 'id'
-    end
-    object fdTipoProductodesc_tipo_producto: TStringField
-      FieldName = 'desc_tipo_producto'
-    end
-    object fdTipoProductointeres: TFloatField
-      FieldName = 'interes'
-    end
-    object fdTipoProductomora: TFloatField
-      FieldName = 'mora'
-    end
-    object fdTipoProductoplazo_minimo: TIntegerField
-      FieldName = 'plazo_minimo'
-    end
-    object fdTipoProductoplazo_maximo: TIntegerField
-      FieldName = 'plazo_maximo'
-    end
-  end
-  object dsTipoProducto: TDataSource
-    DataSet = fdTipoProducto
-    Left = 553
-    Top = 218
-  end
   object BindSourceDB1: TBindSourceDB
-    DataSet = fdLineaCredito
+    DataSet = dmData.fdLineaCredito
     ScopeMappings = <>
     Left = 696
     Top = 272
@@ -979,8 +827,8 @@ object fCalcular: TfCalcular
   object BindingsList1: TBindingsList
     Methods = <>
     OutputConverters = <>
-    Left = 20
-    Top = 5
+    Left = 156
+    Top = 29
     object LinkPropertyToFieldCaption: TLinkPropertyToField
       Category = 'Quick Bindings'
       DataSource = BindSourceDB1
@@ -1023,68 +871,38 @@ object fCalcular: TfCalcular
       Component = lblPerfilCliente
       ComponentProperty = 'Caption'
     end
-    object LinkPropertyToFieldCaption7: TLinkPropertyToField
-      Category = 'Quick Bindings'
-      DataSource = BindSourceDB1
-      FieldName = 'desc_linea_credito'
+    object LinkPropertyToField1: TLinkPropertyToField
+      DataSource = BindSourceDB4
+      FieldName = 'desc_tipo_producto'
       Component = lblTipoProducto
       ComponentProperty = 'Caption'
     end
   end
   object BindSourceDB2: TBindSourceDB
-    DataSet = fdPerfilCliente
+    DataSet = dmData.fdPerfilCliente
     ScopeMappings = <>
-    Left = 896
-    Top = 272
+    Left = 744
+    Top = 168
   end
   object BindSourceDB3: TBindSourceDB
-    DataSet = fdTipoProducto
+    DataSet = dmData.fdTipoProducto
     ScopeMappings = <>
-    Left = 800
+    Left = 784
     Top = 272
   end
-  object RESTResponseDataSetAdapter4: TRESTResponseDataSetAdapter
-    Dataset = fdAhorro
-    FieldDefs = <>
-    ResponseJSON = RESTResponse1
-    RootElement = '[1].data.ahorroQuery.data'
-    Left = 312
-    Top = 280
-  end
-  object fdAhorro: TFDMemTable
-    FieldDefs = <>
-    IndexDefs = <>
-    FetchOptions.AssignedValues = [evMode]
-    FetchOptions.Mode = fmAll
-    ResourceOptions.AssignedValues = [rvSilentMode]
-    ResourceOptions.SilentMode = True
-    UpdateOptions.AssignedValues = [uvCheckRequired, uvAutoCommitUpdates]
-    UpdateOptions.CheckRequired = False
-    UpdateOptions.AutoCommitUpdates = True
-    StoreDefs = True
-    Left = 457
-    Top = 282
-    object IntegerField2: TIntegerField
-      FieldName = 'id'
-    end
-    object fdAhorrodesc_ahorro: TStringField
-      FieldName = 'desc_ahorro'
-    end
-    object fdAhorroporcentaje: TFloatField
-      FieldName = 'porcentaje'
-      DisplayFormat = '0.00'
-    end
-  end
-  object dsAhorro: TDataSource
-    DataSet = fdAhorro
-    Left = 561
-    Top = 282
-  end
   object cxStyleRepository1: TcxStyleRepository
+    Left = 320
+    Top = 112
     PixelsPerInch = 96
     object cxStyle1: TcxStyle
       AssignedValues = [svColor]
       Color = clCream
     end
+  end
+  object BindSourceDB4: TBindSourceDB
+    DataSource = dmData.dsTipoProducto
+    ScopeMappings = <>
+    Left = 552
+    Top = 376
   end
 end

@@ -40,41 +40,10 @@ type
     Button1: TButton;
     Label7: TLabel;
     GridPanel1: TGridPanel;
-    fdLineaCredito: TFDMemTable;
-    RESTResponseDataSetAdapter2: TRESTResponseDataSetAdapter;
-    RESTResponseDataSetAdapter3: TRESTResponseDataSetAdapter;
-    RESTResponse1: TRESTResponse;
-    RESTRequest1: TRESTRequest;
-    RESTResponseDataSetAdapter1: TRESTResponseDataSetAdapter;
-    fdPerfilCliente: TFDMemTable;
-    dsLineaCredito: TDataSource;
-    fdLineaCreditoid: TWideStringField;
-    fdLineaCreditodesc_linea_credito: TWideStringField;
-    fdLineaCreditotipo_interes: TWideStringField;
-    fdLineaCreditomonto_minimo: TWideStringField;
-    fdLineaCreditomonto_maximo: TWideStringField;
-    dsPerfilCliente: TDataSource;
-    fdPerfilClienteid: TIntegerField;
-    fdPerfilClientedesc_perfil_cliente: TStringField;
-    fdLineaCreditoperfil_cliente: TMemoField;
-    fdTipoProducto: TFDMemTable;
-    IntegerField1: TIntegerField;
-    fdTipoProductodesc_tipo_producto: TStringField;
-    fdTipoProductointeres: TFloatField;
-    fdTipoProductomora: TFloatField;
-    fdTipoProductoplazo_minimo: TIntegerField;
-    fdTipoProductoplazo_maximo: TIntegerField;
-    fdPerfilClientetipo_producto: TMemoField;
-    dsTipoProducto: TDataSource;
     BindSourceDB1: TBindSourceDB;
     BindingsList1: TBindingsList;
     BindSourceDB2: TBindSourceDB;
     BindSourceDB3: TBindSourceDB;
-    RESTResponseDataSetAdapter4: TRESTResponseDataSetAdapter;
-    fdAhorro: TFDMemTable;
-    IntegerField2: TIntegerField;
-    dsAhorro: TDataSource;
-    fdAhorrodesc_ahorro: TStringField;
     cxStyleRepository1: TcxStyleRepository;
     cxStyle1: TcxStyle;
     Panel6: TPanel;
@@ -93,14 +62,12 @@ type
     lblPlazoMaximo: TLabel;
     lblPlazoMinimo: TLabel;
     lblTipoProducto: TLabel;
-    fdAhorroporcentaje: TFloatField;
     LinkPropertyToFieldCaption: TLinkPropertyToField;
     LinkPropertyToFieldCaption2: TLinkPropertyToField;
     LinkPropertyToFieldCaption3: TLinkPropertyToField;
     LinkPropertyToFieldCaption4: TLinkPropertyToField;
     LinkPropertyToFieldCaption5: TLinkPropertyToField;
     LinkPropertyToFieldCaption6: TLinkPropertyToField;
-    LinkPropertyToFieldCaption7: TLinkPropertyToField;
     grid3: TcxGrid;
     cxGridLevel3: TcxGridLevel;
     gridCuota: TcxGridBandedTableView;
@@ -128,6 +95,10 @@ type
     cxGridBandedColumn6: TcxGridBandedColumn;
     cxGridBandedColumn7: TcxGridBandedColumn;
     cxGridLevel4: TcxGridLevel;
+    BindSourceDB4: TBindSourceDB;
+    LinkPropertyToField1: TLinkPropertyToField;
+    Label6: TLabel;
+    lblCuota: TLabel;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure cbbLineaCreditoPropertiesChange(Sender: TObject);
     procedure cbbPerfilClientePropertiesChange(Sender: TObject);
@@ -140,7 +111,7 @@ type
     procedure PrimerElementoCombo(combo:TcxLookupComboBox);
     procedure llenarGridResumen(datos:TJsonArray);
     procedure calcularCuota(monto,plazo,interes:real;dataset: TFdMemTable);
-    procedure calcularAhorro(monto,plazo,interes:real;dataset: TFdMemTable);
+    function calcularAhorro(monto,plazo,interes:real;dataset: TFdMemTable):real;
     procedure calcularRendicion(monto,plazo,interes:real;dataset: TFdMemTable);
   public
     { Public declarations }
@@ -179,16 +150,18 @@ end;
 
 procedure TfCalcular.Button1Click(Sender: TObject);
 var calculos:TJsonArray;
+var cuota:real;
 begin
  with cbbTipoProducto.Properties.Grid.DataController do
  begin
-   if (spnMonto.Value>0) and (spnPlazo.Value>0) and (fdTipoProducto.FieldValues['interes']>0)then
+   if (spnMonto.Value>0) and (spnPlazo.Value>0) and (dmdata.fdTipoProducto.FieldValues['interes']>0)then
    begin
-     calculos:=uHelpers.calcularCuota(fdTipoProducto.FieldValues['interes'],spnMonto.value,spnPlazo.value);
+     calculos:=uHelpers.calcularTotales(dmdata.fdTipoProducto.FieldValues['interes'],spnMonto.value,spnPlazo.value);
      llenarGridResumen(calculos);
-     calcularAhorro(spnMonto.value,spnPlazo.Value,fdTipoProducto.FieldValues['interes'],fdAhorro);
-     calcularCuota(spnMonto.value,spnPlazo.Value,fdTipoProducto.FieldValues['interes'],fdAhorro);
-     calcularRendicion(spnMonto.value,spnPlazo.Value,fdTipoProducto.FieldValues['interes'],fdAhorro);
+     cuota:=calcularAhorro(spnMonto.value,spnPlazo.Value,dmdata.fdTipoProducto.FieldValues['interes'],dmdata.fdAhorro);
+     calcularCuota(spnMonto.value,spnPlazo.Value,dmdata.fdTipoProducto.FieldValues['interes'],dmdata.fdAhorro);
+     calcularRendicion(spnMonto.value,spnPlazo.Value,dmdata.fdTipoProducto.FieldValues['interes'],dmdata.fdAhorro);
+     lblcuota.Caption:=floatToStr(cuota);
    end;
  end;
 
@@ -291,7 +264,7 @@ begin
     gridCuota.ViewData.Expand(true);
 end;
 
-procedure TfCalcular.calcularAhorro(monto,plazo,interes:real;dataset: TFdMemTable);
+function TfCalcular.calcularAhorro(monto,plazo,interes:real;dataset: TFdMemTable):real;
 var inicial,programado,i_acumulado,cuota_mensual,capital_mes:real;
 var recordCount:integer;
 begin
@@ -335,32 +308,31 @@ begin
     gridAhorro.DataController.RecordCount:=gridAhorro.DataController.RecordCount+1;
     gridAhorro.DataController.Values[7,0]:='Cuota Quincenal S/.';
     gridAhorro.DataController.Values[7,1]:=roundTo(cuota_mensual/2,-2);
-
+    result:=cuota_mensual;
 end;
 
 procedure TfCalcular.cbbLineaCreditoPropertiesChange(Sender: TObject);
 begin
-llenarCombo(RESTResponseDataSetAdapter2,VarToStr(fdLineaCredito.FieldValues['perfil_cliente']));
+llenarCombo(dmdata.RESTResponseDataSetAdapter2,VarToStr(dmdata.fdLineaCredito.FieldValues['perfil_cliente']));
 PrimerElementoCombo(cbbPerfilCliente);
 end;
 
 procedure TfCalcular.cbbPerfilClientePropertiesChange(Sender: TObject);
 begin
- llenarCombo(RESTResponseDataSetAdapter3,VarToStr(fdPerfilCliente.FieldValues['tipo_producto']));
+ llenarCombo(dmdata.RESTResponseDataSetAdapter3,VarToStr(dmdata.fdPerfilCliente.FieldValues['tipo_producto']));
   PrimerElementoCombo(cbbTipoProducto);
 end;
 
 procedure TfCalcular.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
-  RESTResponseDataSetAdapter2.ResponseJSON := nil; // Prevent memory leak
+  dmdata.RESTResponseDataSetAdapter2.ResponseJSON := nil; // Prevent memory leak
 end;
 
 procedure TfCalcular.FormCreate(Sender: TObject);
 begin
-RESTRequest1.Execute;
+dmdata.RESTRequest1.Execute;
 PrimerElementoCombo(cbbLineaCredito);
-RESTResponseDataSetAdapter4.Active;
-//LlenarCombo(cbbAhorro);
+dmdata.RESTResponseDataSetAdapter4.Active;
 end;
 
 procedure TfCalcular.LlenarCombo(adapter:TRESTResponseDataSetAdapter;json:string);
