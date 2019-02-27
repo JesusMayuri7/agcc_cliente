@@ -1,4 +1,5 @@
 unit uAdapterJson;
+// Convertir json a RestAdapter y FdMemtable
 
 interface
 
