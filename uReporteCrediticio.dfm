@@ -264,8 +264,7 @@ object fReporteCrediticio: TfReporteCrediticio
               Width = 58
             end
             object gridReporteCrediticioDBTableView1desc_historial_crediticio: TcxGridDBColumn
-              Caption = 'desc_historial_crediticio'
-              DataBinding.FieldName = 'desc_linea_credito'
+              DataBinding.FieldName = 'desc_historial_crediticio'
               HeaderAlignmentHorz = taCenter
               Width = 271
             end
@@ -370,7 +369,6 @@ object fReporteCrediticio: TfReporteCrediticio
       FieldName = 'id'
     end
     object fdReporteCrediticiodesc_historial_crediticio: TStringField
-      DisplayLabel = 'Linea de credito'
       FieldName = 'desc_historial_crediticio'
       Size = 45
     end

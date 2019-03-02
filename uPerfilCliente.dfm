@@ -273,7 +273,7 @@ object fPerfilCliente: TfPerfilCliente
               HeaderAlignmentHorz = taCenter
               Width = 271
             end
-            object gridPerfilClienteDBTableView1Column1: TcxGridDBColumn
+            object gridPerfilClienteDBTableView1linea_credito_id: TcxGridDBColumn
               DataBinding.FieldName = 'linea_credito_id'
               PropertiesClassName = 'TcxLookupComboBoxProperties'
               Properties.KeyFieldNames = 'id'

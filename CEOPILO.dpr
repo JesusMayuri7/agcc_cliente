@@ -23,7 +23,8 @@ uses
   uLineaCredito in 'uLineaCredito.pas' {fLineaCredito},
   uCalcular in 'uCalcular.pas' {fCalcular},
   uMenu in 'uMenu.pas' {fMenu},
-  uAdapterJson in 'uAdapterJson.pas';
+  uAdapterJson in 'uAdapterJson.pas',
+  uSolicitud in 'uSolicitud.pas' {fSolicitud};
 
 {$R *.res}
 

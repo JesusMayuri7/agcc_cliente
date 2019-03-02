@@ -102,13 +102,12 @@ type
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure cbbLineaCreditoPropertiesChange(Sender: TObject);
     procedure cbbPerfilClientePropertiesChange(Sender: TObject);
-    procedure FormCreate(Sender: TObject);
+    procedure FormCreat(Sender: TObject);
     procedure Button1Click(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
   private
     { Private declarations }
     var itemJson:TJsonObject;
-    procedure LlenarCombo(adapter:TRESTResponseDataSetAdapter;json:string);
-    procedure PrimerElementoCombo(combo:TcxLookupComboBox);
     procedure llenarGridResumen(datos:TJsonArray);
     procedure calcularCuota(monto,plazo,interes:real;dataset: TFdMemTable);
     function calcularAhorro(monto,plazo,interes:real;dataset: TFdMemTable):real;
@@ -319,8 +318,8 @@ end;
 
 procedure TfCalcular.cbbPerfilClientePropertiesChange(Sender: TObject);
 begin
- llenarCombo(dmdata.RESTResponseDataSetAdapter3,VarToStr(dmdata.fdPerfilCliente.FieldValues['tipo_producto']));
-  PrimerElementoCombo(cbbTipoProducto);
+  uHelpers.llenarCombo(dmdata.RESTResponseDataSetAdapter3,VarToStr(dmdata.fdPerfilCliente.FieldValues['tipo_producto']));
+  uHelpers.PrimerElementoCombo(cbbTipoProducto);
 end;
 
 procedure TfCalcular.FormClose(Sender: TObject; var Action: TCloseAction);
@@ -328,51 +327,19 @@ begin
   dmdata.RESTResponseDataSetAdapter2.ResponseJSON := nil; // Prevent memory leak
 end;
 
-procedure TfCalcular.FormCreate(Sender: TObject);
+procedure TfCalcular.FormCreat(Sender: TObject);
 begin
 dmdata.RESTRequest1.Execute;
-PrimerElementoCombo(cbbLineaCredito);
+uHelpers.PrimerElementoCombo(cbbLineaCredito);
 dmdata.RESTResponseDataSetAdapter4.Active;
 end;
 
-procedure TfCalcular.LlenarCombo(adapter:TRESTResponseDataSetAdapter;json:string);
-var
-  LJSON: TJSONValue;
-  LIntf: IRESTResponseJSON;
+procedure TfCalcular.FormCreate(Sender: TObject);
 begin
-  // Clear last value
-  adapter.ResponseJSON := nil;
-  adapter.NestedElements := False;
-  adapter.RootElement :='';
-
-  LJSON := TJSONObject.ParseJSONValue(json);
-  if LJSON = nil then
-//    raise Exception.Create('Sin datos');
-  else
-  begin
-    // Provide the JSON value to the adapter
-  LIntf := TAdapterJSONValue.Create(LJSON);
-  adapter.ResponseJSON := LIntf;
-  adapter.Active := True;
-  end;
+dmdata.RESTRequest1.Execute;
+uHelpers.PrimerElementoCombo(cbbLineaCredito);
+dmdata.RESTResponseDataSetAdapter4.Active;
 end;
 
-procedure TfCalcular.PrimerElementoCombo(combo:TcxLookupComboBox);
-var
-  AProperties: TcxLookupComboBoxProperties;
-  ARecordIndex: Integer;
-  AValue: Variant;
-begin
-  AProperties := combo.Properties;
-  with AProperties.Grid do
-  begin
-    if DataController.RecordCount>0 then
-       begin
-      ARecordIndex := ViewInfo.Rows[0].RecordIndex;
-      AValue := DataController.Values[ARecordIndex, 0];
-      combo.EditValue:=AValue;
-      end;
-  end;
-end;
 
 end.

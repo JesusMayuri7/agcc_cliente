@@ -1,7 +1,7 @@
 object fReporteCeop: TfReporteCeop
   Left = 0
   Top = 0
-  Caption = 'Reporte Ceop'
+  Caption = 'ReporteCeop'
   ClientHeight = 459
   ClientWidth = 682
   Color = clBtnFace
@@ -193,6 +193,10 @@ object fReporteCeop: TfReporteCeop
       object tabFormulario: TTabSheet
         Caption = 'Formulario'
         TabVisible = False
+        ExplicitLeft = 0
+        ExplicitTop = 0
+        ExplicitWidth = 0
+        ExplicitHeight = 0
         object GroupBox1: TGroupBox
           Left = 51
           Top = 31
@@ -242,8 +246,6 @@ object fReporteCeop: TfReporteCeop
           Align = alClient
           TabOrder = 0
           LookAndFeel.NativeStyle = False
-          ExplicitLeft = -2
-          ExplicitTop = 39
           object gridReporteCeopDBTableView1: TcxGridDBTableView
             Navigator.Buttons.CustomButtons = <>
             DataController.DataSource = dsReporteCeop
@@ -267,7 +269,7 @@ object fReporteCeop: TfReporteCeop
             end
             object gridReporteCeopDBTableView1desc_reporte_ceop: TcxGridDBColumn
               Caption = 'Descripcion'
-              DataBinding.FieldName = 'desc_linea_credito'
+              DataBinding.FieldName = 'desc_reporte_ceop'
               HeaderAlignmentHorz = taCenter
               Width = 271
             end

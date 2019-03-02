@@ -1,12 +1,88 @@
 unit uHelpers;
 
 interface
-uses FireDAC.Comp.Client,Data.DB,Json,SysUtils,Rest.Json,System.Math;
+uses System.JSON,FireDAC.Comp.Client,Data.DB,SysUtils,Rest.Json,System.Math,cxDBLookupComboBox,
+REST.Client,REST.Response.Adapter,Dialogs;
 
 procedure InsertarRegistroDataset(datajson:TJsonObject;dataset:TFDmemtable);
 function calcularTotales(interes:real=0;monto:real=0;plazo:real=0):TJsonArray;
+procedure PrimerElementoCombo(combo:TcxLookupComboBox);
+procedure LlenarCombo(adapter:TRESTResponseDataSetAdapter;json:string);
+function existeCliente(dni:string):TJSONObject;
 
 implementation
+
+uses
+  uAdapterJson, UGraph, UData;
+
+function existeCliente(dni:string):TJSONObject;
+var graph:Tgraph;
+var variables:TJSONObject;
+var dataVar,dataRest,query:TJSONObject;
+var resultado:TJsonObject;
+begin
+    //result:=TJSONObject.Create;
+    graph:=TGraph.Create(dmData.restClient1);
+    try  // Cambiar por el query a consultar, hacer pruebas en Insomnia
+    graph.query:='query verCliente($dni:String) { clienteQuery(dni:$dni)' +
+     '{ data {id,dni,nombres,apellido_paterno,apellido_materno,fecha_nacimiento,direccion,telefono,activo}}} ';
+
+    //NO variar
+    variables:=TJSONObject.Create;
+    dataVar:=TJSONObject.Create;
+    if length(dni)>0 then
+       dataVar.AddPair('dni',TJSONString.Create(dni));// depende el campo en que busques
+    variables.AddPair('variables',dataVar);
+    graph.variables:=variables;
+
+    graph.rootElement:='data.clienteQuery.data'; // cambiar por el nombre del Query que buscas linea_creditoQuery
+    result:=graph.ejecutar('clienteQuery');  // cambiar por el nombre del Query que buscas linea_creditoQuery
+    //showmessage(Result.ToJSON);
+    finally
+       FreeAndNil(graph);
+       FreeAndNil(variables);
+    end;
+end;
+
+procedure LlenarCombo(adapter:TRESTResponseDataSetAdapter;json:string);
+var
+  LJSON: TJSONValue;
+  LIntf: IRESTResponseJSON;
+begin
+  // Clear last value
+  adapter.ResponseJSON := nil;
+  adapter.NestedElements := False;
+  adapter.RootElement :='';
+
+  LJSON := TJSONObject.ParseJSONValue(json);
+  if LJSON = nil then
+//    raise Exception.Create('Sin datos');
+  else
+  begin
+    // Provide the JSON value to the adapter
+  LIntf := TAdapterJSONValue.Create(LJSON);
+  adapter.ResponseJSON := LIntf;
+  adapter.Active := True;
+  end;
+end;
+
+procedure PrimerElementoCombo(combo:TcxLookupComboBox);
+var
+  AProperties: TcxLookupComboBoxProperties;
+  ARecordIndex: Integer;
+  AValue: Variant;
+begin
+  AProperties := combo.Properties;
+  with AProperties.Grid do
+  begin
+    if DataController.RecordCount>0 then
+       begin
+      ARecordIndex := ViewInfo.Rows[0].RecordIndex;
+      AValue := DataController.Values[ARecordIndex, 0];
+      combo.EditValue:=AValue;
+      end;
+  end;
+end;
 
 procedure InsertarRegistroDataset(datajson:TJsonObject;dataset:TFDmemtable);
 var I:integer;

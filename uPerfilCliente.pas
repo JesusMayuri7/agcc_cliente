@@ -85,7 +85,7 @@ type
     fdLineaCreditotipo_interes: TStringField;
     dsLineaCredito: TDataSource;
     fdPerfilClientedesc_perfil_cliente: TStringField;
-    gridPerfilClienteDBTableView1Column1: TcxGridDBColumn;
+    gridPerfilClienteDBTableView1linea_credito_id: TcxGridDBColumn;
     procedure FormCreate(Sender: TObject);
     procedure cbbRegistrosChange(Sender: TObject);
     procedure spbPagSiguienteClick(Sender: TObject);
@@ -145,7 +145,7 @@ begin
     graph.variables:=variables;
 
     resultado:=graph.ejecutar('perfil_clienteMutation');  // cambiar por el nombre del Query que buscas linea_creditoQuery
-      showmessage(resultado.ToString);
+      //showmessage(resultado.ToString);
     uHelpers.InsertarRegistroDataset(resultado,fdPerfilCliente);
 
     finally
@@ -196,7 +196,7 @@ begin
          btnCancelar.Enabled:=true;
          btnGuardar.Enabled:=true;
          edDescripcion.Text:=gridPerfilClienteDBTableView1.DataController.Values[gridPerfilClienteDBTableView1.Controller.FocusedRecordIndex , 1];
-        // cbbLineaCredito.ItemIndex:=cbbLineaCredito.Items.IndexOf(gridPerfilClienteDBTableView1.DataController.Values[gridPerfilClienteDBTableView1.Controller.FocusedRecordIndex , 2]);
+         cbbLineaCredito.EditValue:=gridPerfilClienteDBTableView1.DataController.Values[gridPerfilClienteDBTableView1.Controller.FocusedRecordIndex , 2];
      end;
   end;
 end;
@@ -263,7 +263,7 @@ begin
     // NO variar
     lblPaginaActual.Caption:=paginaActual.ToString;
     lblTotalPagina.Caption:= graph.totalPag.ToString;
-    showmessage(resultado.ToString);
+    //showmessage(resultado.ToString);
     finally
        FreeAndNil(resultado);
        FreeAndNil(graph);

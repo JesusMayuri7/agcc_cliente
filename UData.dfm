@@ -184,7 +184,7 @@ object dmData: TdmData
     Dataset = fdPerfilCliente
     FieldDefs = <>
     Left = 72
-    Top = 312
+    Top = 320
   end
   object RESTResponseDataSetAdapter3: TRESTResponseDataSetAdapter
     Dataset = fdTipoProducto

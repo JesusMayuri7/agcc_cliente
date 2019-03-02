@@ -190,11 +190,9 @@ object fAhorro: TfAhorro
       ActivePage = tabLIstado
       Align = alClient
       TabOrder = 0
-      ExplicitHeight = 377
       object tabFormulario: TTabSheet
         Caption = 'Formulario'
         TabVisible = False
-        ExplicitHeight = 233
         object GroupBox1: TGroupBox
           Left = 15
           Top = 31
@@ -220,7 +218,8 @@ object fAhorro: TfAhorro
             Left = 136
             Top = 80
             Properties.Alignment.Horz = taRightJustify
-            Properties.DisplayFormat = '#,##0'
+            Properties.DisplayFormat = '#,##0.00'
+            Properties.ValueType = vtFloat
             TabOrder = 0
             Width = 112
           end
@@ -228,7 +227,8 @@ object fAhorro: TfAhorro
             Left = 136
             Top = 37
             Properties.Alignment.Horz = taRightJustify
-            Properties.DisplayFormat = '#,##0'
+            Properties.DisplayFormat = '#,##0.00'
+            Properties.ValueType = vtFloat
             TabOrder = 1
             Width = 112
           end
@@ -237,7 +237,6 @@ object fAhorro: TfAhorro
       object tabLIstado: TTabSheet
         Caption = 'Listado'
         ImageIndex = 1
-        ExplicitHeight = 349
         object gridAhorro: TcxGrid
           Left = 0
           Top = 41
@@ -246,7 +245,6 @@ object fAhorro: TfAhorro
           Align = alClient
           TabOrder = 0
           LookAndFeel.NativeStyle = False
-          ExplicitHeight = 308
           object gridAhorroDBTableView1: TcxGridDBTableView
             Navigator.Buttons.CustomButtons = <>
             DataController.DataSource = dsAhorro
@@ -269,14 +267,12 @@ object fAhorro: TfAhorro
               Width = 58
             end
             object gridAhorroDBTableView1desc_ahorro: TcxGridDBColumn
-              Caption = 'desc_ahorro'
-              DataBinding.FieldName = 'desc_linea_credito'
+              DataBinding.FieldName = 'desc_ahorro'
               HeaderAlignmentHorz = taCenter
               Width = 271
             end
             object gridAhorroDBTableView1porcentaje: TcxGridDBColumn
-              Caption = 'porcentaje'
-              DataBinding.FieldName = 'tipo_interes'
+              DataBinding.FieldName = 'porcentaje'
               HeaderAlignmentHorz = taCenter
             end
           end
@@ -375,10 +371,10 @@ object fAhorro: TfAhorro
       DisplayLabel = '#'
       FieldName = 'id'
     end
-    object fdAhorrodesc_ahorro: TIntegerField
+    object fdAhorrodesc_ahorro: TFloatField
       FieldName = 'desc_ahorro'
     end
-    object fdAhorroporcentaje: TIntegerField
+    object fdAhorroporcentaje: TFloatField
       FieldName = 'porcentaje'
     end
   end

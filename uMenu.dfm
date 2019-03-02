@@ -3,7 +3,7 @@ object fMenu: TfMenu
   Top = 0
   BorderIcons = [biSystemMenu, biMinimize]
   Caption = 'APLICATIVO DE GESTION DE CALIFICACION DE CRREDITOS'
-  ClientHeight = 570
+  ClientHeight = 499
   ClientWidth = 960
   Color = clHighlightText
   Font.Charset = DEFAULT_CHARSET
@@ -23,7 +23,7 @@ object fMenu: TfMenu
     Left = 0
     Top = 42
     Width = 960
-    Height = 528
+    Height = 457
     Align = alClient
     Center = True
     Picture.Data = {
@@ -472,6 +472,7 @@ object fMenu: TfMenu
       028A28A0028A28A0028A28A0028A28A0028A28A0028A28A0028A28A0028A28A0
       028A28A0028A28A0028A28A0028A28A0028A28A0028A28A0028A28A00FFFD9}
     ExplicitTop = 106
+    ExplicitHeight = 528
   end
   object ActionToolBar1: TActionToolBar
     Left = 0
@@ -495,57 +496,71 @@ object fMenu: TfMenu
   object menu: TMainMenu
     Left = 96
     Top = 104
-    object actArchivo1: TMenuItem
-      Caption = 'Archivo'
-      ImageIndex = 0
+    object Gestion1: TMenuItem
+      Caption = 'Gestion'
       object actLineaCredito1: TMenuItem
         Action = actLineaCredito
-      end
-      object actPerfilCliente1: TMenuItem
-        Action = actPerfilCliente
       end
       object actTipoProducto1: TMenuItem
         Action = actTipoProducto
       end
-      object actCliente1: TMenuItem
-        Action = actCliente
+      object ipoPrestamo1: TMenuItem
+        Action = actTipoPrestamo
+      end
+      object actPerfilCliente1: TMenuItem
+        Action = actPerfilCliente
       end
       object actAhorro1: TMenuItem
         Action = actAhorro
       end
+      object Negocio1: TMenuItem
+        Caption = 'Negocio'
+        object ipoInfo1: TMenuItem
+          Action = actTipoInfo
+        end
+        object GiroNegocio1: TMenuItem
+          Action = actGiroNegocio
+        end
+      end
+      object Garantia1: TMenuItem
+        Action = actGarantia
+      end
+      object Cliente1: TMenuItem
+        Action = actCliente
+      end
+    end
+    object Historial1: TMenuItem
+      Caption = 'Historial'
       object actReporteCeop1: TMenuItem
         Action = actReporteCeop
       end
       object actReporteCrediticio1: TMenuItem
         Action = actReporteCrediticio
       end
-      object GiroNegocio1: TMenuItem
-        Action = actGiroNegocio
-      end
-      object ipoPrestamo1: TMenuItem
-        Action = actTipoPrestamo
-      end
-      object ipoInfo1: TMenuItem
-        Action = actTipoInfo
-      end
-      object ipoInfoDetalle1: TMenuItem
-        Action = actTipoInfoDetalle
-      end
-      object Garantia1: TMenuItem
-        Action = actGarantia
-      end
+    end
+    object Credito1: TMenuItem
+      Caption = 'Credito'
       object Solicitud1: TMenuItem
         Action = actSolicitud
       end
+      object Resolucion1: TMenuItem
+        Action = actResolucion
+      end
+      object Simulador1: TMenuItem
+        Action = actCalcular
+      end
+    end
+    object Seguidad1: TMenuItem
+      Caption = 'Seguidad'
       object Empleado1: TMenuItem
         Action = actEmpleado
       end
       object Auditoria1: TMenuItem
         Action = actAuditoria
       end
-      object Resolucion1: TMenuItem
-        Action = actResolucion
-      end
+    end
+    object Reportes1: TMenuItem
+      Caption = 'Reportes'
     end
     object actSalir1: TMenuItem
       Caption = 'Salir'
@@ -633,12 +648,6 @@ object fMenu: TfMenu
             Caption = '-'
           end
           item
-            Action = actTipoInfoDetalle
-            Caption = 'Tip&oInfoDetalle'
-            ImageIndex = 21
-            ShowCaption = False
-          end
-          item
             Action = actTipoInfo
             Caption = 'T&ipoInfo'
             ImageIndex = 20
@@ -649,6 +658,7 @@ object fMenu: TfMenu
           end
           item
             Action = actEmpleado
+            Caption = 'Emplead&o'
             ImageIndex = 16
             ShowCaption = False
           end
@@ -742,18 +752,13 @@ object fMenu: TfMenu
       Caption = 'TipoPrestamo'
       Hint = 'Tipo Prestamo'
       ImageIndex = 18
+      OnExecute = actTipoPrestamoExecute
     end
     object actTipoInfo: TAction
       Category = 'informacio negocio'
       Caption = 'TipoInfo'
       Hint = 'Tipo Info'
       ImageIndex = 20
-    end
-    object actTipoInfoDetalle: TAction
-      Category = 'informacio negocio'
-      Caption = 'TipoInfoDetalle'
-      Hint = 'Tipo Info Detalle'
-      ImageIndex = 21
     end
     object actGarantia: TAction
       Category = 'prestamo'
@@ -767,6 +772,7 @@ object fMenu: TfMenu
       Caption = 'Solicitud'
       Hint = 'Solicitud'
       ImageIndex = 6
+      OnExecute = actSolicitudExecute
     end
     object actEmpleado: TAction
       Category = 'autorizacion'
@@ -786,6 +792,11 @@ object fMenu: TfMenu
       Hint = 'Resolucion'
       ImageIndex = 4
       OnExecute = actResolucionExecute
+    end
+    object actCalcular: TAction
+      Category = 'credito'
+      Caption = 'Simulador'
+      OnExecute = actCalcularExecute
     end
   end
   object ImageList1: TImageList

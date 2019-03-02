@@ -92,7 +92,7 @@ object fCalcular: TfCalcular
         end
         object cbbLineaCredito: TcxLookupComboBox
           Left = 10
-          Top = 35
+          Top = 34
           Properties.DropDownListStyle = lsFixedList
           Properties.KeyFieldNames = 'id'
           Properties.ListColumns = <
@@ -580,6 +580,7 @@ object fCalcular: TfCalcular
           OptionsData.Editing = False
           OptionsData.Inserting = False
           OptionsSelection.CellSelect = False
+          OptionsView.NoDataToDisplayInfoText = 'Sin datos'
           Styles.ContentOdd = cxStyle1
           Bands = <
             item
@@ -647,6 +648,7 @@ object fCalcular: TfCalcular
           OptionsData.Editing = False
           OptionsData.Inserting = False
           OptionsSelection.CellSelect = False
+          OptionsView.NoDataToDisplayInfoText = 'Sin datos'
           OptionsView.GroupByBox = False
           Styles.ContentOdd = cxStyle1
           Bands = <
@@ -706,6 +708,7 @@ object fCalcular: TfCalcular
           OptionsData.Editing = False
           OptionsData.Inserting = False
           OptionsSelection.CellSelect = False
+          OptionsView.NoDataToDisplayInfoText = 'Sin datos'
           OptionsView.GroupByBox = False
           Styles.ContentOdd = cxStyle1
           Bands = <
@@ -770,6 +773,7 @@ object fCalcular: TfCalcular
           OptionsData.Editing = False
           OptionsData.Inserting = False
           OptionsSelection.CellSelect = False
+          OptionsView.NoDataToDisplayInfoText = 'Sin datos'
           OptionsView.Footer = True
           OptionsView.GroupSummaryLayout = gslAlignWithColumnsAndDistribute
           Styles.ContentOdd = cxStyle1

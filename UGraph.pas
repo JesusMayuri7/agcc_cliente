@@ -71,8 +71,10 @@ begin
    // si es existe el token
    // if token
   // ARESTRequest.addParameter('Authorization','Bearer aaa',TRESTRequestParameterKind.pkHTTPHEADER);
-   result:=TJsonObject.Create;
+   result:=TJsonObject.Create();
    request:=TJSONObject.Create();
+   queryRest:=TJSONObject.Create();
+
    request.AddPair('query',TJSONString.Create(Fquery));
 
    if Fvariables.TryGetValue('variables', variable) then
@@ -105,9 +107,9 @@ begin
               end;
             end;
     end;
-  // Result:=queryRest;
+   Result:=queryRest;
    //Result:=TJsonObject(ARESTRequest.Response.JSONValue);
-  Result:=request;
+ // Result:=request;
 end;
 
 function TGraph.GetQuery: string;

@@ -76,8 +76,8 @@ type
     Label11: TLabel;
     spbActualizar: TSpeedButton;
     spbDescripcion: TcxSpinEdit;
-    fdAhorrodesc_ahorro: TIntegerField;
-    fdAhorroporcentaje: TIntegerField;
+    fdAhorrodesc_ahorro: TFloatField;
+    fdAhorroporcentaje: TFloatField;
     procedure FormCreate(Sender: TObject);
     procedure cbbRegistrosChange(Sender: TObject);
     procedure spbPagSiguienteClick(Sender: TObject);
@@ -93,8 +93,8 @@ type
     var paginaActual:integer;
     procedure listar;
     procedure Limpiar();
-    procedure EditarLinea(id,desc_ahorro,porcentaje:integer);
-    procedure NuevaLinea(desc_ahorro,porcentaje:integer);
+    procedure EditarLinea(id:integer;desc_ahorro,porcentaje:real);
+    procedure NuevaLinea(desc_ahorro,porcentaje:real);
   public
     { Public declarations }
   end;
@@ -112,7 +112,7 @@ uses
 
 { TfLineaCredito }
 
-procedure TfAhorro.EditarLinea( id,desc_ahorro,porcentaje: integer);
+procedure TfAhorro.EditarLinea( id: integer;desc_ahorro,porcentaje:real);
 var graph:Tgraph;
 var variables:TJSONObject;
 var dataVar,dataRest,query:TJSONObject;
@@ -136,7 +136,7 @@ begin
     graph.variables:=variables;
 
     resultado:=graph.ejecutar('ahorroMutation');  // cambiar por el nombre del Query que buscas linea_creditoQuery
-      showmessage(resultado.ToString);
+     // showmessage(resultado.ToString);
     uHelpers.InsertarRegistroDataset(resultado,fdAhorro);
 
     finally
@@ -179,6 +179,7 @@ begin
   if gridAhorroDBTableView1.Controller.SelectedRowCount=1 then
   begin
      Tag:=gridAhorroDBTableView1.DataController.Values[gridAhorroDBTableView1.Controller.FocusedRecordIndex , 0];
+     //showmessage(tag.ToString);
      if Tag>0 then
      begin
          btnEditar.Enabled:=false;
@@ -196,7 +197,7 @@ procedure TfAhorro.btnGuardarClick(Sender: TObject);
 begin
   btnGuardar.Enabled:=false;
   if Tag>0 then
-     EditarLinea(Tag,spbDescripcion.value,spbPorcentaje.value)
+     EditarLinea(tag,spbDescripcion.value,spbPorcentaje.value)
   else
      nuevalinea(spbDescripcion.value,spbPorcentaje.value);
   tabFormulario.TabVisible:=false;
@@ -244,7 +245,7 @@ begin
     dataVar.AddPair('limit',TJSONNumber.Create(cbbRegistros.Items[cbbRegistros.ItemIndex]));
     dataVar.AddPair('per_page',TJSONNumber.Create(paginaActual));
     if length(edcriterio.Text)>0 then
-       dataVar.AddPair('desc_ahorro',TJSONString.Create(edCriterio.Text));// depende el campo en que busques
+       dataVar.AddPair('desc_ahorro',TJSONNumber.Create(edCriterio.Text));// depende el campo en que busques
     variables.AddPair('variables',dataVar);
     graph.variables:=variables;
 
@@ -255,14 +256,14 @@ begin
     // NO variar
     lblPaginaActual.Caption:=paginaActual.ToString;
     lblTotalPagina.Caption:= graph.totalPag.ToString;
-   // showmessage(resultado.ToString);
+    //showmessage(resultado.ToString);
     finally
        FreeAndNil(resultado);
        FreeAndNil(graph);
     end;
 end;
 
-procedure TfAhorro.NuevaLinea(desc_ahorro,porcentaje:integer);
+procedure TfAhorro.NuevaLinea(desc_ahorro,porcentaje:real);
 var graph:Tgraph;
 var variables:TJSONObject;
 var dataVar,dataRest,query:TJSONObject;

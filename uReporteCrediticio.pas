@@ -124,7 +124,7 @@ begin
     graph:=TGraph.Create(dmdata.RESTClient1);
     try  // Cambiar por el query a consultar, hacer pruebas en Insomnia
     graph.query:='mutation postReporteCrediticio($id:Int,$desc_historial_crediticio:String,$activo:Int)'+
-    ' { reporte_ceopMutation(id:$id,desc_historial_crediticio:$desc_historial_crediticio,'+
+    ' { reporte_crediticioMutation(id:$id,desc_historial_crediticio:$desc_historial_crediticio,'+
     ',activo:$activo) {id,desc_historial_crediticio,activo}  } ';
 
     //NO variar
@@ -136,8 +136,8 @@ begin
     variables.AddPair('variables',dataVar);
     graph.variables:=variables;
 
-    resultado:=graph.ejecutar('reporte_ceopMutation');  // cambiar por el nombre del Query que buscas linea_creditoQuery
-      showmessage(resultado.ToString);
+    resultado:=graph.ejecutar('reporte_crediticioMutation');  // cambiar por el nombre del Query que buscas linea_creditoQuery
+      //showmessage(resultado.ToString);
     uHelpers.InsertarRegistroDataset(resultado,fdReporteCrediticio);
 
     finally
@@ -197,7 +197,7 @@ procedure TfReporteCrediticio.btnGuardarClick(Sender: TObject);
 begin
   btnGuardar.Enabled:=false;
   if Tag>0 then
-     EditarLinea(eddescripcion.Text,Tag,chkActivo.checked)
+     EditarLinea(eddescripcion.Text,tag,chkActivo.checked)
   else
      nuevalinea(eddescripcion.Text,chkActivo.checked);
   tabFormulario.TabVisible:=false;
@@ -235,9 +235,10 @@ begin
     resultado:=TJSONObject.Create;
     graph:=TGraph.Create(dmdata.RESTClient1,fdReporteCrediticio);
     try  // Cambiar por el query a consultar, hacer pruebas en Insomnia
-    graph.query:='query verReporteCrediticio($limit:Int,$per_page:Int,$desc_historial_crediticio:String)'+
-     '{ reporte_crediticioQuery(limit:$limit,per_page:$per_page,desc_historial_crediticio:$desc_historial_crediticio)' +
-     '{ data {id,desc_historial_crediticio,activo},per_page,total}} ';
+    graph.query:='query verReporteCrediticio($limit:Int,$per_page:Int,'+
+    '$desc_historial_crediticio:String){ reporte_crediticioQuery(limit:$limit,per_page:'+
+    '$per_page,desc_historial_crediticio:$desc_historial_crediticio)'+
+    '{ data {id,desc_historial_crediticio,activo},per_page,total}} ';
 
     //NO variar
     variables:=TJSONObject.Create;
@@ -256,15 +257,14 @@ begin
     // NO variar
     lblPaginaActual.Caption:=paginaActual.ToString;
     lblTotalPagina.Caption:= graph.totalPag.ToString;
-   // showmessage(resultado.ToString);
+    //showmessage(resultado.ToString);
     finally
        FreeAndNil(resultado);
        FreeAndNil(graph);
     end;
 end;
 
-procedure TfReporteCrediticio.NuevaLinea(desc_historial_crediticio:string;
-activo:boolean);
+procedure TfReporteCrediticio.NuevaLinea(desc_historial_crediticio:string;activo:boolean);
 var graph:Tgraph;
 var variables:TJSONObject;
 var dataVar,dataRest,query:TJSONObject;

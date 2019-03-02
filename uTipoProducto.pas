@@ -157,7 +157,7 @@ begin
     dataVar.AddPair('activo',TJSONNumber.Create(activo.ToInteger));
     variables.AddPair('variables',dataVar);
     graph.variables:=variables;
-   // showmessage(variables.ToString);
+    //showmessage(variables.ToString);
     resultado:=graph.ejecutar('tipo_productoMutation');  // cambiar por el nombre del Query que buscas linea_creditoQuery
     memo1.Lines.Text:=resultado.ToString;
     uHelpers.InsertarRegistroDataset(resultado,fdTipoProducto);
