@@ -17,7 +17,8 @@ uses
   FireDAC.Comp.Client, REST.Client, Data.Bind.Components, Data.Bind.ObjectScope,
   REST.Response.Adapter, Data.Bind.EngExt, Vcl.Bind.DBEngExt, System.Rtti,
   System.Bindings.Outputs, Vcl.Bind.Editors, Data.Bind.DBScope, cxLabel,
-  Vcl.DBCtrls, cxGridBandedTableView, cxGridDBBandedTableView;
+  Vcl.DBCtrls, cxGridBandedTableView, cxGridDBBandedTableView, Vcl.ComCtrls,
+  Vcl.Buttons;
 
 type
   TfCalcular = class(TForm)
@@ -96,13 +97,41 @@ type
     cxGridBandedColumn7: TcxGridBandedColumn;
     cxGridLevel4: TcxGridLevel;
     BindSourceDB4: TBindSourceDB;
-    LinkPropertyToField1: TLinkPropertyToField;
     Label6: TLabel;
-    lblCuota: TLabel;
+    PageControl1: TPageControl;
+    pgcSimple: TTabSheet;
+    pgcRebatir: TTabSheet;
+    GridPanel2: TGridPanel;
+    GridPanel3: TGridPanel;
+    cxGrid3: TcxGrid;
+    gridCuotasRebatir: TcxGridBandedTableView;
+    colSaldoDeuda: TcxGridBandedColumn;
+    colInteres: TcxGridBandedColumn;
+    cxGridLevel5: TcxGridLevel;
+    cxGrid6: TcxGrid;
+    gridParametrosRebatir: TcxGridBandedTableView;
+    cxGridBandedColumn10: TcxGridBandedColumn;
+    cxGridBandedColumn11: TcxGridBandedColumn;
+    cxGridLevel6: TcxGridLevel;
+    cxGrid7: TcxGrid;
+    gridFactorRebatir: TcxGridBandedTableView;
+    cxGridBandedColumn12: TcxGridBandedColumn;
+    cxGridBandedColumn13: TcxGridBandedColumn;
+    cxGridLevel7: TcxGridLevel;
+    cxGrid8: TcxGrid;
+    gridInteresRebatir: TcxGridBandedTableView;
+    cxGridBandedColumn14: TcxGridBandedColumn;
+    cxGridBandedColumn15: TcxGridBandedColumn;
+    cxGridLevel8: TcxGridLevel;
+    colId: TcxGridBandedColumn;
+    colAmortizacion: TcxGridBandedColumn;
+    colCuota: TcxGridBandedColumn;
+    LinkPropertyToField1: TLinkPropertyToField;
+    spnCuota: TcxSpinEdit;
+    SpeedButton1: TSpeedButton;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure cbbLineaCreditoPropertiesChange(Sender: TObject);
     procedure cbbPerfilClientePropertiesChange(Sender: TObject);
-    procedure FormCreat(Sender: TObject);
     procedure Button1Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
   private
@@ -112,6 +141,8 @@ type
     procedure calcularCuota(monto,plazo,interes:real;dataset: TFdMemTable);
     function calcularAhorro(monto,plazo,interes:real;dataset: TFdMemTable):real;
     procedure calcularRendicion(monto,plazo,interes:real;dataset: TFdMemTable);
+    function calcularParametrosRebatir(monto,plazo,interes:real):real;
+    procedure llenarGridRebatir(grid:TcxGridBandedTableView;cuota,monto,interes:real;plazo:byte);
   public
     { Public declarations }
   end;
@@ -124,6 +155,38 @@ implementation
 {$R *.dfm}
 
 uses UData, uAdapterJson, uHelpers;
+
+
+
+procedure TfCalcular.llenarGridRebatir(grid: TcxGridBandedTableView;cuota, monto, interes: real;plazo:byte);
+var i:byte;
+var m_interes,m_cuota,m_amortizacion,m_saldo:real;
+begin
+     grid.BeginUpdate();
+  try
+    grid.DataController.RecordCount:=0;
+    grid.DataController.RecordCount:=plazo+1;
+    m_saldo:=monto;
+    m_interes:=0;
+    m_amortizacion:=0;
+    m_cuota:=0;
+   for i:=0 to grid.DataController.RecordCount-1 do
+   begin
+    grid.DataController.Values[i,colId.Position.ColIndex]:=i;
+    grid.DataController.Values[i,colSaldoDeuda.Position.ColIndex]:=m_saldo;
+    grid.DataController.Values[i,colInteres.Position.ColIndex]:=m_interes;
+    grid.DataController.Values[i,colAmortizacion.Position.ColIndex]:=m_amortizacion;
+    grid.DataController.Values[i,colCuota.Position.ColIndex]:=m_cuota;
+    m_interes:=(interes*m_saldo)/100;
+    m_amortizacion:=RoundTo(cuota-m_interes,-2);
+    m_saldo:=roundTo(m_saldo-m_amortizacion,-2);
+    m_cuota:=cuota;
+   end;
+    grid.DataController.Values[grid.DataController.RecordCount-1,colSaldoDeuda.Position.ColIndex]:=RoundTo(abs(grid.DataController.Values[grid.DataController.RecordCount-1,colSaldoDeuda.Position.ColIndex]),-1);
+  finally
+    grid.EndUpdate;
+  end;
+end;
 
 procedure TfCalcular.llenarGridResumen(datos:TJsonArray);
 var i:byte;
@@ -149,21 +212,84 @@ end;
 
 procedure TfCalcular.Button1Click(Sender: TObject);
 var calculos:TJsonArray;
-var cuota:real;
+var cuota,interes:real;
 begin
+ cuota:=0;
+ interes:=0;
  with cbbTipoProducto.Properties.Grid.DataController do
  begin
-   if (spnMonto.Value>0) and (spnPlazo.Value>0) and (dmdata.fdTipoProducto.FieldValues['interes']>0)then
+   if (spnMonto.Value>0) and (spnPlazo.Value>0) and (cbbTipoProducto.EditValue>0) then
    begin
-     calculos:=uHelpers.calcularTotales(dmdata.fdTipoProducto.FieldValues['interes'],spnMonto.value,spnPlazo.value);
-     llenarGridResumen(calculos);
-     cuota:=calcularAhorro(spnMonto.value,spnPlazo.Value,dmdata.fdTipoProducto.FieldValues['interes'],dmdata.fdAhorro);
-     calcularCuota(spnMonto.value,spnPlazo.Value,dmdata.fdTipoProducto.FieldValues['interes'],dmdata.fdAhorro);
-     calcularRendicion(spnMonto.value,spnPlazo.Value,dmdata.fdTipoProducto.FieldValues['interes'],dmdata.fdAhorro);
-     lblcuota.Caption:=floatToStr(cuota);
+      interes:=dmdata.fdTipoProducto.FieldValues['interes'];
+     if dmdata.fdLineaCredito.FieldValues['tipo_interes']='SIMPLE' then
+         begin
+         pgcRebatir.TabVisible:=false;
+         pgcSimple.TabVisible:=true;
+         calculos:=uHelpers.calcularTotales(interes,spnMonto.value,spnPlazo.value);
+         llenarGridResumen(calculos);
+         cuota:=calcularAhorro(spnMonto.value,spnPlazo.Value,interes,dmdata.fdAhorro);
+         calcularCuota(spnMonto.value,spnPlazo.Value,interes,dmdata.fdAhorro);
+         calcularRendicion(spnMonto.value,spnPlazo.Value,interes,dmdata.fdAhorro);
+          end;
+      if dmdata.fdLineaCredito.FieldValues['tipo_interes']='REBATIR' then
+         begin
+         pgcSimple.TabVisible:=false;
+         pgcRebatir.TabVisible:=true;
+         cuota:=calcularParametrosRebatir(spnMonto.value,spnPlazo.Value,interes);
+         llenarGridRebatir(gridCuotasRebatir,cuota,spnMonto.Value,interes,spnPlazo.Value);
+         end;
+     spnCuota.Value:=cuota;
    end;
  end;
 
+end;
+
+function TfCalcular.calcularParametrosRebatir(monto,plazo,interes:real):real;
+var interes_por,factor,i_soles_total,i_soles_anual,cuota_mensual,i_soles_mensual:real;
+var recordCount:integer;
+begin
+  cuota_mensual:=0;
+  i_soles_total:=0;
+  i_soles_anual:=0;
+  i_soles_mensual:=0;
+  factor:=0;
+  interes_por:=interes/100;
+
+    i_soles_anual:=(Power(1+interes_por,(360/30))-1)*100;
+    factor:=(Power(1+interes_por,plazo)*interes_por)/(Power(1+interes_por,plazo)-1);
+    cuota_mensual:=roundTo(factor*monto,-2);
+    i_soles_total:=plazo*(interes/100);
+    i_soles_total:=roundTo(cuota_mensual*plazo,-2);
+    gridParametrosRebatir.DataController.RecordCount:=0;
+    gridParametrosRebatir.DataController.RecordCount:=gridParametrosRebatir.DataController.RecordCount+1;
+    gridParametrosRebatir.DataController.Values[0,0]:='Interes anual';
+    gridParametrosRebatir.DataController.Values[0,1]:=i_soles_anual;
+    gridParametrosRebatir.DataController.RecordCount:=gridParametrosRebatir.DataController.RecordCount+1;
+    gridParametrosRebatir.DataController.Values[1,0]:='Interes mensual %';
+    gridParametrosRebatir.DataController.Values[1,1]:=interes;
+    gridParametrosRebatir.DataController.RecordCount:=gridParametrosRebatir.DataController.RecordCount+1;
+    gridParametrosRebatir.DataController.Values[2,0]:='Monto';
+    gridParametrosRebatir.DataController.Values[2,1]:=monto;
+    gridParametrosRebatir.DataController.RecordCount:=gridParametrosRebatir.DataController.RecordCount+1;
+    gridParametrosRebatir.DataController.Values[3,0]:='Plazo';
+    gridParametrosRebatir.DataController.Values[3,1]:=plazo;
+    gridParametrosRebatir.DataController.RecordCount:=gridParametrosRebatir.DataController.RecordCount+1;
+    gridParametrosRebatir.DataController.Values[4,0]:='Cuota';
+    gridParametrosRebatir.DataController.Values[4,1]:=cuota_mensual;
+    //Grid Factor Rebatir
+    gridFactorRebatir.DataController.RecordCount:=0;
+    gridFactorRebatir.DataController.RecordCount:=gridFactorRebatir.DataController.RecordCount+1;
+    gridFactorRebatir.DataController.Values[0,0]:='Factor';
+    gridFactorRebatir.DataController.Values[0,1]:=roundTo(factor,-7);
+    gridFactorRebatir.DataController.RecordCount:=gridFactorRebatir.DataController.RecordCount+1;
+    gridFactorRebatir.DataController.Values[1,0]:='Factor';
+    gridFactorRebatir.DataController.Values[1,1]:=factor;
+     //Grid Interes
+    gridInteresRebatir.DataController.RecordCount:=0;
+    gridInteresRebatir.DataController.RecordCount:=gridInteresRebatir.DataController.RecordCount+1;
+    gridInteresRebatir.DataController.Values[0,0]:='Interes total a pagar';
+    gridInteresRebatir.DataController.Values[0,1]:=roundTo(i_soles_total-monto,-2);
+    result:=cuota_mensual;
 end;
 
 procedure TfCalcular.calcularRendicion(monto,plazo,interes:real;dataset: TFdMemTable);
@@ -313,6 +439,18 @@ end;
 procedure TfCalcular.cbbLineaCreditoPropertiesChange(Sender: TObject);
 begin
 llenarCombo(dmdata.RESTResponseDataSetAdapter2,VarToStr(dmdata.fdLineaCredito.FieldValues['perfil_cliente']));
+if dmdata.fdLineaCredito.FieldValues['tipo_interes']='SIMPLE' then
+   begin
+   pgcRebatir.TabVisible:=false;
+   pgcSimple.TabVisible:=true;
+   end;
+if dmdata.fdLineaCredito.FieldValues['tipo_interes']='REBATIR' then
+   begin
+   pgcSimple.TabVisible:=false;
+   pgcRebatir.TabVisible:=true;
+   end;
+
+
 PrimerElementoCombo(cbbPerfilCliente);
 end;
 
@@ -327,18 +465,13 @@ begin
   dmdata.RESTResponseDataSetAdapter2.ResponseJSON := nil; // Prevent memory leak
 end;
 
-procedure TfCalcular.FormCreat(Sender: TObject);
-begin
-dmdata.RESTRequest1.Execute;
-uHelpers.PrimerElementoCombo(cbbLineaCredito);
-dmdata.RESTResponseDataSetAdapter4.Active;
-end;
-
 procedure TfCalcular.FormCreate(Sender: TObject);
 begin
-dmdata.RESTRequest1.Execute;
-uHelpers.PrimerElementoCombo(cbbLineaCredito);
-dmdata.RESTResponseDataSetAdapter4.Active;
+   pgcRebatir.TabVisible:=false;
+   pgcSimple.TabVisible:=false;
+   dmdata.RESTRequest1.Execute;
+   uHelpers.PrimerElementoCombo(cbbLineaCredito);
+   dmdata.adapAhorro.Active;
 end;
 
 

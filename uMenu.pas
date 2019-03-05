@@ -71,9 +71,6 @@ type
     procedure actAuditoriaExecute(Sender: TObject);
     procedure actResolucionExecute(Sender: TObject);
     procedure actCalcularExecute(Sender: TObject);
-
-
-
   private
     { Private declarations }
 
@@ -89,8 +86,8 @@ implementation
 
 uses
   uLineaCredito, UData, uPerfilCliente, uTipoProducto, uCliente, uAhorro,uReporteCeop,
-  uReporteCrediticio,uGiroNegocio,uTipoPrestamo,uTipoInfo,uGarantia,
-  uEmpleado,uSolicitud,uAuditoria,uResolucion, uCalcular;
+  uReporteCrediticio,uGiroNegocio,uGarantia,
+  uEmpleado,uAuditoria,uResolucion, uCalcular, uSolicitud;
 
 {$R *.dfm}
 
@@ -216,7 +213,7 @@ end;
 procedure TfMenu.actSolicitudExecute(Sender: TObject);
  var ResultsForm:TfSolicitud;
 begin
-      ResultsForm := TfSolicitud.Create(nil);
+     ResultsForm := TfSolicitud.Create(nil);
       try
         ResultsForm.ShowModal;
       finally
@@ -225,14 +222,14 @@ end;
 end;
 
 procedure TfMenu.actTipoPrestamoExecute(Sender: TObject);
-var ResultsForm:TfTipoPrestamo;
+//var ResultsForm:TfTipoPrestamo;
 begin
-      ResultsForm := TfTipoPrestamo.Create(nil);
+{      ResultsForm := TfTipoPrestamo.Create(nil);
       try
         ResultsForm.ShowModal;
       finally
         ResultsForm.Free;
-end;
+end;       }
 end;
 
 procedure TfMenu.actTipoProductoExecute(Sender: TObject);

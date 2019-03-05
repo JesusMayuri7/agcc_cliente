@@ -150,7 +150,7 @@ begin
     graph:=TGraph.Create(dmdata.RESTClient1);
     try  // Cambiar por el query a consultar, hacer pruebas en Insomnia
     graph.query:='mutation postEmpleado($id:Int,$dni:String,$nombres:String,$apellido_paterno:'+
-    'string,$apellido_materno:String,$usuario:String,$password:String,$email:String,$activo:Int)'+
+    'String,$apellido_materno:String,$usuario:String,$password:String,$email:String,$activo:Int)'+
     ' { empleadoMutation(id:$id,dni:$dni,nombres:$nombres,apellido_paterno:$apellido_paterno,apellido_materno'+
     ':$apellido_materno,usuario:$usuario,password:$password,email:$email,activo:$activo)'+
     ' {id,dni,nombres,apellido_paterno,apellido_materno,usuario,password,email,activo}  } ';
@@ -258,7 +258,7 @@ end;
 procedure TfEmpleado.FormCreate(Sender: TObject);
 begin
 paginaActual:=1;
-//listar();
+listar();
 end;
 
 procedure TfEmpleado.Limpiar;
@@ -345,7 +345,7 @@ begin
     graph.variables:=variables;
 
     resultado:=graph.ejecutar('empleadoMutation');  // cambiar por el nombre del Query que buscas linea_creditoQuery
-  //  uHelpers.InsertarRegistroDataset(resultado,fdEmpleado);
+    uHelpers.InsertarRegistroDataset(resultado,fdEmpleado);
    // memo1.Lines.Text:=resultado.ToString;
     showmessage(resultado.ToString);
     finally

@@ -149,8 +149,8 @@ begin
     resultado:=TJSONObject.Create;
     graph:=TGraph.Create(dmdata.RESTClient1);
     try  // Cambiar por el query a consultar, hacer pruebas en Insomnia
-    graph.query:='mutation postReporteCeop($id:Int,$dni:String,$nombres:String,$apellido_paterno:'+
-    'string,$apellido_materno:String,$direccion:String,$telefono:String,$fecha_nacimiento:String,$activo:Int)'+
+    graph.query:='mutation postCliente($id:Int,$dni:String,$nombres:String,$apellido_paterno:'+
+    'String,$apellido_materno:String,$direccion:String,$telefono:String,$fecha_nacimiento:String,$activo:Int)'+
     ' { clienteMutation(id:$id,dni:$dni,nombres:$nombres,apellido_paterno:$apellido_paterno,apellido_materno'+
     ':$apellido_materno,direccion:$direccion,telefono:$telefono,fecha_nacimiento:$fecha_nacimiento,activo:$activo)'+
     ' {id,dni,nombres,apellido_paterno,apellido_materno,direccion,telefono,fecha_nacimiento,activo}  } ';
@@ -159,19 +159,19 @@ begin
     variables:=TJSONObject.Create;
     dataVar:=TJSONObject.Create;
     dataVar.AddPair('id',TJSONNumber.Create(id));
-    dataVar.AddPair('dni',TJSONNumber.Create(dni));
+    dataVar.AddPair('dni',TJSONString.Create(dni));
     dataVar.AddPair('nombres',TJSONString.Create(nombres));
     dataVar.AddPair('apellido_paterno',TJSONString.Create(apellido_paterno));
     dataVar.AddPair('apellido_materno',TJSONString.Create(apellido_materno));
     dataVar.AddPair('direccion',TJSONString.Create(direccion));
     dataVar.AddPair('telefono',TJSONString.Create(telefono));
-    dataVar.AddPair('fecha_nacimiento',TJSONString.Create(datetostr(fecha_nacimiento)));
+    dataVar.AddPair('fecha_nacimiento',TJSONString.Create(formatdatetime('yyyy-mm-dd',fecha_nacimiento)));
     dataVar.AddPair('activo',TJSONNumber.Create(activo.ToInteger));
     variables.AddPair('variables',dataVar);
     graph.variables:=variables;
 
     resultado:=graph.ejecutar('clienteMutation');  // cambiar por el nombre del Query que buscas linea_creditoQuery
-      showmessage(resultado.ToString);
+  //    showmessage(resultado.ToString);
     uHelpers.InsertarRegistroDataset(resultado,fdCliente);
 
     finally
@@ -268,7 +268,7 @@ edDni.Text:='';
 edNombres.Text:='';
 edPaterno.Text:='';
 edMaterno.Text:='';
-cxDateEdit1.Date:=0;
+cxDateEdit1.Date:=Date;
 edDireccion.Text:='';
 edTelefono.Text:='';
 chkActivo.Checked:=False;
@@ -285,7 +285,7 @@ begin
     try  // Cambiar por el query a consultar, hacer pruebas en Insomnia
     graph.query:='query verCliente($limit:Int,$per_page:Int,$dni:String)'+
      '{ clienteQuery(limit:$limit,per_page:$per_page,dni:$dni)' +
-     '{ data {id,dni,nombres,apellido_paterno,apellido_materno,fecha_nacimiento,direccion,telefono'+
+     '{ data {id,dni,nombres,apellido_paterno,apellido_materno,full_name,fecha_nacimiento,direccion,telefono'+
      ',activo},per_page,total}} ';
 
     //NO variar
@@ -305,7 +305,7 @@ begin
     // NO variar
     lblPaginaActual.Caption:=paginaActual.ToString;
     lblTotalPagina.Caption:= graph.totalPag.ToString;
-    showmessage(resultado.ToString);
+ //   showmessage(resultado.ToString);
     finally
        FreeAndNil(resultado);
        FreeAndNil(graph);
@@ -323,23 +323,25 @@ begin
     resultado:=TJSONObject.Create;
     graph:=TGraph.Create(dmdata.RESTClient1);
     try  // Cambiar por el query a consultar, hacer pruebas en Insomnia
-    graph.query:='mutation postCliente($dni:String,$nombres:String,$apellidos_paterno:String'+
+    graph.query:='mutation postCliente($dni:String,$nombres:String,$apellido_paterno:String'+
     ',$apellido_materno:String,$direccion:String,$telefono:String,$fecha_nacimiento:String,$activo:Int)'+
     ' { clienteMutation(dni:$dni,nombres:$nombres,apellido_paterno:$apellido_paterno,'+
     'apellido_materno:$apellido_materno,direccion:$direccion,telefono:$telefono,fecha_nacimiento'+
     ':$fecha_nacimiento,activo:$activo)'+
     ' {id,dni,nombres,apellido_paterno,apellido_materno,direccion,telefono,fecha_nacimiento,activo}  } ';
-
+  //  showmessage(DateToStr(fecha_nacimiento));
     //NO variar
+    //fecha_nacimiento:= StrToDate('fecha_nacimiento');
+    //fecha_nacimiento := StrToDateTime('fecha_nacimiento');
     variables:=TJSONObject.Create;
     dataVar:=TJSONObject.Create;
-    dataVar.AddPair('dni',TJSONNumber.Create(dni));
+    dataVar.AddPair('dni',TJSONString.Create(dni));
     dataVar.AddPair('nombres',TJSONString.Create(nombres));
     dataVar.AddPair('apellido_paterno',TJSONString.Create(apellido_paterno));
     dataVar.AddPair('apellido_materno',TJSONString.Create(apellido_materno));
     dataVar.AddPair('direccion',TJSONString.Create(direccion));
     dataVar.AddPair('telefono',TJSONString.Create(telefono));
-    dataVar.AddPair('fecha_nacimiento',TJSONString.Create(datetostr(fecha_nacimiento)));
+    dataVar.AddPair('fecha_nacimiento',TJSONString.Create(formatdatetime('yyyy-mm-dd',fecha_nacimiento)));
     dataVar.AddPair('activo',TJSONNumber.Create(activo.ToInteger));
     variables.AddPair('variables',dataVar);
     graph.variables:=variables;

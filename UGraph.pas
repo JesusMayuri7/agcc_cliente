@@ -91,6 +91,7 @@ begin
     if TJsonObject(ARESTRequest.Response.JSONValue).TryGetValue('data',dataRest) then
     begin
          queryRest:=dataRest.GetValue(query) as TJsonObject;
+
          if queryRest.TryGetValue('total',total) then
             begin
               if limit.ToInteger>0 then

@@ -1,9 +1,9 @@
-object fCliente: TfCliente
+object fTipoInfoDetalle: TfTipoInfoDetalle
   Left = 0
   Top = 0
-  Caption = 'Cliente'
-  ClientHeight = 512
-  ClientWidth = 860
+  Caption = 'TipoInfoDetalle'
+  ClientHeight = 459
+  ClientWidth = 682
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -26,17 +26,17 @@ object fCliente: TfCliente
     AlignWithMargins = True
     Left = 3
     Top = 3
-    Width = 854
+    Width = 676
     Height = 33
     Align = alTop
     TabOrder = 0
     object Label1: TLabel
       Left = 129
       Top = 6
-      Width = 44
+      Width = 156
       Height = 16
       Alignment = taCenter
-      Caption = 'Cliente'
+      Caption = 'Tipo Informacion Detalle'
       Color = clHotLight
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clNavy
@@ -48,7 +48,7 @@ object fCliente: TfCliente
     end
     object spbPagSiguiente: TSpeedButton
       AlignWithMargins = True
-      Left = 827
+      Left = 649
       Top = 4
       Width = 23
       Height = 25
@@ -61,7 +61,7 @@ object fCliente: TfCliente
     end
     object spbPaginaAnteriorrr: TSpeedButton
       AlignWithMargins = True
-      Left = 798
+      Left = 620
       Top = 4
       Width = 23
       Height = 25
@@ -86,7 +86,7 @@ object fCliente: TfCliente
     end
     object Panel3: TPanel
       AlignWithMargins = True
-      Left = 647
+      Left = 469
       Top = 4
       Width = 145
       Height = 25
@@ -142,7 +142,7 @@ object fCliente: TfCliente
     end
     object Panel4: TPanel
       AlignWithMargins = True
-      Left = 507
+      Left = 329
       Top = 4
       Width = 134
       Height = 25
@@ -178,16 +178,16 @@ object fCliente: TfCliente
   object pnDetalle: TPanel
     Left = 0
     Top = 39
-    Width = 860
-    Height = 473
+    Width = 682
+    Height = 420
     Align = alClient
     TabOrder = 1
     object PageControl1: TPageControl
       Left = 1
       Top = 1
-      Width = 858
-      Height = 430
-      ActivePage = tabFormulario
+      Width = 680
+      Height = 287
+      ActivePage = tabLIstado
       Align = alClient
       TabOrder = 0
       object tabFormulario: TTabSheet
@@ -195,149 +195,97 @@ object fCliente: TfCliente
         TabVisible = False
         object GroupBox1: TGroupBox
           Left = 51
-          Top = 31
-          Width = 673
-          Height = 368
-          Caption = 'Cliente'
+          Top = 38
+          Width = 550
+          Height = 218
+          Caption = 'Tipo Informacion Detalle'
           TabOrder = 0
           object Label2: TLabel
             Left = 33
-            Top = 49
-            Width = 15
+            Top = 40
+            Width = 54
             Height = 13
-            Caption = 'Dni'
+            Caption = 'Descripcion'
+          end
+          object Label3: TLabel
+            Left = 33
+            Top = 83
+            Width = 43
+            Height = 13
+            Caption = 'Tipo Info'
           end
           object Label7: TLabel
             Left = 33
-            Top = 325
+            Top = 165
             Width = 30
             Height = 13
             Caption = 'Activo'
           end
-          object Label3: TLabel
-            Left = 33
-            Top = 88
-            Width = 42
-            Height = 13
-            Caption = 'Nombres'
-          end
-          object TLabel
-            Left = 56
-            Top = 128
-            Width = 3
-            Height = 13
-          end
-          object Label4: TLabel
-            Left = 33
-            Top = 128
-            Width = 83
-            Height = 13
-            Caption = 'Apellidos Paterno'
-          end
           object Label6: TLabel
             Left = 33
-            Top = 168
-            Width = 80
+            Top = 126
+            Width = 20
             Height = 13
-            Caption = 'Apellido Materno'
+            Caption = 'Tipo'
           end
-          object Label8: TLabel
-            Left = 33
-            Top = 208
-            Width = 84
-            Height = 13
-            Caption = 'Fecha Nacimiento'
-          end
-          object Label9: TLabel
-            Left = 32
-            Top = 248
-            Width = 43
-            Height = 13
-            Caption = 'Direccion'
-          end
-          object Label13: TLabel
-            Left = 33
-            Top = 288
-            Width = 42
-            Height = 13
-            Caption = 'Telefono'
-          end
-          object edDni: TEdit
-            Left = 128
-            Top = 41
-            Width = 121
+          object edDescripcion: TEdit
+            Left = 112
+            Top = 37
+            Width = 161
             Height = 21
+            CharCase = ecUpperCase
             TabOrder = 0
           end
-          object chkActivo: TCheckBox
+          object cbbTipoInfo: TcxLookupComboBox
             Left = 113
-            Top = 318
+            Top = 80
+            Properties.KeyFieldNames = 'id'
+            Properties.ListColumns = <
+              item
+                FieldName = 'desc_tipo_info'
+              end>
+            Properties.ListSource = dsTipoInfo
+            TabOrder = 1
+            Width = 129
+          end
+          object chkActivo: TCheckBox
+            Left = 104
+            Top = 161
             Width = 25
             Height = 17
             Alignment = taLeftJustify
-            TabOrder = 4
-          end
-          object edNombres: TEdit
-            Left = 128
-            Top = 85
-            Width = 129
-            Height = 21
-            TabOrder = 1
-          end
-          object edPaterno: TEdit
-            Left = 128
-            Top = 125
-            Width = 193
-            Height = 21
             TabOrder = 2
           end
-          object edMaterno: TEdit
-            Left = 128
-            Top = 165
-            Width = 193
+          object cbbTipo: TComboBox
+            Left = 113
+            Top = 123
+            Width = 160
             Height = 21
+            Style = csDropDownList
             TabOrder = 3
-          end
-          object edDireccion: TEdit
-            Left = 123
-            Top = 248
-            Width = 198
-            Height = 21
-            TabOrder = 6
-          end
-          object edTelefono: TEdit
-            Left = 123
-            Top = 291
-            Width = 121
-            Height = 21
-            TabOrder = 7
-          end
-          object cxDateEdit1: TcxDateEdit
-            Left = 128
-            Top = 205
-            EditValue = 0d
-            Properties.DisplayFormat = 'YYYY/dd/mm'
-            Properties.InputKind = ikStandard
-            Properties.ShowTime = False
-            TabOrder = 5
-            Width = 121
+            TextHint = 'DATOS'
+            Items.Strings = (
+              'DATOS'
+              'DEUDAS FINANCIERAS'
+              'INGRESOS'
+              'POR_PAGAR_PROVEEDOR')
           end
         end
       end
       object tabLIstado: TTabSheet
         Caption = 'Listado'
         ImageIndex = 1
-        object gridCliente: TcxGrid
+        object gridTipoInfoDetalle: TcxGrid
           Left = 0
           Top = 41
-          Width = 850
-          Height = 361
+          Width = 672
+          Height = 218
           Align = alClient
           TabOrder = 0
           LookAndFeel.NativeStyle = False
-          object gridClienteDBTableView1: TcxGridDBTableView
+          object gridTipoInfoDetalleDBTableView1: TcxGridDBTableView
             Navigator.Buttons.CustomButtons = <>
-            DataController.DataSource = dsCliente
+            DataController.DataSource = dsTipoInfoDetalle
             DataController.Summary.DefaultGroupSummaryItems = <>
             DataController.Summary.FooterSummaryItems = <>
             DataController.Summary.SummaryGroups = <>
@@ -351,53 +299,43 @@ object fCliente: TfCliente
             OptionsView.GroupByBox = False
             OptionsView.GroupRowStyle = grsOffice11
             Styles.ContentOdd = cxStyle1
-            object gridClienteDBTableView1id: TcxGridDBColumn
+            object gridTipoInfoDetalleDBTableView1id: TcxGridDBColumn
               DataBinding.FieldName = 'id'
               HeaderAlignmentHorz = taCenter
-              Width = 38
+              Width = 58
             end
-            object gridClienteDBTableView1dni: TcxGridDBColumn
-              DataBinding.FieldName = 'dni'
-              Width = 70
-            end
-            object gridClienteDBTableView1nombres: TcxGridDBColumn
-              DataBinding.FieldName = 'nombres'
-              Width = 103
-            end
-            object gridClienteDBTableView1apellido_paterno: TcxGridDBColumn
-              DataBinding.FieldName = 'apellido_paterno'
-              Width = 100
-            end
-            object gridClienteDBTableView1apellido_materno: TcxGridDBColumn
-              DataBinding.FieldName = 'apellido_materno'
-              Width = 101
-            end
-            object gridClienteDBTableView1fecha_nacimiento: TcxGridDBColumn
-              DataBinding.FieldName = 'fecha_nacimiento'
-              Width = 96
-            end
-            object gridClienteDBTableView1direccion: TcxGridDBColumn
-              DataBinding.FieldName = 'direccion'
-              Width = 162
-            end
-            object gridClienteDBTableView1telefono: TcxGridDBColumn
-              DataBinding.FieldName = 'telefono'
-              Width = 107
-            end
-            object gridClienteDBTableView1activo: TcxGridDBColumn
-              DataBinding.FieldName = 'activo'
+            object gridTipoInfoDetalleDBTableView1desc_tipo_info_detalle: TcxGridDBColumn
+              DataBinding.FieldName = 'desc_tipo_info_detalle'
               HeaderAlignmentHorz = taCenter
-              Width = 40
+              Width = 177
+            end
+            object gridTipoInfoDetalleDBTableView1tipo_info_id: TcxGridDBColumn
+              DataBinding.FieldName = 'tipo_info_id'
+              PropertiesClassName = 'TcxLookupComboBoxProperties'
+              Properties.KeyFieldNames = 'id'
+              Properties.ListColumns = <
+                item
+                  FieldName = 'desc_tipo_info'
+                end>
+              Properties.ListSource = dsTipoInfo
+              Width = 136
+            end
+            object gridTipoInfoDetalleDBTableView1tipo: TcxGridDBColumn
+              DataBinding.FieldName = 'tipo'
+              Width = 158
+            end
+            object gridTipoInfoDetalleDBTableView1activo: TcxGridDBColumn
+              DataBinding.FieldName = 'activo'
             end
           end
-          object gridClienteLevel1: TcxGridLevel
-            GridView = gridClienteDBTableView1
+          object gridTipoInfoDetalleLevel1: TcxGridLevel
+            GridView = gridTipoInfoDetalleDBTableView1
           end
         end
         object Panel2: TPanel
           Left = 0
           Top = 0
-          Width = 850
+          Width = 672
           Height = 41
           Align = alTop
           TabOrder = 1
@@ -407,7 +345,7 @@ object fCliente: TfCliente
             Width = 305
             Height = 21
             TabOrder = 0
-            TextHint = 'Cliente'
+            TextHint = 'Tipo informacion al detalle'
           end
           object btnBuscar: TButton
             Left = 330
@@ -423,9 +361,9 @@ object fCliente: TfCliente
     end
     object Panel1: TPanel
       Left = 1
-      Top = 431
-      Width = 858
-      Height = 41
+      Top = 288
+      Width = 680
+      Height = 131
       Align = alBottom
       TabOrder = 1
       object btnNuevo: TButton
@@ -468,7 +406,7 @@ object fCliente: TfCliente
       end
     end
   end
-  object fdCliente: TFDMemTable
+  object fdTipoInfoDetalle: TFDMemTable
     FieldDefs = <>
     IndexDefs = <>
     FetchOptions.AssignedValues = [evMode]
@@ -479,50 +417,63 @@ object fCliente: TfCliente
     UpdateOptions.CheckRequired = False
     UpdateOptions.AutoCommitUpdates = True
     StoreDefs = True
-    Left = 597
-    Top = 162
-    object fdClienteid: TIntegerField
+    Left = 621
+    Top = 138
+    object fdTipoInfoDetalleid: TIntegerField
       DisplayLabel = '#'
       FieldName = 'id'
     end
-    object fdClientedni: TStringField
-      FieldName = 'dni'
+    object fdTipoInfoDetalledesc_tipo_info_detalle: TStringField
+      FieldName = 'desc_tipo_info_detalle'
     end
-    object fdClientenombres: TStringField
-      FieldName = 'nombres'
+    object fdTipoInfoDetalletipo_info_id: TIntegerField
+      FieldName = 'tipo_info_id'
     end
-    object fdClienteapellido_paterno: TStringField
-      FieldName = 'apellido_paterno'
+    object fdTipoInfoDetalletipo: TStringField
+      FieldName = 'tipo'
     end
-    object fdClienteapellido_materno: TStringField
-      FieldName = 'apellido_materno'
-    end
-    object fdClientefecha_nacimiento: TDateField
-      FieldName = 'fecha_nacimiento'
-    end
-    object fdClientedireccion: TStringField
-      FieldName = 'direccion'
-    end
-    object fdClientetelefono: TStringField
-      FieldName = 'telefono'
-    end
-    object fdClienteactivo: TBooleanField
-      DisplayLabel = 'Activo'
+    object fdTipoInfoDetalleactivo: TBooleanField
       FieldName = 'activo'
     end
   end
-  object dsCliente: TDataSource
-    DataSet = fdCliente
-    Left = 597
-    Top = 226
+  object dsTipoInfoDetalle: TDataSource
+    DataSet = fdTipoInfoDetalle
+    Left = 605
+    Top = 186
   end
   object cxStyleRepository1: TcxStyleRepository
-    Left = 552
-    Top = 288
+    Left = 392
+    Top = 400
     PixelsPerInch = 96
     object cxStyle1: TcxStyle
       AssignedValues = [svColor]
       Color = clInfoBk
     end
+  end
+  object fdTipoInfo: TFDMemTable
+    FieldDefs = <>
+    IndexDefs = <>
+    FetchOptions.AssignedValues = [evMode]
+    FetchOptions.Mode = fmAll
+    ResourceOptions.AssignedValues = [rvSilentMode]
+    ResourceOptions.SilentMode = True
+    UpdateOptions.AssignedValues = [uvCheckRequired, uvAutoCommitUpdates]
+    UpdateOptions.CheckRequired = False
+    UpdateOptions.AutoCommitUpdates = True
+    StoreDefs = True
+    Left = 589
+    Top = 330
+    object fdTipoInfoid: TIntegerField
+      DisplayLabel = '#'
+      FieldName = 'id'
+    end
+    object fdTipoInfodesc_tipo_info: TStringField
+      FieldName = 'desc_tipo_info'
+    end
+  end
+  object dsTipoInfo: TDataSource
+    DataSet = fdTipoInfo
+    Left = 589
+    Top = 392
   end
 end

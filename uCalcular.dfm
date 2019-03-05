@@ -2,8 +2,8 @@ object fCalcular: TfCalcular
   Left = 0
   Top = 0
   Caption = 'Calcular Cuota'
-  ClientHeight = 736
-  ClientWidth = 1121
+  ClientHeight = 750
+  ClientWidth = 1134
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -19,7 +19,7 @@ object fCalcular: TfCalcular
   object Panel1: TPanel
     Left = 0
     Top = 0
-    Width = 1121
+    Width = 1134
     Height = 41
     Align = alTop
     TabOrder = 0
@@ -42,24 +42,31 @@ object fCalcular: TfCalcular
   end
   object Panel2: TPanel
     Left = 0
-    Top = 695
-    Width = 1121
-    Height = 41
+    Top = 699
+    Width = 1134
+    Height = 51
     Align = alBottom
     TabOrder = 1
+    object SpeedButton1: TSpeedButton
+      Left = 112
+      Top = 14
+      Width = 107
+      Height = 27
+      Caption = 'Nueva Solicitud'
+    end
   end
   object Panel3: TPanel
     Left = 0
     Top = 41
-    Width = 1121
-    Height = 654
+    Width = 1134
+    Height = 658
     Align = alClient
     TabOrder = 2
     object Panel4: TPanel
       Left = 1
       Top = 1
       Width = 264
-      Height = 652
+      Height = 656
       Align = alLeft
       TabOrder = 0
       object Panel5: TPanel
@@ -242,7 +249,7 @@ object fCalcular: TfCalcular
         Left = 1
         Top = 297
         Width = 262
-        Height = 354
+        Height = 358
         Align = alClient
         TabOrder = 2
         object Label11: TLabel
@@ -446,18 +453,6 @@ object fCalcular: TfCalcular
           Font.Style = []
           ParentFont = False
         end
-        object lblCuota: TLabel
-          Left = 127
-          Top = 210
-          Width = 4
-          Height = 16
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -13
-          Font.Name = 'Tahoma'
-          Font.Style = []
-          ParentFont = False
-        end
         object cxGrid4: TcxGrid
           Left = 12
           Top = 240
@@ -507,317 +502,713 @@ object fCalcular: TfCalcular
             GridView = cxGrid4DBBandedTableView1
           end
         end
+        object spnCuota: TcxSpinEdit
+          Left = 127
+          Top = 209
+          Properties.Alignment.Horz = taRightJustify
+          Properties.CanEdit = False
+          Properties.DisplayFormat = '#,##0.00'
+          Properties.ReadOnly = False
+          Properties.SpinButtons.Visible = False
+          TabOrder = 1
+          Width = 90
+        end
       end
     end
-    object GridPanel1: TGridPanel
+    object PageControl1: TPageControl
       Left = 265
       Top = 1
-      Width = 855
-      Height = 652
+      Width = 868
+      Height = 656
+      ActivePage = pgcRebatir
       Align = alClient
-      ColumnCollection = <
-        item
-          Value = 50.000000000000000000
-        end
-        item
-          Value = 50.000000000000000000
-        end>
-      ControlCollection = <
-        item
-          Column = 0
-          Control = grid3
-          Row = 1
-        end
-        item
-          Column = 0
-          Control = cxGrid5
-          Row = 0
-        end
-        item
-          Column = 1
-          Control = cxGrid1
-          Row = 0
-        end
-        item
-          Column = 1
-          Control = cxGrid2
-          Row = 1
-        end>
-      Padding.Left = 10
-      Padding.Top = 10
-      Padding.Right = 10
-      Padding.Bottom = 10
-      RowCollection = <
-        item
-          Value = 47.368421052631580000
-        end
-        item
-          Value = 52.631578947368420000
-        end>
-      ShowCaption = False
       TabOrder = 1
-      object grid3: TcxGrid
-        Left = 21
-        Top = 319
-        Width = 396
-        Height = 312
-        Align = alClient
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -17
-        Font.Name = 'Tahoma'
-        Font.Style = [fsBold]
-        ParentFont = False
-        TabOrder = 0
-        object gridCuota: TcxGridBandedTableView
-          Navigator.Buttons.CustomButtons = <>
-          DataController.Summary.DefaultGroupSummaryItems = <>
-          DataController.Summary.FooterSummaryItems = <>
-          DataController.Summary.SummaryGroups = <>
-          OptionsData.CancelOnExit = False
-          OptionsData.Deleting = False
-          OptionsData.DeletingConfirmation = False
-          OptionsData.Editing = False
-          OptionsData.Inserting = False
-          OptionsSelection.CellSelect = False
-          OptionsView.NoDataToDisplayInfoText = 'Sin datos'
-          Styles.ContentOdd = cxStyle1
-          Bands = <
+      object pgcSimple: TTabSheet
+        Caption = 'Simple'
+        object GridPanel1: TGridPanel
+          Left = 0
+          Top = 0
+          Width = 860
+          Height = 628
+          Align = alClient
+          ColumnCollection = <
             item
-              Caption = 'Distribuci'#243'n de cuota'
-              Width = 374
+              Value = 50.000000000000000000
+            end
+            item
+              Value = 50.000000000000000000
             end>
-          object gridCuotaColumn3: TcxGridBandedColumn
-            Caption = 'Condicion'
-            Visible = False
-            GroupIndex = 0
-            Width = 101
-            Position.BandIndex = 0
-            Position.ColIndex = 0
-            Position.RowIndex = 0
+          ControlCollection = <
+            item
+              Column = 0
+              Control = grid3
+              Row = 1
+            end
+            item
+              Column = 0
+              Control = cxGrid5
+              Row = 0
+            end
+            item
+              Column = 1
+              Control = cxGrid1
+              Row = 0
+            end
+            item
+              Column = 1
+              Control = cxGrid2
+              Row = 1
+            end>
+          Padding.Left = 10
+          Padding.Top = 10
+          Padding.Right = 10
+          Padding.Bottom = 10
+          RowCollection = <
+            item
+              Value = 47.368421052631580000
+            end
+            item
+              Value = 52.631578947368420000
+            end>
+          ShowCaption = False
+          TabOrder = 0
+          object grid3: TcxGrid
+            Left = 21
+            Top = 308
+            Width = 399
+            Height = 299
+            Align = alClient
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -17
+            Font.Name = 'Tahoma'
+            Font.Style = [fsBold]
+            ParentFont = False
+            TabOrder = 0
+            object gridCuota: TcxGridBandedTableView
+              Navigator.Buttons.CustomButtons = <>
+              DataController.Summary.DefaultGroupSummaryItems = <>
+              DataController.Summary.FooterSummaryItems = <>
+              DataController.Summary.SummaryGroups = <>
+              OptionsData.CancelOnExit = False
+              OptionsData.Deleting = False
+              OptionsData.DeletingConfirmation = False
+              OptionsData.Editing = False
+              OptionsData.Inserting = False
+              OptionsSelection.CellSelect = False
+              OptionsView.NoDataToDisplayInfoText = 'Sin datos'
+              Styles.ContentOdd = cxStyle1
+              Bands = <
+                item
+                  Caption = 'Distribuci'#243'n de cuota'
+                  Width = 374
+                end>
+              object gridCuotaColumn3: TcxGridBandedColumn
+                Caption = 'Condicion'
+                Visible = False
+                GroupIndex = 0
+                Width = 101
+                Position.BandIndex = 0
+                Position.ColIndex = 0
+                Position.RowIndex = 0
+              end
+              object gridCuotaColumn1: TcxGridBandedColumn
+                Caption = 'Descripcion'
+                HeaderAlignmentHorz = taCenter
+                Width = 193
+                Position.BandIndex = 0
+                Position.ColIndex = 1
+                Position.RowIndex = 0
+              end
+              object gridCuotaColumn2: TcxGridBandedColumn
+                Caption = 'Valor'
+                DataBinding.ValueType = 'Float'
+                PropertiesClassName = 'TcxSpinEditProperties'
+                Properties.Alignment.Horz = taRightJustify
+                Properties.DisplayFormat = '#,##0.00'
+                Properties.ReadOnly = True
+                Properties.SpinButtons.Visible = False
+                Properties.ValueType = vtFloat
+                HeaderAlignmentHorz = taCenter
+                Width = 80
+                Position.BandIndex = 0
+                Position.ColIndex = 2
+                Position.RowIndex = 0
+              end
+            end
+            object cxGridLevel3: TcxGridLevel
+              GridView = gridCuota
+            end
           end
-          object gridCuotaColumn1: TcxGridBandedColumn
-            Caption = 'Descripcion'
-            HeaderAlignmentHorz = taCenter
-            Width = 193
-            Position.BandIndex = 0
-            Position.ColIndex = 1
-            Position.RowIndex = 0
+          object cxGrid5: TcxGrid
+            Left = 21
+            Top = 21
+            Width = 399
+            Height = 267
+            Align = alClient
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -17
+            Font.Name = 'Tahoma'
+            Font.Style = [fsBold]
+            ParentFont = False
+            TabOrder = 1
+            object gridTotales: TcxGridBandedTableView
+              Navigator.Buttons.CustomButtons = <>
+              DataController.Summary.DefaultGroupSummaryItems = <>
+              DataController.Summary.FooterSummaryItems = <>
+              DataController.Summary.SummaryGroups = <>
+              OptionsData.CancelOnExit = False
+              OptionsData.Deleting = False
+              OptionsData.DeletingConfirmation = False
+              OptionsData.Editing = False
+              OptionsData.Inserting = False
+              OptionsSelection.CellSelect = False
+              OptionsView.NoDataToDisplayInfoText = 'Sin datos'
+              OptionsView.GroupByBox = False
+              Styles.ContentOdd = cxStyle1
+              Bands = <
+                item
+                  Caption = 'Parametros'
+                  Width = 374
+                end>
+              object cxGridBandedColumn1: TcxGridBandedColumn
+                Caption = 'Descripcion'
+                HeaderAlignmentHorz = taCenter
+                Width = 264
+                Position.BandIndex = 0
+                Position.ColIndex = 0
+                Position.RowIndex = 0
+              end
+              object cxGridBandedColumn2: TcxGridBandedColumn
+                Caption = 'Valor'
+                DataBinding.ValueType = 'Float'
+                PropertiesClassName = 'TcxSpinEditProperties'
+                Properties.Alignment.Horz = taRightJustify
+                Properties.DisplayFormat = '#,##0.00'
+                Properties.ReadOnly = True
+                Properties.SpinButtons.Visible = False
+                Properties.ValueType = vtFloat
+                HeaderAlignmentHorz = taCenter
+                Width = 110
+                Position.BandIndex = 0
+                Position.ColIndex = 1
+                Position.RowIndex = 0
+              end
+            end
+            object cxGridLevel1: TcxGridLevel
+              GridView = gridTotales
+            end
           end
-          object gridCuotaColumn2: TcxGridBandedColumn
-            Caption = 'Valor'
-            DataBinding.ValueType = 'Float'
-            PropertiesClassName = 'TcxSpinEditProperties'
-            Properties.Alignment.Horz = taRightJustify
-            Properties.DisplayFormat = '#,##0.00'
-            Properties.ReadOnly = True
-            Properties.SpinButtons.Visible = False
-            Properties.ValueType = vtFloat
-            HeaderAlignmentHorz = taCenter
-            Width = 80
-            Position.BandIndex = 0
-            Position.ColIndex = 2
-            Position.RowIndex = 0
+          object cxGrid1: TcxGrid
+            Left = 440
+            Top = 21
+            Width = 399
+            Height = 267
+            Align = alClient
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -17
+            Font.Name = 'Tahoma'
+            Font.Style = [fsBold]
+            ParentFont = False
+            TabOrder = 2
+            object gridAhorro: TcxGridBandedTableView
+              Navigator.Buttons.CustomButtons = <>
+              DataController.Summary.DefaultGroupSummaryItems = <>
+              DataController.Summary.FooterSummaryItems = <>
+              DataController.Summary.SummaryGroups = <>
+              OptionsData.CancelOnExit = False
+              OptionsData.Deleting = False
+              OptionsData.DeletingConfirmation = False
+              OptionsData.Editing = False
+              OptionsData.Inserting = False
+              OptionsSelection.CellSelect = False
+              OptionsView.NoDataToDisplayInfoText = 'Sin datos'
+              OptionsView.GroupByBox = False
+              Styles.ContentOdd = cxStyle1
+              Bands = <
+                item
+                  Caption = 'Ahorro'
+                  Width = 374
+                end>
+              object cxGridBandedColumn3: TcxGridBandedColumn
+                Caption = 'Descripcion'
+                HeaderAlignmentHorz = taCenter
+                Width = 264
+                Position.BandIndex = 0
+                Position.ColIndex = 0
+                Position.RowIndex = 0
+              end
+              object cxGridBandedColumn4: TcxGridBandedColumn
+                Caption = 'Valor'
+                DataBinding.ValueType = 'Float'
+                PropertiesClassName = 'TcxSpinEditProperties'
+                Properties.Alignment.Horz = taRightJustify
+                Properties.DisplayFormat = '#,##0.00'
+                Properties.ReadOnly = True
+                Properties.SpinButtons.Visible = False
+                Properties.ValueType = vtFloat
+                HeaderAlignmentHorz = taCenter
+                Width = 110
+                Position.BandIndex = 0
+                Position.ColIndex = 1
+                Position.RowIndex = 0
+              end
+            end
+            object cxGridLevel2: TcxGridLevel
+              GridView = gridAhorro
+            end
           end
-        end
-        object cxGridLevel3: TcxGridLevel
-          GridView = gridCuota
+          object cxGrid2: TcxGrid
+            Left = 440
+            Top = 308
+            Width = 399
+            Height = 299
+            Align = alClient
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -17
+            Font.Name = 'Tahoma'
+            Font.Style = [fsBold]
+            ParentFont = False
+            TabOrder = 3
+            object gridRendicion: TcxGridBandedTableView
+              Navigator.Buttons.CustomButtons = <>
+              DataController.Summary.DefaultGroupSummaryItems = <
+                item
+                  Format = '#,##0.00'
+                  Kind = skSum
+                  Column = cxGridBandedColumn7
+                end>
+              DataController.Summary.FooterSummaryItems = <>
+              DataController.Summary.SummaryGroups = <>
+              OptionsData.CancelOnExit = False
+              OptionsData.Deleting = False
+              OptionsData.DeletingConfirmation = False
+              OptionsData.Editing = False
+              OptionsData.Inserting = False
+              OptionsSelection.CellSelect = False
+              OptionsView.NoDataToDisplayInfoText = 'Sin datos'
+              OptionsView.Footer = True
+              OptionsView.GroupSummaryLayout = gslAlignWithColumnsAndDistribute
+              Styles.ContentOdd = cxStyle1
+              Bands = <
+                item
+                  Caption = 'Distribuci'#243'n al finalizar pago de cuotas'#9#9#9
+                  Width = 374
+                end>
+              object cxGridBandedColumn5: TcxGridBandedColumn
+                Caption = 'Tipo'
+                Visible = False
+                GroupIndex = 0
+                Width = 101
+                Position.BandIndex = 0
+                Position.ColIndex = 0
+                Position.RowIndex = 0
+              end
+              object cxGridBandedColumn6: TcxGridBandedColumn
+                Caption = 'Descripcion'
+                HeaderAlignmentHorz = taCenter
+                Width = 193
+                Position.BandIndex = 0
+                Position.ColIndex = 1
+                Position.RowIndex = 0
+              end
+              object cxGridBandedColumn7: TcxGridBandedColumn
+                Caption = 'Valor'
+                DataBinding.ValueType = 'Float'
+                PropertiesClassName = 'TcxSpinEditProperties'
+                Properties.Alignment.Horz = taRightJustify
+                Properties.DisplayFormat = '#,##0.00'
+                Properties.ReadOnly = True
+                Properties.SpinButtons.Visible = False
+                Properties.ValueType = vtFloat
+                GroupSummaryAlignment = taRightJustify
+                HeaderAlignmentHorz = taCenter
+                Width = 80
+                Position.BandIndex = 0
+                Position.ColIndex = 2
+                Position.RowIndex = 0
+              end
+            end
+            object cxGridLevel4: TcxGridLevel
+              GridView = gridRendicion
+            end
+          end
         end
       end
-      object cxGrid5: TcxGrid
-        Left = 21
-        Top = 21
-        Width = 396
-        Height = 278
-        Align = alClient
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -17
-        Font.Name = 'Tahoma'
-        Font.Style = [fsBold]
-        ParentFont = False
-        TabOrder = 1
-        object gridTotales: TcxGridBandedTableView
-          Navigator.Buttons.CustomButtons = <>
-          DataController.Summary.DefaultGroupSummaryItems = <>
-          DataController.Summary.FooterSummaryItems = <>
-          DataController.Summary.SummaryGroups = <>
-          OptionsData.CancelOnExit = False
-          OptionsData.Deleting = False
-          OptionsData.DeletingConfirmation = False
-          OptionsData.Editing = False
-          OptionsData.Inserting = False
-          OptionsSelection.CellSelect = False
-          OptionsView.NoDataToDisplayInfoText = 'Sin datos'
-          OptionsView.GroupByBox = False
-          Styles.ContentOdd = cxStyle1
-          Bands = <
+      object pgcRebatir: TTabSheet
+        Caption = 'Rebatir'
+        ImageIndex = 1
+        object GridPanel2: TGridPanel
+          Left = 0
+          Top = 0
+          Width = 860
+          Height = 628
+          Align = alClient
+          Caption = 'GridPanel2'
+          ColumnCollection = <
             item
-              Caption = 'Parametros'
-              Width = 374
-            end>
-          object cxGridBandedColumn1: TcxGridBandedColumn
-            Caption = 'Descripcion'
-            HeaderAlignmentHorz = taCenter
-            Width = 264
-            Position.BandIndex = 0
-            Position.ColIndex = 0
-            Position.RowIndex = 0
-          end
-          object cxGridBandedColumn2: TcxGridBandedColumn
-            Caption = 'Valor'
-            DataBinding.ValueType = 'Float'
-            PropertiesClassName = 'TcxSpinEditProperties'
-            Properties.Alignment.Horz = taRightJustify
-            Properties.DisplayFormat = '#,##0.00'
-            Properties.ReadOnly = True
-            Properties.SpinButtons.Visible = False
-            Properties.ValueType = vtFloat
-            HeaderAlignmentHorz = taCenter
-            Width = 110
-            Position.BandIndex = 0
-            Position.ColIndex = 1
-            Position.RowIndex = 0
-          end
-        end
-        object cxGridLevel1: TcxGridLevel
-          GridView = gridTotales
-        end
-      end
-      object cxGrid1: TcxGrid
-        Left = 437
-        Top = 21
-        Width = 397
-        Height = 278
-        Align = alClient
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -17
-        Font.Name = 'Tahoma'
-        Font.Style = [fsBold]
-        ParentFont = False
-        TabOrder = 2
-        object gridAhorro: TcxGridBandedTableView
-          Navigator.Buttons.CustomButtons = <>
-          DataController.Summary.DefaultGroupSummaryItems = <>
-          DataController.Summary.FooterSummaryItems = <>
-          DataController.Summary.SummaryGroups = <>
-          OptionsData.CancelOnExit = False
-          OptionsData.Deleting = False
-          OptionsData.DeletingConfirmation = False
-          OptionsData.Editing = False
-          OptionsData.Inserting = False
-          OptionsSelection.CellSelect = False
-          OptionsView.NoDataToDisplayInfoText = 'Sin datos'
-          OptionsView.GroupByBox = False
-          Styles.ContentOdd = cxStyle1
-          Bands = <
+              Value = 42.857142857142850000
+            end
             item
-              Caption = 'Ahorro'
-              Width = 374
+              Value = 57.142857142857150000
             end>
-          object cxGridBandedColumn3: TcxGridBandedColumn
-            Caption = 'Descripcion'
-            HeaderAlignmentHorz = taCenter
-            Width = 264
-            Position.BandIndex = 0
-            Position.ColIndex = 0
-            Position.RowIndex = 0
-          end
-          object cxGridBandedColumn4: TcxGridBandedColumn
-            Caption = 'Valor'
-            DataBinding.ValueType = 'Float'
-            PropertiesClassName = 'TcxSpinEditProperties'
-            Properties.Alignment.Horz = taRightJustify
-            Properties.DisplayFormat = '#,##0.00'
-            Properties.ReadOnly = True
-            Properties.SpinButtons.Visible = False
-            Properties.ValueType = vtFloat
-            HeaderAlignmentHorz = taCenter
-            Width = 110
-            Position.BandIndex = 0
-            Position.ColIndex = 1
-            Position.RowIndex = 0
-          end
-        end
-        object cxGridLevel2: TcxGridLevel
-          GridView = gridAhorro
-        end
-      end
-      object cxGrid2: TcxGrid
-        Left = 437
-        Top = 319
-        Width = 397
-        Height = 312
-        Align = alClient
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -17
-        Font.Name = 'Tahoma'
-        Font.Style = [fsBold]
-        ParentFont = False
-        TabOrder = 3
-        object gridRendicion: TcxGridBandedTableView
-          Navigator.Buttons.CustomButtons = <>
-          DataController.Summary.DefaultGroupSummaryItems = <
+          ControlCollection = <
             item
-              Format = '#,##0.00'
-              Kind = skSum
-              Column = cxGridBandedColumn7
-            end>
-          DataController.Summary.FooterSummaryItems = <>
-          DataController.Summary.SummaryGroups = <>
-          OptionsData.CancelOnExit = False
-          OptionsData.Deleting = False
-          OptionsData.DeletingConfirmation = False
-          OptionsData.Editing = False
-          OptionsData.Inserting = False
-          OptionsSelection.CellSelect = False
-          OptionsView.NoDataToDisplayInfoText = 'Sin datos'
-          OptionsView.Footer = True
-          OptionsView.GroupSummaryLayout = gslAlignWithColumnsAndDistribute
-          Styles.ContentOdd = cxStyle1
-          Bands = <
+              Column = 0
+              Control = GridPanel3
+              Row = 0
+            end
             item
-              Caption = 'Distribuci'#243'n al finalizar pago de cuotas'#9#9#9
-              Width = 374
+              Column = 1
+              Control = cxGrid3
+              Row = 0
             end>
-          object cxGridBandedColumn5: TcxGridBandedColumn
-            Caption = 'Tipo'
-            Visible = False
-            GroupIndex = 0
-            Width = 101
-            Position.BandIndex = 0
-            Position.ColIndex = 0
-            Position.RowIndex = 0
+          Padding.Left = 5
+          Padding.Top = 5
+          Padding.Right = 5
+          Padding.Bottom = 5
+          RowCollection = <
+            item
+              Value = 100.000000000000000000
+            end>
+          TabOrder = 0
+          object GridPanel3: TGridPanel
+            Left = 11
+            Top = 11
+            Width = 353
+            Height = 606
+            Align = alClient
+            Caption = 'GridPanel3'
+            ColumnCollection = <
+              item
+                Value = 100.000000000000000000
+              end>
+            ControlCollection = <
+              item
+                Column = 0
+                Control = cxGrid6
+                Row = 0
+              end
+              item
+                Column = 0
+                Control = cxGrid7
+                Row = 1
+              end
+              item
+                Column = 0
+                Control = cxGrid8
+                Row = 2
+              end>
+            RowCollection = <
+              item
+                Value = 40.066382171645330000
+              end
+              item
+                Value = 24.371740161213850000
+              end
+              item
+                Value = 35.561877667140830000
+              end>
+            TabOrder = 0
+            object cxGrid6: TcxGrid
+              Left = 1
+              Top = 1
+              Width = 351
+              Height = 242
+              Align = alClient
+              Font.Charset = DEFAULT_CHARSET
+              Font.Color = clWindowText
+              Font.Height = -17
+              Font.Name = 'Tahoma'
+              Font.Style = [fsBold]
+              ParentFont = False
+              TabOrder = 0
+              object gridParametrosRebatir: TcxGridBandedTableView
+                Navigator.Buttons.CustomButtons = <>
+                DataController.Summary.DefaultGroupSummaryItems = <>
+                DataController.Summary.FooterSummaryItems = <>
+                DataController.Summary.SummaryGroups = <>
+                OptionsData.CancelOnExit = False
+                OptionsData.Deleting = False
+                OptionsData.DeletingConfirmation = False
+                OptionsData.Editing = False
+                OptionsData.Inserting = False
+                OptionsSelection.CellSelect = False
+                OptionsView.NoDataToDisplayInfoText = 'Sin datos'
+                OptionsView.GroupByBox = False
+                Styles.ContentOdd = cxStyle1
+                Bands = <
+                  item
+                    Caption = 'Parametros'
+                    Width = 348
+                  end>
+                object cxGridBandedColumn10: TcxGridBandedColumn
+                  Caption = 'Descripcion'
+                  HeaderAlignmentHorz = taCenter
+                  Width = 247
+                  Position.BandIndex = 0
+                  Position.ColIndex = 0
+                  Position.RowIndex = 0
+                end
+                object cxGridBandedColumn11: TcxGridBandedColumn
+                  Caption = 'Valor'
+                  DataBinding.ValueType = 'Float'
+                  PropertiesClassName = 'TcxSpinEditProperties'
+                  Properties.Alignment.Horz = taRightJustify
+                  Properties.DisplayFormat = '#,##0.000'
+                  Properties.ReadOnly = True
+                  Properties.SpinButtons.Visible = False
+                  Properties.ValueType = vtFloat
+                  HeaderAlignmentHorz = taCenter
+                  Width = 127
+                  Position.BandIndex = 0
+                  Position.ColIndex = 1
+                  Position.RowIndex = 0
+                end
+              end
+              object cxGridLevel6: TcxGridLevel
+                GridView = gridParametrosRebatir
+              end
+            end
+            object cxGrid7: TcxGrid
+              Left = 1
+              Top = 243
+              Width = 351
+              Height = 147
+              Align = alClient
+              Font.Charset = DEFAULT_CHARSET
+              Font.Color = clWindowText
+              Font.Height = -17
+              Font.Name = 'Tahoma'
+              Font.Style = [fsBold]
+              ParentFont = False
+              TabOrder = 1
+              object gridFactorRebatir: TcxGridBandedTableView
+                Navigator.Buttons.CustomButtons = <>
+                DataController.Summary.DefaultGroupSummaryItems = <>
+                DataController.Summary.FooterSummaryItems = <>
+                DataController.Summary.SummaryGroups = <>
+                OptionsData.CancelOnExit = False
+                OptionsData.Deleting = False
+                OptionsData.DeletingConfirmation = False
+                OptionsData.Editing = False
+                OptionsData.Inserting = False
+                OptionsSelection.CellSelect = False
+                OptionsView.NoDataToDisplayInfoText = 'Sin datos'
+                OptionsView.GroupByBox = False
+                Styles.ContentOdd = cxStyle1
+                Bands = <
+                  item
+                    Caption = 'Factor'
+                    Width = 348
+                  end>
+                object cxGridBandedColumn12: TcxGridBandedColumn
+                  Caption = 'Descripcion'
+                  HeaderAlignmentHorz = taCenter
+                  Width = 178
+                  Position.BandIndex = 0
+                  Position.ColIndex = 0
+                  Position.RowIndex = 0
+                end
+                object cxGridBandedColumn13: TcxGridBandedColumn
+                  Caption = 'Valor'
+                  DataBinding.ValueType = 'Float'
+                  PropertiesClassName = 'TcxSpinEditProperties'
+                  Properties.Alignment.Horz = taRightJustify
+                  Properties.DisplayFormat = '#,##0.0000000000'
+                  Properties.ReadOnly = True
+                  Properties.SpinButtons.Visible = False
+                  Properties.ValueType = vtFloat
+                  HeaderAlignmentHorz = taCenter
+                  Width = 170
+                  Position.BandIndex = 0
+                  Position.ColIndex = 1
+                  Position.RowIndex = 0
+                end
+              end
+              object cxGridLevel7: TcxGridLevel
+                GridView = gridFactorRebatir
+              end
+            end
+            object cxGrid8: TcxGrid
+              Left = 1
+              Top = 390
+              Width = 351
+              Height = 215
+              Align = alClient
+              Font.Charset = DEFAULT_CHARSET
+              Font.Color = clWindowText
+              Font.Height = -17
+              Font.Name = 'Tahoma'
+              Font.Style = [fsBold]
+              ParentFont = False
+              TabOrder = 2
+              object gridInteresRebatir: TcxGridBandedTableView
+                Navigator.Buttons.CustomButtons = <>
+                DataController.Summary.DefaultGroupSummaryItems = <>
+                DataController.Summary.FooterSummaryItems = <>
+                DataController.Summary.SummaryGroups = <>
+                OptionsData.CancelOnExit = False
+                OptionsData.Deleting = False
+                OptionsData.DeletingConfirmation = False
+                OptionsData.Editing = False
+                OptionsData.Inserting = False
+                OptionsSelection.CellSelect = False
+                OptionsView.NoDataToDisplayInfoText = 'Sin datos'
+                OptionsView.GroupByBox = False
+                Styles.ContentOdd = cxStyle1
+                Bands = <
+                  item
+                    Caption = 'Interes'
+                    Width = 348
+                  end>
+                object cxGridBandedColumn14: TcxGridBandedColumn
+                  Caption = 'Descripcion'
+                  HeaderAlignmentHorz = taCenter
+                  Width = 264
+                  Position.BandIndex = 0
+                  Position.ColIndex = 0
+                  Position.RowIndex = 0
+                end
+                object cxGridBandedColumn15: TcxGridBandedColumn
+                  Caption = 'Valor'
+                  DataBinding.ValueType = 'Float'
+                  PropertiesClassName = 'TcxSpinEditProperties'
+                  Properties.Alignment.Horz = taRightJustify
+                  Properties.DisplayFormat = '#,##0.00'
+                  Properties.ReadOnly = True
+                  Properties.SpinButtons.Visible = False
+                  Properties.ValueType = vtFloat
+                  HeaderAlignmentHorz = taCenter
+                  Width = 110
+                  Position.BandIndex = 0
+                  Position.ColIndex = 1
+                  Position.RowIndex = 0
+                end
+              end
+              object cxGridLevel8: TcxGridLevel
+                GridView = gridInteresRebatir
+              end
+            end
           end
-          object cxGridBandedColumn6: TcxGridBandedColumn
-            Caption = 'Descripcion'
-            HeaderAlignmentHorz = taCenter
-            Width = 193
-            Position.BandIndex = 0
-            Position.ColIndex = 1
-            Position.RowIndex = 0
+          object cxGrid3: TcxGrid
+            Left = 374
+            Top = 11
+            Width = 475
+            Height = 606
+            Align = alClient
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -17
+            Font.Name = 'Tahoma'
+            Font.Style = [fsBold]
+            ParentFont = False
+            TabOrder = 1
+            object gridCuotasRebatir: TcxGridBandedTableView
+              Navigator.Buttons.CustomButtons = <>
+              DataController.Summary.DefaultGroupSummaryItems = <>
+              DataController.Summary.FooterSummaryItems = <>
+              DataController.Summary.SummaryGroups = <>
+              OptionsData.CancelOnExit = False
+              OptionsData.Deleting = False
+              OptionsData.DeletingConfirmation = False
+              OptionsData.Editing = False
+              OptionsData.Inserting = False
+              OptionsSelection.CellSelect = False
+              OptionsView.NoDataToDisplayInfoText = 'Sin datos'
+              OptionsView.GroupByBox = False
+              Styles.ContentOdd = cxStyle1
+              Bands = <
+                item
+                  Caption = 'Parametros'
+                  Width = 467
+                end>
+              object colId: TcxGridBandedColumn
+                Caption = '#'
+                DataBinding.ValueType = 'Integer'
+                PropertiesClassName = 'TcxSpinEditProperties'
+                Properties.Alignment.Horz = taRightJustify
+                Properties.ReadOnly = True
+                HeaderAlignmentHorz = taCenter
+                HeaderGlyphAlignmentHorz = taCenter
+                Width = 49
+                Position.BandIndex = 0
+                Position.ColIndex = 0
+                Position.RowIndex = 0
+              end
+              object colSaldoDeuda: TcxGridBandedColumn
+                Caption = 'Saldo deuda'
+                DataBinding.ValueType = 'Float'
+                PropertiesClassName = 'TcxSpinEditProperties'
+                Properties.Alignment.Horz = taRightJustify
+                Properties.CanEdit = False
+                Properties.DisplayFormat = '#,#0.00'
+                Properties.ReadOnly = True
+                Properties.SpinButtons.Visible = False
+                HeaderAlignmentHorz = taCenter
+                HeaderGlyphAlignmentHorz = taCenter
+                Width = 113
+                Position.BandIndex = 0
+                Position.ColIndex = 1
+                Position.RowIndex = 0
+              end
+              object colInteres: TcxGridBandedColumn
+                Caption = 'Interes'
+                DataBinding.ValueType = 'Float'
+                PropertiesClassName = 'TcxSpinEditProperties'
+                Properties.Alignment.Horz = taRightJustify
+                Properties.CanEdit = False
+                Properties.DisplayFormat = '#,##0.00'
+                Properties.ReadOnly = True
+                Properties.SpinButtons.Visible = False
+                Properties.ValueType = vtFloat
+                HeaderAlignmentHorz = taCenter
+                HeaderGlyphAlignmentHorz = taCenter
+                Width = 108
+                Position.BandIndex = 0
+                Position.ColIndex = 2
+                Position.RowIndex = 0
+              end
+              object colAmortizacion: TcxGridBandedColumn
+                Caption = 'Amortizacion'
+                DataBinding.ValueType = 'Float'
+                PropertiesClassName = 'TcxSpinEditProperties'
+                Properties.Alignment.Horz = taRightJustify
+                Properties.CanEdit = False
+                Properties.DisplayFormat = '#,##0.00'
+                Properties.ReadOnly = True
+                Properties.SpinButtons.Visible = False
+                HeaderAlignmentHorz = taCenter
+                HeaderGlyphAlignmentHorz = taCenter
+                Width = 116
+                Position.BandIndex = 0
+                Position.ColIndex = 3
+                Position.RowIndex = 0
+              end
+              object colCuota: TcxGridBandedColumn
+                Caption = 'Cuota'
+                DataBinding.ValueType = 'Float'
+                PropertiesClassName = 'TcxSpinEditProperties'
+                Properties.Alignment.Horz = taRightJustify
+                Properties.CanEdit = False
+                Properties.DisplayFormat = '#,##0.00'
+                Properties.ReadOnly = True
+                Properties.SpinButtons.Visible = False
+                HeaderAlignmentHorz = taCenter
+                HeaderGlyphAlignmentHorz = taCenter
+                Width = 81
+                Position.BandIndex = 0
+                Position.ColIndex = 4
+                Position.RowIndex = 0
+              end
+            end
+            object cxGridLevel5: TcxGridLevel
+              GridView = gridCuotasRebatir
+            end
           end
-          object cxGridBandedColumn7: TcxGridBandedColumn
-            Caption = 'Valor'
-            DataBinding.ValueType = 'Float'
-            PropertiesClassName = 'TcxSpinEditProperties'
-            Properties.Alignment.Horz = taRightJustify
-            Properties.DisplayFormat = '#,##0.00'
-            Properties.ReadOnly = True
-            Properties.SpinButtons.Visible = False
-            Properties.ValueType = vtFloat
-            GroupSummaryAlignment = taRightJustify
-            HeaderAlignmentHorz = taCenter
-            Width = 80
-            Position.BandIndex = 0
-            Position.ColIndex = 2
-            Position.RowIndex = 0
-          end
-        end
-        object cxGridLevel4: TcxGridLevel
-          GridView = gridRendicion
         end
       end
     end
@@ -831,8 +1222,8 @@ object fCalcular: TfCalcular
   object BindingsList1: TBindingsList
     Methods = <>
     OutputConverters = <>
-    Left = 156
-    Top = 29
+    Left = 164
+    Top = 5
     object LinkPropertyToFieldCaption: TLinkPropertyToField
       Category = 'Quick Bindings'
       DataSource = BindSourceDB1
@@ -876,20 +1267,18 @@ object fCalcular: TfCalcular
       ComponentProperty = 'Caption'
     end
     object LinkPropertyToField1: TLinkPropertyToField
-      DataSource = BindSourceDB4
+      DataSource = BindSourceDB3
       FieldName = 'desc_tipo_producto'
       Component = lblTipoProducto
       ComponentProperty = 'Caption'
     end
   end
   object BindSourceDB2: TBindSourceDB
-    DataSet = dmData.fdPerfilCliente
     ScopeMappings = <>
     Left = 744
     Top = 168
   end
   object BindSourceDB3: TBindSourceDB
-    DataSet = dmData.fdTipoProducto
     ScopeMappings = <>
     Left = 784
     Top = 272
@@ -904,7 +1293,6 @@ object fCalcular: TfCalcular
     end
   end
   object BindSourceDB4: TBindSourceDB
-    DataSource = dmData.dsTipoProducto
     ScopeMappings = <>
     Left = 552
     Top = 376

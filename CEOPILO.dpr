@@ -24,7 +24,9 @@ uses
   uCalcular in 'uCalcular.pas' {fCalcular},
   uMenu in 'uMenu.pas' {fMenu},
   uAdapterJson in 'uAdapterJson.pas',
-  uSolicitud in 'uSolicitud.pas' {fSolicitud};
+  uSolicitud in 'uSolicitud.pas' {fSolicitud},
+  Vcl.Themes,
+  Vcl.Styles;
 
 {$R *.res}
 

@@ -30,6 +30,7 @@ object fEmpleado: TfEmpleado
     Height = 33
     Align = alTop
     TabOrder = 0
+    ExplicitWidth = 854
     object Label1: TLabel
       Left = 129
       Top = 6
@@ -92,6 +93,7 @@ object fEmpleado: TfEmpleado
       Height = 25
       Align = alRight
       TabOrder = 0
+      ExplicitLeft = 647
       object Label12: TLabel
         Left = 6
         Top = 6
@@ -148,6 +150,7 @@ object fEmpleado: TfEmpleado
       Height = 25
       Align = alRight
       TabOrder = 1
+      ExplicitLeft = 507
       object Label11: TLabel
         Left = 17
         Top = 6
@@ -182,17 +185,22 @@ object fEmpleado: TfEmpleado
     Height = 576
     Align = alClient
     TabOrder = 1
+    ExplicitWidth = 860
+    ExplicitHeight = 473
     object PageControl1: TPageControl
       Left = 1
       Top = 1
       Width = 843
       Height = 533
-      ActivePage = tabFormulario
+      ActivePage = tabLIstado
       Align = alClient
       TabOrder = 0
+      ExplicitLeft = 2
       object tabFormulario: TTabSheet
         Caption = 'Formulario'
         TabVisible = False
+        ExplicitWidth = 850
+        ExplicitHeight = 402
         object GroupBox1: TGroupBox
           Left = 51
           Top = 31
@@ -324,6 +332,8 @@ object fEmpleado: TfEmpleado
       object tabLIstado: TTabSheet
         Caption = 'Listado'
         ImageIndex = 1
+        ExplicitWidth = 850
+        ExplicitHeight = 402
         object gridEmpleado: TcxGrid
           Left = 0
           Top = 41
@@ -332,6 +342,8 @@ object fEmpleado: TfEmpleado
           Align = alClient
           TabOrder = 0
           LookAndFeel.NativeStyle = False
+          ExplicitWidth = 850
+          ExplicitHeight = 361
           object gridEmpleadoDBTableView1: TcxGridDBTableView
             Navigator.Buttons.CustomButtons = <>
             DataController.DataSource = dsEmpleado
@@ -397,6 +409,7 @@ object fEmpleado: TfEmpleado
           Height = 41
           Align = alTop
           TabOrder = 1
+          ExplicitWidth = 850
           object edCriterio: TEdit
             Left = 12
             Top = 10
@@ -424,6 +437,8 @@ object fEmpleado: TfEmpleado
       Height = 41
       Align = alBottom
       TabOrder = 1
+      ExplicitTop = 431
+      ExplicitWidth = 858
       object btnNuevo: TButton
         Left = 55
         Top = 6

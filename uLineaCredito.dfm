@@ -295,7 +295,7 @@ object fLineaCredito: TfLineaCredito
           Height = 308
           Align = alClient
           TabOrder = 0
-          LookAndFeel.NativeStyle = False
+          LookAndFeel.NativeStyle = True
           object gridLIneaCreditoDBTableView1: TcxGridDBTableView
             Navigator.Buttons.CustomButtons = <>
             DataController.DataSource = dsLineaCredito
@@ -476,7 +476,7 @@ object fLineaCredito: TfLineaCredito
     PixelsPerInch = 96
     object cxStyle1: TcxStyle
       AssignedValues = [svColor]
-      Color = clInfoBk
+      Color = clHighlight
     end
   end
 end

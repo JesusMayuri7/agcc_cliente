@@ -9,11 +9,56 @@ function calcularTotales(interes:real=0;monto:real=0;plazo:real=0):TJsonArray;
 procedure PrimerElementoCombo(combo:TcxLookupComboBox);
 procedure LlenarCombo(adapter:TRESTResponseDataSetAdapter;json:string);
 function existeCliente(dni:string):TJSONObject;
+function calcularTotalesRebatir(monto,plazo,interes:real):real;
+procedure JsonToDataset(aDataset : TDataSet; aJSON : string);
+procedure LlenarCombo2(dataset:TFdMemtable;json:widestring);
 
 implementation
 
 uses
   uAdapterJson, UGraph, UData;
+
+procedure JsonToDataset(aDataset : TDataSet; aJSON : string);
+var
+  JObj: TJSONArray;
+  vConv : TCustomJSONDataSetAdapter;
+begin
+  if (aJSON = EmptyStr) then
+  begin
+    Exit;
+  end;
+
+  JObj := TJSONObject.ParseJSONValue(aJSON) as TJSONArray;
+  vConv := TCustomJSONDataSetAdapter.Create(Nil);
+
+  try
+    vConv.Dataset := aDataset;
+    vConv.UpdateDataSet(JObj);
+  finally
+    vConv.Free;
+    JObj.Free;
+  end;
+end;
+
+function calcularTotalesRebatir(monto,plazo,interes:real):real;
+var interes_por,factor,i_soles_total,i_soles_anual,cuota_mensual,i_soles_mensual:real;
+var recordCount:integer;
+begin
+  cuota_mensual:=0;
+  i_soles_total:=0;
+  i_soles_anual:=0;
+  i_soles_mensual:=0;
+  factor:=0;
+  interes_por:=interes/100;
+
+    i_soles_anual:=(Power(1+interes_por,(360/30))-1)*100;
+    factor:=(Power(1+interes_por,plazo)*interes_por)/(Power(1+interes_por,plazo)-1);
+    cuota_mensual:=roundTo(factor*monto,-2);
+    i_soles_total:=plazo*(interes/100);
+    i_soles_total:=roundTo(cuota_mensual*plazo,-2);
+    result:=cuota_mensual;
+end;
+
 
 function existeCliente(dni:string):TJSONObject;
 var graph:Tgraph;
@@ -25,7 +70,7 @@ begin
     graph:=TGraph.Create(dmData.restClient1);
     try  // Cambiar por el query a consultar, hacer pruebas en Insomnia
     graph.query:='query verCliente($dni:String) { clienteQuery(dni:$dni)' +
-     '{ data {id,dni,nombres,apellido_paterno,apellido_materno,fecha_nacimiento,direccion,telefono,activo}}} ';
+     '{ data {id,dni,nombres,apellido_paterno,apellido_materno,full_name,fecha_nacimiento,direccion,telefono,activo}}} ';
 
     //NO variar
     variables:=TJSONObject.Create;
@@ -44,25 +89,59 @@ begin
     end;
 end;
 
+procedure LlenarCombo2(dataset:TFdMemtable;json:widestring);
+var
+  LJSON: TJSONValue;
+  LIntf: IRESTResponseJSON;
+  adapter: TRESTResponseDataSetAdapter;
+begin
+  try
+      adapter:=TRESTResponseDataSetAdapter.Create(nil);
+     // dataset.Close;
+      //dataset.ClearFields;
+      adapter.Dataset := dataset;
+      adapter.ResponseJSON := nil;
+      adapter.NestedElements := False;
+      adapter.RootElement :='';
+
+      LJSON := TJSONObject.ParseJSONValue(json);
+      if LJSON = nil then
+    //    raise Exception.Create('Sin datos');
+      else
+      begin
+        // Provide the JSON value to the adapter
+      LIntf := TAdapterJSONValue.Create(LJSON);
+      adapter.ResponseJSON := LIntf;
+      adapter.Active := True;
+      dataset.Refresh;
+      end;
+  finally
+      FreeAndNil(adapter);
+  end;
+end;
+
 procedure LlenarCombo(adapter:TRESTResponseDataSetAdapter;json:string);
 var
   LJSON: TJSONValue;
   LIntf: IRESTResponseJSON;
 begin
-  // Clear last value
-  adapter.ResponseJSON := nil;
-  adapter.NestedElements := False;
-  adapter.RootElement :='';
+  try
+    adapter.ResponseJSON := nil;
+    adapter.NestedElements := False;
+    adapter.RootElement :='';
 
-  LJSON := TJSONObject.ParseJSONValue(json);
-  if LJSON = nil then
-//    raise Exception.Create('Sin datos');
-  else
-  begin
-    // Provide the JSON value to the adapter
-  LIntf := TAdapterJSONValue.Create(LJSON);
-  adapter.ResponseJSON := LIntf;
-  adapter.Active := True;
+    LJSON := TJSONObject.ParseJSONValue(json);
+    if LJSON = nil then
+  //    raise Exception.Create('Sin datos');
+    else
+    begin
+      // Provide the JSON value to the adapter
+    LIntf := TAdapterJSONValue.Create(LJSON);
+    adapter.ResponseJSON := LIntf;
+    adapter.Active := True;
+    end;
+  finally
+
   end;
 end;
 
