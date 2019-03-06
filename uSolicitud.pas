@@ -304,7 +304,7 @@ begin
     graph.variables:=variables;
 
     resultado:=graph.ejecutar('linea_creditoMutation');  // cambiar por el nombre del Query que buscas linea_creditoQuery
-      showmessage(resultado.ToString);
+    //  showmessage(resultado.ToString);
     uHelpers.InsertarRegistroDataset(resultado,fdSolicitud);
 
     finally
@@ -359,7 +359,7 @@ procedure TfSolicitud.btnCancelarClick(Sender: TObject);
 begin
   btnCancelar.Enabled:=false;
   Limpiar();
-  tabFormulario.TabVisible:=false;
+  //tabFormulario.TabVisible:=false;
   tabListado.TabVisible:=true;
   btnNuevo.Enabled:=true;
   btnEditar.Enabled:=True;
@@ -372,21 +372,22 @@ begin
   if gridSolicitud.Controller.SelectedRowCount=1 then
   begin
      Tag:=gridSolicitud.DataController.Values[gridSolicitud.Controller.FocusedRecordIndex , 0];
+     ShowMessage(tag.ToString);
      if Tag>0 then
      begin
          btnEditar.Enabled:=false;
-         tabListado.TabVisible:=false;
+         //tabListado.TabVisible:=false;
          tabFormulario.TabVisible:=true;
          btnCancelar.Enabled:=true;
          btnGuardar.Enabled:=true;
           dmdata.RESTRequest1.Execute;
           memo1.Lines.Clear;
           memo1.Lines.Text:=dmdata.RESTRequest1.Response.Content;
-         cbbLineaCredito.EditValue:=fdSolicitud.FieldValues['linea_credito_id'];
-         uHelpers.llenarCombo2(dmdata.fdPerfilCliente,VarToStr(cbbLineaCredito.Properties.ListSource.DataSet.FieldValues['perfil_cliente']));
-         cbbPerfilCliente.EditValue:=fdSolicitud.FieldValues['perfil_cliente_id'];
-         uHelpers.llenarCombo2(dmdata.fdTipoProducto,VarToStr(cbbPerfilCliente.Properties.listsource.DataSet.FieldValues['tipo_producto']));
-         cbbTipoProducto.EditValue:=fdSolicitud.FieldValues['tipo_producto_id'];
+          cbbLineaCredito.EditValue:=fdSolicitud.FieldValues['linea_credito_id'];
+          uHelpers.llenarCombo2(dmdata.fdPerfilCliente,VarToStr(dmData.fdLineaCredito.FieldValues['perfil_cliente']));
+          cbbPerfilCliente.EditValue:=fdSolicitud.FieldValues['perfil_cliente_id'];
+          uHelpers.llenarCombo2(dmdata.fdTipoProducto,VarToStr(dmdata.fdPerfilCliente.FieldValues['tipo_producto']));
+           cbbTipoProducto.EditValue:=fdSolicitud.FieldValues['tipo_producto_id'];
          // no llena perfil cliente la segunda vez que edita.....
          cbbTipoPrestamo.EditValue:=fdSolicitud.FieldValues['tipo_prestamo_id'];
          cbbGarantia.EditValue:=fdSolicitud.FieldValues['garantia_id'];
@@ -428,14 +429,35 @@ end;
 
 procedure TfSolicitud.cbbLineaCreditoPropertiesChange(Sender: TObject);
 begin
-uHelpers.llenarCombo(dmdata.RESTResponseDataSetAdapter2,VarToStr(dmdata.fdLineaCredito.FieldValues['perfil_cliente']));
-PrimerElementoCombo(cbbPerfilCliente);
+//ShowMessage();
+//uHelpers.JsonToDataset(dmdata.fdPerfilCliente,dmdata.fdLineaCredito.FieldByName('perfil_cliente').AsString);
+//  uHelpers.llenarCombo(dmData.RESTResponseDataSetAdapter2,VarToStr(dmdata.fdLineaCredito.FieldByName('perfil_cliente').AsString));
+
+if Tag>0 then
+   begin
+     //ShowMessage('Lnea credito '+VarToStr(dmdata.fdLineaCredito.FieldValues['perfil_cliente']));
+    // cbbPerfilCliente.EditValue:=fdSolicitud.FieldValues['perfil_cliente_id'];
+   end
+   else
+   begin
+   uHelpers.llenarCombo2(dmData.fdPerfilCliente,VarToStr(dmdata.fdLineaCredito.FieldValues['perfil_cliente']));
+   PrimerElementoCombo(cbbPerfilCliente);
+   end;
 end;
 
 procedure TfSolicitud.cbbPerfilClientePropertiesChange(Sender: TObject);
 begin
-  uHelpers.llenarCombo(dmdata.RESTResponseDataSetAdapter3,VarToStr(dmdata.fdPerfilCliente.FieldValues['tipo_producto']));
-  uHelpers.PrimerElementoCombo(cbbTipoProducto);
+
+  if Tag>0 then
+     begin
+      //ShowMessage('Perfil cliente '+VarToStr(dmdata.fdPerfilCliente.FieldValues['tipo_producto']));
+      //cbbTipoProducto.EditValue:=fdSolicitud.FieldValues['tipo_producto_id'];
+     end
+  else
+    begin
+    uHelpers.llenarCombo2(dmdata.fdTipoProducto,VarToStr(dmdata.fdPerfilCliente.FieldValues['tipo_producto']));
+     uHelpers.PrimerElementoCombo(cbbTipoProducto);
+    end;
 end;
 
 procedure TfSolicitud.cbbRegistrosChange(Sender: TObject);
@@ -446,7 +468,7 @@ end;
 
 procedure TfSolicitud.dsSolicitudDataChange(Sender: TObject; Field: TField);
 begin
-  uHelpers.LlenarCombo2(fdAvales,VarToStr(fdSolicitud.FieldValues['avales']));
+//  uHelpers.LlenarCombo2(fdAvales,VarToStr(fdSolicitud.FieldValues['avales']));
 end;
 
 procedure TfSolicitud.FormCreate(Sender: TObject);
@@ -465,7 +487,9 @@ end;
 procedure TfSolicitud.Limpiar;
 begin
 Tag:=0;
-dmdata.RESTResponseDataSetAdapter1.Active:=false;
+dmdata.fdLineaCredito.Close;
+dmdata.fdPerfilCliente.Close;
+dmData.fdTipoProducto.Close;
 txtDniCliente.Text:='';
 txtDniAval.Text:='';
 txtNombresCliente.Text:='';
@@ -504,6 +528,7 @@ begin
     resultado:=graph.ejecutar('solicitudQuery');  // cambiar por el nombre del Query que buscas linea_creditoQuery
     //avales
     // showmessage(resultado.ToString);
+    ShowMessage('avales');
      uHelpers.LlenarCombo2(fdAvales,VarToStr(fdSolicitud.FieldValues['avales']));
 
 //    uHelpers.JsonToDataset(fdAvales,TJsonArray((TJsonObject(resultado.Get('data').JsonValue.ToJSON).Get(0)).JsonValue.ToJSON));
@@ -515,8 +540,6 @@ begin
        FreeAndNil(resultado);
        FreeAndNil(graph);
     end;
-//     dsCoords.DataSet := (FDMongoQuery1.FieldByName('address.coord') as TDataSetField).NestedDataSet;
-//    dsGrades.DataSet := (FDMongoQuery1.FieldByName('grades') as TDataSetField).NestedDataSet;
 
 end;
 

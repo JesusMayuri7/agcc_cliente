@@ -66,6 +66,32 @@ type
     fdPerfilClientetipo_producto: TMemoField;
     RESTResponseDataSetAdapter2: TRESTResponseDataSetAdapter;
     RESTResponseDataSetAdapter3: TRESTResponseDataSetAdapter;
+    RESTResponse2: TRESTResponse;
+    RESTRequest2: TRESTRequest;
+    DataSource1: TDataSource;
+    FDMemTable1: TFDMemTable;
+    WideStringField1: TWideStringField;
+    WideStringField2: TWideStringField;
+    WideStringField3: TWideStringField;
+    WideStringField4: TWideStringField;
+    WideStringField5: TWideStringField;
+    MemoField1: TMemoField;
+    RESTResponseDataSetAdapter4: TRESTResponseDataSetAdapter;
+    DataSource2: TDataSource;
+    DataSource3: TDataSource;
+    FDMemTable2: TFDMemTable;
+    IntegerField7: TIntegerField;
+    StringField1: TStringField;
+    FloatField1: TFloatField;
+    FloatField2: TFloatField;
+    IntegerField8: TIntegerField;
+    IntegerField9: TIntegerField;
+    FDMemTable3: TFDMemTable;
+    IntegerField10: TIntegerField;
+    StringField2: TStringField;
+    MemoField2: TMemoField;
+    RESTResponseDataSetAdapter5: TRESTResponseDataSetAdapter;
+    RESTResponseDataSetAdapter6: TRESTResponseDataSetAdapter;
   private
     { Private declarations }
   public

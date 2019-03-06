@@ -6,7 +6,6 @@ object dmData: TdmData
     Accept = 'application/json, text/plain; q=0.9, text/html;q=0.8,'
     AcceptCharset = 'utf-8, *;q=0.8'
     BaseURL = 'http://ceopilo.test/graphql/query'
-    ContentType = 'application/json'
     Params = <>
     RaiseExceptionOn500 = False
     Left = 456
@@ -52,21 +51,7 @@ object dmData: TdmData
     Top = 370
   end
   object fdAhorro: TFDMemTable
-    Active = True
-    FieldDefs = <
-      item
-        Name = 'id'
-        DataType = ftInteger
-      end
-      item
-        Name = 'desc_ahorro'
-        DataType = ftString
-        Size = 20
-      end
-      item
-        Name = 'porcentaje'
-        DataType = ftFloat
-      end>
+    FieldDefs = <>
     IndexDefs = <>
     FetchOptions.AssignedValues = [evMode]
     FetchOptions.Mode = fmAll
@@ -90,37 +75,7 @@ object dmData: TdmData
     end
   end
   object fdLineaCredito: TFDMemTable
-    Active = True
-    FieldDefs = <
-      item
-        Name = 'id'
-        DataType = ftWideString
-        Size = 255
-      end
-      item
-        Name = 'desc_linea_credito'
-        DataType = ftWideString
-        Size = 255
-      end
-      item
-        Name = 'tipo_interes'
-        DataType = ftWideString
-        Size = 255
-      end
-      item
-        Name = 'monto_minimo'
-        DataType = ftWideString
-        Size = 255
-      end
-      item
-        Name = 'monto_maximo'
-        DataType = ftWideString
-        Size = 255
-      end
-      item
-        Name = 'perfil_cliente'
-        DataType = ftMemo
-      end>
+    FieldDefs = <>
     IndexDefs = <>
     FetchOptions.AssignedValues = [evMode]
     FetchOptions.Mode = fmAll
@@ -158,7 +113,6 @@ object dmData: TdmData
     end
   end
   object RESTResponseDataSetAdapter1: TRESTResponseDataSetAdapter
-    Active = True
     Dataset = fdLineaCredito
     FieldDefs = <>
     Response = RESTResponse1
@@ -167,7 +121,6 @@ object dmData: TdmData
     Top = 160
   end
   object adapAhorro: TRESTResponseDataSetAdapter
-    Active = True
     Dataset = fdAhorro
     FieldDefs = <>
     ResponseJSON = RESTResponse1
@@ -181,17 +134,7 @@ object dmData: TdmData
     Top = 434
   end
   object fdReporteCeop: TFDMemTable
-    Active = True
-    FieldDefs = <
-      item
-        Name = 'id'
-        DataType = ftInteger
-      end
-      item
-        Name = 'desc_reporte_ceop'
-        DataType = ftString
-        Size = 20
-      end>
+    FieldDefs = <>
     IndexDefs = <>
     FetchOptions.AssignedValues = [evMode]
     FetchOptions.Mode = fmAll
@@ -211,7 +154,6 @@ object dmData: TdmData
     end
   end
   object adapReporteCeop: TRESTResponseDataSetAdapter
-    Active = True
     Dataset = fdReporteCeop
     FieldDefs = <>
     ResponseJSON = RESTResponse1
@@ -225,17 +167,7 @@ object dmData: TdmData
     Top = 498
   end
   object fdReporteInfo: TFDMemTable
-    Active = True
-    FieldDefs = <
-      item
-        Name = 'id'
-        DataType = ftInteger
-      end
-      item
-        Name = 'desc_historial_crediticio'
-        DataType = ftString
-        Size = 20
-      end>
+    FieldDefs = <>
     IndexDefs = <>
     FetchOptions.AssignedValues = [evMode]
     FetchOptions.Mode = fmAll
@@ -255,7 +187,6 @@ object dmData: TdmData
     end
   end
   object adapReporteInfo: TRESTResponseDataSetAdapter
-    Active = True
     Dataset = fdReporteInfo
     FieldDefs = <>
     ResponseJSON = RESTResponse1
@@ -269,17 +200,7 @@ object dmData: TdmData
     Top = 498
   end
   object fdTipoPrestamo: TFDMemTable
-    Active = True
-    FieldDefs = <
-      item
-        Name = 'id'
-        DataType = ftInteger
-      end
-      item
-        Name = 'desc_tipo_prestamo'
-        DataType = ftString
-        Size = 20
-      end>
+    FieldDefs = <>
     IndexDefs = <>
     FetchOptions.AssignedValues = [evMode]
     FetchOptions.Mode = fmAll
@@ -299,7 +220,6 @@ object dmData: TdmData
     end
   end
   object adapTipoPrestamo: TRESTResponseDataSetAdapter
-    Active = True
     Dataset = fdTipoPrestamo
     FieldDefs = <>
     ResponseJSON = RESTResponse1
@@ -313,17 +233,7 @@ object dmData: TdmData
     Top = 434
   end
   object fdGarantia: TFDMemTable
-    Active = True
-    FieldDefs = <
-      item
-        Name = 'id'
-        DataType = ftInteger
-      end
-      item
-        Name = 'desc_garantia'
-        DataType = ftString
-        Size = 20
-      end>
+    FieldDefs = <>
     IndexDefs = <>
     FetchOptions.AssignedValues = [evMode]
     FetchOptions.Mode = fmAll
@@ -343,7 +253,6 @@ object dmData: TdmData
     end
   end
   object adapGarantia: TRESTResponseDataSetAdapter
-    Active = True
     Dataset = fdGarantia
     FieldDefs = <>
     ResponseJSON = RESTResponse1
@@ -362,38 +271,7 @@ object dmData: TdmData
     Top = 306
   end
   object fdTipoProducto: TFDMemTable
-    Active = True
-    FieldDefs = <
-      item
-        Name = 'data'
-        DataType = ftWideString
-        Size = 255
-      end
-      item
-        Name = 'id'
-        DataType = ftInteger
-      end
-      item
-        Name = 'desc_tipo_producto'
-        DataType = ftString
-        Size = 20
-      end
-      item
-        Name = 'interes'
-        DataType = ftFloat
-      end
-      item
-        Name = 'mora'
-        DataType = ftFloat
-      end
-      item
-        Name = 'plazo_minimo'
-        DataType = ftInteger
-      end
-      item
-        Name = 'plazo_maximo'
-        DataType = ftInteger
-      end>
+    FieldDefs = <>
     IndexDefs = <>
     FetchOptions.AssignedValues = [evMode]
     FetchOptions.Mode = fmAll
@@ -425,26 +303,7 @@ object dmData: TdmData
     end
   end
   object fdPerfilCliente: TFDMemTable
-    Active = True
-    FieldDefs = <
-      item
-        Name = 'data'
-        DataType = ftWideString
-        Size = 255
-      end
-      item
-        Name = 'id'
-        DataType = ftInteger
-      end
-      item
-        Name = 'desc_perfil_cliente'
-        DataType = ftString
-        Size = 20
-      end
-      item
-        Name = 'tipo_producto'
-        DataType = ftMemo
-      end>
+    FieldDefs = <>
     IndexDefs = <>
     FetchOptions.AssignedValues = [evMode]
     FetchOptions.Mode = fmAll
@@ -454,7 +313,7 @@ object dmData: TdmData
     UpdateOptions.CheckRequired = False
     UpdateOptions.AutoCommitUpdates = True
     StoreDefs = True
-    Left = 169
+    Left = 177
     Top = 226
     object fdPerfilClienteid: TIntegerField
       FieldName = 'id'
@@ -468,7 +327,6 @@ object dmData: TdmData
     end
   end
   object RESTResponseDataSetAdapter2: TRESTResponseDataSetAdapter
-    Active = True
     Dataset = fdPerfilCliente
     FieldDefs = <>
     ResponseJSON = RESTResponse1
@@ -476,11 +334,170 @@ object dmData: TdmData
     Top = 224
   end
   object RESTResponseDataSetAdapter3: TRESTResponseDataSetAdapter
-    Active = True
     Dataset = fdTipoProducto
     FieldDefs = <>
     ResponseJSON = RESTResponse1
     Left = 56
     Top = 280
+  end
+  object RESTResponse2: TRESTResponse
+    ContentType = 'application/json'
+    Left = 833
+    Top = 90
+  end
+  object RESTRequest2: TRESTRequest
+    Client = RESTClient1
+    Params = <
+      item
+        Kind = pkREQUESTBODY
+        Name = 'body'
+        Value = 
+          '[{"query":"query calcular {linea_creditoQuery { data { id,desc_l' +
+          'inea_credito,tipo_interes,monto_minimo,monto_maximo,perfil_clien' +
+          'te {id,desc_perfil_cliente,tipo_producto {id,desc_tipo_producto,' +
+          'interes,mora,plazo_minimo,plazo_maximo}}}}}"},{"query":"query ah' +
+          'orro {ahorroQuery {data {id,desc_ahorro,porcentaje}}}"},{"query"' +
+          ':"query riesgoceop {reporte_ceopQuery {data {id,desc_reporte_ceo' +
+          'p}}}"},{"query":"query riesgoinfo {reporte_crediticioQuery {data' +
+          ' {id,desc_historial_crediticio}}}"},{"query":"query tipoprestamo' +
+          ' {tipo_prestamoQuery {data {id,desc_tipo_prestamo}}}"}, {"query"' +
+          ':"query garantia {garantiaQuery {data {id,desc_garantia}}}"}]'
+        ContentType = ctAPPLICATION_JSON
+      end>
+    Response = RESTResponse2
+    SynchronizedEvents = False
+    Left = 841
+    Top = 26
+  end
+  object DataSource1: TDataSource
+    DataSet = FDMemTable1
+    Left = 945
+    Top = 178
+  end
+  object FDMemTable1: TFDMemTable
+    FieldDefs = <>
+    IndexDefs = <>
+    FetchOptions.AssignedValues = [evMode]
+    FetchOptions.Mode = fmAll
+    ResourceOptions.AssignedValues = [rvSilentMode]
+    ResourceOptions.SilentMode = True
+    UpdateOptions.AssignedValues = [uvCheckRequired, uvAutoCommitUpdates]
+    UpdateOptions.CheckRequired = False
+    UpdateOptions.AutoCommitUpdates = True
+    StoreDefs = True
+    Left = 857
+    Top = 170
+    object WideStringField1: TWideStringField
+      FieldName = 'id'
+      Size = 255
+    end
+    object WideStringField2: TWideStringField
+      FieldName = 'desc_linea_credito'
+      Size = 255
+    end
+    object WideStringField3: TWideStringField
+      FieldName = 'tipo_interes'
+      Size = 255
+    end
+    object WideStringField4: TWideStringField
+      FieldName = 'monto_minimo'
+      Size = 255
+    end
+    object WideStringField5: TWideStringField
+      FieldName = 'monto_maximo'
+      Size = 255
+    end
+    object MemoField1: TMemoField
+      FieldName = 'perfil_cliente'
+      BlobType = ftMemo
+    end
+  end
+  object RESTResponseDataSetAdapter4: TRESTResponseDataSetAdapter
+    Dataset = FDMemTable1
+    FieldDefs = <>
+    Response = RESTResponse2
+    RootElement = '[0].data.linea_creditoQuery.data'
+    Left = 736
+    Top = 168
+  end
+  object DataSource2: TDataSource
+    DataSet = FDMemTable3
+    Left = 945
+    Top = 242
+  end
+  object DataSource3: TDataSource
+    DataSet = FDMemTable2
+    Left = 945
+    Top = 306
+  end
+  object FDMemTable2: TFDMemTable
+    FieldDefs = <>
+    IndexDefs = <>
+    FetchOptions.AssignedValues = [evMode]
+    FetchOptions.Mode = fmAll
+    ResourceOptions.AssignedValues = [rvSilentMode]
+    ResourceOptions.SilentMode = True
+    UpdateOptions.AssignedValues = [uvCheckRequired, uvAutoCommitUpdates]
+    UpdateOptions.CheckRequired = False
+    UpdateOptions.AutoCommitUpdates = True
+    StoreDefs = True
+    Left = 849
+    Top = 298
+    object IntegerField7: TIntegerField
+      FieldName = 'id'
+    end
+    object StringField1: TStringField
+      FieldName = 'desc_tipo_producto'
+    end
+    object FloatField1: TFloatField
+      FieldName = 'interes'
+    end
+    object FloatField2: TFloatField
+      FieldName = 'mora'
+    end
+    object IntegerField8: TIntegerField
+      FieldName = 'plazo_minimo'
+    end
+    object IntegerField9: TIntegerField
+      FieldName = 'plazo_maximo'
+    end
+  end
+  object FDMemTable3: TFDMemTable
+    FieldDefs = <>
+    IndexDefs = <>
+    FetchOptions.AssignedValues = [evMode]
+    FetchOptions.Mode = fmAll
+    ResourceOptions.AssignedValues = [rvSilentMode]
+    ResourceOptions.SilentMode = True
+    UpdateOptions.AssignedValues = [uvCheckRequired, uvAutoCommitUpdates]
+    UpdateOptions.CheckRequired = False
+    UpdateOptions.AutoCommitUpdates = True
+    StoreDefs = True
+    Left = 857
+    Top = 234
+    object IntegerField10: TIntegerField
+      FieldName = 'id'
+    end
+    object StringField2: TStringField
+      FieldName = 'desc_perfil_cliente'
+    end
+    object MemoField2: TMemoField
+      FieldName = 'tipo_producto'
+      BlobType = ftMemo
+    end
+  end
+  object RESTResponseDataSetAdapter5: TRESTResponseDataSetAdapter
+    Dataset = FDMemTable3
+    FieldDefs = <>
+    ResponseJSON = RESTResponse2
+    Left = 736
+    Top = 232
+  end
+  object RESTResponseDataSetAdapter6: TRESTResponseDataSetAdapter
+    Dataset = FDMemTable2
+    FieldDefs = <>
+    ResponseJSON = RESTResponse2
+    Left = 736
+    Top = 288
   end
 end

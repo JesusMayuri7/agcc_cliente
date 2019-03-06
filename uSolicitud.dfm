@@ -74,7 +74,7 @@ object fSolicitud: TfSolicitud
       Align = alLeft
       Caption = '<'
       OnClick = spbActualizarClick
-      ExplicitLeft = 46
+      ExplicitLeft = 3
       ExplicitTop = 5
     end
     object Panel3: TPanel
@@ -1672,8 +1672,8 @@ object fSolicitud: TfSolicitud
     UpdateOptions.CheckRequired = False
     UpdateOptions.AutoCommitUpdates = True
     StoreDefs = True
-    Left = 989
-    Top = 210
+    Left = 1061
+    Top = 162
     object fdAvalesid: TIntegerField
       FieldName = 'id'
     end

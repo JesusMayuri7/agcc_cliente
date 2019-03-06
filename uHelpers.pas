@@ -96,6 +96,11 @@ var
   adapter: TRESTResponseDataSetAdapter;
 begin
   try
+     // ShowMessage(json);
+      dataset.Close;
+      dataset.DisableControls;
+      dataset.FieldDefs.Updated := False;
+
       adapter:=TRESTResponseDataSetAdapter.Create(nil);
      // dataset.Close;
       //dataset.ClearFields;
@@ -112,8 +117,11 @@ begin
         // Provide the JSON value to the adapter
       LIntf := TAdapterJSONValue.Create(LJSON);
       adapter.ResponseJSON := LIntf;
+             dataset.FieldDefs.Update;
       adapter.Active := True;
-      dataset.Refresh;
+      dataset.Active:=True;
+      dataset.EnableControls;
+      //dataset.Refresh;
       end;
   finally
       FreeAndNil(adapter);
