@@ -30,7 +30,7 @@ uses
   dxSkinTheAsphaltWorld, dxSkinTheBezier, dxSkinsDefaultPainters,
   dxSkinValentine, dxSkinVisualStudio2013Blue, dxSkinVisualStudio2013Dark,
   dxSkinVisualStudio2013Light, dxSkinVS2010, dxSkinWhiteprint,
-  dxSkinXmas2008Blue, dxCore, cxDateUtils;
+  dxSkinXmas2008Blue, dxCore, cxDateUtils, System.ImageList, Vcl.ImgList;
 
 type
   TfCliente = class(TForm)
@@ -102,6 +102,8 @@ type
     gridClienteDBTableView1direccion: TcxGridDBColumn;
     gridClienteDBTableView1telefono: TcxGridDBColumn;
     cxDateEdit1: TcxDateEdit;
+    cxStyle2: TcxStyle;
+    ImageList1: TImageList;
     procedure FormCreate(Sender: TObject);
     procedure cbbRegistrosChange(Sender: TObject);
     procedure spbPagSiguienteClick(Sender: TObject);
@@ -149,7 +151,7 @@ begin
     resultado:=TJSONObject.Create;
     graph:=TGraph.Create(dmdata.RESTClient1);
     try  // Cambiar por el query a consultar, hacer pruebas en Insomnia
-    graph.query:='mutation postCliente($id:Int,$dni:String,$nombres:String,$apellido_paterno:'+
+    graph.query:='mutation postCliente($id:String,$dni:String,$nombres:String,$apellido_paterno:'+
     'String,$apellido_materno:String,$direccion:String,$telefono:String,$fecha_nacimiento:String,$activo:Int)'+
     ' { clienteMutation(id:$id,dni:$dni,nombres:$nombres,apellido_paterno:$apellido_paterno,apellido_materno'+
     ':$apellido_materno,direccion:$direccion,telefono:$telefono,fecha_nacimiento:$fecha_nacimiento,activo:$activo)'+
@@ -195,6 +197,7 @@ tabListado.TabVisible:=false;
 tabFormulario.TabVisible:=true;
 btnCancelar.Enabled:=true;
 btnGuardar.Enabled:=true;
+btnEditar.Enabled:=false;
 end;
 
 procedure TfCliente.btnCancelarClick(Sender: TObject);
@@ -285,7 +288,7 @@ begin
     try  // Cambiar por el query a consultar, hacer pruebas en Insomnia
     graph.query:='query verCliente($limit:Int,$per_page:Int,$dni:String)'+
      '{ clienteQuery(limit:$limit,per_page:$per_page,dni:$dni)' +
-     '{ data {id,dni,nombres,apellido_paterno,apellido_materno,full_name,fecha_nacimiento,direccion,telefono'+
+     '{ data {id,dni,nombres,apellido_paterno,apellido_materno,fecha_nacimiento,direccion,telefono'+
      ',activo},per_page,total}} ';
 
     //NO variar
@@ -348,7 +351,7 @@ begin
 
     resultado:=graph.ejecutar('clienteMutation');  // cambiar por el nombre del Query que buscas linea_creditoQuery
     uHelpers.InsertarRegistroDataset(resultado,fdCliente);
-    //memo1.Lines.Text:=resultado.ToString;
+    showmessage(resultado.ToString);
     finally
        FreeAndNil(resultado);
        FreeAndNil(graph);

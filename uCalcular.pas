@@ -397,7 +397,8 @@ begin
   programado:=0;
   cuota_mensual:=0;
   capital_mes:=0;
-  while not dataset.Eof do
+  dataset.First;
+  while not(dataset.Eof) do
   begin
      if dataset.Fieldbyname('desc_ahorro').AsString='INICIAL' then
         inicial:=inicial+dataset.Fieldbyname('porcentaje').AsFloat;

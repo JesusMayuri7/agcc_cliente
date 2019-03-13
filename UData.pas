@@ -9,7 +9,8 @@ uses
   FireDAC.Comp.DataSet, FireDAC.Comp.Client, FireDAC.UI.Intf, FireDAC.Stan.Def,
   FireDAC.Stan.Pool, FireDAC.Phys, FireDAC.Phys.MySQL, FireDAC.Phys.MySQLDef,
   FireDAC.VCLUI.Wait, IPPeerClient, REST.Client, REST.Response.Adapter,
-  Data.Bind.Components, Data.Bind.ObjectScope, REST.Types;
+  Data.Bind.Components, Data.Bind.ObjectScope, REST.Types, System.ImageList,
+  Vcl.ImgList, Vcl.Controls;
 
 type
   TdmData = class(TDataModule)
@@ -66,32 +67,24 @@ type
     fdPerfilClientetipo_producto: TMemoField;
     RESTResponseDataSetAdapter2: TRESTResponseDataSetAdapter;
     RESTResponseDataSetAdapter3: TRESTResponseDataSetAdapter;
-    RESTResponse2: TRESTResponse;
-    RESTRequest2: TRESTRequest;
-    DataSource1: TDataSource;
-    FDMemTable1: TFDMemTable;
-    WideStringField1: TWideStringField;
-    WideStringField2: TWideStringField;
-    WideStringField3: TWideStringField;
-    WideStringField4: TWideStringField;
-    WideStringField5: TWideStringField;
-    MemoField1: TMemoField;
-    RESTResponseDataSetAdapter4: TRESTResponseDataSetAdapter;
-    DataSource2: TDataSource;
-    DataSource3: TDataSource;
-    FDMemTable2: TFDMemTable;
+    dsGiroNegocio: TDataSource;
+    fdGiroNegocio: TFDMemTable;
     IntegerField7: TIntegerField;
-    StringField1: TStringField;
-    FloatField1: TFloatField;
-    FloatField2: TFloatField;
-    IntegerField8: TIntegerField;
-    IntegerField9: TIntegerField;
-    FDMemTable3: TFDMemTable;
-    IntegerField10: TIntegerField;
-    StringField2: TStringField;
-    MemoField2: TMemoField;
-    RESTResponseDataSetAdapter5: TRESTResponseDataSetAdapter;
-    RESTResponseDataSetAdapter6: TRESTResponseDataSetAdapter;
+    RESTResponseDataSetAdapter4: TRESTResponseDataSetAdapter;
+    fdGiroNegociodesc_giro_negocio: TStringField;
+    ImageList1: TImageList;
+    fdTipoInfo: TFDMemTable;
+    fdTipoInfoid: TIntegerField;
+    fdTipoInfodesc_tipo_info_detalle: TStringField;
+    fdTipoInfotipo_info_id: TIntegerField;
+    fdTipoInfotipo: TStringField;
+    fdTipoInfotipo_info: TStringField;
+    fdTipoInfoinformacion: TStringField;
+    dsTipoInfo: TDataSource;
+    adapTipoInfo: TRESTResponseDataSetAdapter;
+    fdTipoInfomonto: TFloatField;
+    fdTipoInfosolicitud_id: TIntegerField;
+    fdTipoInfotipo_info_detalle_id: TIntegerField;
   private
     { Private declarations }
   public

@@ -110,7 +110,7 @@ begin
     end;
    Result:=queryRest;
    //Result:=TJsonObject(ARESTRequest.Response.JSONValue);
- // Result:=request;
+  //Result:=request;
 end;
 
 function TGraph.GetQuery: string;

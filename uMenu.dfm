@@ -521,6 +521,9 @@ object fMenu: TfMenu
         object GiroNegocio1: TMenuItem
           Action = actGiroNegocio
         end
+        object actInfoDetalle1: TMenuItem
+          Action = actInfoDetalle
+        end
       end
       object Garantia1: TMenuItem
         Action = actGarantia
@@ -759,6 +762,7 @@ object fMenu: TfMenu
       Caption = 'TipoInfo'
       Hint = 'Tipo Info'
       ImageIndex = 20
+      OnExecute = actTipoInfoExecute
     end
     object actGarantia: TAction
       Category = 'prestamo'
@@ -797,6 +801,11 @@ object fMenu: TfMenu
       Category = 'credito'
       Caption = 'Simulador'
       OnExecute = actCalcularExecute
+    end
+    object actInfoDetalle: TAction
+      Category = 'informacio negocio'
+      Caption = 'actInfoDetalle'
+      OnExecute = actInfoDetalleExecute
     end
   end
   object ImageList1: TImageList

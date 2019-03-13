@@ -30,7 +30,7 @@ uses
   dxSkinTheAsphaltWorld, dxSkinTheBezier, dxSkinsDefaultPainters,
   dxSkinValentine, dxSkinVisualStudio2013Blue, dxSkinVisualStudio2013Dark,
   dxSkinVisualStudio2013Light, dxSkinVS2010, dxSkinWhiteprint,
-  dxSkinXmas2008Blue;
+  dxSkinXmas2008Blue, System.ImageList, Vcl.ImgList;
 
 type
   TfTipoInfoDetalle = class(TForm)
@@ -90,6 +90,8 @@ type
     fdTipoInfodesc_tipo_info: TStringField;
     gridTipoInfoDetalleDBTableView1tipo: TcxGridDBColumn;
     gridTipoInfoDetalleDBTableView1activo: TcxGridDBColumn;
+    cxStyle2: TcxStyle;
+    ImageList1: TImageList;
     procedure FormCreate(Sender: TObject);
     procedure cbbRegistrosChange(Sender: TObject);
     procedure spbPagSiguienteClick(Sender: TObject);
@@ -236,7 +238,7 @@ end;
 procedure TfTipoInfoDetalle.FormCreate(Sender: TObject);
 begin
 paginaActual:=1;
-//listar();
+listar();
 llenarTipoInfo(fdTipoInfo);
 end;
 

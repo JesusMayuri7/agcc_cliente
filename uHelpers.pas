@@ -2,7 +2,7 @@ unit uHelpers;
 
 interface
 uses System.JSON,FireDAC.Comp.Client,Data.DB,SysUtils,Rest.Json,System.Math,cxDBLookupComboBox,
-REST.Client,REST.Response.Adapter,Dialogs;
+REST.Client,REST.Response.Adapter,Dialogs,Variants;
 
 procedure InsertarRegistroDataset(datajson:TJsonObject;dataset:TFDmemtable);
 function calcularTotales(interes:real=0;monto:real=0;plazo:real=0):TJsonArray;
@@ -96,7 +96,7 @@ var
   adapter: TRESTResponseDataSetAdapter;
 begin
   try
-     // ShowMessage(json);
+      //ShowMessage('combo2='+json);
       dataset.Close;
       dataset.DisableControls;
       dataset.FieldDefs.Updated := False;
@@ -118,7 +118,7 @@ begin
       LIntf := TAdapterJSONValue.Create(LJSON);
       adapter.ResponseJSON := LIntf;
              dataset.FieldDefs.Update;
-      adapter.Active := True;
+      adapter.UpdateDataSet();
       dataset.Active:=True;
       dataset.EnableControls;
       //dataset.Refresh;
@@ -134,6 +134,7 @@ var
   LIntf: IRESTResponseJSON;
 begin
   try
+    //showmessage('dentro='+json);
     adapter.ResponseJSON := nil;
     adapter.NestedElements := False;
     adapter.RootElement :='';
@@ -146,6 +147,7 @@ begin
       // Provide the JSON value to the adapter
     LIntf := TAdapterJSONValue.Create(LJSON);
     adapter.ResponseJSON := LIntf;
+
     adapter.Active := True;
     end;
   finally
@@ -174,6 +176,7 @@ end;
 procedure InsertarRegistroDataset(datajson:TJsonObject;dataset:TFDmemtable);
 var I:integer;
 begin
+ // showmessage(datajson.ToString);
   with dataset do
   begin
     if not(Active) then
@@ -191,7 +194,12 @@ begin
             if  Fields[I].DataType = ftFloat then
                 Fields[I].AsFloat:=datajson.Get(Fields[I].FieldName).JsonValue.value.ToDouble;
             if  Fields[I].DataType = ftInteger then
-                Fields[I].AsInteger:=datajson.Get(Fields[I].FieldName).JsonValue.value.ToInteger;
+            begin
+                if datajson.Get(Fields[I].FieldName).Null then
+                   Fields[I].AsVariant:=Null
+                else
+                   Fields[I].AsInteger:=datajson.Get(Fields[I].FieldName).JsonValue.value.ToInteger;
+            end;
             if  Fields[I].DataType = ftBoolean then
                 Fields[I].AsBoolean:=datajson.Get(Fields[I].FieldName).JsonValue.value.ToBoolean;
           end;

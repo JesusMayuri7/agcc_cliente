@@ -30,7 +30,7 @@ uses
   dxSkinTheAsphaltWorld, dxSkinTheBezier, dxSkinsDefaultPainters,
   dxSkinValentine, dxSkinVisualStudio2013Blue, dxSkinVisualStudio2013Dark,
   dxSkinVisualStudio2013Light, dxSkinVS2010, dxSkinWhiteprint,
-  dxSkinXmas2008Blue;
+  dxSkinXmas2008Blue, System.ImageList, Vcl.ImgList;
 
 type
   TfAhorro = class(TForm)
@@ -75,9 +75,13 @@ type
     cbbRegistros: TComboBox;
     Label11: TLabel;
     spbActualizar: TSpeedButton;
-    spbDescripcion: TcxSpinEdit;
-    fdAhorrodesc_ahorro: TFloatField;
     fdAhorroporcentaje: TFloatField;
+    cxStyle2: TcxStyle;
+    cxStyleRepository2: TcxStyleRepository;
+    cxStyle3: TcxStyle;
+    ImageList1: TImageList;
+    fdAhorrodesc_ahorro: TStringField;
+    spbDescripcion: TComboBox;
     procedure FormCreate(Sender: TObject);
     procedure cbbRegistrosChange(Sender: TObject);
     procedure spbPagSiguienteClick(Sender: TObject);
@@ -93,8 +97,8 @@ type
     var paginaActual:integer;
     procedure listar;
     procedure Limpiar();
-    procedure EditarLinea(id:integer;desc_ahorro,porcentaje:real);
-    procedure NuevaLinea(desc_ahorro,porcentaje:real);
+    procedure EditarLinea(desc_ahorro:string;id:integer;porcentaje:real);
+    procedure NuevaLinea(desc_ahorro:string;porcentaje:real);
   public
     { Public declarations }
   end;
@@ -112,7 +116,7 @@ uses
 
 { TfLineaCredito }
 
-procedure TfAhorro.EditarLinea( id: integer;desc_ahorro,porcentaje:real);
+procedure TfAhorro.EditarLinea( desc_ahorro:string;id:integer;porcentaje:real);
 var graph:Tgraph;
 var variables:TJSONObject;
 var dataVar,dataRest,query:TJSONObject;
@@ -122,7 +126,7 @@ begin
     resultado:=TJSONObject.Create;
     graph:=TGraph.Create(dmdata.RESTClient1);
     try  // Cambiar por el query a consultar, hacer pruebas en Insomnia
-    graph.query:='mutation postAhorro($id:Int,$desc_ahorro:Float,$porcentaje:Float)'+
+    graph.query:='mutation postAhorro($id:Int,$desc_ahorro:String,$porcentaje:Float)'+
     ' { ahorroMutation(id:$id,desc_ahorro:$desc_ahorro,porcentaje:$porcentaje)'+
     ' {id,desc_ahorro,porcentaje}  } ';
 
@@ -130,7 +134,7 @@ begin
     variables:=TJSONObject.Create;
     dataVar:=TJSONObject.Create;
     dataVar.AddPair('id',TJSONNumber.Create(id));
-    dataVar.AddPair('desc_ahorro',TJSONNumber.Create(desc_ahorro));
+    dataVar.AddPair('desc_ahorro',TJSONString.Create(desc_ahorro));
     dataVar.AddPair('porcentaje',TJSONNumber.Create(porcentaje));
     variables.AddPair('variables',dataVar);
     graph.variables:=variables;
@@ -160,6 +164,7 @@ tabListado.TabVisible:=false;
 tabFormulario.TabVisible:=true;
 btnCancelar.Enabled:=true;
 btnGuardar.Enabled:=true;
+btnEditar.Enabled:=false;
 end;
 
 procedure TfAhorro.btnCancelarClick(Sender: TObject);
@@ -187,7 +192,7 @@ begin
          tabFormulario.TabVisible:=true;
          btnCancelar.Enabled:=true;
          btnGuardar.Enabled:=true;
-         spbDescripcion.Value:=gridAhorroDBTableView1.DataController.Values[gridAhorroDBTableView1.Controller.FocusedRecordIndex , 1];
+         spbDescripcion.ItemIndex:=spbDescripcion.Items.IndexOf(gridAhorroDBTableView1.DataController.Values[gridAhorroDBTableView1.Controller.FocusedRecordIndex , 1]);
          spbPorcentaje.Value:=gridAhorroDBTableView1.DataController.Values[gridAhorroDBTableView1.Controller.FocusedRecordIndex , 2];
      end;
   end;
@@ -197,9 +202,9 @@ procedure TfAhorro.btnGuardarClick(Sender: TObject);
 begin
   btnGuardar.Enabled:=false;
   if Tag>0 then
-     EditarLinea(tag,spbDescripcion.value,spbPorcentaje.value)
+     EditarLinea(spbDescripcion.items[spbDescripcion.itemindex],tag,spbPorcentaje.value)
   else
-     nuevalinea(spbDescripcion.value,spbPorcentaje.value);
+     nuevalinea(spbDescripcion.items[spbDescripcion.itemindex],spbPorcentaje.value);
   tabFormulario.TabVisible:=false;
   tabListado.TabVisible:=true;
   btnNuevo.Enabled:=true;
@@ -222,7 +227,7 @@ end;
 procedure TfAhorro.Limpiar;
 begin
 Tag:=0;
-spbDescripcion.Value:=0;
+spbDescripcion.ItemIndex:=0;
 spbPorcentaje.Value:=0;
 end;
 
@@ -235,7 +240,7 @@ begin
     resultado:=TJSONObject.Create;
     graph:=TGraph.Create(dmdata.RESTClient1,fdAhorro);
     try  // Cambiar por el query a consultar, hacer pruebas en Insomnia
-    graph.query:='query verAhorro($limit:Int,$per_page:Int,$desc_ahorro:Float)'+
+    graph.query:='query verAhorro($limit:Int,$per_page:Int,$desc_ahorro:String)'+
      '{ ahorroQuery(limit:$limit,per_page:$per_page,desc_ahorro:$desc_ahorro)' +
      '{ data {id,desc_ahorro,porcentaje},per_page,total}} ';
 
@@ -245,7 +250,7 @@ begin
     dataVar.AddPair('limit',TJSONNumber.Create(cbbRegistros.Items[cbbRegistros.ItemIndex]));
     dataVar.AddPair('per_page',TJSONNumber.Create(paginaActual));
     if length(edcriterio.Text)>0 then
-       dataVar.AddPair('desc_ahorro',TJSONNumber.Create(edCriterio.Text));// depende el campo en que busques
+       dataVar.AddPair('desc_ahorro',TJSONString.Create(edCriterio.Text));// depende el campo en que busques
     variables.AddPair('variables',dataVar);
     graph.variables:=variables;
 
@@ -263,7 +268,7 @@ begin
     end;
 end;
 
-procedure TfAhorro.NuevaLinea(desc_ahorro,porcentaje:real);
+procedure TfAhorro.NuevaLinea(desc_ahorro:string;porcentaje:real);
 var graph:Tgraph;
 var variables:TJSONObject;
 var dataVar,dataRest,query:TJSONObject;
@@ -273,14 +278,14 @@ begin
     resultado:=TJSONObject.Create;
     graph:=TGraph.Create(dmdata.RESTClient1);
     try  // Cambiar por el query a consultar, hacer pruebas en Insomnia
-    graph.query:='mutation postAhorro($desc_ahorro:Float,$porcentaje:Float)'+
+    graph.query:='mutation postAhorro($desc_ahorro:String,$porcentaje:Float)'+
     ' { ahorroMutation(desc_ahorro:$desc_ahorro,porcentaje:$porcentaje)'+
     ' {id,desc_ahorro,porcentaje}  } ';
 
     //NO variar
     variables:=TJSONObject.Create;
     dataVar:=TJSONObject.Create;
-    dataVar.AddPair('desc_ahorro',TJSONNumber.Create(desc_ahorro));
+    dataVar.AddPair('desc_ahorro',TJSONString.Create(desc_ahorro));
     dataVar.AddPair('porcentaje',TJSONNumber.Create(porcentaje));
     variables.AddPair('variables',dataVar);
     graph.variables:=variables;

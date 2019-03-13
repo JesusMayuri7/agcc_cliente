@@ -30,7 +30,7 @@ uses
   dxSkinTheAsphaltWorld, dxSkinTheBezier, dxSkinsDefaultPainters,
   dxSkinValentine, dxSkinVisualStudio2013Blue, dxSkinVisualStudio2013Dark,
   dxSkinVisualStudio2013Light, dxSkinVS2010, dxSkinWhiteprint,
-  dxSkinXmas2008Blue, dxCore, cxDateUtils;
+  dxSkinXmas2008Blue, dxCore, cxDateUtils, System.ImageList, Vcl.ImgList;
 
 type
   TfEmpleado = class(TForm)
@@ -102,6 +102,8 @@ type
     Label14: TLabel;
     edPassword: TEdit;
     gridEmpleadoDBTableView1dni: TcxGridDBColumn;
+    cxStyle2: TcxStyle;
+    ImageList1: TImageList;
     procedure FormCreate(Sender: TObject);
     procedure cbbRegistrosChange(Sender: TObject);
     procedure spbPagSiguienteClick(Sender: TObject);
@@ -171,7 +173,7 @@ begin
     graph.variables:=variables;
 
     resultado:=graph.ejecutar('empleadoMutation');  // cambiar por el nombre del Query que buscas linea_creditoQuery
-      showmessage(resultado.ToString);
+      //showmessage(resultado.ToString);
     uHelpers.InsertarRegistroDataset(resultado,fdEmpleado);
 
     finally
@@ -195,6 +197,7 @@ tabListado.TabVisible:=false;
 tabFormulario.TabVisible:=true;
 btnCancelar.Enabled:=true;
 btnGuardar.Enabled:=true;
+btnEditar.Enabled:=false;
 end;
 
 procedure TfEmpleado.btnCancelarClick(Sender: TObject);
@@ -305,7 +308,7 @@ begin
     // NO variar
     lblPaginaActual.Caption:=paginaActual.ToString;
     lblTotalPagina.Caption:= graph.totalPag.ToString;
-    showmessage(resultado.ToString);
+    //showmessage(resultado.ToString);
     finally
        FreeAndNil(resultado);
        FreeAndNil(graph);
@@ -347,7 +350,7 @@ begin
     resultado:=graph.ejecutar('empleadoMutation');  // cambiar por el nombre del Query que buscas linea_creditoQuery
     uHelpers.InsertarRegistroDataset(resultado,fdEmpleado);
    // memo1.Lines.Text:=resultado.ToString;
-    showmessage(resultado.ToString);
+   // showmessage(resultado.ToString);
     finally
        FreeAndNil(resultado);
        FreeAndNil(graph);

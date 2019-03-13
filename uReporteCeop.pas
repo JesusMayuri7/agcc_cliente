@@ -30,7 +30,7 @@ uses
   dxSkinTheAsphaltWorld, dxSkinTheBezier, dxSkinsDefaultPainters,
   dxSkinValentine, dxSkinVisualStudio2013Blue, dxSkinVisualStudio2013Dark,
   dxSkinVisualStudio2013Light, dxSkinVS2010, dxSkinWhiteprint,
-  dxSkinXmas2008Blue;
+  dxSkinXmas2008Blue, System.ImageList, Vcl.ImgList;
 
 type
   TfReporteCeop = class(TForm)
@@ -78,6 +78,8 @@ type
     Label11: TLabel;
     spbActualizar: TSpeedButton;
     fdReporteCeopdesc_reporte_ceop: TStringField;
+    cxStyle2: TcxStyle;
+    ImageList1: TImageList;
     procedure FormCreate(Sender: TObject);
     procedure cbbRegistrosChange(Sender: TObject);
     procedure spbPagSiguienteClick(Sender: TObject);
@@ -137,7 +139,7 @@ begin
     graph.variables:=variables;
 
     resultado:=graph.ejecutar('reporte_ceopMutation');  // cambiar por el nombre del Query que buscas linea_creditoQuery
-      showmessage(resultado.ToString);
+     // showmessage(resultado.ToString);
     uHelpers.InsertarRegistroDataset(resultado,fdReporteCeop);
 
     finally
@@ -161,6 +163,7 @@ tabListado.TabVisible:=false;
 tabFormulario.TabVisible:=true;
 btnCancelar.Enabled:=true;
 btnGuardar.Enabled:=true;
+btnEditar.Enabled:=false;
 end;
 
 procedure TfReporteCeop.btnCancelarClick(Sender: TObject);

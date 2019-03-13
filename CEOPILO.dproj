@@ -181,6 +181,18 @@
             <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="uAdapterJson.pas"/>
+        <DCCReference Include="uResolucionRpt.pas">
+            <Form>Form1</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="uTipoInfo.pas">
+            <Form>fTipoInfo</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="uTipoInfoDetalle.pas">
+            <Form>fTipoInfoDetalle</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <DCCReference Include="uSolicitud.pas">
             <Form>fSolicitud</Form>
             <FormType>dfm</FormType>

@@ -7,7 +7,7 @@ uses
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ToolWin, Vcl.ComCtrls,
   Vcl.PlatformDefaultStyleActnCtrls, System.Actions, Vcl.ActnList, Vcl.ActnMan,
   Vcl.ActnCtrls, Vcl.ActnMenus, Vcl.Menus, System.ImageList, Vcl.ImgList,
-  dxGDIPlusClasses, Vcl.ExtCtrls;
+  dxGDIPlusClasses, Vcl.ExtCtrls, uTipoPrestamo;
 
 type
   TfMenu = class(TForm)
@@ -55,6 +55,8 @@ type
     Reportes1: TMenuItem;
     actCalcular: TAction;
     Simulador1: TMenuItem;
+    actInfoDetalle: TAction;
+    actInfoDetalle1: TMenuItem;
     procedure actArchivoExecute(Sender: TObject);
     procedure actLineaCreditoExecute(Sender: TObject);
     procedure actPerfilClienteExecute(Sender: TObject);
@@ -71,6 +73,8 @@ type
     procedure actAuditoriaExecute(Sender: TObject);
     procedure actResolucionExecute(Sender: TObject);
     procedure actCalcularExecute(Sender: TObject);
+    procedure actTipoInfoExecute(Sender: TObject);
+    procedure actInfoDetalleExecute(Sender: TObject);
   private
     { Private declarations }
 
@@ -87,7 +91,8 @@ implementation
 uses
   uLineaCredito, UData, uPerfilCliente, uTipoProducto, uCliente, uAhorro,uReporteCeop,
   uReporteCrediticio,uGiroNegocio,uGarantia,
-  uEmpleado,uAuditoria,uResolucion, uCalcular, uSolicitud;
+  uEmpleado,uAuditoria,uResolucion, uCalcular, uSolicitud, uTipoInfo,
+  uTipoInfoDetalle;
 
 {$R *.dfm}
 
@@ -221,15 +226,26 @@ begin
 end;
 end;
 
-procedure TfMenu.actTipoPrestamoExecute(Sender: TObject);
-//var ResultsForm:TfTipoPrestamo;
+procedure TfMenu.actTipoInfoExecute(Sender: TObject);
+var ResultsForm:TfTipoInfo;
 begin
-{      ResultsForm := TfTipoPrestamo.Create(nil);
+      ResultsForm := TfTipoInfo.Create(nil);
       try
         ResultsForm.ShowModal;
       finally
         ResultsForm.Free;
-end;       }
+      end;
+end;
+
+procedure TfMenu.actTipoPrestamoExecute(Sender: TObject);
+var ResultsForm:TfTipoPrestamo;
+begin
+     ResultsForm := TfTipoPrestamo.Create(nil);
+      try
+        ResultsForm.ShowModal;
+      finally
+        ResultsForm.Free;
+end;
 end;
 
 procedure TfMenu.actTipoProductoExecute(Sender: TObject);
@@ -266,6 +282,17 @@ begin
         ResultsForm.Free;
 end;
 
+end;
+
+procedure TfMenu.actInfoDetalleExecute(Sender: TObject);
+   var ResultsForm:TfTipoInfoDetalle;
+begin
+      ResultsForm := TfTipoInfoDetalle.Create(nil);
+      try
+        ResultsForm.ShowModal;
+      finally
+        ResultsForm.Free;
+      end;
 end;
 
 end.

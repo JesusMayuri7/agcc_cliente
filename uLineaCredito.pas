@@ -15,7 +15,22 @@ uses
   FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Comp.DataSet,
   FireDAC.Comp.Client, cxContainer, cxTextEdit, cxMaskEdit, cxDropDownEdit,
   cxLookupEdit, cxDBLookupEdit, cxDBLookupComboBox, cxCalendar, cxDBEdit,
-  cxSpinEdit, Vcl.Buttons;
+  cxSpinEdit, Vcl.Buttons, dxSkinBlack, dxSkinBlue, dxSkinBlueprint,
+  dxSkinCaramel, dxSkinCoffee, dxSkinDarkRoom, dxSkinDarkSide,
+  dxSkinDevExpressDarkStyle, dxSkinDevExpressStyle, dxSkinFoggy,
+  dxSkinGlassOceans, dxSkinHighContrast, dxSkiniMaginary, dxSkinLilian,
+  dxSkinLiquidSky, dxSkinLondonLiquidSky, dxSkinMcSkin, dxSkinMetropolis,
+  dxSkinMetropolisDark, dxSkinMoneyTwins, dxSkinOffice2007Black,
+  dxSkinOffice2007Blue, dxSkinOffice2007Green, dxSkinOffice2007Pink,
+  dxSkinOffice2007Silver, dxSkinOffice2010Black, dxSkinOffice2010Blue,
+  dxSkinOffice2010Silver, dxSkinOffice2013DarkGray, dxSkinOffice2013LightGray,
+  dxSkinOffice2013White, dxSkinOffice2016Colorful, dxSkinOffice2016Dark,
+  dxSkinPumpkin, dxSkinSeven, dxSkinSevenClassic, dxSkinSharp, dxSkinSharpPlus,
+  dxSkinSilver, dxSkinSpringTime, dxSkinStardust, dxSkinSummer2008,
+  dxSkinTheAsphaltWorld, dxSkinTheBezier, dxSkinsDefaultPainters,
+  dxSkinValentine, dxSkinVisualStudio2013Blue, dxSkinVisualStudio2013Dark,
+  dxSkinVisualStudio2013Light, dxSkinVS2010, dxSkinWhiteprint,
+  dxSkinXmas2008Blue, System.ImageList, Vcl.ImgList;
 
 type
   TfLineaCredito = class(TForm)
@@ -32,16 +47,21 @@ type
     Label6: TLabel;
     Label7: TLabel;
     gridLIneaCreditoDBTableView1: TcxGridDBTableView;
-    gridLIneaCreditoDBTableView1id: TcxGridDBColumn;
-    gridLIneaCreditoDBTableView1desc_linea_credito: TcxGridDBColumn;
-    gridLineaCredito:Tcxgrid;
+    gridLIneaCreditoLevel1: TcxGridLevel;
+    gridLIneaCredito: TcxGrid;
     fdLineaCredito: TFDMemTable;
     dsLineaCredito: TDataSource;
     fdLineaCreditoid: TIntegerField;
     fdLineaCreditodesc_linea_credito: TStringField;
+    gridLIneaCreditoDBTableView1id: TcxGridDBColumn;
+    gridLIneaCreditoDBTableView1desc_linea_credito: TcxGridDBColumn;
     fdLineaCreditomonto_minimo: TFloatField;
     fdLineaCreditomonto_maximo: TFloatField;
     fdLineaCreditoactivo: TBooleanField;
+    gridLIneaCreditoDBTableView1interes: TcxGridDBColumn;
+    gridLIneaCreditoDBTableView1monto_minimo: TcxGridDBColumn;
+    gridLIneaCreditoDBTableView1monto_maximo: TcxGridDBColumn;
+    gridLIneaCreditoDBTableView1activo: TcxGridDBColumn;
     fdLineaCreditotipo_interes: TStringField;
     edLineaCredito: TEdit;
     cbbInteres: TComboBox;
@@ -70,6 +90,10 @@ type
     cbbRegistros: TComboBox;
     Label11: TLabel;
     spbActualizar: TSpeedButton;
+    cxStyleRepository2: TcxStyleRepository;
+    cxStyle2: TcxStyle;
+    cxStyle3: TcxStyle;
+    ImageList1: TImageList;
     procedure FormCreate(Sender: TObject);
     procedure cbbRegistrosChange(Sender: TObject);
     procedure spbPagSiguienteClick(Sender: TObject);
@@ -80,7 +104,6 @@ type
     procedure btnCancelarClick(Sender: TObject);
     procedure btnGuardarClick(Sender: TObject);
     procedure btnEditarClick(Sender: TObject);
-    procedure Button1Click(Sender: TObject);
   private
     { Private declarations }
     var paginaActual:integer;
@@ -149,7 +172,6 @@ procedure TfLineaCredito.btnBuscarClick(Sender: TObject);
 begin
 paginaActual:=1;
 listar();
-//gridLIneaCreditoDBTableView1.Controller.ApplyFindFilterText(edCriterio.Text);
 end;
 
 procedure TfLineaCredito.btnNuevoClick(Sender: TObject);
@@ -161,14 +183,7 @@ tabListado.TabVisible:=false;
 tabFormulario.TabVisible:=true;
 btnCancelar.Enabled:=true;
 btnGuardar.Enabled:=true;
-end;
-
-procedure TfLineaCredito.Button1Click(Sender: TObject);
-begin
-   //gridLIneaCreditoDBTableView1.Controller.ClearFindFilterText;
-   edCriterio.Text:='';
-   paginaActual:=1;
-   listar();
+btnEditar.Enabled:=false;
 end;
 
 procedure TfLineaCredito.btnCancelarClick(Sender: TObject);
@@ -188,7 +203,6 @@ begin
   if gridLIneaCreditoDBTableView1.Controller.SelectedRowCount=1 then
   begin
      Tag:=gridLIneaCreditoDBTableView1.DataController.Values[gridLIneaCreditoDBTableView1.Controller.FocusedRecordIndex , 0];
-     showmessage(tag.ToString);
      if Tag>0 then
      begin
          btnEditar.Enabled:=false;

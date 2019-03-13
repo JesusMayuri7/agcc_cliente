@@ -30,7 +30,7 @@ uses
   dxSkinTheAsphaltWorld, dxSkinTheBezier, dxSkinsDefaultPainters,
   dxSkinValentine, dxSkinVisualStudio2013Blue, dxSkinVisualStudio2013Dark,
   dxSkinVisualStudio2013Light, dxSkinVS2010, dxSkinWhiteprint,
-  dxSkinXmas2008Blue;
+  dxSkinXmas2008Blue, System.ImageList, Vcl.ImgList;
 
 type
   TfTipoProducto = class(TForm)
@@ -95,6 +95,9 @@ type
     fdTipoProductoactivo: TBooleanField;
     gridTipoProductoDBTableView1activo: TcxGridDBColumn;
     Memo1: TMemo;
+    cxStyle2: TcxStyle;
+    cxStyle3: TcxStyle;
+    ImageList1: TImageList;
     procedure FormCreate(Sender: TObject);
     procedure cbbRegistrosChange(Sender: TObject);
     procedure spbPagSiguienteClick(Sender: TObject);
@@ -159,7 +162,7 @@ begin
     graph.variables:=variables;
     //showmessage(variables.ToString);
     resultado:=graph.ejecutar('tipo_productoMutation');  // cambiar por el nombre del Query que buscas linea_creditoQuery
-    memo1.Lines.Text:=resultado.ToString;
+    //memo1.Lines.Text:=resultado.ToString;
     uHelpers.InsertarRegistroDataset(resultado,fdTipoProducto);
 
     finally
@@ -183,6 +186,7 @@ tabListado.TabVisible:=false;
 tabFormulario.TabVisible:=true;
 btnCancelar.Enabled:=true;
 btnGuardar.Enabled:=true;
+btnEditar.Enabled:=false;
 end;
 
 procedure TfTipoProducto.btnCancelarClick(Sender: TObject);
@@ -202,7 +206,7 @@ begin
   if gridTipoProductoDBTableView1.Controller.SelectedRowCount=1 then
   begin
      Tag:=gridTipoProductoDBTableView1.DataController.Values[gridTipoProductoDBTableView1.Controller.FocusedRecordIndex , 0];
-     showmessage(tag.ToString);
+     //showmessage(tag.ToString);
      if Tag>0 then
      begin
          btnEditar.Enabled:=false;
@@ -324,7 +328,7 @@ begin
 
     resultado:=graph.ejecutar('tipo_productoMutation');  // cambiar por el nombre del Query que buscas linea_creditoQuery
     uHelpers.InsertarRegistroDataset(resultado,fdTipoProducto);
-    memo1.Lines.Text:=resultado.ToString;
+   // memo1.Lines.Text:=resultado.ToString;
     finally
        FreeAndNil(resultado);
        FreeAndNil(graph);

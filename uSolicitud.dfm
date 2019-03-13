@@ -228,18 +228,9 @@ object fSolicitud: TfSolicitud
               Properties.KeyFieldNames = 'id'
               Properties.ListColumns = <
                 item
-                  Width = 20
-                  FieldName = 'id'
-                end
-                item
-                  Width = 100
+                  Width = 150
                   FieldName = 'desc_linea_credito'
-                end
-                item
-                  Width = 400
-                  FieldName = 'perfil_cliente'
                 end>
-              Properties.ListFieldIndex = 1
               Properties.ListOptions.SyncMode = True
               Properties.ListSource = dmData.dsLineaCredito
               Properties.OnChange = cbbLineaCreditoPropertiesChange
@@ -587,7 +578,7 @@ object fSolicitud: TfSolicitud
               Height = 81
               Enabled = False
               TabOrder = 0
-              object cxGrid4DBBandedTableView1: TcxGridDBBandedTableView
+              object gridAhorro: TcxGridDBBandedTableView
                 Navigator.Buttons.CustomButtons = <>
                 DataController.DataSource = dmData.dsAhorro
                 DataController.Summary.DefaultGroupSummaryItems = <>
@@ -604,7 +595,7 @@ object fSolicitud: TfSolicitud
                   item
                     Caption = 'Ahorro'
                   end>
-                object cxGrid4DBBandedTableView1Column1: TcxGridDBBandedColumn
+                object gridAhorroColumn1: TcxGridDBBandedColumn
                   Caption = 'Descripcion'
                   DataBinding.FieldName = 'desc_ahorro'
                   HeaderAlignmentHorz = taCenter
@@ -613,7 +604,7 @@ object fSolicitud: TfSolicitud
                   Position.ColIndex = 0
                   Position.RowIndex = 0
                 end
-                object cxGrid4DBBandedTableView1Column2: TcxGridDBBandedColumn
+                object gridAhorroColumn2: TcxGridDBBandedColumn
                   Caption = 'Valor (%)'
                   DataBinding.FieldName = 'porcentaje'
                   PropertiesClassName = 'TcxSpinEditProperties'
@@ -626,7 +617,7 @@ object fSolicitud: TfSolicitud
                 end
               end
               object cxGrid4Level1: TcxGridLevel
-                GridView = cxGrid4DBBandedTableView1
+                GridView = gridAhorro
               end
             end
             object spnCuota: TcxSpinEdit
@@ -635,8 +626,9 @@ object fSolicitud: TfSolicitud
               Properties.Alignment.Horz = taRightJustify
               Properties.CanEdit = False
               Properties.DisplayFormat = '#,##0.00'
-              Properties.ReadOnly = True
+              Properties.ReadOnly = False
               Properties.SpinButtons.Visible = False
+              Properties.ValueType = vtFloat
               Style.Color = clWhite
               TabOrder = 1
               Width = 90
@@ -690,11 +682,6 @@ object fSolicitud: TfSolicitud
                 Column = 0
                 Control = grid3
                 Row = 0
-              end
-              item
-                Column = 0
-                Control = cxGrid2
-                Row = 1
               end>
             Padding.Left = 10
             Padding.Top = 10
@@ -702,10 +689,7 @@ object fSolicitud: TfSolicitud
             Padding.Bottom = 10
             RowCollection = <
               item
-                Value = 56.666942217078620000
-              end
-              item
-                Value = 43.333057782921390000
+                Value = 100.000000000000000000
               end>
             ShowCaption = False
             TabOrder = 0
@@ -713,142 +697,78 @@ object fSolicitud: TfSolicitud
               Left = 21
               Top = 21
               Width = 477
-              Height = 368
+              Height = 665
               Align = alClient
               Font.Charset = DEFAULT_CHARSET
               Font.Color = clWindowText
-              Font.Height = -17
+              Font.Height = -12
               Font.Name = 'Tahoma'
               Font.Style = [fsBold]
               ParentFont = False
               TabOrder = 0
-              object gridCuota: TcxGridBandedTableView
+              object gridInfo: TcxGridDBBandedTableView
                 Navigator.Buttons.CustomButtons = <>
+                DataController.DataSource = dmData.dsTipoInfo
                 DataController.Summary.DefaultGroupSummaryItems = <>
                 DataController.Summary.FooterSummaryItems = <>
                 DataController.Summary.SummaryGroups = <>
-                OptionsData.CancelOnExit = False
-                OptionsData.Deleting = False
-                OptionsData.DeletingConfirmation = False
-                OptionsData.Editing = False
-                OptionsData.Inserting = False
-                OptionsSelection.CellSelect = False
-                Styles.ContentOdd = cxStyle1
                 Bands = <
                   item
-                    Caption = 'Distribuci'#243'n de cuota'
-                    Width = 374
+                    Caption = 'Informacion del Negocio y Familiar'
+                    Width = 455
                   end>
-                object gridCuotaColumn3: TcxGridBandedColumn
-                  Caption = 'Condicion'
+                object gridInfoid: TcxGridDBBandedColumn
+                  DataBinding.FieldName = 'id'
                   Visible = False
-                  GroupIndex = 0
-                  Width = 101
                   Position.BandIndex = 0
                   Position.ColIndex = 0
                   Position.RowIndex = 0
                 end
-                object gridCuotaColumn1: TcxGridBandedColumn
-                  Caption = 'Descripcion'
+                object gridInfodesc_tipo_info_detalle: TcxGridDBBandedColumn
+                  Caption = 'Detalle'
+                  DataBinding.FieldName = 'desc_tipo_info_detalle'
                   HeaderAlignmentHorz = taCenter
-                  Width = 193
+                  Options.Editing = False
+                  Width = 328
                   Position.BandIndex = 0
                   Position.ColIndex = 1
                   Position.RowIndex = 0
                 end
-                object gridCuotaColumn2: TcxGridBandedColumn
-                  Caption = 'Valor'
-                  DataBinding.ValueType = 'Float'
-                  PropertiesClassName = 'TcxSpinEditProperties'
-                  Properties.Alignment.Horz = taRightJustify
-                  Properties.DisplayFormat = '#,##0.00'
-                  Properties.ReadOnly = True
-                  Properties.SpinButtons.Visible = False
-                  Properties.ValueType = vtFloat
-                  HeaderAlignmentHorz = taCenter
-                  Width = 80
+                object gridInfotipo_info_id: TcxGridDBBandedColumn
+                  DataBinding.FieldName = 'tipo_info_id'
+                  Visible = False
                   Position.BandIndex = 0
                   Position.ColIndex = 2
+                  Position.RowIndex = 0
+                end
+                object gridInfotipo_info: TcxGridDBBandedColumn
+                  DataBinding.FieldName = 'tipo_info'
+                  Visible = False
+                  GroupIndex = 1
+                  Position.BandIndex = 0
+                  Position.ColIndex = 3
+                  Position.RowIndex = 0
+                end
+                object gridInfoinformacion: TcxGridDBBandedColumn
+                  DataBinding.FieldName = 'informacion'
+                  Visible = False
+                  GroupIndex = 0
+                  Position.BandIndex = 0
+                  Position.ColIndex = 4
+                  Position.RowIndex = 0
+                end
+                object gridInfovalor: TcxGridDBBandedColumn
+                  Caption = 'Monto'
+                  DataBinding.FieldName = 'monto'
+                  HeaderAlignmentHorz = taCenter
+                  Width = 81
+                  Position.BandIndex = 0
+                  Position.ColIndex = 5
                   Position.RowIndex = 0
                 end
               end
               object cxGridLevel3: TcxGridLevel
-                GridView = gridCuota
-              end
-            end
-            object cxGrid2: TcxGrid
-              Left = 21
-              Top = 409
-              Width = 477
-              Height = 277
-              Align = alClient
-              Font.Charset = DEFAULT_CHARSET
-              Font.Color = clWindowText
-              Font.Height = -17
-              Font.Name = 'Tahoma'
-              Font.Style = [fsBold]
-              ParentFont = False
-              TabOrder = 1
-              object gridRendicion: TcxGridBandedTableView
-                Navigator.Buttons.CustomButtons = <>
-                DataController.Summary.DefaultGroupSummaryItems = <
-                  item
-                    Format = '#,##0.00'
-                    Kind = skSum
-                    Column = cxGridBandedColumn7
-                  end>
-                DataController.Summary.FooterSummaryItems = <>
-                DataController.Summary.SummaryGroups = <>
-                OptionsData.CancelOnExit = False
-                OptionsData.Deleting = False
-                OptionsData.DeletingConfirmation = False
-                OptionsData.Editing = False
-                OptionsData.Inserting = False
-                OptionsSelection.CellSelect = False
-                OptionsView.Footer = True
-                OptionsView.GroupSummaryLayout = gslAlignWithColumnsAndDistribute
-                Styles.ContentOdd = cxStyle1
-                Bands = <
-                  item
-                    Caption = 'Distribuci'#243'n al finalizar pago de cuotas'#9#9#9
-                    Width = 374
-                  end>
-                object cxGridBandedColumn5: TcxGridBandedColumn
-                  Caption = 'Tipo'
-                  Visible = False
-                  GroupIndex = 0
-                  Width = 101
-                  Position.BandIndex = 0
-                  Position.ColIndex = 0
-                  Position.RowIndex = 0
-                end
-                object cxGridBandedColumn6: TcxGridBandedColumn
-                  Caption = 'Descripcion'
-                  HeaderAlignmentHorz = taCenter
-                  Width = 193
-                  Position.BandIndex = 0
-                  Position.ColIndex = 1
-                  Position.RowIndex = 0
-                end
-                object cxGridBandedColumn7: TcxGridBandedColumn
-                  Caption = 'Valor'
-                  DataBinding.ValueType = 'Float'
-                  PropertiesClassName = 'TcxSpinEditProperties'
-                  Properties.Alignment.Horz = taRightJustify
-                  Properties.DisplayFormat = '#,##0.00'
-                  Properties.ReadOnly = True
-                  Properties.SpinButtons.Visible = False
-                  Properties.ValueType = vtFloat
-                  GroupSummaryAlignment = taRightJustify
-                  HeaderAlignmentHorz = taCenter
-                  Width = 80
-                  Position.BandIndex = 0
-                  Position.ColIndex = 2
-                  Position.RowIndex = 0
-                end
-              end
-              object cxGridLevel4: TcxGridLevel
-                GridView = gridRendicion
+                GridView = gridInfo
               end
             end
           end
@@ -859,7 +779,7 @@ object fSolicitud: TfSolicitud
             Height = 707
             Align = alClient
             TabOrder = 1
-            object GroupBox1: TGroupBox
+            object grpCliente: TGroupBox
               Left = 19
               Top = 16
               Width = 454
@@ -939,7 +859,6 @@ object fSolicitud: TfSolicitud
                 Width = 65
                 Height = 21
                 TabOrder = 0
-                Text = '74205877'
                 OnKeyUp = txtDniAvalKeyUp
               end
               object cxGrid1: TcxGrid
@@ -955,12 +874,12 @@ object fSolicitud: TfSolicitud
                 ParentFont = False
                 TabOrder = 1
                 object gridAvales: TcxGridBandedTableView
+                  OnKeyUp = gridAvalesKeyUp
                   Navigator.Buttons.CustomButtons = <>
                   DataController.Summary.DefaultGroupSummaryItems = <>
                   DataController.Summary.FooterSummaryItems = <>
                   DataController.Summary.SummaryGroups = <>
                   OptionsData.CancelOnExit = False
-                  OptionsData.Deleting = False
                   OptionsData.DeletingConfirmation = False
                   OptionsData.Editing = False
                   OptionsData.Inserting = False
@@ -972,28 +891,36 @@ object fSolicitud: TfSolicitud
                       Caption = 'Avales'
                       Width = 407
                     end>
+                  object colId: TcxGridBandedColumn
+                    Caption = 'id'
+                    DataBinding.ValueType = 'Integer'
+                    Visible = False
+                    Position.BandIndex = 0
+                    Position.ColIndex = 0
+                    Position.RowIndex = 0
+                  end
                   object colDni: TcxGridBandedColumn
                     Caption = 'Dni'
                     HeaderAlignmentHorz = taCenter
-                    Width = 75
+                    Width = 80
                     Position.BandIndex = 0
-                    Position.ColIndex = 0
+                    Position.ColIndex = 1
                     Position.RowIndex = 0
                   end
                   object colNombres: TcxGridBandedColumn
                     Caption = 'Noombres'
                     HeaderAlignmentHorz = taCenter
-                    Width = 235
+                    Width = 231
                     Position.BandIndex = 0
-                    Position.ColIndex = 1
+                    Position.ColIndex = 2
                     Position.RowIndex = 0
                   end
                   object colTipo: TcxGridBandedColumn
                     Caption = 'Tipo'
                     HeaderAlignmentHorz = taCenter
-                    Width = 97
+                    Width = 96
                     Position.BandIndex = 0
-                    Position.ColIndex = 2
+                    Position.ColIndex = 3
                     Position.RowIndex = 0
                   end
                 end
@@ -1076,7 +1003,7 @@ object fSolicitud: TfSolicitud
               Left = 19
               Top = 406
               Width = 454
-              Height = 81
+              Height = 283
               Caption = 'Datos'
               TabOrder = 3
               object Label24: TLabel
@@ -1087,11 +1014,25 @@ object fSolicitud: TfSolicitud
                 Caption = 'Tipo prestamo'
               end
               object Label25: TLabel
-                Left = 245
-                Top = 19
+                Left = 18
+                Top = 155
                 Width = 41
                 Height = 13
                 Caption = 'Garantia'
+              end
+              object Label30: TLabel
+                Left = 18
+                Top = 83
+                Width = 60
+                Height = 13
+                Caption = 'Giro Negocio'
+              end
+              object Label31: TLabel
+                Left = 234
+                Top = 19
+                Width = 55
+                Height = 13
+                Caption = 'Comentario'
               end
               object cbbTipoPrestamo: TcxLookupComboBox
                 Left = 18
@@ -1108,8 +1049,8 @@ object fSolicitud: TfSolicitud
                 Width = 191
               end
               object cbbGarantia: TcxLookupComboBox
-                Left = 245
-                Top = 38
+                Left = 18
+                Top = 174
                 Properties.DropDownListStyle = lsFixedList
                 Properties.KeyFieldNames = 'id'
                 Properties.ListColumns = <
@@ -1121,15 +1062,29 @@ object fSolicitud: TfSolicitud
                 TabOrder = 1
                 Width = 188
               end
-            end
-            object Memo1: TMemo
-              Left = 19
-              Top = 495
-              Width = 466
-              Height = 194
-              Lines.Strings = (
-                'Memo1')
-              TabOrder = 4
+              object cbbGiroNegocio: TcxLookupComboBox
+                Left = 18
+                Top = 102
+                Properties.DropDownListStyle = lsFixedList
+                Properties.KeyFieldNames = 'id'
+                Properties.ListColumns = <
+                  item
+                    FieldName = 'desc_giro_negocio'
+                  end>
+                Properties.ListOptions.SyncMode = True
+                Properties.ListSource = dmData.dsGiroNegocio
+                TabOrder = 2
+                Width = 191
+              end
+              object txtComentario: TMemo
+                Left = 232
+                Top = 40
+                Width = 209
+                Height = 209
+                Lines.Strings = (
+                  '')
+                TabOrder = 3
+              end
             end
           end
         end
@@ -1146,6 +1101,7 @@ object fSolicitud: TfSolicitud
           TabOrder = 0
           LookAndFeel.NativeStyle = False
           object gridSolicitud: TcxGridDBTableView
+            PopupMenu = PopupMenu1
             Navigator.Buttons.CustomButtons = <>
             DataController.DataSource = dsSolicitud
             DataController.Summary.DefaultGroupSummaryItems = <>
@@ -1315,6 +1271,7 @@ object fSolicitud: TfSolicitud
                   end>
                 object cxGrid5DBBandedTableView1id: TcxGridDBBandedColumn
                   DataBinding.FieldName = 'id'
+                  Visible = False
                   Width = 28
                   Position.BandIndex = 0
                   Position.ColIndex = 0
@@ -1435,7 +1392,7 @@ object fSolicitud: TfSolicitud
         OnClick = btnNuevoClick
       end
       object btnEditar: TButton
-        Left = 168
+        Left = 169
         Top = 6
         Width = 75
         Height = 25
@@ -1476,8 +1433,8 @@ object fSolicitud: TfSolicitud
     UpdateOptions.CheckRequired = False
     UpdateOptions.AutoCommitUpdates = True
     StoreDefs = True
-    Left = 517
-    Top = 242
+    Left = 421
+    Top = 282
     object fdSolicitudid: TIntegerField
       DisplayLabel = '#'
       FieldName = 'id'
@@ -1514,7 +1471,9 @@ object fSolicitud: TfSolicitud
       FieldName = 'tipo_producto'
     end
     object fdSolicitudcomentario: TStringField
+      DisplayWidth = 20
       FieldName = 'comentario'
+      Size = 500
     end
     object fdSolicitudperfil_cliente: TStringField
       FieldName = 'perfil_cliente'
@@ -1564,6 +1523,10 @@ object fSolicitud: TfSolicitud
     object fdSolicitudmonto: TFloatField
       FieldName = 'monto'
     end
+    object fdSolicitudtipo_info_detalle: TMemoField
+      FieldName = 'tipo_info_detalle'
+      BlobType = ftMemo
+    end
   end
   object dsSolicitud: TDataSource
     DataSet = fdSolicitud
@@ -1594,28 +1557,28 @@ object fSolicitud: TfSolicitud
     end
     object LinkPropertyToFieldCaption2: TLinkPropertyToField
       Category = 'Quick Bindings'
-      DataSource = BindSourceDB3
+      DataSource = BindSourceDB4
       FieldName = 'mora'
       Component = lblMora
       ComponentProperty = 'Caption'
     end
     object LinkPropertyToFieldCaption3: TLinkPropertyToField
       Category = 'Quick Bindings'
-      DataSource = BindSourceDB3
+      DataSource = BindSourceDB4
       FieldName = 'interes'
       Component = lblInteres
       ComponentProperty = 'Caption'
     end
     object LinkPropertyToFieldCaption4: TLinkPropertyToField
       Category = 'Quick Bindings'
-      DataSource = BindSourceDB3
+      DataSource = BindSourceDB4
       FieldName = 'plazo_minimo'
       Component = lblPlazoMinimo
       ComponentProperty = 'Caption'
     end
     object LinkPropertyToFieldCaption5: TLinkPropertyToField
       Category = 'Quick Bindings'
-      DataSource = BindSourceDB3
+      DataSource = BindSourceDB4
       FieldName = 'plazo_maximo'
       Component = lblPlazoMaximo
       ComponentProperty = 'Caption'
@@ -1635,6 +1598,7 @@ object fSolicitud: TfSolicitud
     end
   end
   object BindSourceDB2: TBindSourceDB
+    DataSet = dmData.fdPerfilCliente
     ScopeMappings = <>
     Left = 712
     Top = 56
@@ -1651,14 +1615,15 @@ object fSolicitud: TfSolicitud
     Top = 272
   end
   object BindSourceDB4: TBindSourceDB
+    DataSet = dmData.fdTipoProducto
     ScopeMappings = <>
     Left = 784
     Top = 360
   end
   object dsAvales: TDataSource
     DataSet = fdAvales
-    Left = 973
-    Top = 176
+    Left = 901
+    Top = 216
   end
   object fdAvales: TFDMemTable
     FieldDefs = <>
@@ -1672,16 +1637,52 @@ object fSolicitud: TfSolicitud
     UpdateOptions.CheckRequired = False
     UpdateOptions.AutoCommitUpdates = True
     StoreDefs = True
-    Left = 1061
-    Top = 162
+    Left = 1085
+    Top = 242
     object fdAvalesid: TIntegerField
       FieldName = 'id'
+    end
+    object fdAvalesdni: TStringField
+      FieldName = 'dni'
+    end
+    object fdAvalesfull_name: TStringField
+      FieldName = 'full_name'
+      Size = 100
     end
     object fdAvalestipo: TStringField
       FieldName = 'tipo'
     end
-    object fdAvalesfull_name: TStringField
-      FieldName = 'full_name'
+  end
+  object PopupMenu1: TPopupMenu
+    Left = 349
+    Top = 184
+    object Imprimir1: TMenuItem
+      Action = actCerrar
+    end
+    object Anular1: TMenuItem
+      Action = actAnular
+    end
+    object Imprimirsolicitud1: TMenuItem
+      Caption = 'Imprimir solicitud'
+    end
+    object Resolucion1: TMenuItem
+      Action = actResolucion
+    end
+  end
+  object ActionList1: TActionList
+    Left = 309
+    Top = 352
+    object actCerrar: TAction
+      Caption = 'Cerrar'
+      OnExecute = actCerrarExecute
+    end
+    object actAnular: TAction
+      Caption = 'Anular'
+      OnExecute = actAnularExecute
+    end
+    object actResolucion: TAction
+      Caption = 'Generar Resolucion'
+      OnExecute = actResolucionExecute
     end
   end
 end
