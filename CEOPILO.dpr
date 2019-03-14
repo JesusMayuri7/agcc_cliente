@@ -26,7 +26,6 @@ uses
   uAdapterJson in 'uAdapterJson.pas',
   Vcl.Themes,
   Vcl.Styles,
-  uResolucionRpt in 'uResolucionRpt.pas' {Form1},
   uTipoInfo in 'uTipoInfo.pas' {fTipoInfo},
   uTipoInfoDetalle in 'uTipoInfoDetalle.pas' {fTipoInfoDetalle},
   uSolicitud in 'uSolicitud.pas' {fSolicitud};

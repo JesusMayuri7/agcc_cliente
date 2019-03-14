@@ -184,12 +184,13 @@ object fTipoProducto: TfTipoProducto
       Top = 1
       Width = 674
       Height = 377
-      ActivePage = tabLIstado
+      ActivePage = tabFormulario
       Align = alClient
       TabOrder = 0
       object tabFormulario: TTabSheet
         Caption = 'Formulario'
-        TabVisible = False
+        ExplicitLeft = 2
+        ExplicitTop = 22
         object GroupBox1: TGroupBox
           Left = 51
           Top = 31
@@ -242,7 +243,7 @@ object fTipoProducto: TfTipoProducto
           object edDescripcion: TEdit
             Left = 112
             Top = 37
-            Width = 353
+            Width = 362
             Height = 21
             TabOrder = 0
           end
@@ -287,6 +288,56 @@ object fTipoProducto: TfTipoProducto
             Properties.ValueType = vtFloat
             TabOrder = 5
             Width = 89
+          end
+          object cxGrid1: TcxGrid
+            Left = 224
+            Top = 104
+            Width = 250
+            Height = 181
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -12
+            Font.Name = 'Tahoma'
+            Font.Style = [fsBold]
+            ParentFont = False
+            TabOrder = 6
+            object gridPerfilCliente: TcxGridTableView
+              Navigator.Buttons.CustomButtons = <>
+              DataController.Summary.DefaultGroupSummaryItems = <>
+              DataController.Summary.FooterSummaryItems = <>
+              DataController.Summary.SummaryGroups = <>
+              OptionsData.CancelOnExit = False
+              OptionsData.DeletingConfirmation = False
+              OptionsData.Editing = False
+              OptionsData.Inserting = False
+              OptionsView.NoDataToDisplayInfoText = '<Sin perfil asignado>'
+              OptionsView.GroupByBox = False
+              object colId: TcxGridColumn
+                Caption = '#'
+                HeaderAlignmentHorz = taCenter
+                Width = 31
+              end
+              object colDescripcion: TcxGridColumn
+                Caption = 'Perfil Cliente'
+                HeaderAlignmentHorz = taCenter
+                Width = 211
+              end
+            end
+            object cxGridLevel2: TcxGridLevel
+              GridView = gridPerfilCliente
+            end
+          end
+          object cbbPerfilCliente: TcxLookupComboBox
+            Left = 224
+            Top = 80
+            Properties.KeyFieldNames = 'id'
+            Properties.ListColumns = <
+              item
+                FieldName = 'desc_perfil_cliente'
+              end>
+            Properties.ListSource = dsPerfilCliente
+            TabOrder = 7
+            Width = 250
           end
         end
         object Memo1: TMemo
@@ -499,6 +550,10 @@ object fTipoProducto: TfTipoProducto
     end
     object fdTipoProductoactivo: TBooleanField
       FieldName = 'activo'
+    end
+    object fdTipoProductoperfil_cliente: TMemoField
+      FieldName = 'perfil_cliente'
+      BlobType = ftMemo
     end
   end
   object dsTipoProducto: TDataSource
@@ -805,5 +860,30 @@ object fTipoProducto: TfTipoProducto
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
       000000000000}
+  end
+  object fdPerfilCliente: TFDMemTable
+    FieldDefs = <>
+    IndexDefs = <>
+    FetchOptions.AssignedValues = [evMode]
+    FetchOptions.Mode = fmAll
+    ResourceOptions.AssignedValues = [rvSilentMode]
+    ResourceOptions.SilentMode = True
+    UpdateOptions.AssignedValues = [uvCheckRequired, uvAutoCommitUpdates]
+    UpdateOptions.CheckRequired = False
+    UpdateOptions.AutoCommitUpdates = True
+    StoreDefs = True
+    Left = 441
+    Top = 66
+    object fdPerfilClienteid: TIntegerField
+      FieldName = 'id'
+    end
+    object fdPerfilClientedesc_perfil_cliente: TStringField
+      FieldName = 'desc_perfil_cliente'
+    end
+  end
+  object dsPerfilCliente: TDataSource
+    DataSet = fdPerfilCliente
+    Left = 533
+    Top = 74
   end
 end

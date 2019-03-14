@@ -358,7 +358,7 @@ object dmData: TdmData
   end
   object dsPerfilCliente: TDataSource
     DataSet = fdPerfilCliente
-    Left = 257
+    Left = 265
     Top = 234
   end
   object dsTipoProducto: TDataSource
@@ -459,8 +459,8 @@ object dmData: TdmData
     UpdateOptions.CheckRequired = False
     UpdateOptions.AutoCommitUpdates = True
     StoreDefs = True
-    Left = 169
-    Top = 226
+    Left = 177
+    Top = 234
     object fdPerfilClienteid: TIntegerField
       FieldName = 'id'
     end

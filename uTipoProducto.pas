@@ -30,7 +30,7 @@ uses
   dxSkinTheAsphaltWorld, dxSkinTheBezier, dxSkinsDefaultPainters,
   dxSkinValentine, dxSkinVisualStudio2013Blue, dxSkinVisualStudio2013Dark,
   dxSkinVisualStudio2013Light, dxSkinVS2010, dxSkinWhiteprint,
-  dxSkinXmas2008Blue, System.ImageList, Vcl.ImgList;
+  dxSkinXmas2008Blue, System.ImageList, Vcl.ImgList, REST.Response.Adapter;
 
 type
   TfTipoProducto = class(TForm)
@@ -98,6 +98,17 @@ type
     cxStyle2: TcxStyle;
     cxStyle3: TcxStyle;
     ImageList1: TImageList;
+    cxGrid1: TcxGrid;
+    cxGridLevel2: TcxGridLevel;
+    cbbPerfilCliente: TcxLookupComboBox;
+    gridPerfilCliente: TcxGridTableView;
+    colId: TcxGridColumn;
+    colDescripcion: TcxGridColumn;
+    fdPerfilCliente: TFDMemTable;
+    dsPerfilCliente: TDataSource;
+    fdTipoProductoperfil_cliente: TMemoField;
+    fdPerfilClienteid: TIntegerField;
+    fdPerfilClientedesc_perfil_cliente: TStringField;
     procedure FormCreate(Sender: TObject);
     procedure cbbRegistrosChange(Sender: TObject);
     procedure spbPagSiguienteClick(Sender: TObject);
@@ -115,6 +126,10 @@ type
     procedure Limpiar();
     procedure EditarLinea(desc_tipo_producto: string;id, plazo_minimo, plazo_maximo:integer;interes,mora: real;activo: boolean);
     procedure NuevaLinea(desc_tipo_producto:string;plazo_minimo,plazo_maximo:integer;interes,mora:real;activo:boolean);
+    procedure addClick(Sender: TObject; AButtonIndex: Integer);
+    procedure listarPerfilCliente;
+    procedure actualizarPerfil(aJson:String);
+    function datasetToJsonArray2(dataset:TFdMemTable): TJsonArray;
   public
     { Public declarations }
   end;
@@ -130,7 +145,74 @@ uses
 
 {$R *.dfm}
 
-{ TfLineaCredito }
+function TfTipoProducto.datasetToJsonArray2(dataset:TFdMemTable): TJsonArray;
+var
+  I: Integer;
+  item:TJsonObject;
+begin
+   result:=TJsonArray.Create();
+    dataset.first;
+    while not(dataset.eof) do
+    begin
+      item:=TJsonObject.Create;
+               item.AddPair('tipo_producto_id',TJsonNUmber.Create(Tag));
+               item.AddPair('perfil_cliente_id',TJsonNUmber.Create(dataset.FieldbyName('id').AsInteger));   // NO ENVIA EL TAG.....
+       result.AddElement(item);
+       dataset.Next;
+    end;
+end;
+
+procedure TfTipoProducto.actualizarPerfil(aJson:String);
+var
+  I,size: Integer;
+  item:TJsonObject;
+  jsonArray:TJsonArray;
+begin
+    jsonArray := TJSONObject.ParseJSONValue(aJSON) as TJSONArray;
+   Size := jsonArray.Count;
+     gridPerfilCliente.datacontroller.recordcount:=0;
+     for i:=0 to pred(Size) do
+     begin
+     gridPerfilCliente.datacontroller.recordcount:=gridPerfilCliente.datacontroller.recordcount+1;
+     item := jsonArray.Get(i) as TJsonObject;
+     gridPerfilCliente.datacontroller.Values[i,colId.Index]:=item.Get('id').JsonValue.Value;
+     gridPerfilCliente.datacontroller.Values[i,colDescripcion.Index]:=item.Get('desc_perfil_cliente').JsonValue.Value;
+     end;
+end;
+
+procedure TfTipoProducto.listarPerfilCliente;
+var graph:Tgraph;
+var variables:TJSONObject;
+var dataVar,dataRest,query:TJSONObject;
+var resultado:TJsonObject;
+begin
+    resultado:=TJSONObject.Create;
+    graph:=TGraph.Create(dmdata.RESTClient1,fdPerfilCliente);
+    try  // Cambiar por el query a consultar, hacer pruebas en Insomnia
+    graph.query:='query verPerfilCliente($limit:Int,$per_page:Int,$desc_perfil_cliente:String)'+
+     '{ perfil_clienteQuery(limit:$limit,per_page:$per_page,desc_perfil_cliente:$desc_perfil_cliente)' +
+     '{ data {id,desc_perfil_cliente,linea_credito_id},per_page,total}} ';
+
+    //NO variar
+    graph.rootElement:='data.perfil_clienteQuery.data'; // cambiar por el nombre del Query que buscas linea_creditoQuery
+    resultado:=graph.ejecutar('perfil_clienteQuery');  // cambiar por el nombre del Query que buscas linea_creditoQuery
+    finally
+       FreeAndNil(resultado);
+       FreeAndNil(graph);
+    end;
+end;
+
+procedure TfTipoProducto.addClick(Sender: TObject; AButtonIndex: Integer);
+begin
+  if AButtonIndex = 1 then
+    with TcxLookupComboBox(Sender) do
+    begin
+      gridPerfilCliente.DataController.RecordCount:=gridPerfilCliente.DataController.RecordCount+1;
+      gridPerfilCliente.DataController.Values[gridPerfilCliente.DataController.RecordCount-1,colId.Index]:=Editvalue;
+      gridPerfilCliente.DataController.Values[gridPerfilCliente.DataController.RecordCount-1,colDescripcion.Index]:=EditText;
+      EditValue := Null;
+    end;
+end;
 
 procedure TfTipoProducto.EditarLinea(desc_tipo_producto: string;id, plazo_minimo, plazo_maximo:integer;interes,mora: real;activo: boolean);
 var graph:Tgraph;
@@ -209,6 +291,10 @@ begin
      //showmessage(tag.ToString);
      if Tag>0 then
      begin
+         tabFormulario.TabVisible:=true;
+         PageControl1.ActivePageIndex:=0;
+         listarPerfilCliente();
+         actualizarPerfil(VarToStr(fdTipoProducto.fieldValues['perfil_cliente']));
          btnEditar.Enabled:=false;
          tabListado.TabVisible:=false;
          tabFormulario.TabVisible:=true;
@@ -228,7 +314,7 @@ procedure TfTipoProducto.btnGuardarClick(Sender: TObject);
 begin
   btnGuardar.Enabled:=false;
   if Tag>0 then
-     EditarLinea(edDescripcion.Text,tag,spbMinimo.value,spbMaximo.value,spbInteres.value,spbMora.value,chkActivo.checked)
+     EditarLinea(edDescripcion.Text,tag,spbMinimo.value,spbMaximo.value,spbInteres.value,spbMora.value,chkActivo.checked,datasetToArray2)
   else
      nuevalinea(edDescripcion.Text,spbMinimo.value,spbMaximo.value,spbInteres.value,spbMora.value,chkActivo.checked);
   tabFormulario.TabVisible:=false;
@@ -245,9 +331,18 @@ listar();
 end;
 
 procedure TfTipoProducto.FormCreate(Sender: TObject);
+var
+  AButton: TcxEditButton;
 begin
 paginaActual:=1;
 listar();
+        with TcxLookupComboBoxProperties(cbbPerfilCliente.Properties) do
+        begin
+          AButton := Buttons.Add;
+          AButton.Kind := bkText;
+          AButton.Caption := 'Add';
+          OnButtonClick := addClick;
+        end;
 end;
 
 procedure TfTipoProducto.Limpiar;
@@ -272,7 +367,8 @@ begin
     try  // Cambiar por el query a consultar, hacer pruebas en Insomnia
     graph.query:='query verTipoProducto($limit:Int,$per_page:Int,$desc_tipo_producto:String)'+
      '{ tipo_productoQuery(limit:$limit,per_page:$per_page,desc_tipo_producto:$desc_tipo_producto)' +
-     '{ data {id,desc_tipo_producto,interes,mora,plazo_minimo,plazo_maximo,activo},per_page,total}} ';
+     '{ data {id,desc_tipo_producto,interes,mora,plazo_minimo,plazo_maximo,activo,perfil_cliente'+
+     ' {id,desc_perfil_cliente}},per_page,total}} ';
 
     //NO variar
     variables:=TJSONObject.Create;
