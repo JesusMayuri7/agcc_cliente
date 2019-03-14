@@ -189,8 +189,6 @@ object fTipoProducto: TfTipoProducto
       TabOrder = 0
       object tabFormulario: TTabSheet
         Caption = 'Formulario'
-        ExplicitLeft = 2
-        ExplicitTop = 22
         object GroupBox1: TGroupBox
           Left = 51
           Top = 31
@@ -330,6 +328,7 @@ object fTipoProducto: TfTipoProducto
           object cbbPerfilCliente: TcxLookupComboBox
             Left = 224
             Top = 80
+            Properties.Alignment.Horz = taCenter
             Properties.KeyFieldNames = 'id'
             Properties.ListColumns = <
               item
@@ -878,6 +877,7 @@ object fTipoProducto: TfTipoProducto
       FieldName = 'id'
     end
     object fdPerfilClientedesc_perfil_cliente: TStringField
+      DisplayLabel = 'Perfiles'
       FieldName = 'desc_perfil_cliente'
     end
   end
