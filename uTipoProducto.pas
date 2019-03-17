@@ -94,21 +94,23 @@ type
     fdTipoProductoplazo_maximo: TIntegerField;
     fdTipoProductoactivo: TBooleanField;
     gridTipoProductoDBTableView1activo: TcxGridDBColumn;
-    Memo1: TMemo;
     cxStyle2: TcxStyle;
     cxStyle3: TcxStyle;
     ImageList1: TImageList;
-    cxGrid1: TcxGrid;
-    cxGridLevel2: TcxGridLevel;
-    cbbPerfilCliente: TcxLookupComboBox;
-    gridPerfilCliente: TcxGridTableView;
-    colId: TcxGridColumn;
-    colDescripcion: TcxGridColumn;
     fdPerfilCliente: TFDMemTable;
     dsPerfilCliente: TDataSource;
     fdTipoProductoperfil_cliente: TMemoField;
     fdPerfilClienteid: TIntegerField;
     fdPerfilClientedesc_perfil_cliente: TStringField;
+    GroupBox2: TGroupBox;
+    cbbPerfilCliente: TcxLookupComboBox;
+    cxGrid1: TcxGrid;
+    gridPerfilCliente: TcxGridTableView;
+    colId: TcxGridColumn;
+    colDescripcion: TcxGridColumn;
+    cxGridLevel2: TcxGridLevel;
+    fdPerfilClientedesc_linea_credito: TStringField;
+    colLineaCredito: TcxGridColumn;
     procedure FormCreate(Sender: TObject);
     procedure cbbRegistrosChange(Sender: TObject);
     procedure spbPagSiguienteClick(Sender: TObject);
@@ -177,6 +179,7 @@ begin
      item := jsonArray.Get(i) as TJsonObject;
      gridPerfilCliente.datacontroller.Values[i,colId.Index]:=item.Get('id').JsonValue.Value;
      gridPerfilCliente.datacontroller.Values[i,colDescripcion.Index]:=item.Get('desc_perfil_cliente').JsonValue.Value;
+     gridPerfilCliente.datacontroller.Values[i,colLineaCredito.Index]:=item.Get('desc_linea_credito').JsonValue.Value;
      end;
 end;
 
@@ -368,7 +371,7 @@ begin
     graph.query:='query verTipoProducto($limit:Int,$per_page:Int,$desc_tipo_producto:String)'+
      '{ tipo_productoQuery(limit:$limit,per_page:$per_page,desc_tipo_producto:$desc_tipo_producto)' +
      '{ data {id,desc_tipo_producto,interes,mora,plazo_minimo,plazo_maximo,activo,perfil_cliente'+
-     ' {id,desc_perfil_cliente}},per_page,total}} ';
+     ' {id,desc_perfil_cliente,linea_credito {id,desc_linea_credito} }},per_page,total}} ';
 
     //NO variar
     variables:=TJSONObject.Create;
