@@ -194,7 +194,6 @@ object fTipoProducto: TfTipoProducto
       ExplicitWidth = 674
       object tabFormulario: TTabSheet
         Caption = 'Formulario'
-        ExplicitWidth = 666
         object GroupBox1: TGroupBox
           Left = 51
           Top = 31
@@ -355,6 +354,22 @@ object fTipoProducto: TfTipoProducto
                 GridView = gridPerfilCliente
               end
             end
+            object cxGridLevel2: TcxGridLevel
+              GridView = gridPerfilCliente
+            end
+          end
+          object cbbPerfilCliente: TcxLookupComboBox
+            Left = 224
+            Top = 80
+            Properties.Alignment.Horz = taCenter
+            Properties.KeyFieldNames = 'id'
+            Properties.ListColumns = <
+              item
+                FieldName = 'desc_perfil_cliente'
+              end>
+            Properties.ListSource = dsPerfilCliente
+            TabOrder = 7
+            Width = 250
           end
         end
       end
@@ -890,6 +905,7 @@ object fTipoProducto: TfTipoProducto
       FieldName = 'id'
     end
     object fdPerfilClientedesc_perfil_cliente: TStringField
+      DisplayLabel = 'Perfiles'
       FieldName = 'desc_perfil_cliente'
     end
     object fdPerfilClientedesc_linea_credito: TStringField

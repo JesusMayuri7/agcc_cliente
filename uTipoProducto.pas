@@ -126,12 +126,12 @@ type
     var paginaActual:integer;
     procedure listar;
     procedure Limpiar();
-    procedure EditarLinea(desc_tipo_producto: string;id, plazo_minimo, plazo_maximo:integer;interes,mora: real;activo: boolean);
+    procedure EditarLinea(desc_tipo_producto: string;id, plazo_minimo, plazo_maximo:integer;interes,mora: real;activo: boolean;perfil_cliente:TJsonArray);
     procedure NuevaLinea(desc_tipo_producto:string;plazo_minimo,plazo_maximo:integer;interes,mora:real;activo:boolean);
     procedure addClick(Sender: TObject; AButtonIndex: Integer);
     procedure listarPerfilCliente;
     procedure actualizarPerfil(aJson:String);
-    function datasetToJsonArray2(dataset:TFdMemTable): TJsonArray;
+    function datasetToJsonArray2(): TJsonArray;
   public
     { Public declarations }
   end;
@@ -147,20 +147,18 @@ uses
 
 {$R *.dfm}
 
-function TfTipoProducto.datasetToJsonArray2(dataset:TFdMemTable): TJsonArray;
+function TfTipoProducto.datasetToJsonArray2(): TJsonArray;
 var
   I: Integer;
   item:TJsonObject;
 begin
-   result:=TJsonArray.Create();
-    dataset.first;
-    while not(dataset.eof) do
-    begin
+    result:=TJsonArray.Create();
+    for I := 0 to gridPerfilCliente.DataController.RecordCount-1 do
+      begin
       item:=TJsonObject.Create;
                item.AddPair('tipo_producto_id',TJsonNUmber.Create(Tag));
-               item.AddPair('perfil_cliente_id',TJsonNUmber.Create(dataset.FieldbyName('id').AsInteger));   // NO ENVIA EL TAG.....
+               item.AddPair('perfil_cliente_id',TJsonNUmber.Create(gridPerfilCliente.datacontroller.Values[i,colId.Index]));
        result.AddElement(item);
-       dataset.Next;
     end;
 end;
 
@@ -217,7 +215,7 @@ begin
     end;
 end;
 
-procedure TfTipoProducto.EditarLinea(desc_tipo_producto: string;id, plazo_minimo, plazo_maximo:integer;interes,mora: real;activo: boolean);
+procedure TfTipoProducto.EditarLinea(desc_tipo_producto: string;id, plazo_minimo, plazo_maximo:integer;interes,mora: real;activo: boolean;perfil_cliente:TJSONArray);
 var graph:Tgraph;
 var variables:TJSONObject;
 var dataVar,dataRest,query:TJSONObject;
@@ -243,6 +241,7 @@ begin
     dataVar.AddPair('plazo_minimo',TJSONNumber.Create(plazo_minimo));
      dataVar.AddPair('plazo_maximo',TJSONNumber.Create(plazo_maximo));
     dataVar.AddPair('activo',TJSONNumber.Create(activo.ToInteger));
+    dataVar.AddPair('perfil_cliente',perfil_cliente);
     variables.AddPair('variables',dataVar);
     graph.variables:=variables;
     //showmessage(variables.ToString);
@@ -317,7 +316,7 @@ procedure TfTipoProducto.btnGuardarClick(Sender: TObject);
 begin
   btnGuardar.Enabled:=false;
   if Tag>0 then
-     EditarLinea(edDescripcion.Text,tag,spbMinimo.value,spbMaximo.value,spbInteres.value,spbMora.value,chkActivo.checked,datasetToArray2)
+     EditarLinea(edDescripcion.Text,tag,spbMinimo.value,spbMaximo.value,spbInteres.value,spbMora.value,chkActivo.checked,datasetToJsonArray2())
   else
      nuevalinea(edDescripcion.Text,spbMinimo.value,spbMaximo.value,spbInteres.value,spbMora.value,chkActivo.checked);
   tabFormulario.TabVisible:=false;
