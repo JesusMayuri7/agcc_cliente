@@ -3,7 +3,7 @@ object fTipoProducto: TfTipoProducto
   Top = 0
   Caption = 'Tipo Producto'
   ClientHeight = 459
-  ClientWidth = 898
+  ClientWidth = 1000
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -26,7 +26,7 @@ object fTipoProducto: TfTipoProducto
     AlignWithMargins = True
     Left = 3
     Top = 3
-    Width = 892
+    Width = 994
     Height = 33
     Align = alTop
     TabOrder = 0
@@ -49,7 +49,7 @@ object fTipoProducto: TfTipoProducto
     end
     object spbPagSiguiente: TSpeedButton
       AlignWithMargins = True
-      Left = 865
+      Left = 967
       Top = 4
       Width = 23
       Height = 25
@@ -62,7 +62,7 @@ object fTipoProducto: TfTipoProducto
     end
     object spbPaginaAnteriorrr: TSpeedButton
       AlignWithMargins = True
-      Left = 836
+      Left = 938
       Top = 4
       Width = 23
       Height = 25
@@ -87,7 +87,7 @@ object fTipoProducto: TfTipoProducto
     end
     object Panel3: TPanel
       AlignWithMargins = True
-      Left = 685
+      Left = 787
       Top = 4
       Width = 145
       Height = 25
@@ -144,7 +144,7 @@ object fTipoProducto: TfTipoProducto
     end
     object Panel4: TPanel
       AlignWithMargins = True
-      Left = 545
+      Left = 647
       Top = 4
       Width = 134
       Height = 25
@@ -178,7 +178,7 @@ object fTipoProducto: TfTipoProducto
   object pnDetalle: TPanel
     Left = 0
     Top = 39
-    Width = 898
+    Width = 1000
     Height = 420
     Align = alClient
     TabOrder = 1
@@ -186,7 +186,7 @@ object fTipoProducto: TfTipoProducto
     object PageControl1: TPageControl
       Left = 1
       Top = 1
-      Width = 896
+      Width = 998
       Height = 377
       ActivePage = tabFormulario
       Align = alClient
@@ -194,10 +194,11 @@ object fTipoProducto: TfTipoProducto
       ExplicitWidth = 674
       object tabFormulario: TTabSheet
         Caption = 'Formulario'
+        ExplicitWidth = 666
         object GroupBox1: TGroupBox
           Left = 51
           Top = 31
-          Width = 814
+          Width = 879
           Height = 316
           Caption = 'Tipo Producto'
           TabOrder = 0
@@ -246,7 +247,7 @@ object fTipoProducto: TfTipoProducto
           object edDescripcion: TEdit
             Left = 112
             Top = 37
-            Width = 209
+            Width = 217
             Height = 21
             TabOrder = 0
           end
@@ -293,28 +294,34 @@ object fTipoProducto: TfTipoProducto
             Width = 89
           end
           object GroupBox2: TGroupBox
-            Left = 352
-            Top = 16
-            Width = 455
-            Height = 289
-            Caption = 'Linea y perfil'
+            Left = 344
+            Top = 13
+            Width = 513
+            Height = 292
+            Caption = 'Linea de credito y perfil'
             TabOrder = 6
             object cbbPerfilCliente: TcxLookupComboBox
-              Left = 13
-              Top = 21
+              Left = 15
+              Top = 24
+              Properties.Alignment.Horz = taCenter
               Properties.KeyFieldNames = 'id'
               Properties.ListColumns = <
                 item
+                  Caption = 'Perfil'
                   FieldName = 'desc_perfil_cliente'
+                end
+                item
+                  Caption = 'Linea Credito'
+                  FieldName = 'desc_linea_credito'
                 end>
               Properties.ListSource = dsPerfilCliente
               TabOrder = 0
-              Width = 428
+              Width = 450
             end
             object cxGrid1: TcxGrid
-              Left = 13
-              Top = 49
-              Width = 428
+              Left = 15
+              Top = 51
+              Width = 482
               Height = 230
               Font.Charset = DEFAULT_CHARSET
               Font.Color = clWindowText
@@ -339,53 +346,35 @@ object fTipoProducto: TfTipoProducto
                   HeaderAlignmentHorz = taCenter
                   Width = 31
                 end
-                object colLineaCredito: TcxGridColumn
-                  Caption = 'Linea Credito'
-                  HeaderAlignmentHorz = taCenter
-                  Width = 163
-                end
                 object colDescripcion: TcxGridColumn
                   Caption = 'Perfil Cliente'
                   HeaderAlignmentHorz = taCenter
-                  Width = 219
+                  Width = 291
+                end
+                object colLineaCredito: TcxGridColumn
+                  Caption = 'Linea Credito'
+                  HeaderAlignmentHorz = taCenter
+                  Width = 146
                 end
               end
               object cxGridLevel2: TcxGridLevel
                 GridView = gridPerfilCliente
               end
             end
-            object cxGridLevel2: TcxGridLevel
-              GridView = gridPerfilCliente
-            end
-          end
-          object cbbPerfilCliente: TcxLookupComboBox
-            Left = 224
-            Top = 80
-            Properties.Alignment.Horz = taCenter
-            Properties.KeyFieldNames = 'id'
-            Properties.ListColumns = <
-              item
-                FieldName = 'desc_perfil_cliente'
-              end>
-            Properties.ListSource = dsPerfilCliente
-            TabOrder = 7
-            Width = 250
           end
         end
       end
       object tabLIstado: TTabSheet
         Caption = 'Listado'
         ImageIndex = 1
-        ExplicitWidth = 666
         object gridTipoProducto: TcxGrid
           Left = 0
           Top = 41
-          Width = 888
+          Width = 990
           Height = 308
           Align = alClient
           TabOrder = 0
           LookAndFeel.NativeStyle = False
-          ExplicitWidth = 666
           object gridTipoProductoDBTableView1: TcxGridDBTableView
             Navigator.Buttons.CustomButtons = <>
             DataController.DataSource = dsTipoProducto
@@ -453,11 +442,10 @@ object fTipoProducto: TfTipoProducto
         object Panel2: TPanel
           Left = 0
           Top = 0
-          Width = 888
+          Width = 990
           Height = 41
           Align = alTop
           TabOrder = 1
-          ExplicitWidth = 666
           object edCriterio: TEdit
             Left = 12
             Top = 10
@@ -484,7 +472,7 @@ object fTipoProducto: TfTipoProducto
     object Panel1: TPanel
       Left = 1
       Top = 378
-      Width = 896
+      Width = 998
       Height = 41
       Align = alBottom
       TabOrder = 1
@@ -552,7 +540,7 @@ object fTipoProducto: TfTipoProducto
     UpdateOptions.CheckRequired = False
     UpdateOptions.AutoCommitUpdates = True
     StoreDefs = True
-    Left = 557
+    Left = 461
     Top = 218
     object fdTipoProductoid: TIntegerField
       DisplayLabel = '#'
@@ -585,8 +573,8 @@ object fTipoProducto: TfTipoProducto
   end
   object dsTipoProducto: TDataSource
     DataSet = fdTipoProducto
-    Left = 637
-    Top = 218
+    Left = 645
+    Top = 226
   end
   object cxStyleRepository1: TcxStyleRepository
     Left = 608
@@ -899,8 +887,8 @@ object fTipoProducto: TfTipoProducto
     UpdateOptions.CheckRequired = False
     UpdateOptions.AutoCommitUpdates = True
     StoreDefs = True
-    Left = 457
-    Top = 186
+    Left = 273
+    Top = 106
     object fdPerfilClienteid: TIntegerField
       FieldName = 'id'
     end
@@ -914,7 +902,7 @@ object fTipoProducto: TfTipoProducto
   end
   object dsPerfilCliente: TDataSource
     DataSet = fdPerfilCliente
-    Left = 693
-    Top = 202
+    Left = 405
+    Top = 218
   end
 end

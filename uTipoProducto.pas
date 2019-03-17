@@ -109,8 +109,8 @@ type
     colId: TcxGridColumn;
     colDescripcion: TcxGridColumn;
     cxGridLevel2: TcxGridLevel;
-    fdPerfilClientedesc_linea_credito: TStringField;
     colLineaCredito: TcxGridColumn;
+    fdPerfilClientedesc_linea_credito: TStringField;
     procedure FormCreate(Sender: TObject);
     procedure cbbRegistrosChange(Sender: TObject);
     procedure spbPagSiguienteClick(Sender: TObject);
@@ -127,7 +127,7 @@ type
     procedure listar;
     procedure Limpiar();
     procedure EditarLinea(desc_tipo_producto: string;id, plazo_minimo, plazo_maximo:integer;interes,mora: real;activo: boolean;perfil_cliente:TJsonArray);
-    procedure NuevaLinea(desc_tipo_producto:string;plazo_minimo,plazo_maximo:integer;interes,mora:real;activo:boolean);
+    procedure NuevaLinea(desc_tipo_producto:string;plazo_minimo,plazo_maximo:integer;interes,mora:real;activo:boolean;perfil_cliente:TJsonArray);
     procedure addClick(Sender: TObject; AButtonIndex: Integer);
     procedure listarPerfilCliente;
     procedure actualizarPerfil(aJson:String);
@@ -192,7 +192,7 @@ begin
     try  // Cambiar por el query a consultar, hacer pruebas en Insomnia
     graph.query:='query verPerfilCliente($limit:Int,$per_page:Int,$desc_perfil_cliente:String)'+
      '{ perfil_clienteQuery(limit:$limit,per_page:$per_page,desc_perfil_cliente:$desc_perfil_cliente)' +
-     '{ data {id,desc_perfil_cliente,linea_credito_id},per_page,total}} ';
+     '{ data {id,desc_perfil_cliente,linea_credito_id,desc_linea_credito },per_page,total}} ';
 
     //NO variar
     graph.rootElement:='data.perfil_clienteQuery.data'; // cambiar por el nombre del Query que buscas linea_creditoQuery
@@ -211,6 +211,8 @@ begin
       gridPerfilCliente.DataController.RecordCount:=gridPerfilCliente.DataController.RecordCount+1;
       gridPerfilCliente.DataController.Values[gridPerfilCliente.DataController.RecordCount-1,colId.Index]:=Editvalue;
       gridPerfilCliente.DataController.Values[gridPerfilCliente.DataController.RecordCount-1,colDescripcion.Index]:=EditText;
+      gridPerfilCliente.DataController.Values[gridPerfilCliente.DataController.RecordCount-1,collineaCredito.Index]:=Properties.Grid.DataController.Values[Properties.Grid.DataController.FocusedRecordIndex, 1];
+      gridPerfilCliente.DataController.Post();
       EditValue := Null;
     end;
 end;
@@ -226,9 +228,9 @@ begin
     graph:=TGraph.Create(dmdata.RESTClient1);
     try  // Cambiar por el query a consultar, hacer pruebas en Insomnia
     graph.query:='mutation postTipoProducto($id:Int,$desc_tipo_producto:String,$interes:Float,'+
-    '$mora:Float,$plazo_minimo:Int,$plazo_maximo:Int,$activo:Int)'+
+    '$mora:Float,$plazo_minimo:Int,$plazo_maximo:Int,$activo:Int,$perfil_cliente:[PerfilClienteInputObjectType])'+
     ' { tipo_productoMutation(id:$id,desc_tipo_producto:$desc_tipo_producto,interes:$interes,'+
-    ' mora:$mora,plazo_minimo:$plazo_minimo,plazo_maximo:$plazo_maximo,activo:$activo)'+
+    ' mora:$mora,plazo_minimo:$plazo_minimo,plazo_maximo:$plazo_maximo,activo:$activo,perfil_cliente:$perfil_cliente)'+
     ' {id,desc_tipo_producto,interes,mora,plazo_minimo,plazo_maximo,activo}  } ';
 
     //NO variar
@@ -247,8 +249,8 @@ begin
     //showmessage(variables.ToString);
     resultado:=graph.ejecutar('tipo_productoMutation');  // cambiar por el nombre del Query que buscas linea_creditoQuery
     //memo1.Lines.Text:=resultado.ToString;
-    uHelpers.InsertarRegistroDataset(resultado,fdTipoProducto);
-
+   // uHelpers.InsertarRegistroDataset(resultado,fdTipoProducto);
+     listar();
     finally
        FreeAndNil(resultado);
        FreeAndNil(graph);
@@ -265,6 +267,7 @@ procedure TfTipoProducto.btnNuevoClick(Sender: TObject);
 begin
 //TODO limpiar campos
 Limpiar();
+listarPerfilCliente();
 btnNuevo.Enabled:=true;
 tabListado.TabVisible:=false;
 tabFormulario.TabVisible:=true;
@@ -318,7 +321,7 @@ begin
   if Tag>0 then
      EditarLinea(edDescripcion.Text,tag,spbMinimo.value,spbMaximo.value,spbInteres.value,spbMora.value,chkActivo.checked,datasetToJsonArray2())
   else
-     nuevalinea(edDescripcion.Text,spbMinimo.value,spbMaximo.value,spbInteres.value,spbMora.value,chkActivo.checked);
+     nuevalinea(edDescripcion.Text,spbMinimo.value,spbMaximo.value,spbInteres.value,spbMora.value,chkActivo.checked,datasetToJsonArray2());
   tabFormulario.TabVisible:=false;
   tabListado.TabVisible:=true;
   btnNuevo.Enabled:=true;
@@ -356,6 +359,8 @@ spbMora.Value:=0;
 spbMinimo.Value:=0;
 spbMaximo.Value:=0;
 chkActivo.Checked:=False;
+gridPerfilCliente.DataController.RecordCount:=0;
+//gridPerfilCliente.ClearItems;
 end;
 
 procedure TfTipoProducto.listar;
@@ -370,7 +375,7 @@ begin
     graph.query:='query verTipoProducto($limit:Int,$per_page:Int,$desc_tipo_producto:String)'+
      '{ tipo_productoQuery(limit:$limit,per_page:$per_page,desc_tipo_producto:$desc_tipo_producto)' +
      '{ data {id,desc_tipo_producto,interes,mora,plazo_minimo,plazo_maximo,activo,perfil_cliente'+
-     ' {id,desc_perfil_cliente,linea_credito {id,desc_linea_credito} }},per_page,total}} ';
+     ' {id,desc_perfil_cliente,desc_linea_credito }},per_page,total}} ';
 
     //NO variar
     variables:=TJSONObject.Create;
@@ -396,7 +401,7 @@ begin
     end;
 end;
 
-procedure TfTipoProducto.NuevaLinea(desc_tipo_producto:string;plazo_minimo,plazo_maximo:integer;interes,mora:real;activo:boolean);
+procedure TfTipoProducto.NuevaLinea(desc_tipo_producto:string;plazo_minimo,plazo_maximo:integer;interes,mora:real;activo:boolean;perfil_cliente:TJsonArray);
 var graph:Tgraph;
 var variables:TJSONObject;
 var dataVar,dataRest,query:TJSONObject;
@@ -407,9 +412,9 @@ begin
     graph:=TGraph.Create(dmdata.RESTClient1);
     try  // Cambiar por el query a consultar, hacer pruebas en Insomnia
     graph.query:='mutation postTipoProducto($desc_tipo_producto:String,$interes:Float,'+
-    '$mora:Float,$plazo_minimo:Int,$plazo_maximo:Int,$activo:Int)'+
+    '$mora:Float,$plazo_minimo:Int,$plazo_maximo:Int,$activo:Int,$perfil_cliente:[PerfilClienteInputObjectType])'+
     ' { tipo_productoMutation(desc_tipo_producto:$desc_tipo_producto,interes:$interes,'+
-    ' mora:$mora,plazo_minimo:$plazo_minimo,plazo_maximo:$plazo_maximo,activo:$activo)'+
+    ' mora:$mora,plazo_minimo:$plazo_minimo,plazo_maximo:$plazo_maximo,activo:$activo,perfil_cliente:$perfil_cliente)'+
     ' {id,desc_tipo_producto,interes,mora,plazo_minimo,plazo_maximo,activo}  } ';
 
     //NO variar
@@ -421,11 +426,13 @@ begin
     dataVar.AddPair('plazo_minimo',TJSONNumber.Create(plazo_minimo));
     dataVar.AddPair('plazo_maximo',TJSONNumber.Create(plazo_maximo));
     dataVar.AddPair('activo',TJSONNumber.Create(activo.ToInteger));
+    dataVar.AddPair('perfil_cliente',perfil_cliente);
     variables.AddPair('variables',dataVar);
     graph.variables:=variables;
 
     resultado:=graph.ejecutar('tipo_productoMutation');  // cambiar por el nombre del Query que buscas linea_creditoQuery
-    uHelpers.InsertarRegistroDataset(resultado,fdTipoProducto);
+    listar();
+   // uHelpers.InsertarRegistroDataset(resultado,fdTipoProducto);
    // memo1.Lines.Text:=resultado.ToString;
     finally
        FreeAndNil(resultado);
