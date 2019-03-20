@@ -21,25 +21,22 @@ object fResolucion: TfResolucion
     Height = 468
     Align = alClient
     TabOrder = 0
-    ExplicitTop = 33
-    ExplicitWidth = 830
-    ExplicitHeight = 476
     object PageControl1: TPageControl
       Left = 1
       Top = 1
       Width = 956
       Height = 466
-      ActivePage = tabListado
+      ActivePage = tabFormulario
       Align = alClient
       TabOrder = 0
-      ExplicitHeight = 501
       object tabFormulario: TTabSheet
         Caption = 'Formulario'
-        ExplicitHeight = 457
+        ExplicitLeft = 6
+        ExplicitTop = 23
         object GroupBox1: TGroupBox
           Left = 35
           Top = 39
-          Width = 582
+          Width = 726
           Height = 378
           Caption = 'Resolucion'
           TabOrder = 0
@@ -85,41 +82,35 @@ object fResolucion: TfResolucion
             Height = 13
             Caption = 'Analista'
           end
-          object Label14: TLabel
-            Left = 264
-            Top = 35
-            Width = 49
-            Height = 19
-            Caption = 'Monto '
+          object Label16: TLabel
+            Left = 255
+            Top = 40
+            Width = 58
+            Height = 13
+            Caption = 'Tipo Interes'
+          end
+          object Label17: TLabel
+            Left = 237
+            Top = 70
+            Width = 77
+            Height = 16
+            Caption = 'Interes Inicial'
             Font.Charset = DEFAULT_CHARSET
             Font.Color = clWindowText
-            Font.Height = -16
+            Font.Height = -13
             Font.Name = 'Tahoma'
             Font.Style = []
             ParentFont = False
           end
-          object Label15: TLabel
-            Left = 264
-            Top = 67
-            Width = 37
-            Height = 19
-            Caption = 'Plazo'
+          object Label18: TLabel
+            Left = 218
+            Top = 105
+            Width = 109
+            Height = 16
+            Caption = 'Interes Progamado'
             Font.Charset = DEFAULT_CHARSET
             Font.Color = clWindowText
-            Font.Height = -16
-            Font.Name = 'Tahoma'
-            Font.Style = []
-            ParentFont = False
-          end
-          object Label6: TLabel
-            Left = 264
-            Top = 100
-            Width = 41
-            Height = 19
-            Caption = 'Cuota'
-            Font.Charset = DEFAULT_CHARSET
-            Font.Color = clWindowText
-            Font.Height = -16
+            Font.Height = -13
             Font.Name = 'Tahoma'
             Font.Style = []
             ParentFont = False
@@ -127,7 +118,7 @@ object fResolucion: TfResolucion
           object cbbEstado: TComboBox
             Left = 105
             Top = 102
-            Width = 122
+            Width = 104
             Height = 21
             Style = csDropDownList
             ItemIndex = 0
@@ -149,7 +140,7 @@ object fResolucion: TfResolucion
           object txtResolucion: TEdit
             Left = 105
             Top = 37
-            Width = 122
+            Width = 104
             Height = 21
             Enabled = False
             TabOrder = 2
@@ -157,7 +148,7 @@ object fResolucion: TfResolucion
           object txtSolicitud: TEdit
             Left = 105
             Top = 69
-            Width = 122
+            Width = 104
             Height = 21
             Enabled = False
             TabOrder = 3
@@ -178,66 +169,247 @@ object fResolucion: TfResolucion
             Enabled = False
             TabOrder = 5
           end
-          object spnMonto: TcxSpinEdit
-            Left = 339
-            Top = 32
-            Enabled = False
-            ParentFont = False
-            Properties.Alignment.Horz = taRightJustify
-            Properties.DisplayFormat = '#,##0.00'
-            Properties.SpinButtons.Visible = False
-            Style.Font.Charset = DEFAULT_CHARSET
-            Style.Font.Color = clWindowText
-            Style.Font.Height = -16
-            Style.Font.Name = 'Tahoma'
-            Style.Font.Style = []
-            Style.IsFontAssigned = True
+          object GroupBox2: TGroupBox
+            Left = 464
+            Top = 187
+            Width = 241
+            Height = 159
+            Caption = 'Aprobado'
             TabOrder = 6
-            Width = 97
+            object Label8: TLabel
+              Left = 30
+              Top = 44
+              Width = 49
+              Height = 19
+              Caption = 'Monto '
+              Font.Charset = DEFAULT_CHARSET
+              Font.Color = clWindowText
+              Font.Height = -16
+              Font.Name = 'Tahoma'
+              Font.Style = []
+              ParentFont = False
+            end
+            object Label9: TLabel
+              Left = 30
+              Top = 77
+              Width = 37
+              Height = 19
+              Caption = 'Plazo'
+              Font.Charset = DEFAULT_CHARSET
+              Font.Color = clWindowText
+              Font.Height = -16
+              Font.Name = 'Tahoma'
+              Font.Style = []
+              ParentFont = False
+            end
+            object Label13: TLabel
+              Left = 30
+              Top = 112
+              Width = 41
+              Height = 19
+              Caption = 'Cuota'
+              Font.Charset = DEFAULT_CHARSET
+              Font.Color = clWindowText
+              Font.Height = -16
+              Font.Name = 'Tahoma'
+              Font.Style = []
+              ParentFont = False
+            end
+            object SpeedButton1: TSpeedButton
+              Left = 207
+              Top = 107
+              Width = 23
+              Height = 27
+              OnClick = SpeedButton1Click
+            end
+            object cxSpinEdit1: TcxSpinEdit
+              Left = 104
+              Top = 41
+              ParentFont = False
+              Properties.Alignment.Horz = taRightJustify
+              Properties.DisplayFormat = '#,##0.00'
+              Properties.SpinButtons.Visible = False
+              Style.Font.Charset = DEFAULT_CHARSET
+              Style.Font.Color = clWindowText
+              Style.Font.Height = -16
+              Style.Font.Name = 'Tahoma'
+              Style.Font.Style = []
+              Style.IsFontAssigned = True
+              TabOrder = 0
+              Width = 97
+            end
+            object cxSpinEdit2: TcxSpinEdit
+              Left = 104
+              Top = 74
+              ParentFont = False
+              Properties.Alignment.Horz = taRightJustify
+              Properties.DisplayFormat = '0'
+              Properties.EditFormat = '0'
+              Properties.SpinButtons.Visible = False
+              Style.Font.Charset = DEFAULT_CHARSET
+              Style.Font.Color = clWindowText
+              Style.Font.Height = -16
+              Style.Font.Name = 'Tahoma'
+              Style.Font.Style = []
+              Style.IsFontAssigned = True
+              TabOrder = 1
+              Width = 97
+            end
+            object cxSpinEdit3: TcxSpinEdit
+              Left = 104
+              Top = 107
+              Enabled = False
+              ParentFont = False
+              Properties.Alignment.Horz = taRightJustify
+              Properties.DisplayFormat = '#,##0.00'
+              Properties.EditFormat = '0'
+              Properties.SpinButtons.Visible = False
+              Style.Font.Charset = DEFAULT_CHARSET
+              Style.Font.Color = clWindowText
+              Style.Font.Height = -16
+              Style.Font.Name = 'Tahoma'
+              Style.Font.Style = []
+              Style.IsFontAssigned = True
+              TabOrder = 2
+              Width = 97
+            end
           end
-          object spnPlazo: TcxSpinEdit
-            Left = 339
-            Top = 65
-            Enabled = False
-            ParentFont = False
-            Properties.Alignment.Horz = taRightJustify
-            Properties.DisplayFormat = '0'
-            Properties.EditFormat = '0'
-            Properties.SpinButtons.Visible = False
-            Style.Font.Charset = DEFAULT_CHARSET
-            Style.Font.Color = clWindowText
-            Style.Font.Height = -16
-            Style.Font.Name = 'Tahoma'
-            Style.Font.Style = []
-            Style.IsFontAssigned = True
+          object GroupBox3: TGroupBox
+            Left = 464
+            Top = 21
+            Width = 241
+            Height = 145
+            Caption = 'Solicitado'
             TabOrder = 7
-            Width = 97
+            object Label14: TLabel
+              Left = 30
+              Top = 36
+              Width = 49
+              Height = 19
+              Caption = 'Monto '
+              Font.Charset = DEFAULT_CHARSET
+              Font.Color = clWindowText
+              Font.Height = -16
+              Font.Name = 'Tahoma'
+              Font.Style = []
+              ParentFont = False
+            end
+            object Label6: TLabel
+              Left = 30
+              Top = 104
+              Width = 41
+              Height = 19
+              Caption = 'Cuota'
+              Font.Charset = DEFAULT_CHARSET
+              Font.Color = clWindowText
+              Font.Height = -16
+              Font.Name = 'Tahoma'
+              Font.Style = []
+              ParentFont = False
+            end
+            object Label15: TLabel
+              Left = 30
+              Top = 69
+              Width = 37
+              Height = 19
+              Caption = 'Plazo'
+              Font.Charset = DEFAULT_CHARSET
+              Font.Color = clWindowText
+              Font.Height = -16
+              Font.Name = 'Tahoma'
+              Font.Style = []
+              ParentFont = False
+            end
+            object spnMonto: TcxSpinEdit
+              Left = 104
+              Top = 33
+              ParentFont = False
+              Properties.Alignment.Horz = taRightJustify
+              Properties.DisplayFormat = '#,##0.00'
+              Properties.SpinButtons.Visible = False
+              Style.Font.Charset = DEFAULT_CHARSET
+              Style.Font.Color = clWindowText
+              Style.Font.Height = -16
+              Style.Font.Name = 'Tahoma'
+              Style.Font.Style = []
+              Style.IsFontAssigned = True
+              TabOrder = 0
+              Width = 97
+            end
+            object spnPlazo: TcxSpinEdit
+              Left = 104
+              Top = 66
+              ParentFont = False
+              Properties.Alignment.Horz = taRightJustify
+              Properties.DisplayFormat = '0'
+              Properties.EditFormat = '0'
+              Properties.SpinButtons.Visible = False
+              Style.Font.Charset = DEFAULT_CHARSET
+              Style.Font.Color = clWindowText
+              Style.Font.Height = -16
+              Style.Font.Name = 'Tahoma'
+              Style.Font.Style = []
+              Style.IsFontAssigned = True
+              TabOrder = 1
+              Width = 97
+            end
+            object spnCuota: TcxSpinEdit
+              Left = 104
+              Top = 99
+              Enabled = False
+              ParentFont = False
+              Properties.Alignment.Horz = taRightJustify
+              Properties.DisplayFormat = '#,##0.00'
+              Properties.EditFormat = '0'
+              Properties.SpinButtons.Visible = False
+              Style.Font.Charset = DEFAULT_CHARSET
+              Style.Font.Color = clWindowText
+              Style.Font.Height = -16
+              Style.Font.Name = 'Tahoma'
+              Style.Font.Style = []
+              Style.IsFontAssigned = True
+              TabOrder = 2
+              Width = 97
+            end
           end
-          object spnCuota: TcxSpinEdit
+          object ComboBox1: TComboBox
             Left = 339
-            Top = 98
-            Enabled = False
-            ParentFont = False
-            Properties.Alignment.Horz = taRightJustify
-            Properties.DisplayFormat = '#,##0.00'
-            Properties.EditFormat = '0'
-            Properties.SpinButtons.Visible = False
-            Style.Font.Charset = DEFAULT_CHARSET
-            Style.Font.Color = clWindowText
-            Style.Font.Height = -16
-            Style.Font.Name = 'Tahoma'
-            Style.Font.Style = []
-            Style.IsFontAssigned = True
+            Top = 37
+            Width = 93
+            Height = 21
+            Style = csDropDownList
+            ItemIndex = 0
             TabOrder = 8
-            Width = 97
+            Text = 'SIMPLE'
+            Items.Strings = (
+              'SIMPLE'
+              'REBATIR')
+          end
+          object SpinEdit1: TSpinEdit
+            Left = 339
+            Top = 69
+            Width = 93
+            Height = 22
+            MaxValue = 0
+            MinValue = 0
+            TabOrder = 9
+            Value = 0
+          end
+          object SpinEdit2: TSpinEdit
+            Left = 339
+            Top = 102
+            Width = 95
+            Height = 22
+            MaxValue = 0
+            MinValue = 0
+            TabOrder = 10
+            Value = 0
           end
         end
       end
       object tabListado: TTabSheet
         Caption = 'Listado'
         ImageIndex = 1
-        ExplicitWidth = 820
-        ExplicitHeight = 446
         object cxGrid1: TcxGrid
           Left = 0
           Top = 41
@@ -245,9 +417,6 @@ object fResolucion: TfResolucion
           Height = 397
           Align = alClient
           TabOrder = 0
-          ExplicitTop = 0
-          ExplicitWidth = 820
-          ExplicitHeight = 405
           object gridResolucion: TcxGridDBTableView
             Navigator.Buttons.CustomButtons = <>
             DataController.DataSource = dsResolucion
@@ -302,9 +471,6 @@ object fResolucion: TfResolucion
           Align = alRight
           Caption = 'Panel1'
           TabOrder = 1
-          ExplicitLeft = 544
-          ExplicitTop = 112
-          ExplicitHeight = 41
           object DBMemo1: TDBMemo
             Left = 1
             Top = 1
@@ -314,10 +480,6 @@ object fResolucion: TfResolucion
             DataField = 'comentario'
             DataSource = dsResolucion
             TabOrder = 0
-            ExplicitLeft = 24
-            ExplicitTop = 40
-            ExplicitWidth = 185
-            ExplicitHeight = 89
           end
         end
         object Panel5: TPanel
@@ -327,7 +489,6 @@ object fResolucion: TfResolucion
           Height = 41
           Align = alTop
           TabOrder = 2
-          ExplicitWidth = 718
           object edCriterio: TEdit
             Left = 12
             Top = 10
@@ -355,7 +516,6 @@ object fResolucion: TfResolucion
     Height = 51
     Align = alBottom
     TabOrder = 1
-    ExplicitTop = 536
     object btnEditar: TButton
       Left = 157
       Top = 14
@@ -403,7 +563,6 @@ object fResolucion: TfResolucion
     Height = 33
     Align = alTop
     TabOrder = 2
-    ExplicitWidth = 722
     object Label1: TLabel
       Left = 207
       Top = 6
@@ -469,7 +628,6 @@ object fResolucion: TfResolucion
       Height = 25
       Align = alRight
       TabOrder = 0
-      ExplicitLeft = 515
       object Label12: TLabel
         Left = 6
         Top = 6
@@ -526,7 +684,6 @@ object fResolucion: TfResolucion
       Height = 25
       Align = alRight
       TabOrder = 1
-      ExplicitLeft = 375
       object Label11: TLabel
         Left = 17
         Top = 6
@@ -563,8 +720,8 @@ object fResolucion: TfResolucion
     UpdateOptions.AssignedValues = [uvCheckRequired, uvAutoCommitUpdates]
     UpdateOptions.CheckRequired = False
     UpdateOptions.AutoCommitUpdates = True
-    Left = 709
-    Top = 170
+    Left = 837
+    Top = 202
     object fdResolucionid: TIntegerField
       FieldName = 'id'
     end
@@ -601,7 +758,7 @@ object fResolucion: TfResolucion
   end
   object dsResolucion: TDataSource
     DataSet = fdResolucion
-    Left = 685
-    Top = 234
+    Left = 853
+    Top = 282
   end
 end

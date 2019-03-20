@@ -76,6 +76,13 @@ type
     fdTipoInfodesc_tipo_info: TStringField;
     cxStyle2: TcxStyle;
     ImageList1: TImageList;
+    Label7: TLabel;
+    chkActivo: TCheckBox;
+    cbbInformacion: TComboBox;
+    Label3: TLabel;
+    fdTipoInfoactivo: TBooleanField;
+    fdTipoInfoinformacion: TStringField;
+    gridTipoInfoDBTableView1Column1: TcxGridDBColumn;
     procedure FormCreate(Sender: TObject);
     procedure cbbRegistrosChange(Sender: TObject);
     procedure spbPagSiguienteClick(Sender: TObject);
@@ -91,8 +98,8 @@ type
     var paginaActual:integer;
     procedure listar;
     procedure Limpiar();
-    procedure EditarLinea(desc_tipo_info:string;id:integer);
-    procedure NuevaLinea(desc_tipo_info:string);
+    procedure EditarLinea(desc_tipo_info:string;id:integer;activo:boolean;informacion:string);
+    procedure NuevaLinea(desc_tipo_info:string;activo:boolean;informacion:string);
   public
     { Public declarations }
   end;
@@ -110,7 +117,7 @@ uses
 
 { TfLineaCredito }
 
-procedure TfTipoInfo.EditarLinea(desc_tipo_info: string; id: integer);
+procedure TfTipoInfo.EditarLinea(desc_tipo_info: string; id: integer;activo:boolean;informacion:string);
 var graph:Tgraph;
 var variables:TJSONObject;
 var dataVar,dataRest,query:TJSONObject;
@@ -120,15 +127,17 @@ begin
     resultado:=TJSONObject.Create;
     graph:=TGraph.Create(dmdata.RESTClient1);
     try  // Cambiar por el query a consultar, hacer pruebas en Insomnia
-    graph.query:='mutation postTipoInfo($id:Int,$desc_tipo_info:String)'+
-    ' { tipo_infoMutation(id:$id,desc_tipo_info:$desc_tipo_info)'+
-    ' {id,desc_tipo_info}  } ';
+    graph.query:='mutation postTipoInfo($id:Int,$desc_tipo_info:String,$activo:Int,$informacion:String)'+
+    ' { tipo_infoMutation(id:$id,desc_tipo_info:$desc_tipo_info,activo:$activo,informacion:$informacion)'+
+    ' {id,desc_tipo_info,activo,informacion}  } ';
 
     //NO variar
     variables:=TJSONObject.Create;
     dataVar:=TJSONObject.Create;
     dataVar.AddPair('id',TJSONNumber.Create(id));
     dataVar.AddPair('desc_tipo_info',TJSONString.Create(desc_tipo_info));
+    dataVar.AddPair('activo',TJSONNumber.Create(activo.ToInteger));
+    dataVar.AddPair('informacion',TJSONString.Create(informacion));
     variables.AddPair('variables',dataVar);
     graph.variables:=variables;
 
@@ -185,7 +194,7 @@ begin
          btnCancelar.Enabled:=true;
          btnGuardar.Enabled:=true;
          edDescripcion.Text:=gridTipoInfoDBTableView1.DataController.Values[gridTipoInfoDBTableView1.Controller.FocusedRecordIndex , 1];
-
+         cbbInformacion.Text:=gridTipoInfoDBTableView1.DataController.Values[gridTipoInfoDBTableView1.Controller.FocusedRecordIndex , 2];
      end;
   end;
 end;
@@ -194,9 +203,9 @@ procedure TfTipoInfo.btnGuardarClick(Sender: TObject);
 begin
   btnGuardar.Enabled:=false;
   if Tag>0 then
-     EditarLinea(edDescripcion.Text,Tag)
+     EditarLinea(edDescripcion.Text,Tag,chkActivo.Checked,cbbInformacion.Items[cbbInformacion.ItemIndex])
   else
-     nuevalinea(edDescripcion.Text);
+     nuevalinea(edDescripcion.Text,chkActivo.Checked,cbbInformacion.Items[cbbInformacion.ItemIndex]);
   tabFormulario.TabVisible:=false;
   tabListado.TabVisible:=true;
   btnNuevo.Enabled:=true;
@@ -220,7 +229,8 @@ procedure TfTipoInfo.Limpiar;
 begin
 Tag:=0;
 edDescripcion.Text:='';
-
+cbbInformacion.ItemIndex:=0;
+chkactivo.Checked:=false;
 end;
 
 procedure TfTipoInfo.listar;
@@ -232,9 +242,9 @@ begin
     resultado:=TJSONObject.Create;
     graph:=TGraph.Create(dmdata.RESTClient1,fdTipoInfo);
     try  // Cambiar por el query a consultar, hacer pruebas en Insomnia
-    graph.query:='query verTipoInfo($limit:Int,$per_page:Int,$desc_tipo_info:String)'+
-     '{ tipo_infoQuery(limit:$limit,per_page:$per_page,desc_tipo_info:$desc_tipo_info)' +
-     '{ data {id,desc_tipo_info},per_page,total}} ';
+    graph.query:='query verTipoInfo($limit:Int,$per_page:Int,$desc_tipo_info:String,$activo:Int,$informacion:String)'+
+     '{ tipo_infoQuery(limit:$limit,per_page:$per_page,desc_tipo_info:$desc_tipo_info,activo:$activo,informacion:$informacion)' +
+     '{ data {id,desc_tipo_info,activo,informacion},per_page,total}} ';
 
     //NO variar
     variables:=TJSONObject.Create;
@@ -260,7 +270,7 @@ begin
     end;
 end;
 
-procedure TfTipoInfo.NuevaLinea(desc_tipo_info:string);
+procedure TfTipoInfo.NuevaLinea(desc_tipo_info:string;activo:boolean;informacion:string);
 var graph:Tgraph;
 var variables:TJSONObject;
 var dataVar,dataRest,query:TJSONObject;
@@ -270,14 +280,16 @@ begin
     resultado:=TJSONObject.Create;
     graph:=TGraph.Create(dmdata.RESTClient1);
     try  // Cambiar por el query a consultar, hacer pruebas en Insomnia
-    graph.query:='mutation postTipoInfo($desc_tipo_info:String)'+
-    ' { tipo_infoMutation(desc_tipo_info:$desc_tipo_info)'+
+    graph.query:='mutation postTipoInfo($desc_tipo_info:String,$activo:Int,$informacion:String)'+
+    ' { tipo_infoMutation(desc_tipo_info:$desc_tipo_info,activo:$activo,informacion:$informacion)'+
     ' {id,desc_tipo_info}  } ';
 
     //NO variar
     variables:=TJSONObject.Create;
     dataVar:=TJSONObject.Create;
     dataVar.AddPair('desc_tipo_info',TJSONString.Create(desc_tipo_info));
+    dataVar.AddPair('activo',TJSONNumber.Create(activo.ToInteger));
+    dataVar.AddPair('informacion',TJSONString.Create(informacion));
     variables.AddPair('variables',dataVar);
     graph.variables:=variables;
 

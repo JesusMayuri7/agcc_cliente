@@ -65,12 +65,6 @@ type
     Label4: TLabel;
     txtAnalista: TEdit;
     Label5: TLabel;
-    spnMonto: TcxSpinEdit;
-    Label14: TLabel;
-    Label15: TLabel;
-    spnPlazo: TcxSpinEdit;
-    Label6: TLabel;
-    spnCuota: TcxSpinEdit;
     pnCabecera: TPanel;
     Label1: TLabel;
     spbPagSiguiente: TSpeedButton;
@@ -87,6 +81,27 @@ type
     Panel5: TPanel;
     edCriterio: TEdit;
     btnBuscar: TButton;
+    GroupBox2: TGroupBox;
+    GroupBox3: TGroupBox;
+    Label14: TLabel;
+    spnMonto: TcxSpinEdit;
+    spnPlazo: TcxSpinEdit;
+    spnCuota: TcxSpinEdit;
+    Label6: TLabel;
+    Label15: TLabel;
+    Label8: TLabel;
+    cxSpinEdit1: TcxSpinEdit;
+    cxSpinEdit2: TcxSpinEdit;
+    Label9: TLabel;
+    Label13: TLabel;
+    cxSpinEdit3: TcxSpinEdit;
+    SpeedButton1: TSpeedButton;
+    Label16: TLabel;
+    ComboBox1: TComboBox;
+    Label17: TLabel;
+    SpinEdit1: TSpinEdit;
+    Label18: TLabel;
+    SpinEdit2: TSpinEdit;
     procedure spbActualizarClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure btnEditarClick(Sender: TObject);
@@ -95,6 +110,7 @@ type
     procedure cbbRegistrosChange(Sender: TObject);
     procedure spbPaginaAnteriorrrClick(Sender: TObject);
     procedure spbPagSiguienteClick(Sender: TObject);
+    procedure SpeedButton1Click(Sender: TObject);
   private
     { Private declarations }
     var paginaActual:integer;
@@ -125,7 +141,12 @@ begin
          spnPlazo.Value:=0;
          txtCliente.Text:='';
          txtAnalista.Text:='';
-         txtComentario.Lines.Text:=''
+         txtComentario.Lines.Text:='';
+         btnCancelar.Enabled:=false;
+         btnEditar.Enabled:=true;
+         btnGuardar.Enabled:=false;
+         TabFormulario.TabVisible:=false;
+         TabListado.Tabvisible:=true;
 end;
 
 procedure TfResolucion.btnEditarClick(Sender: TObject);
@@ -152,7 +173,8 @@ if gridResolucion.Controller.SelectedRowCount=1 then
          spnPlazo.Value:=fdResolucion.FieldValues['plazo'];
          txtCliente.Text:=fdResolucion.FieldValues['cliente_full_name'];
          txtAnalista.Text:=fdResolucion.FieldValues['empleado_full_name'];
-
+         cbbEstado.ItemIndex:=cbbEstado.Items.IndexOf(fdResolucion.FieldValues['estado']);
+//         cbbEstado.Text:=fdResolucion.FieldValues['estado'];
          if fdResolucion.FieldValues['comentario']=null then
             txtComentario.Lines.Text:=''
          else
@@ -258,6 +280,11 @@ begin
        paginaActual:=paginaActual+1;
        listar();
        end;
+end;
+
+procedure TfResolucion.SpeedButton1Click(Sender: TObject);
+begin
+//RECALCULAR CUOTA
 end;
 
 end.

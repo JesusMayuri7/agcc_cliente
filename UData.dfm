@@ -418,9 +418,11 @@ object dmData: TdmData
     end
     object fdTipoProductointeres: TFloatField
       FieldName = 'interes'
+      DisplayFormat = '#,##0.0000'
     end
     object fdTipoProductomora: TFloatField
       FieldName = 'mora'
+      DisplayFormat = '#,##0.0000'
     end
     object fdTipoProductoplazo_minimo: TIntegerField
       FieldName = 'plazo_minimo'

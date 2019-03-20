@@ -221,6 +221,8 @@ type
     gridInfoinformacion: TcxGridDBBandedColumn;
     gridInfovalor: TcxGridDBBandedColumn;
     fdSolicitudtipo_info_detalle: TMemoField;
+    fdSolicitudcreated_at: TDateField;
+    gridSolicitudcreated_at: TcxGridDBColumn;
     procedure FormCreate(Sender: TObject);
     procedure cbbRegistrosChange(Sender: TObject);
     procedure spbPagSiguienteClick(Sender: TObject);
@@ -423,19 +425,34 @@ end;
 procedure TfSolicitud.actAnularExecute(Sender: TObject);
 begin
    if (fdSolicitud.FieldValues['estado']='PENDIENTE') then
+   begin
      cerrarSolicitud(fdSolicitud.FieldValues['id'] ,'ANULADO');
+      Showmessage('Solicitud Anulada con exito')
+   end
+   else
+      Showmessage('Solicitud debe estar PENDIENTE, para anularla')
 end;
 
 procedure TfSolicitud.actCerrarExecute(Sender: TObject);
 begin
    if fdSolicitud.FieldValues['estado']='PENDIENTE' then
+    begin
      cerrarSolicitud(fdSolicitud.FieldValues['id'] ,'CERRADO');
+     Showmessage('Solicitud Cerrada con exito')
+    end
+    else
+        Showmessage('Solicitud debe estar PENDIENTE, para cerrar');
 end;
 
 procedure TfSolicitud.actResolucionExecute(Sender: TObject);
 begin
     if fdSolicitud.FieldValues['estado']='CERRADO' then
+    begin
        GenerarResolucion(fdSolicitud.FieldValues['id']);
+       Showmessage('Creacion de resolucion con exito');
+    end
+    else
+        Showmessage('Solicitud deb estar Cerrada, para crear Resolucion')
 end;
 
 procedure TfSolicitud.btnBuscarClick(Sender: TObject);
@@ -469,6 +486,7 @@ btnGuardar.Enabled:=true;
           cbbGarantia.EditValue:=null;
           cbbTipoPrestamo.EditValue:=null;
           cbbGiroNegocio.EditValue:=null;
+           gridInfo.ViewData.Expand(true);
 end;
 
 procedure TfSolicitud.Button1Click(Sender: TObject);
@@ -559,6 +577,7 @@ begin
             txtComentario.Lines.Text:=fdSolicitud.FieldValues['comentario'];
          copiarAvales(fdAvales);
          actualizarInfo(dmdata.fdTipoInfo,VarToStr(fdSolicitud.FieldValues['tipo_info_detalle']));
+         gridInfo.ViewData.Expand(true);
      end;
   end;
 end;
@@ -827,7 +846,7 @@ begin
     'comentario,reporte_ceop,reporte_ceop_id,reporte_info,reporte_info_id,cliente_full_name,garantia,garantia_id,empleado,'+
     'tipo_producto,tipo_producto_id,tipo_prestamo,tipo_prestamo_id,nro_solicitud,estado,'+
     'perfil_cliente,perfil_cliente_id,'+'linea_credito,linea_credito_id,cliente_dni,'+
-    'giro_negocio,giro_negocio_id,'+
+    'giro_negocio,giro_negocio_id,created_at,'+
     'avales {id,dni,full_name,tipo},tipo_info_detalle {tipo_info_detalle_id,solicitud_id,monto} }}}';
     //NO variar
     variables:=TJSONObject.Create;
@@ -966,7 +985,7 @@ begin
         txtDniAval.Tag:=0;
         respuesta:=TJSONObject.Create();
         respuesta:=uHelpers.existeCliente(txtDniAval.Text);
-        ShowMessage(respuesta.ToString);
+       // ShowMessage(respuesta.ToString);
         if respuesta.TryGetValue('data',data) then
            begin
              //  ShowMessage(data.ToString);

@@ -30,7 +30,6 @@ object fTipoInfo: TfTipoInfo
     Height = 33
     Align = alTop
     TabOrder = 0
-    ExplicitWidth = 499
     object Label1: TLabel
       Left = 33
       Top = 6
@@ -93,7 +92,6 @@ object fTipoInfo: TfTipoInfo
       Height = 25
       Align = alRight
       TabOrder = 0
-      ExplicitLeft = 292
       object Label12: TLabel
         Left = 6
         Top = 6
@@ -150,7 +148,6 @@ object fTipoInfo: TfTipoInfo
       Height = 25
       Align = alRight
       TabOrder = 1
-      ExplicitLeft = 152
       object Label11: TLabel
         Left = 17
         Top = 6
@@ -182,22 +179,19 @@ object fTipoInfo: TfTipoInfo
     Height = 420
     Align = alClient
     TabOrder = 1
-    ExplicitWidth = 505
     object PageControl1: TPageControl
       Left = 1
       Top = 1
       Width = 516
       Height = 377
-      ActivePage = tabLIstado
+      ActivePage = tabFormulario
       Align = alClient
       TabOrder = 0
-      ExplicitWidth = 503
       object tabFormulario: TTabSheet
         Caption = 'Formulario'
         TabVisible = False
-        ExplicitWidth = 495
         object GroupBox1: TGroupBox
-          Left = 51
+          Left = 3
           Top = 31
           Width = 550
           Height = 274
@@ -210,6 +204,20 @@ object fTipoInfo: TfTipoInfo
             Height = 13
             Caption = 'Descripcion'
           end
+          object Label7: TLabel
+            Left = 57
+            Top = 109
+            Width = 30
+            Height = 13
+            Caption = 'Activo'
+          end
+          object Label3: TLabel
+            Left = 30
+            Top = 77
+            Width = 57
+            Height = 13
+            Caption = 'Informacion'
+          end
           object edDescripcion: TEdit
             Left = 112
             Top = 37
@@ -217,12 +225,32 @@ object fTipoInfo: TfTipoInfo
             Height = 21
             TabOrder = 0
           end
+          object chkActivo: TCheckBox
+            Left = 110
+            Top = 101
+            Width = 25
+            Height = 17
+            Alignment = taLeftJustify
+            TabOrder = 1
+          end
+          object cbbInformacion: TComboBox
+            Left = 112
+            Top = 74
+            Width = 145
+            Height = 21
+            Style = csDropDownList
+            ItemIndex = 0
+            TabOrder = 2
+            Text = 'NEGOCIO'
+            Items.Strings = (
+              'NEGOCIO'
+              'FAMILIAR')
+          end
         end
       end
       object tabLIstado: TTabSheet
         Caption = 'Listado'
         ImageIndex = 1
-        ExplicitWidth = 495
         object gridTipoInfo: TcxGrid
           Left = 0
           Top = 41
@@ -231,7 +259,6 @@ object fTipoInfo: TfTipoInfo
           Align = alClient
           TabOrder = 0
           LookAndFeel.NativeStyle = False
-          ExplicitWidth = 495
           object gridTipoInfoDBTableView1: TcxGridDBTableView
             Navigator.Buttons.CustomButtons = <>
             DataController.DataSource = dsTipoInfo
@@ -259,7 +286,13 @@ object fTipoInfo: TfTipoInfo
               DataBinding.FieldName = 'desc_tipo_info'
               HeaderAlignmentHorz = taCenter
               Styles.Header = cxStyle1
-              Width = 434
+              Width = 305
+            end
+            object gridTipoInfoDBTableView1Column1: TcxGridDBColumn
+              Caption = 'Informacion'
+              DataBinding.FieldName = 'informacion'
+              HeaderAlignmentHorz = taCenter
+              Width = 110
             end
           end
           object gridTipoInfoLevel1: TcxGridLevel
@@ -273,7 +306,6 @@ object fTipoInfo: TfTipoInfo
           Height = 41
           Align = alTop
           TabOrder = 1
-          ExplicitWidth = 495
           object edCriterio: TEdit
             Left = 19
             Top = 14
@@ -304,7 +336,6 @@ object fTipoInfo: TfTipoInfo
       Height = 41
       Align = alBottom
       TabOrder = 1
-      ExplicitWidth = 503
       object btnNuevo: TButton
         Left = 41
         Top = 6
@@ -318,7 +349,7 @@ object fTipoInfo: TfTipoInfo
         OnClick = btnNuevoClick
       end
       object btnEditar: TButton
-        Left = 154
+        Left = 158
         Top = 6
         Width = 75
         Height = 25
@@ -376,6 +407,12 @@ object fTipoInfo: TfTipoInfo
     end
     object fdTipoInfodesc_tipo_info: TStringField
       FieldName = 'desc_tipo_info'
+    end
+    object fdTipoInfoactivo: TBooleanField
+      FieldName = 'activo'
+    end
+    object fdTipoInfoinformacion: TStringField
+      FieldName = 'informacion'
     end
   end
   object dsTipoInfo: TDataSource

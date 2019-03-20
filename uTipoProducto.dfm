@@ -30,7 +30,6 @@ object fTipoProducto: TfTipoProducto
     Height = 33
     Align = alTop
     TabOrder = 0
-    ExplicitWidth = 670
     object Label1: TLabel
       Left = 129
       Top = 6
@@ -93,7 +92,6 @@ object fTipoProducto: TfTipoProducto
       Height = 25
       Align = alRight
       TabOrder = 0
-      ExplicitLeft = 463
       object Label12: TLabel
         Left = 6
         Top = 6
@@ -150,7 +148,6 @@ object fTipoProducto: TfTipoProducto
       Height = 25
       Align = alRight
       TabOrder = 1
-      ExplicitLeft = 323
       object Label11: TLabel
         Left = 17
         Top = 6
@@ -182,19 +179,16 @@ object fTipoProducto: TfTipoProducto
     Height = 420
     Align = alClient
     TabOrder = 1
-    ExplicitWidth = 676
     object PageControl1: TPageControl
       Left = 1
       Top = 1
       Width = 998
       Height = 377
-      ActivePage = tabFormulario
+      ActivePage = tabLIstado
       Align = alClient
       TabOrder = 0
-      ExplicitWidth = 674
       object tabFormulario: TTabSheet
         Caption = 'Formulario'
-        ExplicitWidth = 666
         object GroupBox1: TGroupBox
           Left = 51
           Top = 31
@@ -476,7 +470,6 @@ object fTipoProducto: TfTipoProducto
       Height = 41
       Align = alBottom
       TabOrder = 1
-      ExplicitWidth = 674
       object btnNuevo: TButton
         Left = 111
         Top = 6
@@ -540,8 +533,8 @@ object fTipoProducto: TfTipoProducto
     UpdateOptions.CheckRequired = False
     UpdateOptions.AutoCommitUpdates = True
     StoreDefs = True
-    Left = 461
-    Top = 218
+    Left = 493
+    Top = 178
     object fdTipoProductoid: TIntegerField
       DisplayLabel = '#'
       FieldName = 'id'
@@ -551,7 +544,7 @@ object fTipoProducto: TfTipoProducto
     end
     object fdTipoProductointeres: TFloatField
       FieldName = 'interes'
-      DisplayFormat = '#,##0.000000'
+      DisplayFormat = '#,##0.0000'
     end
     object fdTipoProductomora: TFloatField
       FieldName = 'mora'
@@ -887,8 +880,8 @@ object fTipoProducto: TfTipoProducto
     UpdateOptions.CheckRequired = False
     UpdateOptions.AutoCommitUpdates = True
     StoreDefs = True
-    Left = 273
-    Top = 106
+    Left = 249
+    Top = 154
     object fdPerfilClienteid: TIntegerField
       FieldName = 'id'
     end

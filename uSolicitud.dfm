@@ -180,7 +180,7 @@ object fSolicitud: TfSolicitud
       Top = 1
       Width = 1312
       Height = 737
-      ActivePage = tabFormulario
+      ActivePage = tabLIstado
       Align = alClient
       TabOrder = 0
       object tabFormulario: TTabSheet
@@ -1169,6 +1169,11 @@ object fSolicitud: TfSolicitud
               DataBinding.FieldName = 'empleado'
               HeaderAlignmentHorz = taCenter
             end
+            object gridSolicitudcreated_at: TcxGridDBColumn
+              DataBinding.FieldName = 'created_at'
+              HeaderAlignmentHorz = taCenter
+              Width = 92
+            end
           end
           object gridTableViewSolicitudLevel1: TcxGridLevel
             GridView = gridSolicitud
@@ -1526,6 +1531,10 @@ object fSolicitud: TfSolicitud
     object fdSolicitudtipo_info_detalle: TMemoField
       FieldName = 'tipo_info_detalle'
       BlobType = ftMemo
+    end
+    object fdSolicitudcreated_at: TDateField
+      DisplayLabel = 'Creado'
+      FieldName = 'created_at'
     end
   end
   object dsSolicitud: TDataSource

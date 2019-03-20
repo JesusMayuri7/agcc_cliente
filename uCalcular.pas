@@ -96,7 +96,6 @@ type
     cxGridBandedColumn6: TcxGridBandedColumn;
     cxGridBandedColumn7: TcxGridBandedColumn;
     cxGridLevel4: TcxGridLevel;
-    BindSourceDB4: TBindSourceDB;
     Label6: TLabel;
     PageControl1: TPageControl;
     pgcSimple: TTabSheet;
@@ -397,6 +396,7 @@ begin
   programado:=0;
   cuota_mensual:=0;
   capital_mes:=0;
+  i_acumulado:=0;
   dataset.First;
   while not(dataset.Eof) do
   begin

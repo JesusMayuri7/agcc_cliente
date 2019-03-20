@@ -133,6 +133,9 @@ object fCalcular: TfCalcular
             item
               Caption = 'Descripcion'
               FieldName = 'desc_perfil_cliente'
+            end
+            item
+              FieldName = 'tipo_producto'
             end>
           Properties.ListFieldIndex = 1
           Properties.ListOptions.SyncMode = True
@@ -510,6 +513,7 @@ object fCalcular: TfCalcular
           Properties.DisplayFormat = '#,##0.00'
           Properties.ReadOnly = False
           Properties.SpinButtons.Visible = False
+          Properties.ValueType = vtFloat
           TabOrder = 1
           Width = 90
         end
@@ -1274,11 +1278,13 @@ object fCalcular: TfCalcular
     end
   end
   object BindSourceDB2: TBindSourceDB
+    DataSet = dmData.fdPerfilCliente
     ScopeMappings = <>
     Left = 744
     Top = 168
   end
   object BindSourceDB3: TBindSourceDB
+    DataSet = dmData.fdTipoProducto
     ScopeMappings = <>
     Left = 784
     Top = 272
@@ -1291,10 +1297,5 @@ object fCalcular: TfCalcular
       AssignedValues = [svColor]
       Color = clCream
     end
-  end
-  object BindSourceDB4: TBindSourceDB
-    ScopeMappings = <>
-    Left = 552
-    Top = 376
   end
 end
