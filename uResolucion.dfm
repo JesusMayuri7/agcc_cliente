@@ -694,7 +694,7 @@ object fResolucion: TfResolucion
       object cbbRegistros: TComboBox
         Tag = 1
         Left = 72
-        Top = 5
+        Top = 1
         Width = 49
         Height = 21
         Style = csDropDownList

@@ -417,8 +417,7 @@ object fTipoProducto: TfTipoProducto
               Width = 94
             end
             object gridTipoProductoDBTableView1plazo_maximo: TcxGridDBColumn
-              Caption = 'plazo_maximo'
-              DataBinding.FieldName = 'plazo_minimo'
+              DataBinding.FieldName = 'plazo_maximo'
               HeaderAlignmentHorz = taCenter
               Styles.Header = cxStyle2
               Width = 93

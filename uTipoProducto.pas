@@ -241,7 +241,7 @@ begin
     dataVar.AddPair('interes',TJSONNumber.Create(interes));
     dataVar.AddPair('mora',TJSONNumber.Create(mora));
     dataVar.AddPair('plazo_minimo',TJSONNumber.Create(plazo_minimo));
-     dataVar.AddPair('plazo_maximo',TJSONNumber.Create(plazo_maximo));
+    dataVar.AddPair('plazo_maximo',TJSONNumber.Create(plazo_maximo));
     dataVar.AddPair('activo',TJSONNumber.Create(activo.ToInteger));
     dataVar.AddPair('perfil_cliente',perfil_cliente);
     variables.AddPair('variables',dataVar);

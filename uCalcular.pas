@@ -138,10 +138,13 @@ type
     var itemJson:TJsonObject;
     procedure llenarGridResumen(datos:TJsonArray);
     procedure calcularCuota(monto,plazo,interes:real;dataset: TFdMemTable);
-    function calcularAhorro(monto,plazo,interes:real;dataset: TFdMemTable):real;
+   // function calcularAhorro(monto,plazo,interes:real;dataset: TFdMemTable):real;
     procedure calcularRendicion(monto,plazo,interes:real;dataset: TFdMemTable);
     function calcularParametrosRebatir(monto,plazo,interes:real):real;
     procedure llenarGridRebatir(grid:TcxGridBandedTableView;cuota,monto,interes:real;plazo:byte);
+    function calcularCuotaParalelo(monto,plazo,interes:real):real;
+    procedure distribucionCuotaParalelo(monto,plazo,interes:real);
+    procedure RendicionParalelo(monto,plazo,interes:real);
   public
     { Public declarations }
   end;
@@ -225,17 +228,27 @@ begin
          pgcRebatir.TabVisible:=false;
          pgcSimple.TabVisible:=true;
          calculos:=uHelpers.calcularTotales(interes,spnMonto.value,spnPlazo.value);
-         llenarGridResumen(calculos);
-         cuota:=calcularAhorro(spnMonto.value,spnPlazo.Value,interes,dmdata.fdAhorro);
-         calcularCuota(spnMonto.value,spnPlazo.Value,interes,dmdata.fdAhorro);
-         calcularRendicion(spnMonto.value,spnPlazo.Value,interes,dmdata.fdAhorro);
+         uHelpers.llenarGridResumen(calculos,gridTotales);
+         cuota:=uHelpers.calcularAhorro(spnMonto.value,spnPlazo.Value,interes,dmdata.fdAhorro,gridAhorro);
+         uHelpers.calcularCuota(spnMonto.value,spnPlazo.Value,interes,dmdata.fdAhorro,gridCuota);
+         uHelpers.calcularRendicion(spnMonto.value,spnPlazo.Value,interes,dmdata.fdAhorro,gridRendicion);
+          end;
+     if dmdata.fdLineaCredito.FieldValues['tipo_interes']='PARALELO' then
+         begin
+         pgcRebatir.TabVisible:=false;
+         pgcSimple.TabVisible:=true;
+         calculos:=uHelpers.calcularTotales(interes,spnMonto.value,spnPlazo.value);
+         uHelpers.llenarGridResumen(calculos,gridTotales);
+         cuota:=uHelpers.calcularAhorro(spnMonto.value,spnPlazo.Value,interes,nil,gridAhorro);
+         uHelpers.calcularCuota(spnMonto.value,spnPlazo.Value,interes,nil,gridCuota);
+         uHelpers.calcularRendicion(spnMonto.value,spnPlazo.Value,interes,nil,gridRendicion);
           end;
       if dmdata.fdLineaCredito.FieldValues['tipo_interes']='REBATIR' then
          begin
          pgcSimple.TabVisible:=false;
          pgcRebatir.TabVisible:=true;
-         cuota:=calcularParametrosRebatir(spnMonto.value,spnPlazo.Value,interes);
-         llenarGridRebatir(gridCuotasRebatir,cuota,spnMonto.Value,interes,spnPlazo.Value);
+         cuota:=uHelpers.calcularParametrosRebatir(spnMonto.value,spnPlazo.Value,interes,gridParametrosRebatir,gridFactorRebatir,gridInteresRebatir);
+         uHelpers.llenarGridRebatir(gridCuotasRebatir,cuota,spnMonto.Value,interes,spnPlazo.Value);
          end;
      spnCuota.Value:=cuota;
    end;
@@ -291,6 +304,39 @@ begin
     result:=cuota_mensual;
 end;
 
+procedure TfCalcular.RendicionParalelo(monto,plazo,interes:real);
+var inicial,programado,i_acumulado,cuota_mensual,capital_mes,i_soles,i_soles_mensual:real;
+var recordCount:integer;
+begin
+  inicial:=0;
+  programado:=0;
+  cuota_mensual:=0;
+  capital_mes:=0;
+  i_acumulado:=0;
+  i_soles:=0;
+  i_soles_mensual:=0;
+    i_acumulado:=plazo*(interes/100);
+    cuota_mensual:=((monto*i_acumulado)/plazo)+(monto/plazo);
+    capital_mes:=roundTo(monto/plazo*plazo,-2);
+    i_acumulado:=plazo*(interes/100);
+    i_soles:=i_acumulado*monto;
+    i_soles_mensual:=roundTo((i_soles/plazo)*plazo,-2);
+    gridRendicion.DataController.RecordCount:=0;
+    gridRendicion.DataController.RecordCount:=gridRendicion.DataController.RecordCount+1;
+    gridRendicion.DataController.Values[0,0]:='Ceop Ilo';
+    gridRendicion.DataController.Values[0,1]:='Amortizacion Capital S/.';
+    gridRendicion.DataController.Values[0,2]:=capital_mes;
+    gridRendicion.DataController.RecordCount:=gridRendicion.DataController.RecordCount+1;
+    gridRendicion.DataController.Values[1,0]:='Ceop Ilo';
+    gridRendicion.DataController.Values[1,1]:='Interes total S/.';
+    gridRendicion.DataController.Values[1,2]:=i_soles_mensual;
+    gridRendicion.DataController.RecordCount:=gridRendicion.DataController.RecordCount+1;
+    gridRendicion.DataController.Values[2,0]:='Cliente';
+    gridRendicion.DataController.Values[2,1]:='F.G. Fraaccionado';
+    gridRendicion.DataController.Values[2,2]:=0;
+    gridRendicion.ViewData.Expand(true);
+end;
+
 procedure TfCalcular.calcularRendicion(monto,plazo,interes:real;dataset: TFdMemTable);
 var inicial,programado,i_acumulado,cuota_mensual,capital_mes,i_soles,i_soles_mensual:real;
 var recordCount:integer;
@@ -332,6 +378,54 @@ begin
     gridRendicion.DataController.Values[2,2]:=roundto(((monto*(programado/100))/plazo)*plazo,-2);
     gridRendicion.ViewData.Expand(true);
 end;
+
+procedure TfCalcular.distribucionCuotaParalelo(monto,plazo,interes:real);
+var inicial,programado,i_acumulado,cuota_mensual,capital_mes,i_soles,i_soles_mensual:real;
+var recordCount:integer;
+begin
+  inicial:=0;
+  programado:=0;
+  cuota_mensual:=0;
+  capital_mes:=0;
+  i_acumulado:=0;
+  i_soles:=0;
+  i_soles_mensual:=0;
+
+    i_acumulado:=plazo*(interes/100);
+    cuota_mensual:=((monto*i_acumulado)/plazo)+(monto/plazo);
+    capital_mes:=roundTo(monto/plazo,-2);
+    i_acumulado:=plazo*(interes/100);
+    i_soles:=i_acumulado*monto;
+    i_soles_mensual:=i_soles/plazo;
+    gridCuota.DataController.RecordCount:=0;
+    gridCuota.DataController.RecordCount:=gridCuota.DataController.RecordCount+1;
+    gridCuota.DataController.Values[0,0]:='Mensual';
+    gridCuota.DataController.Values[0,1]:='Amortizacion Capital S/.';
+    gridCuota.DataController.Values[0,2]:=capital_mes;
+    gridCuota.DataController.RecordCount:=gridCuota.DataController.RecordCount+1;
+    gridCuota.DataController.Values[1,0]:='Mensual';
+    gridCuota.DataController.Values[1,1]:='Interes x Mes S/.';
+    gridCuota.DataController.Values[1,2]:=i_soles_mensual;
+    gridCuota.DataController.RecordCount:=gridCuota.DataController.RecordCount+1;
+    gridCuota.DataController.Values[2,0]:='Mensual';
+    gridCuota.DataController.Values[2,1]:='F.G. Fraaccionado';
+    gridCuota.DataController.Values[2,2]:=0;
+    //Quincenal
+    gridCuota.DataController.RecordCount:=gridCuota.DataController.RecordCount+1;
+    gridCuota.DataController.Values[3,0]:='Quincenal';
+    gridCuota.DataController.Values[3,1]:='Capital x Mes S/.';
+    gridCuota.DataController.Values[3,2]:=roundTo(capital_mes/2,-2);
+    gridCuota.DataController.RecordCount:=gridCuota.DataController.RecordCount+1;
+    gridCuota.DataController.Values[4,0]:='Quincenal';
+    gridCuota.DataController.Values[4,1]:='Interes x Mes S/.';
+    gridCuota.DataController.Values[4,2]:=roundTo(i_soles_mensual,-2);
+    gridCuota.DataController.RecordCount:=gridCuota.DataController.RecordCount+1;
+    gridCuota.DataController.Values[5,0]:='Quincenal';
+    gridCuota.DataController.Values[5,1]:='F.G. Fraaccionado';
+    gridCuota.DataController.Values[5,2]:=0;
+    gridCuota.ViewData.Expand(true);
+end;
+
 
 procedure TfCalcular.calcularCuota(monto,plazo,interes:real;dataset: TFdMemTable);
 var inicial,programado,i_acumulado,cuota_mensual,capital_mes,i_soles,i_soles_mensual:real;
@@ -388,6 +482,46 @@ begin
     gridCuota.ViewData.Expand(true);
 end;
 
+function TfCalcular.calcularCuotaParalelo(monto,plazo,interes:real):real;
+var inicial,programado,i_acumulado,cuota_mensual,capital_mes:real;
+var recordCount:integer;
+begin
+  inicial:=0;
+  programado:=0;
+  cuota_mensual:=0;
+  capital_mes:=0;
+  i_acumulado:=0;
+    i_acumulado:=plazo*(interes/100);
+    cuota_mensual:=((monto*i_acumulado)/plazo)+(monto/plazo);
+    capital_mes:=roundTo(monto/plazo,-2);
+    gridAhorro.DataController.RecordCount:=0;
+    gridAhorro.DataController.RecordCount:=gridAhorro.DataController.RecordCount+1;
+    gridAhorro.DataController.Values[0,0]:='Garantia Inicial %';
+    gridAhorro.DataController.Values[0,1]:=0;
+    gridAhorro.DataController.RecordCount:=gridAhorro.DataController.RecordCount+1;
+    gridAhorro.DataController.Values[1,0]:='Garantia Inicial S/.';
+    gridAhorro.DataController.Values[1,1]:=0;
+    gridAhorro.DataController.RecordCount:=gridAhorro.DataController.RecordCount+1;
+    gridAhorro.DataController.Values[2,0]:='Garantia Programado S/.';
+    gridAhorro.DataController.Values[2,1]:=0;
+    gridAhorro.DataController.RecordCount:=gridAhorro.DataController.RecordCount+1;
+    gridAhorro.DataController.Values[3,0]:='Total Garantia S/.';
+    gridAhorro.DataController.Values[3,1]:=0;
+    gridAhorro.DataController.RecordCount:=gridAhorro.DataController.RecordCount+1;
+    gridAhorro.DataController.Values[4,0]:='Total fondo S/.';
+    gridAhorro.DataController.Values[4,1]:=0;
+    gridAhorro.DataController.RecordCount:=gridAhorro.DataController.RecordCount+1;
+    gridAhorro.DataController.Values[5,0]:='F. G. Fraccionado S/.';
+    gridAhorro.DataController.Values[5,1]:=0;
+    gridAhorro.DataController.RecordCount:=gridAhorro.DataController.RecordCount+1;
+    gridAhorro.DataController.Values[6,0]:='Cuota Mensual S/.';
+    gridAhorro.DataController.Values[6,1]:=cuota_mensual;
+    gridAhorro.DataController.RecordCount:=gridAhorro.DataController.RecordCount+1;
+    gridAhorro.DataController.Values[7,0]:='Cuota Quincenal S/.';
+    gridAhorro.DataController.Values[7,1]:=roundTo(cuota_mensual/2,-2);
+    result:=cuota_mensual;
+end;
+ {
 function TfCalcular.calcularAhorro(monto,plazo,interes:real;dataset: TFdMemTable):real;
 var inicial,programado,i_acumulado,cuota_mensual,capital_mes:real;
 var recordCount:integer;
@@ -409,38 +543,14 @@ begin
     i_acumulado:=plazo*(interes/100);
     cuota_mensual:=((monto*i_acumulado)/plazo)+(monto/plazo)+((monto*(programado/100))/plazo);
     capital_mes:=roundTo(monto/plazo,-2);
-    gridAhorro.DataController.RecordCount:=0;
-    gridAhorro.DataController.RecordCount:=gridAhorro.DataController.RecordCount+1;
-    gridAhorro.DataController.Values[0,0]:='Garantia Inicial %';
-    gridAhorro.DataController.Values[0,1]:=inicial;
-    gridAhorro.DataController.RecordCount:=gridAhorro.DataController.RecordCount+1;
-    gridAhorro.DataController.Values[1,0]:='Garantia Inicial S/.';
-    gridAhorro.DataController.Values[1,1]:=monto*(inicial/100);
-    gridAhorro.DataController.RecordCount:=gridAhorro.DataController.RecordCount+1;
-    gridAhorro.DataController.Values[2,0]:='Garantia Programado S/.';
-    gridAhorro.DataController.Values[2,1]:=programado;
-    gridAhorro.DataController.RecordCount:=gridAhorro.DataController.RecordCount+1;
-    gridAhorro.DataController.Values[3,0]:='Total Garantia S/.';
-    gridAhorro.DataController.Values[3,1]:=monto*(programado/100);
-    gridAhorro.DataController.RecordCount:=gridAhorro.DataController.RecordCount+1;
-    gridAhorro.DataController.Values[4,0]:='Total fondo S/.';
-    gridAhorro.DataController.Values[4,1]:=(monto*(inicial/100))+(monto*(programado/100));
-    gridAhorro.DataController.RecordCount:=gridAhorro.DataController.RecordCount+1;
-    gridAhorro.DataController.Values[5,0]:='F. G. Fraccionado S/.';
-    gridAhorro.DataController.Values[5,1]:=roundto((monto*(programado/100))/plazo,-2);
-    gridAhorro.DataController.RecordCount:=gridAhorro.DataController.RecordCount+1;
-    gridAhorro.DataController.Values[6,0]:='Cuota Mensual S/.';
-    gridAhorro.DataController.Values[6,1]:=cuota_mensual;
-    gridAhorro.DataController.RecordCount:=gridAhorro.DataController.RecordCount+1;
-    gridAhorro.DataController.Values[7,0]:='Cuota Quincenal S/.';
-    gridAhorro.DataController.Values[7,1]:=roundTo(cuota_mensual/2,-2);
+    uHelpers.llenarGridAhorro(inicial,monto,programado,cuota_mensual,plazo,gridAhorro);
     result:=cuota_mensual;
-end;
+end;  }
 
 procedure TfCalcular.cbbLineaCreditoPropertiesChange(Sender: TObject);
 begin
 llenarCombo(dmdata.RESTResponseDataSetAdapter2,VarToStr(dmdata.fdLineaCredito.FieldValues['perfil_cliente']));
-if dmdata.fdLineaCredito.FieldValues['tipo_interes']='SIMPLE' then
+if (dmdata.fdLineaCredito.FieldValues['tipo_interes']='SIMPLE') OR (dmdata.fdLineaCredito.FieldValues['tipo_interes']='PARALELO') then
    begin
    pgcRebatir.TabVisible:=false;
    pgcSimple.TabVisible:=true;

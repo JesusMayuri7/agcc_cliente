@@ -524,7 +524,7 @@ object fCalcular: TfCalcular
       Top = 1
       Width = 868
       Height = 656
-      ActivePage = pgcRebatir
+      ActivePage = pgcSimple
       Align = alClient
       TabOrder = 1
       object pgcSimple: TTabSheet
@@ -1114,7 +1114,27 @@ object fCalcular: TfCalcular
             object gridCuotasRebatir: TcxGridBandedTableView
               Navigator.Buttons.CustomButtons = <>
               DataController.Summary.DefaultGroupSummaryItems = <>
-              DataController.Summary.FooterSummaryItems = <>
+              DataController.Summary.FooterSummaryItems = <
+                item
+                  Format = '#,##0.00'
+                  Kind = skSum
+                  Column = colSaldoDeuda
+                end
+                item
+                  Format = '#,##0.00'
+                  Kind = skSum
+                  Column = colInteres
+                end
+                item
+                  Format = '#,##0.00'
+                  Kind = skSum
+                  Column = colAmortizacion
+                end
+                item
+                  Format = '#,##0.00'
+                  Kind = skSum
+                  Column = colCuota
+                end>
               DataController.Summary.SummaryGroups = <>
               OptionsData.CancelOnExit = False
               OptionsData.Deleting = False
@@ -1123,6 +1143,7 @@ object fCalcular: TfCalcular
               OptionsData.Inserting = False
               OptionsSelection.CellSelect = False
               OptionsView.NoDataToDisplayInfoText = 'Sin datos'
+              OptionsView.Footer = True
               OptionsView.GroupByBox = False
               Styles.ContentOdd = cxStyle1
               Bands = <

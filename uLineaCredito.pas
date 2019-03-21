@@ -320,7 +320,8 @@ begin
     graph.variables:=variables;
 
     resultado:=graph.ejecutar('linea_creditoMutation');  // cambiar por el nombre del Query que buscas linea_creditoQuery
-    uHelpers.InsertarRegistroDataset(resultado,fdLineaCredito);
+    //uHelpers.InsertarRegistroDataset(resultado,fdLineaCredito);
+    listar();
 //    showmessage(resultado.ToString);
     finally
        FreeAndNil(resultado);

@@ -267,6 +267,9 @@ type
     procedure GenerarResolucion(id: Integer);
     function datasetToJsonArray2(dataset:TFdMemTable): TJsonArray;
     procedure actualizarInfo(dataset:TfdMemtable;aJson:String);
+    procedure RendicionParalelo(monto,plazo,interes:real);
+    function calcularCuotaParalelo(monto,plazo,interes:real):real;
+    procedure distribucionCuotaParalelo(monto,plazo,interes:real);
   public
     { Public declarations }
   end;
@@ -281,6 +284,61 @@ uses
 
 
 {$R *.dfm}
+
+function TfSolicitud.calcularCuotaParalelo(monto,plazo,interes:real):real;
+var inicial,programado,i_acumulado,cuota_mensual,capital_mes:real;
+var recordCount:integer;
+begin
+  inicial:=0;
+  programado:=0;
+  cuota_mensual:=0;
+  capital_mes:=0;
+  i_acumulado:=0;
+    i_acumulado:=plazo*(interes/100);
+    cuota_mensual:=((monto*i_acumulado)/plazo)+(monto/plazo);
+    capital_mes:=roundTo(monto/plazo,-2);
+    result:=cuota_mensual;
+end;
+
+procedure TfSolicitud.distribucionCuotaParalelo(monto,plazo,interes:real);
+var inicial,programado,i_acumulado,cuota_mensual,capital_mes,i_soles,i_soles_mensual:real;
+var recordCount:integer;
+begin
+  inicial:=0;
+  programado:=0;
+  cuota_mensual:=0;
+  capital_mes:=0;
+  i_acumulado:=0;
+  i_soles:=0;
+  i_soles_mensual:=0;
+
+    i_acumulado:=plazo*(interes/100);
+    cuota_mensual:=((monto*i_acumulado)/plazo)+(monto/plazo);
+    capital_mes:=roundTo(monto/plazo,-2);
+    i_acumulado:=plazo*(interes/100);
+    i_soles:=i_acumulado*monto;
+    i_soles_mensual:=i_soles/plazo;
+
+end;
+
+procedure TfSolicitud.RendicionParalelo(monto,plazo,interes:real);
+var inicial,programado,i_acumulado,cuota_mensual,capital_mes,i_soles,i_soles_mensual:real;
+var recordCount:integer;
+begin
+  inicial:=0;
+  programado:=0;
+  cuota_mensual:=0;
+  capital_mes:=0;
+  i_acumulado:=0;
+  i_soles:=0;
+  i_soles_mensual:=0;
+    i_acumulado:=plazo*(interes/100);
+    cuota_mensual:=((monto*i_acumulado)/plazo)+(monto/plazo);
+    capital_mes:=roundTo(monto/plazo*plazo,-2);
+    i_acumulado:=plazo*(interes/100);
+    i_soles:=i_acumulado*monto;
+    i_soles_mensual:=roundTo((i_soles/plazo)*plazo,-2);
+end;
 
 procedure TfSolicitud.LookupButtonClick(Sender: TObject; AButtonIndex: Integer);
 begin
@@ -500,14 +558,24 @@ begin
    if (spnMonto.Value>0) and (spnPlazo.Value>0) and (cbbTipoProducto.EditValue>0) then
    begin
       interes:=dmdata.fdTipoProducto.FieldValues['interes'];
-     if dmdata.fdLineaCredito.FieldValues['tipo_interes']='SIMPLE' then
+      if dmdata.fdLineaCredito.FieldValues['tipo_interes']='SIMPLE' then
          begin
          calculos:=uHelpers.calcularTotales(interes,spnMonto.value,spnPlazo.value);
-         cuota:=calcularAhorro(spnMonto.value,spnPlazo.Value,interes,dmdata.fdAhorro);
+         uHelpers.llenarGridResumen(calculos,nil);
+         cuota:=uHelpers.calcularAhorro(spnMonto.value,spnPlazo.Value,interes,dmdata.fdAhorro,nil);
+         uHelpers.calcularCuota(spnMonto.value,spnPlazo.Value,interes,dmdata.fdAhorro,nil);
+         uHelpers.calcularRendicion(spnMonto.value,spnPlazo.Value,interes,dmdata.fdAhorro,nil);
+          end;
+     if dmdata.fdLineaCredito.FieldValues['tipo_interes']='PARALELO' then
+         begin
+         calculos:=uHelpers.calcularTotales(interes,spnMonto.value,spnPlazo.value);
+         cuota:=uHelpers.calcularAhorro(spnMonto.value,spnPlazo.Value,interes,nil,nil);
+         uHelpers.calcularCuota(spnMonto.value,spnPlazo.Value,interes,nil,nil);
+         uHelpers.calcularRendicion(spnMonto.value,spnPlazo.Value,interes,nil,nil);
           end;
       if dmdata.fdLineaCredito.FieldValues['tipo_interes']='REBATIR' then
          begin
-         cuota:=uHelpers.calcularTotalesRebatir(spnMonto.value,spnPlazo.Value,interes);
+         cuota:=uHelpers.calcularParametrosRebatir(spnMonto.value,spnPlazo.Value,interes,nil,nil,nil);
          end;
      spnCuota.Value:=cuota;
    end;

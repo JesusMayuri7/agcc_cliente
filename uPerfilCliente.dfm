@@ -184,7 +184,7 @@ object fPerfilCliente: TfPerfilCliente
       Top = 1
       Width = 532
       Height = 343
-      ActivePage = tabLIstado
+      ActivePage = tabFormulario
       Align = alClient
       TabOrder = 0
       object tabFormulario: TTabSheet
@@ -222,6 +222,7 @@ object fPerfilCliente: TfPerfilCliente
           object cbbLineaCredito: TcxLookupComboBox
             Left = 113
             Top = 80
+            Properties.DropDownListStyle = lsFixedList
             Properties.KeyFieldNames = 'id'
             Properties.ListColumns = <
               item

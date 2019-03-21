@@ -184,7 +184,7 @@ object fLineaCredito: TfLineaCredito
       Top = 1
       Width = 646
       Height = 377
-      ActivePage = tabLIstado
+      ActivePage = tabFormulario
       Align = alClient
       TabOrder = 0
       object tabFormulario: TTabSheet
@@ -250,7 +250,8 @@ object fLineaCredito: TfLineaCredito
             Text = 'SIMPLE'
             Items.Strings = (
               'SIMPLE'
-              'REBATIR')
+              'REBATIR'
+              'PARALELO')
           end
           object spbMinimo: TcxSpinEdit
             Left = 112
