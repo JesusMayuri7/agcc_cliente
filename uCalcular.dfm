@@ -47,13 +47,6 @@ object fCalcular: TfCalcular
     Height = 51
     Align = alBottom
     TabOrder = 1
-    object SpeedButton1: TSpeedButton
-      Left = 112
-      Top = 14
-      Width = 107
-      Height = 27
-      Caption = 'Nueva Solicitud'
-    end
   end
   object Panel3: TPanel
     Left = 0
@@ -126,16 +119,13 @@ object fCalcular: TfCalcular
           Properties.KeyFieldNames = 'id'
           Properties.ListColumns = <
             item
-              Caption = '#'
-              Width = 20
               FieldName = 'id'
             end
             item
-              Caption = 'Descripcion'
               FieldName = 'desc_perfil_cliente'
             end
             item
-              FieldName = 'tipo_producto'
+              FieldName = 't'
             end>
           Properties.ListFieldIndex = 1
           Properties.ListOptions.SyncMode = True
@@ -148,7 +138,7 @@ object fCalcular: TfCalcular
           Left = 10
           Top = 128
           Properties.DropDownListStyle = lsFixedList
-          Properties.KeyFieldNames = 'id'
+          Properties.KeyFieldNames = 'perfil_cliente_tipo_producto_id'
           Properties.ListColumns = <
             item
               Caption = '#'
@@ -524,7 +514,7 @@ object fCalcular: TfCalcular
       Top = 1
       Width = 868
       Height = 656
-      ActivePage = pgcSimple
+      ActivePage = pgcRebatir
       Align = alClient
       TabOrder = 1
       object pgcSimple: TTabSheet

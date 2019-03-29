@@ -19,7 +19,7 @@ procedure distribucionCuotaParalelo(monto,plazo,interes:real); overload;
 procedure RendicionParalelo(monto,plazo,interes:real;grid:TcxGridBandedTableView); overload;
 procedure RendicionParalelo(monto,plazo,interes:real); overload;
 procedure llenarGridAhorro(inicial,monto,programado,cuota_mensual:real;plazo:integer;grid:TcxGridBandedTableView);
-function calcularAhorro(monto:real;plazo:integer;interes:real;dataset: TFdMemTable=nil;grid:TcxGridBandedTableView=nil):real;
+function calcularAhorro(monto:real;plazo:integer;interes:real;dataset: TFdMemTable=nil;grid:TcxGridBandedTableView=nil;plazo_maximo:integer=0):real;
 procedure llenarGridResumen(datos:TJsonArray;grid:TcxGridBandedTableView);
 procedure llenarGridCuota(capital_mes,i_soles_mensual,monto,programado:real;plazo:integer;grid:TcxGridBandedTableView);
 procedure calcularCuota(monto:real;plazo:integer;interes:real;dataset: TFdMemTable=nil;grid:TcxGridBandedTableView=nil);
@@ -27,11 +27,35 @@ procedure calcularRendicion(monto:real;plazo:integer;interes:real;dataset: TFdMe
 procedure llenarGridRendicion(capital_mes,i_soles_mensual,monto,programado:real;plazo:integer;grid:TcxGridBandedTableView);
 function calcularParametrosRebatir(monto,plazo,interes:real;grid1:TcxGridBandedTableView=nil;grid2:TcxGridBandedTableView=nil;grid3:TcxGridBandedTableView=nil):real;
 procedure llenarGridRebatir(grid: TcxGridBandedTableView;cuota, monto, interes: real;plazo:byte);
+procedure datosAhorro(dataset:TFDmemtable=nil);
+function calcularAhorroResolucion(monto:real;plazo:integer;interes:real;inicial,programado:real;grid:TcxGridBandedTableView=nil):real;
+var
+   {variables here}
+   aInicial:Real=0;
+   aProgramado:Real=0;
 
 implementation
 
 uses
   uAdapterJson, UGraph, UData;
+
+procedure datosAhorro(dataset:TFDmemtable=nil);
+begin
+  aInicial:=0;
+  aProgramado:=0;
+  if not(dataset=nil) then
+  begin
+      dataset.First;
+    while not dataset.Eof do
+    begin
+       if dataset.Fieldbyname('desc_ahorro').AsString='INICIAL' then
+          aInicial:=aInicial+dataset.Fieldbyname('porcentaje').AsFloat;
+       if dataset.Fieldbyname('desc_ahorro').AsString='PROGRAMADO' then
+          aProgramado:=aProgramado+dataset.Fieldbyname('porcentaje').AsFloat;
+       dataset.next;
+    end;
+  end;
+end;
 
 procedure llenarGridRebatir(grid: TcxGridBandedTableView;cuota, monto, interes: real;plazo:byte);
 var i:byte;
@@ -244,9 +268,9 @@ var i:byte;
    size: integer;
    jpair:TJsonPair;
 begin
-   grid.BeginUpdate();
+ //  grid.BeginUpdate();
   try
-    grid.DataController.RecordCount := datos.Count;
+    grid.DataController.RecordCount := TJSONArray(datos).Count;
      Size := TJSONArray(datos).Count;
    for i:=0 to pred(Size) do
    begin
@@ -255,11 +279,11 @@ begin
     grid.DataController.Values[i,1]:=item.Pairs[1].jsonvalue.value;
    end;
   finally
-    grid.EndUpdate;
+   // grid.EndUpdate;
   end;
 end;
 
-function calcularAhorro(monto:real;plazo:integer;interes:real;dataset: TFdMemTable=nil;grid:TcxGridBandedTableView=nil):real;
+function calcularAhorro(monto:real;plazo:integer;interes:real;dataset: TFdMemTable=nil;grid:TcxGridBandedTableView=nil;plazo_maximo:integer=0):real;
 var inicial,programado,i_acumulado,cuota_mensual,capital_mes,total_programado:real;
 var recordCount:integer;
 begin
@@ -282,6 +306,28 @@ begin
       end;
       total_programado:=((monto*(programado/100))/plazo);
   end;
+    i_acumulado:=plazo*(interes/100);
+    cuota_mensual:=((monto*i_acumulado)/plazo)+(monto/plazo)+total_programado;
+    capital_mes:=roundTo(monto/plazo,-2);
+    if not(grid=nil) then
+       uHelpers.llenarGridAhorro(inicial,monto,programado,cuota_mensual,plazo,grid);
+    if plazo_maximo=1 then
+       cuota_mensual:=cuota_mensual*plazo;
+    result:=cuota_mensual;
+end;
+
+function calcularAhorroResolucion(monto:real;plazo:integer;interes:real;inicial,programado:real;grid:TcxGridBandedTableView=nil):real;
+var i_acumulado,cuota_mensual,capital_mes,total_programado:real;
+var recordCount:integer;
+begin
+  inicial:=0;
+  programado:=0;
+  cuota_mensual:=0;
+  capital_mes:=0;
+  i_acumulado:=0;
+  total_programado:=0;
+      total_programado:=((monto*(programado/100))/plazo);
+
     i_acumulado:=plazo*(interes/100);
     cuota_mensual:=((monto*i_acumulado)/plazo)+(monto/plazo)+total_programado;
     capital_mes:=roundTo(monto/plazo,-2);

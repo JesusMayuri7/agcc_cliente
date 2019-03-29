@@ -223,6 +223,11 @@ type
     fdSolicitudtipo_info_detalle: TMemoField;
     fdSolicitudcreated_at: TDateField;
     gridSolicitudcreated_at: TcxGridDBColumn;
+    fdSolicitudperfil_cliente_tipo_producto_id: TIntegerField;
+    fdSolicitudahorro_inicial: TFloatField;
+    fdSolicitudahorro_programado: TFloatField;
+    fdSolicitudtipo_interes: TStringField;
+    fdSolicitudresolucion_id: TIntegerField;
     procedure FormCreate(Sender: TObject);
     procedure cbbRegistrosChange(Sender: TObject);
     procedure spbPagSiguienteClick(Sender: TObject);
@@ -255,16 +260,17 @@ type
     procedure Limpiar();
     procedure EditarSolicitud(id,interes,monto,plazo,cuota:real;
     reporte_ceop_id,reporte_info_id,giro_negocio_id,tipo_prestamo_id,
-    perfil_cliente_tipo_producto_id,garantia_id:Variant;comentario:string;activo:boolean;avales,tipo_info_detalle:TJsonArray);
+    perfil_cliente_tipo_producto_id,garantia_id:Variant;comentario:string;
+    activo:boolean;avales,tipo_info_detalle:TJsonArray;aInicial,aProgramado:Real;tipo_interes:string);
     procedure NuevaSolicitud(empleado_id,cliente_id:integer;interes,monto,plazo,cuota:real;
     reporte_ceop_id,reporte_info_id,giro_negocio_id,tipo_prestamo_id,
-    perfil_cliente_tipo_producto_id,garantia_id:Variant;comentario:string;activo:boolean;avales:TJsonArray);
+    perfil_cliente_tipo_producto_id,garantia_id:Variant;comentario:string;activo:boolean;avales:TJsonArray;aIncial,aProgramado:Real;tipo_interes:string);
     function calcularAhorro(monto,plazo,interes:real;dataset: TFdMemTable):real;
     procedure CopiarAvales(dataset:TfdMemtable);
     procedure LookupButtonClick(Sender: TObject; AButtonIndex: Integer);
     function GridToJsonArray(grid:TcxGridBandedTableView):TJsonArray;
     procedure CerrarSolicitud(id:Integer;estado:string);
-    procedure GenerarResolucion(id: Integer);
+    procedure GenerarResolucion(id: Integer;tipo_interes:string;aInicial,aProgramado,interes,monto:real;plazo:integer);
     function datasetToJsonArray2(dataset:TFdMemTable): TJsonArray;
     procedure actualizarInfo(dataset:TfdMemtable;aJson:String);
     procedure RendicionParalelo(monto,plazo,interes:real);
@@ -378,7 +384,7 @@ end;
 procedure TfSolicitud.EditarSolicitud(id,interes,monto,plazo,cuota:real;
     reporte_ceop_id,reporte_info_id,giro_negocio_id,tipo_prestamo_id,
     perfil_cliente_tipo_producto_id,garantia_id:Variant;comentario:string;
-    activo:boolean;avales,tipo_info_detalle:TJsonArray);
+    activo:boolean;avales,tipo_info_detalle:TJsonArray;aInicial,aProgramado:Real;tipo_interes:string);
 var graph:Tgraph;
 var variables:TJSONObject;
 var dataVar,dataRest,query:TJSONObject;
@@ -386,21 +392,24 @@ var resultado:TJsonObject;
 var I:byte;
 begin
     resultado:=TJSONObject.Create;
+    uHelpers.aInicial:=0;
+    uHelpers.aProgramado:=0;
+    interes:=dmdata.fdTipoProducto.FieldValues['interes'];
     graph:=TGraph.Create(dmdata.RESTClient1);
     try  // Cambiar por el query a consultar, hacer pruebas en Insomnia
     graph.query:='mutation postSolicitud($id:Int,$interes:Float,$monto:Float,$plazo:Int,'+
     '$cuota:Float,$comentario:String,$reporte_ceop_id:Int,$reporte_info_id:Int,$giro_negocio_id:Int,$tipo_prestamo_id:Int,'+
     '$perfil_cliente_tipo_producto_id:Int,$garantia_id:Int,$activo:Int,$avales:[avalInputObjectType],'+
-    '$tipo_info_detalle:[tipoInfoDetalleInputObjectType])'+
+    '$tipo_info_detalle:[tipoInfoDetalleInputObjectType],$ahorro_inicial:Float,$ahorro_programado:Float,$tipo_interes:String)'+
     ' { solicitudMutation(id:$id,interes:$interes,monto:$monto,plazo:$plazo,cuota:$cuota,'+
     'comentario:$comentario,reporte_ceop_id:$reporte_ceop_id,historial_crediticio_id:$reporte_info_id,'+
     'giro_negocio_id:$giro_negocio_id,tipo_prestamo_id:$tipo_prestamo_id,'+
     'perfil_cliente_tipo_producto_id:$perfil_cliente_tipo_producto_id,garantia_id:$garantia_id,'+
-    'activo:$activo,avales:$avales,tipo_info_detalle:$tipo_info_detalle)'+
+    'activo:$activo,avales:$avales,tipo_info_detalle:$tipo_info_detalle,ahorro_inicial:$ahorro_inicial,ahorro_programado:$ahorro_programado,tipo_interes:$tipo_interes)'+
     ' {id,activo,monto,plazo,cuota,interes,comentario,reporte_ceop,reporte_ceop_id,reporte_info,'+
     'reporte_info_id,cliente_full_name,garantia,garantia_id,empleado,tipo_producto,tipo_producto_id,'+
     'tipo_prestamo,tipo_prestamo_id,nro_solicitud,estado,perfil_cliente,perfil_cliente_id,'+
-    'linea_credito,linea_credito_id,cliente_dni,giro_negocio,giro_negocio_id,'+
+    'linea_credito,linea_credito_id,cliente_dni,giro_negocio,giro_negocio_id,perfil_cliente_tipo_producto_id,'+
     'tipo_info_detalle {solicitud_id,tipo_info_id,desc_tipo_info_detalle,monto},avales '+
     '{id,dni,full_name,tipo }}}';
 
@@ -412,6 +421,9 @@ begin
     dataVar.AddPair('monto',TJSONNumber.Create(monto));
     dataVar.AddPair('plazo',TJSONNumber.Create(plazo));
     dataVar.AddPair('cuota',TJSONNumber.Create(cuota));
+    dataVar.AddPair('ahorro_inicial',TJSONNumber.Create(aInicial));
+    dataVar.AddPair('ahorro_programado',TJSONNumber.Create(aProgramado));
+    dataVar.AddPair('tipo_interes',TJSONString.Create(tipo_interes));
     dataVar.AddPair('comentario',TJSONString.Create(comentario));
     if VarIsnull(reporte_ceop_id) then
        dataVar.AddPair('reporte_ceop_id',TJsonNUll.Create)
@@ -504,13 +516,13 @@ end;
 
 procedure TfSolicitud.actResolucionExecute(Sender: TObject);
 begin
-    if fdSolicitud.FieldValues['estado']='CERRADO' then
+    if (fdSolicitud.FieldValues['estado']='CERRADO') and (VarIsNull(fdSolicitud.FieldValues['resolucion_id'])) then
     begin
-       GenerarResolucion(fdSolicitud.FieldValues['id']);
+       GenerarResolucion(fdSolicitud.FieldValues['id'],VarToStr(fdSolicitud.FieldValues['tipo_interes']),fdSolicitud.FieldValues['ahorro_inicial'],fdSolicitud.FieldValues['ahorro_programado'],fdSolicitud.FieldValues['interes'],fdSolicitud.FieldValues['monto'],fdSolicitud.FieldValues['plazo']);
        Showmessage('Creacion de resolucion con exito');
     end
     else
-        Showmessage('Solicitud deb estar Cerrada, para crear Resolucion')
+        Showmessage('Solicitud deb estar Cerrada, y sin resolucion creada')
 end;
 
 procedure TfSolicitud.btnBuscarClick(Sender: TObject);
@@ -550,18 +562,22 @@ end;
 procedure TfSolicitud.Button1Click(Sender: TObject);
 var calculos:TJsonArray;
 var cuota,interes:real;
+var plazo_maximo:Integer;
 begin
+spnCuota.Value:=0;
  cuota:=0;
  interes:=0;
  with cbbTipoProducto.Properties.Grid.DataController do
  begin
-   if (spnMonto.Value>0) and (spnPlazo.Value>0) and (cbbTipoProducto.EditValue>0) then
+   interes:=dmdata.fdTipoProducto.FieldValues['interes'];
+   plazo_maximo:=dmdata.fdTipoProducto.FieldValues['plazo_maximo'];
+   if (spnMonto.Value>0) and (spnPlazo.Value>0) and (cbbTipoProducto.EditValue>0) and (interes>0) then
    begin
-      interes:=dmdata.fdTipoProducto.FieldValues['interes'];
+
       if dmdata.fdLineaCredito.FieldValues['tipo_interes']='SIMPLE' then
          begin
          calculos:=uHelpers.calcularTotales(interes,spnMonto.value,spnPlazo.value);
-         uHelpers.llenarGridResumen(calculos,nil);
+         //uHelpers.llenarGridResumen(calculos,nil);
          cuota:=uHelpers.calcularAhorro(spnMonto.value,spnPlazo.Value,interes,dmdata.fdAhorro,nil);
          uHelpers.calcularCuota(spnMonto.value,spnPlazo.Value,interes,dmdata.fdAhorro,nil);
          uHelpers.calcularRendicion(spnMonto.value,spnPlazo.Value,interes,dmdata.fdAhorro,nil);
@@ -569,7 +585,7 @@ begin
      if dmdata.fdLineaCredito.FieldValues['tipo_interes']='PARALELO' then
          begin
          calculos:=uHelpers.calcularTotales(interes,spnMonto.value,spnPlazo.value);
-         cuota:=uHelpers.calcularAhorro(spnMonto.value,spnPlazo.Value,interes,nil,nil);
+         cuota:=uHelpers.calcularAhorro(spnMonto.value,spnPlazo.Value,interes,nil,nil,plazo_maximo);
          uHelpers.calcularCuota(spnMonto.value,spnPlazo.Value,interes,nil,nil);
          uHelpers.calcularRendicion(spnMonto.value,spnPlazo.Value,interes,nil,nil);
           end;
@@ -627,7 +643,7 @@ begin
           cbbPerfilCliente.EditValue:=fdSolicitud.FieldValues['perfil_cliente_id'];
           uHelpers.JsonToDataset(dmdata.fdTipoProducto,VarTostr(dmdata.fdPerfilCliente.FieldValues['tipo_producto']));
           cbbTipoProducto.SetFocus;
-          cbbTipoProducto.EditValue:=fdSolicitud.FieldValues['tipo_producto_id'];
+          cbbTipoProducto.EditValue:=fdSolicitud.FieldValues['perfil_cliente_tipo_producto_id'];
 
          cbbTipoPrestamo.EditValue:=fdSolicitud.FieldValues['tipo_prestamo_id'];
          cbbGarantia.EditValue:=fdSolicitud.FieldValues['garantia_id'];
@@ -651,25 +667,33 @@ begin
 end;
 
 procedure TfSolicitud.btnGuardarClick(Sender: TObject);
-var interes:real;
+var interes,ainicial,aprogramado:real;
 var cadena:string;
 begin
 //  cadena:=datasetToJsonArray2(dmdata.fdTipoInfo).ToString;
 //  showmessage(cadena);
   btnGuardar.Enabled:=false;
+  aInicial:=0;
+  aProgramado:=0;
   interes:=dmdata.fdTipoProducto.FieldValues['interes'];
+  if dmdata.fdLineaCredito.FieldValues['tipo_interes']='SIMPLE' then
+      begin
+          uHelpers.datosAhorro(dmData.fdAhorro);
+          aInicial:=uHelpers.aInicial;
+          aProgramado:=uHelpers.aProgramado;
+      end;
   if Tag>0 then
     begin
-    // showmessage(Vartostr(cbbTipoProducto.editvalue));
+
     EditarSolicitud(tag,interes,spnMonto.Value,spnPlazo.Value,spnCuota.Value,cbbReporteCeop.EditValue,cbbReporteInfo.EditValue,
     cbbGiroNegocio.EditValue,cbbTipoPrestamo.EditValue,cbbTipoProducto.EditValue,cbbGarantia.EditValue,txtcomentario.Lines.Text,true,
-    gridToJsonArray(gridAvales),datasetToJsonArray2(dmdata.fdTipoInfo));
+    gridToJsonArray(gridAvales),datasetToJsonArray2(dmdata.fdTipoInfo),aInicial,aProgramado,dmdata.fdLineaCredito.FieldValues['tipo_interes']);
     end
   else
    NuevaSolicitud(1,txtDniCliente.Tag,interes,spnMonto.Value,spnPlazo.Value,spnCuota.Value,
    cbbReporteCeop.EditValue,cbbReporteInfo.EditValue,
     cbbGiroNegocio.EditValue,cbbTipoPrestamo.EditValue,cbbTipoProducto.EditValue,cbbGarantia.EditValue,
-    txtcomentario.Lines.Text,true,gridToJsonArray(gridAvales));
+    txtcomentario.Lines.Text,true,gridToJsonArray(gridAvales),aInicial,aProgramado,dmdata.fdLineaCredito.FieldValues['tipo_interes']);
   tabFormulario.TabVisible:=false;
   tabListado.TabVisible:=true;
   btnNuevo.Enabled:=true;
@@ -703,7 +727,7 @@ paginaActual:=1;
 listar();
 end;
 
-procedure TfSolicitud.GenerarResolucion(id: Integer);
+procedure TfSolicitud.GenerarResolucion(id: Integer;tipo_interes:string;aInicial,aProgramado,interes,monto:real;plazo:integer);
 var graph:Tgraph;
 var variables:TJSONObject;
 var dataVar,dataRest,query:TJSONObject;
@@ -713,12 +737,20 @@ begin
     resultado:=TJSONObject.Create;
     graph:=TGraph.Create(dmdata.RESTClient1);
     try  // Cambiar por el query a consultar, hacer pruebas en Insomnia
-    graph.query:='mutation postResolucion($solicitud_id:Int)'+
-    ' { resolucionMutation(solicitud_id:$id) {solicitud_id}}';
+    graph.query:='mutation postResolucion($solicitud_id:Int,$tipo_interes:String,'+
+    '$ahorro_inicial:Float,$ahorro_programado:Float,$interes:Float,$monto:Float,$plazo:Int)'+
+    ' { resolucionMutation(solicitud_id:$solicitud_id,tipo_interes:$tipo_interes,ahorro_inicial:$ahorro_inicial,'+
+    ' ahorro_programado:$ahorro_programado,interes:$interes,monto:$monto,plazo:$plazo) {solicitud_id}}';
 
     variables:=TJSONObject.Create;
     dataVar:=TJSONObject.Create;
-    dataVar.AddPair('id',TJSONNumber.Create(id));
+    dataVar.AddPair('solicitud_id',TJSONNumber.Create(id));
+    dataVar.AddPair('tipo_interes',TJSONString.Create(tipo_interes));
+    dataVar.AddPair('ahorro_inicial',TJSONNumber.Create(aInicial));
+    dataVar.AddPair('ahorro_programado',TJSONNumber.Create(aProgramado));
+    dataVar.AddPair('interes',TJSONNumber.Create(interes));
+    dataVar.AddPair('monto',TJSONNumber.Create(monto));
+    dataVar.AddPair('plazo',TJSONNumber.Create(plazo));
     variables.AddPair('variables',dataVar);
     graph.variables:=variables;
     resultado:=graph.ejecutar('resolucionMutation');  // cambiar por el nombre del Query que buscas linea_creditoQuery
@@ -913,9 +945,9 @@ begin
     graph.query:='query solicitud { solicitudQuery { data {id,activo,monto,plazo,cuota,interes,'+
     'comentario,reporte_ceop,reporte_ceop_id,reporte_info,reporte_info_id,cliente_full_name,garantia,garantia_id,empleado,'+
     'tipo_producto,tipo_producto_id,tipo_prestamo,tipo_prestamo_id,nro_solicitud,estado,'+
-    'perfil_cliente,perfil_cliente_id,'+'linea_credito,linea_credito_id,cliente_dni,'+
-    'giro_negocio,giro_negocio_id,created_at,'+
-    'avales {id,dni,full_name,tipo},tipo_info_detalle {tipo_info_detalle_id,solicitud_id,monto} }}}';
+    'perfil_cliente,perfil_cliente_id,'+'linea_credito,linea_credito_id,cliente_dni,perfil_cliente_tipo_producto_id,'+
+    'giro_negocio,giro_negocio_id,created_at,ahorro_inicial,ahorro_programado,tipo_interes,'+
+    'avales {id,dni,full_name,tipo},tipo_info_detalle {tipo_info_detalle_id,solicitud_id,monto},resolucion_id }}}';
     //NO variar
     variables:=TJSONObject.Create;
     dataVar:=TJSONObject.Create;
@@ -948,7 +980,7 @@ end;
 
 procedure TfSolicitud.NuevaSolicitud(empleado_id,cliente_id:integer;interes,monto,plazo,cuota:real;
     reporte_ceop_id,reporte_info_id,giro_negocio_id,tipo_prestamo_id,
-    perfil_cliente_tipo_producto_id,garantia_id:Variant;comentario:string;activo:boolean;avales:TJsonArray);
+    perfil_cliente_tipo_producto_id,garantia_id:Variant;comentario:string;activo:boolean;avales:TJsonArray;aIncial,aProgramado:Real;tipo_interes:string);
 var graph:Tgraph;
 var variables:TJSONObject;
 var dataVar,dataRest,query:TJSONObject;
@@ -956,15 +988,21 @@ var resultado:TJsonObject;
 var I:byte;
 begin
     resultado:=TJSONObject.Create;
+uHelpers.aInicial:=0;
+uHelpers.aProgramado:=0;
+    interes:=dmdata.fdTipoProducto.FieldValues['interes'];
+      if dmdata.fdLineaCredito.FieldValues['tipo_interes']='SIMPLE' then
+             uHelpers.datosAhorro(dmData.fdAhorro);
     graph:=TGraph.Create(dmdata.RESTClient1);
     try  // Cambiar por el query a consultar, hacer pruebas en Insomnia
     graph.query:='mutation postSolicitud($empleado_id:Int,$cliente_id:Int,$id:Int,$interes:Float,$monto:Float,$plazo:Int,'+
     '$cuota:Float,$comentario:String,$reporte_ceop_id:Int,$reporte_info_id:Int,$giro_negocio_id:Int,$tipo_prestamo_id:Int,'+
-    '$perfil_cliente_tipo_producto_id:Int,$garantia_id:Int,$activo:Int)'+
+    '$perfil_cliente_tipo_producto_id:Int,$garantia_id:Int,$activo:Int,$ahorro_inicial:Float,$ahorro_programado:Float,$tipo_interes:String)'+
     ' { solicitudMutation(empleado_id:$empleado_id,cliente_id:$cliente_id,id:$id,interes:$interes,monto:$monto,plazo:$plazo,cuota:$cuota,'+
     'comentario:$comentario,reporte_ceop_id:$reporte_ceop_id,historial_crediticio_id:$reporte_info_id,'+
     'giro_negocio_id:$giro_negocio_id,tipo_prestamo_id:$tipo_prestamo_id,'+
-    'perfil_cliente_tipo_producto_id:$perfil_cliente_tipo_producto_id,garantia_id:$garantia_id,activo:$activo)'+
+    'perfil_cliente_tipo_producto_id:$perfil_cliente_tipo_producto_id,garantia_id:$garantia_id,activo:$activo,'+
+    'ahorro_inicial:$ahorro_inicial,ahorro_programado:$ahorro_programado,tipo_interes:$tipo_interes)'+
     ' {id,activo,monto,plazo,cuota,interes,comentario,reporte_ceop,reporte_ceop_id,reporte_info,'+
     'reporte_info_id,cliente_full_name,garantia,garantia_id,empleado,tipo_producto,tipo_producto_id,'+
     'tipo_prestamo,tipo_prestamo_id,nro_solicitud,estado,perfil_cliente,perfil_cliente_id,'+
@@ -980,7 +1018,10 @@ begin
     dataVar.AddPair('monto',TJSONNumber.Create(monto));
     dataVar.AddPair('plazo',TJSONNumber.Create(plazo));
     dataVar.AddPair('cuota',TJSONNumber.Create(cuota));
+    dataVar.AddPair('ahorro_inicial',TJSONNumber.Create(uHelpers.aInicial));
+    dataVar.AddPair('ahorro_programado',TJSONNumber.Create(uHelpers.aProgramado));
     dataVar.AddPair('comentario',TJSONString.Create(comentario));
+    dataVar.AddPair('tipo_interes',TJSONString.Create(tipo_interes));
     if VarIsnull(reporte_ceop_id) then
        dataVar.AddPair('reporte_ceop_id',TJsonNUll.Create)
     else

@@ -78,7 +78,6 @@ object fAhorro: TfAhorro
       Width = 23
       Height = 25
       Align = alLeft
-      Caption = '<'
       OnClick = spbActualizarClick
       ExplicitLeft = 46
       ExplicitTop = 5
@@ -393,9 +392,11 @@ object fAhorro: TfAhorro
       FieldName = 'id'
     end
     object fdAhorrodesc_ahorro: TStringField
+      DisplayLabel = 'Descripcion'
       FieldName = 'desc_ahorro'
     end
     object fdAhorroporcentaje: TFloatField
+      DisplayLabel = 'Porcentaje'
       FieldName = 'porcentaje'
     end
   end

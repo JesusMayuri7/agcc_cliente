@@ -7,7 +7,7 @@ uses
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ComCtrls, Vcl.ExtCtrls, Vcl.DBCtrls,
   Vcl.StdCtrls, Vcl.Samples.Spin, Vcl.Mask, cxGraphics, cxControls,REST.Json,REST.Types,System.json,
   cxLookAndFeels, cxLookAndFeelPainters, cxStyles, dxSkinsCore, cxCustomData,
-  cxFilter, cxData, cxDataStorage, cxEdit, cxNavigator,
+  cxFilter, cxData, cxDataStorage, cxEdit, cxNavigator, System.Math,
   cxDataControllerConditionalFormattingRulesManagerDialog, Data.DB, cxDBData,
   cxGridLevel, cxClasses, cxGridCustomView, cxGridCustomTableView,
   cxGridTableView, cxGridDBTableView, cxGrid, FireDAC.Stan.Intf,
@@ -90,18 +90,27 @@ type
     Label6: TLabel;
     Label15: TLabel;
     Label8: TLabel;
-    cxSpinEdit1: TcxSpinEdit;
-    cxSpinEdit2: TcxSpinEdit;
+    spnMonto2: TcxSpinEdit;
+    spnPlazo2: TcxSpinEdit;
     Label9: TLabel;
     Label13: TLabel;
-    cxSpinEdit3: TcxSpinEdit;
+    spnCuota2: TcxSpinEdit;
     SpeedButton1: TSpeedButton;
     Label16: TLabel;
-    ComboBox1: TComboBox;
+    cbbTipoInteres: TComboBox;
     Label17: TLabel;
-    SpinEdit1: TSpinEdit;
+    spnInicial: TSpinEdit;
     Label18: TLabel;
-    SpinEdit2: TSpinEdit;
+    spnProgramado: TSpinEdit;
+    fdResoluciontipo_interes: TStringField;
+    fdResolucioninteres: TFloatField;
+    fdResolucionahorro_inicial: TFloatField;
+    fdResolucionahorro_programado: TFloatField;
+    Label19: TLabel;
+    spnInteres: TcxSpinEdit;
+    Label20: TLabel;
+    spnInteres2: TcxSpinEdit;
+    fdResolucionplazo_maximo: TIntegerField;
     procedure spbActualizarClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure btnEditarClick(Sender: TObject);
@@ -111,10 +120,12 @@ type
     procedure spbPaginaAnteriorrrClick(Sender: TObject);
     procedure spbPagSiguienteClick(Sender: TObject);
     procedure SpeedButton1Click(Sender: TObject);
+
   private
     { Private declarations }
     var paginaActual:integer;
     procedure listar;
+    procedure calcular();
   public
     { Public declarations }
   end;
@@ -125,7 +136,7 @@ var
 implementation
 
 uses
-  UGraph, UData;
+  UGraph, UData, uHelpers;
 
 
 {$R *.dfm}
@@ -169,10 +180,18 @@ if gridResolucion.Controller.SelectedRowCount=1 then
          txtResolucion.Text:=fdResolucion.FieldValues['nro_resolucion'];
          txtSolicitud.Text:=fdResolucion.FieldValues['solicitud_id'];
          spnMonto.Value:=fdResolucion.FieldValues['monto'];
+         spnMonto2.Value:=fdResolucion.FieldValues['monto'];
          spnCuota.Value:=fdResolucion.FieldValues['cuota'];
+         spnInteres.Value:=fdResolucion.FieldValues['interes'];
+         spnInteres2.Value:=fdResolucion.FieldValues['interes'];
          spnPlazo.Value:=fdResolucion.FieldValues['plazo'];
+         spnPlazo2.Value:=fdResolucion.FieldValues['plazo'];
+         spnPlazo2.Tag:=fdResolucion.FieldValues['plazo_maximo']; // maximo de cuotas--
          txtCliente.Text:=fdResolucion.FieldValues['cliente_full_name'];
          txtAnalista.Text:=fdResolucion.FieldValues['empleado_full_name'];
+         cbbTipoInteres.ItemIndex:=cbbTipoInteres.items.IndexOf(VarToStr(fdResolucion.FieldValues['tipo_interes']));
+          spnInicial.value:=fdResolucion.FieldValues['ahorro_inicial'];
+          spnProgramado.value:=fdResolucion.FieldValues['ahorro_programado'];
          cbbEstado.ItemIndex:=cbbEstado.Items.IndexOf(fdResolucion.FieldValues['estado']);
 //         cbbEstado.Text:=fdResolucion.FieldValues['estado'];
          if fdResolucion.FieldValues['comentario']=null then
@@ -193,14 +212,17 @@ begin
     resultado:=TJSONObject.Create;
     graph:=TGraph.Create(dmdata.RESTClient1);
     try  // Cambiar por el query a consultar, hacer pruebas en Insomnia
-    graph.query:='mutation editResolucion($id:Int,$estado:String,$comentario:String)'+
-    ' { resolucionMutation(id:$id,estado:$estado,comentario:$comentario) {id,estado,comentario}}';
+    graph.query:='mutation editResolucion($id:Int,$estado:String,$comentario:String,$monto:Float,$plazo:Int,$cuota:Float)'+
+    ' { resolucionMutation(id:$id,estado:$estado,comentario:$comentario,monto:$monto,plazo:$plazo,cuota:$cuota) {id,estado,comentario}}';
 
     variables:=TJSONObject.Create;
     dataVar:=TJSONObject.Create;
     dataVar.AddPair('id',TJSONNumber.Create(Tag));
     dataVar.AddPair('estado',TJSONString.Create(cbbEstado.Items[cbbEstado.ItemIndex]));
     dataVar.AddPair('comentario',TJSONString.Create(txtComentario.Lines.Text));
+    dataVar.AddPair('monto',TJSONNumber.Create(spnMonto2.Value));
+    dataVar.AddPair('plazo',TJSONNumber.Create(spnPlazo2.Value));
+    dataVar.AddPair('cuota',TJSONNumber.Create(spnCuota2.Value));
     variables.AddPair('variables',dataVar);
     graph.variables:=variables;
     resultado:=graph.ejecutar('resolucionMutation');  // cambiar por el nombre del Query que buscas linea_creditoQuery
@@ -209,6 +231,23 @@ begin
        FreeAndNil(resultado);
        FreeAndNil(graph);
     end;
+end;
+
+procedure TfResolucion.calcular;
+var cuota,interes:Real;
+begin
+//spnCuota2.Value:=0;
+ cuota:=0;
+   if (spnMonto2.Value>0) and (spnPlazo2.Value>0) and (spnInteres2.value>0) then
+   begin
+      if cbbTipoInteres.Items[cbbTipoInteres.ItemIndex]='SIMPLE' then
+         cuota:=uHelpers.calcularAhorroResolucion(spnMonto2.value,spnPlazo2.Value,spnInteres.Value,0,spnProgramado.Value,nil);
+     if cbbTipoInteres.items[cbbTipoInteres.ItemIndex]='PARALELO' then
+         cuota:=uHelpers.calcularAhorro(spnMonto2.value,spnPlazo2.Value,spnInteres.Value,nil,nil,spnPlazo2.Tag);
+      if cbbTipoInteres.items[cbbTipoInteres.ItemIndex]='REBATIR' then
+         cuota:=uHelpers.calcularParametrosRebatir(spnMonto2.value,spnPlazo2.Value,spnInteres.Value,nil,nil,nil);
+     spnCuota2.Value:=roundTo(cuota,-2);   // revisar, no calcula bien la cuota
+   end;
 end;
 
 procedure TfResolucion.cbbRegistrosChange(Sender: TObject);
@@ -235,7 +274,8 @@ begin
     graph:=TGraph.Create(dmdata.RESTClient1,fdResolucion);
     try
     graph.query:='query verResolucion { resolucionQuery { data '+
-    '{ id,solicitud_id,nro_resolucion,estado,cliente_full_name,empleado_full_name,monto,cuota,plazo,comentario } }}';
+    '{ id,solicitud_id,nro_resolucion,estado,cliente_full_name,empleado_full_name,monto,'+
+    'cuota,plazo,comentario,tipo_interes,interes,ahorro_inicial,ahorro_programado,plazo_maximo } }}';
 
     variables:=TJSONObject.Create;
     dataVar:=TJSONObject.Create;
@@ -285,6 +325,7 @@ end;
 procedure TfResolucion.SpeedButton1Click(Sender: TObject);
 begin
 //RECALCULAR CUOTA
+calcular();
 end;
 
 end.

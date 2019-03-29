@@ -222,6 +222,8 @@ procedure TfAhorro.FormCreate(Sender: TObject);
 begin
 paginaActual:=1;
 listar();
+dmData.ImageList1.GetBitmap(1, spbActualizar.Glyph);
+
 end;
 
 procedure TfAhorro.Limpiar;

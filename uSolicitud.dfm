@@ -263,7 +263,7 @@ object fSolicitud: TfSolicitud
               Left = 10
               Top = 128
               Properties.DropDownListStyle = lsFixedList
-              Properties.KeyFieldNames = 'id'
+              Properties.KeyFieldNames = 'perfil_cliente_tipo_producto_id'
               Properties.ListColumns = <
                 item
                   Caption = '#'
@@ -1535,6 +1535,21 @@ object fSolicitud: TfSolicitud
     object fdSolicitudcreated_at: TDateField
       DisplayLabel = 'Creado'
       FieldName = 'created_at'
+    end
+    object fdSolicitudperfil_cliente_tipo_producto_id: TIntegerField
+      FieldName = 'perfil_cliente_tipo_producto_id'
+    end
+    object fdSolicitudahorro_inicial: TFloatField
+      FieldName = 'ahorro_inicial'
+    end
+    object fdSolicitudahorro_programado: TFloatField
+      FieldName = 'ahorro_programado'
+    end
+    object fdSolicitudtipo_interes: TStringField
+      FieldName = 'tipo_interes'
+    end
+    object fdSolicitudresolucion_id: TIntegerField
+      FieldName = 'resolucion_id'
     end
   end
   object dsSolicitud: TDataSource

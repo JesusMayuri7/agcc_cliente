@@ -27,18 +27,18 @@ object dmData: TdmData
           '[{"query":"query calcular {linea_creditoQuery { data { id,desc_l' +
           'inea_credito,tipo_interes,monto_minimo,monto_maximo,perfil_clien' +
           'te {id,desc_perfil_cliente,tipo_producto {id,desc_tipo_producto,' +
-          'interes,mora,plazo_minimo,plazo_maximo}}}}}"},{"query":"query ah' +
-          'orro {ahorroQuery {data {id,desc_ahorro,porcentaje}}}"},{"query"' +
-          ':"query riesgoceop {reporte_ceopQuery {data {id,desc_reporte_ceo' +
-          'p}}}"},{"query":"query riesgoinfo {reporte_crediticioQuery {data' +
-          ' {id,desc_historial_crediticio}}}"},{"query":"query tipoprestamo' +
-          ' {tipo_prestamoQuery {data {id,desc_tipo_prestamo}}}"}, {"query"' +
-          ':"query garantia {garantiaQuery {data {id,desc_garantia}}}"},{"q' +
-          'uery":"query giro_negocio {giro_negocioQuery {data {id,desc_giro' +
-          '_negocio}}}"},{"query":"query verTipoInfoDetalle{ tipo_info_deta' +
-          'lleQuery { data {id,solicitud_id,desc_tipo_info_detalle,tipo_inf' +
-          'o_id,tipo,activo,tipo_info,informacion,monto},per_page,total}}"}' +
-          ']'
+          'interes,mora,plazo_minimo,plazo_maximo, perfil_cliente_tipo_prod' +
+          'ucto_id }}}}}"},{"query":"query ahorro {ahorroQuery {data {id,de' +
+          'sc_ahorro,porcentaje}}}"},{"query":"query riesgoceop {reporte_ce' +
+          'opQuery {data {id,desc_reporte_ceop}}}"},{"query":"query riesgoi' +
+          'nfo {reporte_crediticioQuery {data {id,desc_historial_crediticio' +
+          '}}}"},{"query":"query tipoprestamo {tipo_prestamoQuery {data {id' +
+          ',desc_tipo_prestamo}}}"}, {"query":"query garantia {garantiaQuer' +
+          'y {data {id,desc_garantia}}}"},{"query":"query giro_negocio {gir' +
+          'o_negocioQuery {data {id,desc_giro_negocio}}}"},{"query":"query ' +
+          'verTipoInfoDetalle{ tipo_info_detalleQuery { data {id,solicitud_' +
+          'id,desc_tipo_info_detalle,tipo_info_id,tipo,activo,tipo_info,inf' +
+          'ormacion,monto},per_page,total}}"}]'
         ContentType = ctAPPLICATION_JSON
       end>
     Response = RESTResponse1
@@ -367,38 +367,7 @@ object dmData: TdmData
     Top = 306
   end
   object fdTipoProducto: TFDMemTable
-    Active = True
-    FieldDefs = <
-      item
-        Name = 'data'
-        DataType = ftWideString
-        Size = 255
-      end
-      item
-        Name = 'id'
-        DataType = ftInteger
-      end
-      item
-        Name = 'desc_tipo_producto'
-        DataType = ftString
-        Size = 20
-      end
-      item
-        Name = 'interes'
-        DataType = ftFloat
-      end
-      item
-        Name = 'mora'
-        DataType = ftFloat
-      end
-      item
-        Name = 'plazo_minimo'
-        DataType = ftInteger
-      end
-      item
-        Name = 'plazo_maximo'
-        DataType = ftInteger
-      end>
+    FieldDefs = <>
     IndexDefs = <>
     FetchOptions.AssignedValues = [evMode]
     FetchOptions.Mode = fmAll
@@ -410,6 +379,9 @@ object dmData: TdmData
     StoreDefs = True
     Left = 169
     Top = 298
+    object fdTipoProductoperfil_cliente_tipo_producto_id: TIntegerField
+      FieldName = 'perfil_cliente_tipo_producto_id'
+    end
     object IntegerField1: TIntegerField
       FieldName = 'id'
     end
@@ -483,7 +455,6 @@ object dmData: TdmData
     Top = 224
   end
   object RESTResponseDataSetAdapter3: TRESTResponseDataSetAdapter
-    Active = True
     Dataset = fdTipoProducto
     FieldDefs = <>
     ResponseJSON = RESTResponse1

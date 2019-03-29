@@ -85,6 +85,7 @@ type
     fdTipoInfomonto: TFloatField;
     fdTipoInfosolicitud_id: TIntegerField;
     fdTipoInfotipo_info_detalle_id: TIntegerField;
+    fdTipoProductoperfil_cliente_tipo_producto_id: TIntegerField;
   private
     { Private declarations }
   public

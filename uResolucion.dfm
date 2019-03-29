@@ -2,7 +2,7 @@ object fResolucion: TfResolucion
   Left = 0
   Top = 0
   Caption = 'Resolucion'
-  ClientHeight = 558
+  ClientHeight = 594
   ClientWidth = 958
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -18,26 +18,24 @@ object fResolucion: TfResolucion
     Left = 0
     Top = 39
     Width = 958
-    Height = 468
+    Height = 504
     Align = alClient
     TabOrder = 0
     object PageControl1: TPageControl
       Left = 1
       Top = 1
       Width = 956
-      Height = 466
+      Height = 502
       ActivePage = tabFormulario
       Align = alClient
       TabOrder = 0
       object tabFormulario: TTabSheet
         Caption = 'Formulario'
-        ExplicitLeft = 6
-        ExplicitTop = 23
         object GroupBox1: TGroupBox
           Left = 35
           Top = 39
           Width = 726
-          Height = 378
+          Height = 410
           Caption = 'Resolucion'
           TabOrder = 0
           object Label2: TLabel
@@ -92,9 +90,9 @@ object fResolucion: TfResolucion
           object Label17: TLabel
             Left = 237
             Top = 70
-            Width = 77
+            Width = 85
             Height = 16
-            Caption = 'Interes Inicial'
+            Caption = 'Garantia Inicial'
             Font.Charset = DEFAULT_CHARSET
             Font.Color = clWindowText
             Font.Height = -13
@@ -105,9 +103,9 @@ object fResolucion: TfResolucion
           object Label18: TLabel
             Left = 218
             Top = 105
-            Width = 109
+            Width = 117
             Height = 16
-            Caption = 'Interes Progamado'
+            Caption = 'Garantia Progamado'
             Font.Charset = DEFAULT_CHARSET
             Font.Color = clWindowText
             Font.Height = -13
@@ -134,7 +132,7 @@ object fResolucion: TfResolucion
             Left = 105
             Top = 211
             Width = 327
-            Height = 142
+            Height = 182
             TabOrder = 1
           end
           object txtResolucion: TEdit
@@ -171,9 +169,9 @@ object fResolucion: TfResolucion
           end
           object GroupBox2: TGroupBox
             Left = 464
-            Top = 187
+            Top = 211
             Width = 241
-            Height = 159
+            Height = 182
             Caption = 'Aprobado'
             TabOrder = 6
             object Label8: TLabel
@@ -204,7 +202,7 @@ object fResolucion: TfResolucion
             end
             object Label13: TLabel
               Left = 30
-              Top = 112
+              Top = 144
               Width = 41
               Height = 19
               Caption = 'Cuota'
@@ -217,18 +215,32 @@ object fResolucion: TfResolucion
             end
             object SpeedButton1: TSpeedButton
               Left = 207
-              Top = 107
+              Top = 139
               Width = 23
               Height = 27
               OnClick = SpeedButton1Click
             end
-            object cxSpinEdit1: TcxSpinEdit
+            object Label20: TLabel
+              Left = 30
+              Top = 109
+              Width = 49
+              Height = 19
+              Caption = 'Interes'
+              Font.Charset = DEFAULT_CHARSET
+              Font.Color = clWindowText
+              Font.Height = -16
+              Font.Name = 'Tahoma'
+              Font.Style = []
+              ParentFont = False
+            end
+            object spnMonto2: TcxSpinEdit
               Left = 104
               Top = 41
               ParentFont = False
               Properties.Alignment.Horz = taRightJustify
               Properties.DisplayFormat = '#,##0.00'
               Properties.SpinButtons.Visible = False
+              Properties.ValueType = vtFloat
               Style.Font.Charset = DEFAULT_CHARSET
               Style.Font.Color = clWindowText
               Style.Font.Height = -16
@@ -238,7 +250,7 @@ object fResolucion: TfResolucion
               TabOrder = 0
               Width = 97
             end
-            object cxSpinEdit2: TcxSpinEdit
+            object spnPlazo2: TcxSpinEdit
               Left = 104
               Top = 74
               ParentFont = False
@@ -255,15 +267,16 @@ object fResolucion: TfResolucion
               TabOrder = 1
               Width = 97
             end
-            object cxSpinEdit3: TcxSpinEdit
+            object spnCuota2: TcxSpinEdit
               Left = 104
-              Top = 107
+              Top = 139
               Enabled = False
               ParentFont = False
               Properties.Alignment.Horz = taRightJustify
               Properties.DisplayFormat = '#,##0.00'
               Properties.EditFormat = '0'
               Properties.SpinButtons.Visible = False
+              Properties.ValueType = vtFloat
               Style.Font.Charset = DEFAULT_CHARSET
               Style.Font.Color = clWindowText
               Style.Font.Height = -16
@@ -273,12 +286,31 @@ object fResolucion: TfResolucion
               TabOrder = 2
               Width = 97
             end
+            object spnInteres2: TcxSpinEdit
+              Left = 104
+              Top = 106
+              Enabled = False
+              ParentFont = False
+              Properties.Alignment.Horz = taRightJustify
+              Properties.DisplayFormat = '#,##0.00'
+              Properties.EditFormat = '0'
+              Properties.SpinButtons.Visible = False
+              Properties.ValueType = vtFloat
+              Style.Font.Charset = DEFAULT_CHARSET
+              Style.Font.Color = clWindowText
+              Style.Font.Height = -16
+              Style.Font.Name = 'Tahoma'
+              Style.Font.Style = []
+              Style.IsFontAssigned = True
+              TabOrder = 3
+              Width = 97
+            end
           end
           object GroupBox3: TGroupBox
             Left = 464
             Top = 21
             Width = 241
-            Height = 145
+            Height = 170
             Caption = 'Solicitado'
             TabOrder = 7
             object Label14: TLabel
@@ -296,7 +328,7 @@ object fResolucion: TfResolucion
             end
             object Label6: TLabel
               Left = 30
-              Top = 104
+              Top = 136
               Width = 41
               Height = 19
               Caption = 'Cuota'
@@ -320,13 +352,28 @@ object fResolucion: TfResolucion
               Font.Style = []
               ParentFont = False
             end
+            object Label19: TLabel
+              Left = 30
+              Top = 101
+              Width = 49
+              Height = 19
+              Caption = 'Interes'
+              Font.Charset = DEFAULT_CHARSET
+              Font.Color = clWindowText
+              Font.Height = -16
+              Font.Name = 'Tahoma'
+              Font.Style = []
+              ParentFont = False
+            end
             object spnMonto: TcxSpinEdit
               Left = 104
               Top = 33
+              Enabled = False
               ParentFont = False
               Properties.Alignment.Horz = taRightJustify
               Properties.DisplayFormat = '#,##0.00'
               Properties.SpinButtons.Visible = False
+              Properties.ValueType = vtFloat
               Style.Font.Charset = DEFAULT_CHARSET
               Style.Font.Color = clWindowText
               Style.Font.Height = -16
@@ -339,11 +386,13 @@ object fResolucion: TfResolucion
             object spnPlazo: TcxSpinEdit
               Left = 104
               Top = 66
+              Enabled = False
               ParentFont = False
               Properties.Alignment.Horz = taRightJustify
               Properties.DisplayFormat = '0'
               Properties.EditFormat = '0'
               Properties.SpinButtons.Visible = False
+              Properties.ValueType = vtInt
               Style.Font.Charset = DEFAULT_CHARSET
               Style.Font.Color = clWindowText
               Style.Font.Height = -16
@@ -355,13 +404,14 @@ object fResolucion: TfResolucion
             end
             object spnCuota: TcxSpinEdit
               Left = 104
-              Top = 99
+              Top = 131
               Enabled = False
               ParentFont = False
               Properties.Alignment.Horz = taRightJustify
               Properties.DisplayFormat = '#,##0.00'
               Properties.EditFormat = '0'
               Properties.SpinButtons.Visible = False
+              Properties.ValueType = vtFloat
               Style.Font.Charset = DEFAULT_CHARSET
               Style.Font.Color = clWindowText
               Style.Font.Height = -16
@@ -371,8 +421,27 @@ object fResolucion: TfResolucion
               TabOrder = 2
               Width = 97
             end
+            object spnInteres: TcxSpinEdit
+              Left = 104
+              Top = 98
+              Enabled = False
+              ParentFont = False
+              Properties.Alignment.Horz = taRightJustify
+              Properties.DisplayFormat = '#,##0.00'
+              Properties.EditFormat = '0'
+              Properties.SpinButtons.Visible = False
+              Properties.ValueType = vtFloat
+              Style.Font.Charset = DEFAULT_CHARSET
+              Style.Font.Color = clWindowText
+              Style.Font.Height = -16
+              Style.Font.Name = 'Tahoma'
+              Style.Font.Style = []
+              Style.IsFontAssigned = True
+              TabOrder = 3
+              Width = 97
+            end
           end
-          object ComboBox1: TComboBox
+          object cbbTipoInteres: TComboBox
             Left = 339
             Top = 37
             Width = 93
@@ -383,9 +452,10 @@ object fResolucion: TfResolucion
             Text = 'SIMPLE'
             Items.Strings = (
               'SIMPLE'
-              'REBATIR')
+              'REBATIR'
+              'PARALELO')
           end
-          object SpinEdit1: TSpinEdit
+          object spnInicial: TSpinEdit
             Left = 339
             Top = 69
             Width = 93
@@ -395,7 +465,7 @@ object fResolucion: TfResolucion
             TabOrder = 9
             Value = 0
           end
-          object SpinEdit2: TSpinEdit
+          object spnProgramado: TSpinEdit
             Left = 339
             Top = 102
             Width = 95
@@ -414,7 +484,7 @@ object fResolucion: TfResolucion
           Left = 0
           Top = 41
           Width = 763
-          Height = 397
+          Height = 433
           Align = alClient
           TabOrder = 0
           object gridResolucion: TcxGridDBTableView
@@ -467,7 +537,7 @@ object fResolucion: TfResolucion
           Left = 763
           Top = 41
           Width = 185
-          Height = 397
+          Height = 433
           Align = alRight
           Caption = 'Panel1'
           TabOrder = 1
@@ -475,7 +545,7 @@ object fResolucion: TfResolucion
             Left = 1
             Top = 1
             Width = 183
-            Height = 395
+            Height = 431
             Align = alClient
             DataField = 'comentario'
             DataSource = dsResolucion
@@ -511,13 +581,13 @@ object fResolucion: TfResolucion
   end
   object Panel2: TPanel
     Left = 0
-    Top = 507
+    Top = 543
     Width = 958
     Height = 51
     Align = alBottom
     TabOrder = 1
     object btnEditar: TButton
-      Left = 157
+      Left = 145
       Top = 14
       Width = 75
       Height = 25
@@ -542,7 +612,7 @@ object fResolucion: TfResolucion
       OnClick = btnCancelarClick
     end
     object btnGuardar: TButton
-      Left = 379
+      Left = 399
       Top = 14
       Width = 75
       Height = 25
@@ -754,6 +824,21 @@ object fResolucion: TfResolucion
     end
     object fdResolucioncomentario: TStringField
       FieldName = 'comentario'
+    end
+    object fdResoluciontipo_interes: TStringField
+      FieldName = 'tipo_interes'
+    end
+    object fdResolucioninteres: TFloatField
+      FieldName = 'interes'
+    end
+    object fdResolucionahorro_inicial: TFloatField
+      FieldName = 'ahorro_inicial'
+    end
+    object fdResolucionahorro_programado: TFloatField
+      FieldName = 'ahorro_programado'
+    end
+    object fdResolucionplazo_maximo: TIntegerField
+      FieldName = 'plazo_maximo'
     end
   end
   object dsResolucion: TDataSource

@@ -127,7 +127,6 @@ type
     colCuota: TcxGridBandedColumn;
     LinkPropertyToField1: TLinkPropertyToField;
     spnCuota: TcxSpinEdit;
-    SpeedButton1: TSpeedButton;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure cbbLineaCreditoPropertiesChange(Sender: TObject);
     procedure cbbPerfilClientePropertiesChange(Sender: TObject);
@@ -215,21 +214,25 @@ end;
 procedure TfCalcular.Button1Click(Sender: TObject);
 var calculos:TJsonArray;
 var cuota,interes:real;
+var plazo_maximo:Integer;
 begin
+ spnCuota.Value:=0;
  cuota:=0;
  interes:=0;
+ plazo_maximo:=0;
  with cbbTipoProducto.Properties.Grid.DataController do
  begin
    if (spnMonto.Value>0) and (spnPlazo.Value>0) and (cbbTipoProducto.EditValue>0) then
    begin
       interes:=dmdata.fdTipoProducto.FieldValues['interes'];
+      plazo_maximo:=dmdata.fdTipoProducto.FieldValues['plazo_maximo'];
      if dmdata.fdLineaCredito.FieldValues['tipo_interes']='SIMPLE' then
          begin
          pgcRebatir.TabVisible:=false;
          pgcSimple.TabVisible:=true;
          calculos:=uHelpers.calcularTotales(interes,spnMonto.value,spnPlazo.value);
          uHelpers.llenarGridResumen(calculos,gridTotales);
-         cuota:=uHelpers.calcularAhorro(spnMonto.value,spnPlazo.Value,interes,dmdata.fdAhorro,gridAhorro);
+         cuota:=uHelpers.calcularAhorro(spnMonto.value,spnPlazo.Value,interes,dmdata.fdAhorro,gridAhorro,plazo_maximo);
          uHelpers.calcularCuota(spnMonto.value,spnPlazo.Value,interes,dmdata.fdAhorro,gridCuota);
          uHelpers.calcularRendicion(spnMonto.value,spnPlazo.Value,interes,dmdata.fdAhorro,gridRendicion);
           end;
@@ -239,7 +242,7 @@ begin
          pgcSimple.TabVisible:=true;
          calculos:=uHelpers.calcularTotales(interes,spnMonto.value,spnPlazo.value);
          uHelpers.llenarGridResumen(calculos,gridTotales);
-         cuota:=uHelpers.calcularAhorro(spnMonto.value,spnPlazo.Value,interes,nil,gridAhorro);
+         cuota:=uHelpers.calcularAhorro(spnMonto.value,spnPlazo.Value,interes,nil,gridAhorro,plazo_maximo);
          uHelpers.calcularCuota(spnMonto.value,spnPlazo.Value,interes,nil,gridCuota);
          uHelpers.calcularRendicion(spnMonto.value,spnPlazo.Value,interes,nil,gridRendicion);
           end;
@@ -567,7 +570,9 @@ end;
 
 procedure TfCalcular.cbbPerfilClientePropertiesChange(Sender: TObject);
 begin
-  uHelpers.llenarCombo(dmdata.RESTResponseDataSetAdapter3,VarToStr(dmdata.fdPerfilCliente.FieldValues['tipo_producto']));
+//  uHelpers.llenarCombo(dmdata.RESTResponseDataSetAdapter3,VarToStr(dmdata.fdPerfilCliente.FieldValues['tipo_producto']));
+  uHelpers.JsonToDataset(dmdata.fdTipoProducto,VarToStr(dmdata.fdPerfilCliente.FieldValues['tipo_producto']));
+  //cbbTipoProducto.SetFocus;
   uHelpers.PrimerElementoCombo(cbbTipoProducto);
 end;
 
