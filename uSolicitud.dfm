@@ -1092,6 +1092,10 @@ object fSolicitud: TfSolicitud
       object tabLIstado: TTabSheet
         Caption = 'Listado'
         ImageIndex = 1
+        ExplicitLeft = 0
+        ExplicitTop = 0
+        ExplicitWidth = 0
+        ExplicitHeight = 0
         object gridTableViewSolicitud: TcxGrid
           Left = 0
           Top = 41
@@ -1358,12 +1362,11 @@ object fSolicitud: TfSolicitud
               object Label28: TLabel
                 Left = 1
                 Top = 1
-                Width = 286
+                Width = 68
                 Height = 13
                 Align = alTop
                 Alignment = taCenter
                 Caption = 'COMENTARIO'
-                ExplicitWidth = 68
               end
               object DBMemo1: TDBMemo
                 Left = 1

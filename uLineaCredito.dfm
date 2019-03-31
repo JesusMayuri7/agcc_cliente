@@ -47,6 +47,7 @@ object fLineaCredito: TfLineaCredito
       ParentFont = False
     end
     object spbPagSiguiente: TSpeedButton
+      Tag = 11
       AlignWithMargins = True
       Left = 615
       Top = 4
@@ -54,12 +55,14 @@ object fLineaCredito: TfLineaCredito
       Height = 25
       Align = alRight
       Caption = '>'
+      Enabled = False
       OnClick = spbPagSiguienteClick
       ExplicitLeft = 680
       ExplicitTop = 5
       ExplicitHeight = 22
     end
     object spbPaginaAnteriorrr: TSpeedButton
+      Tag = 11
       AlignWithMargins = True
       Left = 586
       Top = 4
@@ -67,12 +70,14 @@ object fLineaCredito: TfLineaCredito
       Height = 25
       Align = alRight
       Caption = '<'
+      Enabled = False
       OnClick = spbPaginaAnteriorrrClick
       ExplicitLeft = 680
       ExplicitTop = 5
       ExplicitHeight = 22
     end
     object spbActualizar: TSpeedButton
+      Tag = 11
       AlignWithMargins = True
       Left = 4
       Top = 4
@@ -80,6 +85,7 @@ object fLineaCredito: TfLineaCredito
       Height = 25
       Align = alLeft
       Caption = '<'
+      Enabled = False
       OnClick = spbActualizarClick
       ExplicitLeft = 46
       ExplicitTop = 5
@@ -156,11 +162,13 @@ object fLineaCredito: TfLineaCredito
         Caption = 'Registros:'
       end
       object cbbRegistros: TComboBox
+        Tag = 11
         Left = 72
         Top = 1
         Width = 49
         Height = 21
         Style = csDropDownList
+        Enabled = False
         ItemIndex = 0
         TabOrder = 0
         Text = '30'
@@ -386,11 +394,13 @@ object fLineaCredito: TfLineaCredito
       Align = alBottom
       TabOrder = 1
       object btnNuevo: TButton
+        Tag = 13
         Left = 55
         Top = 6
         Width = 75
         Height = 25
         Caption = 'Nuevo'
+        Enabled = False
         ImageIndex = 1
         ImageMargins.Left = 7
         Images = ImageList1
@@ -398,11 +408,13 @@ object fLineaCredito: TfLineaCredito
         OnClick = btnNuevoClick
       end
       object btnEditar: TButton
+        Tag = 12
         Left = 168
         Top = 6
         Width = 75
         Height = 25
         Caption = 'Editar'
+        Enabled = False
         ImageIndex = 2
         ImageMargins.Left = 7
         Images = ImageList1

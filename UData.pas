@@ -5,7 +5,7 @@ interface
 uses
   System.SysUtils, System.Classes, FireDAC.Stan.Intf, FireDAC.Stan.Option,
   FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf,
-  FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt, Data.DB,
+  FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt, Data.DB,Json,
   FireDAC.Comp.DataSet, FireDAC.Comp.Client, FireDAC.UI.Intf, FireDAC.Stan.Def,
   FireDAC.Stan.Pool, FireDAC.Phys, FireDAC.Phys.MySQL, FireDAC.Phys.MySQLDef,
   FireDAC.VCLUI.Wait, IPPeerClient, REST.Client, REST.Response.Adapter,
@@ -86,10 +86,15 @@ type
     fdTipoInfosolicitud_id: TIntegerField;
     fdTipoInfotipo_info_detalle_id: TIntegerField;
     fdTipoProductoperfil_cliente_tipo_producto_id: TIntegerField;
+    RestMenu: TRESTRequest;
+    RespMenu: TRESTResponse;
+    RESTClient2: TRESTClient;
   private
     { Private declarations }
+
   public
     { Public declarations }
+    var Permisos:TJSONArray;
   end;
 
 var

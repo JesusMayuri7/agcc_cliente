@@ -17,6 +17,7 @@ object fMenu: TfMenu
   ShowHint = True
   WindowState = wsMaximized
   WindowMenu = actPerfilCliente1
+  OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
   object Image1: TImage
@@ -582,12 +583,6 @@ object fMenu: TfMenu
             ShowCaption = False
           end
           item
-            Action = actTipoProducto
-            Caption = '&TipoProducto'
-            ImageIndex = 23
-            ShowCaption = False
-          end
-          item
             Action = actPerfilCliente
             Caption = '&PerfilCliente'
             ImageIndex = 22
@@ -697,6 +692,7 @@ object fMenu: TfMenu
     object actLineaCredito: TAction
       Category = 'credito'
       Caption = 'LineaCredito'
+      Enabled = False
       Hint = 'Linea de Credito'
       ImageIndex = 12
       OnExecute = actLineaCreditoExecute
@@ -704,6 +700,7 @@ object fMenu: TfMenu
     object actPerfilCliente: TAction
       Category = 'credito'
       Caption = 'PerfilCliente'
+      Enabled = False
       Hint = 'Perfil Cliente'
       ImageIndex = 22
       OnExecute = actPerfilClienteExecute
@@ -711,6 +708,7 @@ object fMenu: TfMenu
     object actTipoProducto: TAction
       Category = 'credito'
       Caption = 'TipoProducto'
+      Enabled = False
       Hint = 'Tipo Producto'
       ImageIndex = 23
       OnExecute = actTipoProductoExecute
@@ -718,6 +716,7 @@ object fMenu: TfMenu
     object actCliente: TAction
       Category = 'prestamo'
       Caption = 'Cliente'
+      Enabled = False
       Hint = 'Cliente'
       ImageIndex = 15
       OnExecute = actClienteExecute
@@ -725,6 +724,7 @@ object fMenu: TfMenu
     object actAhorro: TAction
       Category = 'credito'
       Caption = 'Ahorro'
+      Enabled = False
       Hint = 'Ahorro'
       ImageIndex = 24
       OnExecute = actAhorroExecute
@@ -732,6 +732,7 @@ object fMenu: TfMenu
     object actReporteCeop: TAction
       Category = 'reporte'
       Caption = 'ReporteCeop'
+      Enabled = False
       Hint = 'Reporte Ceop'
       ImageIndex = 14
       OnExecute = actReporteCeopExecute
@@ -739,6 +740,7 @@ object fMenu: TfMenu
     object actReporteCrediticio: TAction
       Category = 'reporte'
       Caption = 'ReporteCrediticio'
+      Enabled = False
       Hint = 'Reporte Crediticio'
       ImageIndex = 13
       OnExecute = actReporteCrediticioExecute
@@ -746,6 +748,7 @@ object fMenu: TfMenu
     object actGiroNegocio: TAction
       Category = 'prestamo'
       Caption = 'GiroNegocio'
+      Enabled = False
       Hint = 'Giro Negocio'
       ImageIndex = 25
       OnExecute = actGiroNegocioExecute
@@ -753,6 +756,7 @@ object fMenu: TfMenu
     object actTipoPrestamo: TAction
       Category = 'prestamo'
       Caption = 'TipoPrestamo'
+      Enabled = False
       Hint = 'Tipo Prestamo'
       ImageIndex = 18
       OnExecute = actTipoPrestamoExecute
@@ -760,6 +764,7 @@ object fMenu: TfMenu
     object actTipoInfo: TAction
       Category = 'informacio negocio'
       Caption = 'TipoInfo'
+      Enabled = False
       Hint = 'Tipo Info'
       ImageIndex = 20
       OnExecute = actTipoInfoExecute
@@ -767,6 +772,7 @@ object fMenu: TfMenu
     object actGarantia: TAction
       Category = 'prestamo'
       Caption = 'Garantia'
+      Enabled = False
       Hint = 'Garantia'
       ImageIndex = 7
       OnExecute = actGarantiaExecute
@@ -774,6 +780,7 @@ object fMenu: TfMenu
     object actSolicitud: TAction
       Category = 'prestamo'
       Caption = 'Solicitud'
+      Enabled = False
       Hint = 'Solicitud'
       ImageIndex = 6
       OnExecute = actSolicitudExecute
@@ -781,18 +788,21 @@ object fMenu: TfMenu
     object actEmpleado: TAction
       Category = 'autorizacion'
       Caption = 'Empleado'
+      Enabled = False
       Hint = 'Empleado'
       ImageIndex = 16
       OnExecute = actEmpleadoExecute
     end
     object actAuditoria: TAction
       Caption = 'Auditoria'
+      Enabled = False
       Hint = 'Auditoria'
       ImageIndex = 5
       OnExecute = actAuditoriaExecute
     end
     object actResolucion: TAction
       Caption = 'Resolucion'
+      Enabled = False
       Hint = 'Resolucion'
       ImageIndex = 4
       OnExecute = actResolucionExecute
@@ -800,11 +810,13 @@ object fMenu: TfMenu
     object actCalcular: TAction
       Category = 'credito'
       Caption = 'Simulador'
+      Enabled = False
       OnExecute = actCalcularExecute
     end
     object actInfoDetalle: TAction
       Category = 'informacio negocio'
       Caption = 'actInfoDetalle'
+      Enabled = False
       OnExecute = actInfoDetalleExecute
     end
   end

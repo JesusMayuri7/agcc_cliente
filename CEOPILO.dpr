@@ -28,14 +28,25 @@ uses
   Vcl.Styles,
   uTipoInfo in 'uTipoInfo.pas' {fTipoInfo},
   uTipoInfoDetalle in 'uTipoInfoDetalle.pas' {fTipoInfoDetalle},
-  uSolicitud in 'uSolicitud.pas' {fSolicitud};
+  uSolicitud in 'uSolicitud.pas' {fSolicitud},
+  uLoginForm in 'uLoginForm.pas' {fLoginForm};
 
 {$R *.res}
 
+
+
 begin
-  Application.Initialize;
-  Application.MainFormOnTaskbar := True;
-  Application.CreateForm(TdmData, dmData);
-  Application.CreateForm(TfMenu, fMenu);
-  Application.Run;
+   if TfLoginForm.Execute then
+   begin
+       Application.Initialize;
+       Application.MainFormOnTaskbar := True;
+       Application.CreateForm(TdmData, dmData);
+       Application.CreateForm(TfMenu, fMenu);
+       Application.Run;
+   end
+   else
+   begin
+      Application.Terminate;
+       //Application.MessageBox('Credenciales invalidas The password is "delphi".', 'Password Protected Delphi application') ;
+   end;
 end.

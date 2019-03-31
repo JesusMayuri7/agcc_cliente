@@ -4,10 +4,10 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ToolWin, Vcl.ComCtrls,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ToolWin, Vcl.ComCtrls,System.IniFiles,
   Vcl.PlatformDefaultStyleActnCtrls, System.Actions, Vcl.ActnList, Vcl.ActnMan,
-  Vcl.ActnCtrls, Vcl.ActnMenus, Vcl.Menus, System.ImageList, Vcl.ImgList,
-  dxGDIPlusClasses, Vcl.ExtCtrls, uTipoPrestamo;
+  Vcl.ActnCtrls, Vcl.ActnMenus, Vcl.Menus, System.ImageList, Vcl.ImgList,Json,
+  dxGDIPlusClasses, Vcl.ExtCtrls, uTipoPrestamo,REST.Types;
 
 type
   TfMenu = class(TForm)
@@ -75,6 +75,11 @@ type
     procedure actCalcularExecute(Sender: TObject);
     procedure actTipoInfoExecute(Sender: TObject);
     procedure actInfoDetalleExecute(Sender: TObject);
+    function cargarToken:WideString;
+    function cargarMenu(token:WideString): TJSONArray;
+    procedure habilitarMenu(menu:TJSONArray);
+    procedure FormCreate(Sender: TObject);
+
   private
     { Private declarations }
 
@@ -259,6 +264,70 @@ begin
     ResultsForm.Free;
   end;
 
+end;
+
+function TfMenu.cargarMenu(token:WideString): TJSONArray;
+var error,exito,param,resultado:TJSONObject;
+var mensaje:string;
+begin
+   Result:=TJSONArray.Create;
+   resultado:=TJSONObject.Create;
+   dmdata.RestMenu.Params.AddItem('Accept',
+                            'application/json, */*; q=0.01',
+                            TRESTRequestParameterKind.pkHTTPHEADER);
+   dmdata.RestMenu.AddParameter('Authorization','Bearer '+token,TRESTRequestParameterKind.pkHTTPHEADER);
+   dmdata.RestMenu.Params.ParameterByName('Authorization').Options :=[poDoNotEncode];
+   dmdata.RestMenu.Execute;
+
+   resultado:=TJSONObject(dmdata.RespMenu.JSONValue);
+   //ShowMessage(resultado.ToString);
+      if resultado.TryGetValue('message',mensaje) then
+      begin
+         if resultado.Get('message').JsonValue.Value='exito' then
+         begin
+             result:=TJSONArray(resultado.Get('data').JsonValue);
+         end;
+      end
+      else
+         ShowMessage('Error al cargar el Menu de opciones');
+end;
+
+function TfMenu.cargarToken: WideString;
+var
+  Ini: TIniFile;
+  menu:TStringList;
+  I: Integer;
+  item:TJSONObject;
+begin
+  Ini := TIniFile.Create(ExtractFilePath(Application.ExeName)+'ceop.ini');
+  try
+    menu:=TStringList.Create;
+    Result:=Ini.ReadString('LOGIN','token','');
+    //ShowMessage(result);
+  finally
+    FreeAndNil(Ini);
+  end;
+end;
+
+procedure TfMenu.FormCreate(Sender: TObject);
+begin
+dmdata.permisos:=TJSONArray.Create;
+dmData.Permisos:=cargarMenu(cargarToken);
+habilitarMenu(dmdata.Permisos);
+end;
+
+procedure TfMenu.habilitarMenu(menu:TJSONArray);
+var
+  Ini: TIniFile;
+  I: Integer;
+  item:TJSONObject;
+
+begin
+    for I := 0 to menu.Count-1 do
+      begin
+          item := menu.Get(i) as TJsonObject;
+          TAction(FindComponent(item.Get('desc_menu').JsonValue.Value)).Enabled:=True;
+      end;
 end;
 
 procedure TfMenu.actGarantiaExecute(Sender: TObject);

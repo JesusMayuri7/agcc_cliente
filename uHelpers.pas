@@ -1,8 +1,8 @@
 unit uHelpers;
 
 interface
-uses System.JSON,FireDAC.Comp.Client,Data.DB,SysUtils,Rest.Json,System.Math,cxDBLookupComboBox,
-REST.Client,REST.Response.Adapter,Dialogs,Variants,cxGridBandedTableView;
+uses System.JSON,Vcl.StdCtrls,FireDAC.Comp.Client,Data.DB,SysUtils,Rest.Json,System.Math,cxDBLookupComboBox,
+REST.Client,REST.Response.Adapter,Dialogs,Variants,cxGridBandedTableView,Vcl.Forms,Vcl.Buttons;
 
 procedure InsertarRegistroDataset(datajson:TJsonObject;dataset:TFDmemtable);
 function calcularTotales(interes:real=0;monto:real=0;plazo:real=0):TJsonArray;
@@ -29,6 +29,7 @@ function calcularParametrosRebatir(monto,plazo,interes:real;grid1:TcxGridBandedT
 procedure llenarGridRebatir(grid: TcxGridBandedTableView;cuota, monto, interes: real;plazo:byte);
 procedure datosAhorro(dataset:TFDmemtable=nil);
 function calcularAhorroResolucion(monto:real;plazo:integer;interes:real;inicial,programado:real;grid:TcxGridBandedTableView=nil):real;
+procedure habilitarPermisos(form:TForm;per:TJSONArray);
 var
    {variables here}
    aInicial:Real=0;
@@ -38,6 +39,44 @@ implementation
 
 uses
   uAdapterJson, UGraph, UData;
+
+procedure habilitarPermisos(form:TForm;per:TJSONArray);
+var
+  I,J: Integer;
+  item,item2:TJSONObject;
+  permiso:TJSONArray;
+  K: Integer;
+begin
+//  ShowMessage(per.ToString);
+  for I := 0 to per.Count-1 do
+     item:= per.Get(i) as TJSONObject;
+     if item.Get('formulario').JsonValue.Value=TForm(form).Name then
+        begin
+           permiso:=item.Get('permiso').JsonValue as TJsonArray;
+           for J := 0 to permiso.Count-1 do
+           begin
+               item:= permiso.Get(J) as TJSONObject;
+               if item.Get('opcion').JsonValue.Value='LISTAR' then
+               begin
+                 TSpeedButton(form.FindComponent('spbActualizar')).enabled:=True;
+               end;
+               if item.Get('opcion').JsonValue.Value='LISTAR_EDITAR' then
+               begin
+                 TSpeedButton(form.FindComponent('spbActualizar')).enabled:=True;
+                 TButton(form.FindComponent('btnEditar')).enabled:=True;
+               end;
+               if item.Get('opcion').JsonValue.Value='LISTAR_EDITAR_CREAR' then
+               begin
+                 TSpeedButton(form.FindComponent('spbActualizar')).enabled:=True;
+                 TButton(form.FindComponent('btnEditar')).enabled:=True;
+                 TButton(form.FindComponent('btnNuevo')).enabled:=True;
+               end;
+           end;
+        end; // los permisos son
+         // listar,
+         // listar,editar
+         // listar,editar,crear
+end;
 
 procedure datosAhorro(dataset:TFDmemtable=nil);
 begin

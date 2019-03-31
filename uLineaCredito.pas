@@ -195,6 +195,7 @@ begin
   btnNuevo.Enabled:=true;
   btnEditar.Enabled:=True;
   btnGuardar.Enabled:=false;
+  habilitarPermisos(TForm(TPanel(TButton(Sender).GetParentComponent).GetParentComponent),dmData.Permisos);
 end;
 
 procedure TfLineaCredito.btnEditarClick(Sender: TObject);
@@ -241,8 +242,9 @@ end;
 
 procedure TfLineaCredito.FormCreate(Sender: TObject);
 begin
+habilitarPermisos(TForm(Sender),dmData.Permisos);
 paginaActual:=1;
-listar();
+//listar();
 end;
 
 procedure TfLineaCredito.Limpiar;

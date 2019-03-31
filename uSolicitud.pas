@@ -813,7 +813,10 @@ procedure TfSolicitud.FormCreate(Sender: TObject);
 var
   AButton: TcxEditButton;
 begin
-paginaActual:=1;
+  // revisar permisos de formulario
+
+
+  paginaActual:=1;
   tabListado.TabVisible:=true;
   pageControl1.ActivePageIndex:=1;
   tabFormulario.TabVisible:=false;
