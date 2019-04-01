@@ -180,7 +180,7 @@ object fSolicitud: TfSolicitud
       Top = 1
       Width = 1312
       Height = 737
-      ActivePage = tabFormulario
+      ActivePage = tabLIstado
       Align = alClient
       TabOrder = 0
       object tabFormulario: TTabSheet
@@ -1092,10 +1092,6 @@ object fSolicitud: TfSolicitud
       object tabLIstado: TTabSheet
         Caption = 'Listado'
         ImageIndex = 1
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 0
         object gridTableViewSolicitud: TcxGrid
           Left = 0
           Top = 41
@@ -1288,6 +1284,7 @@ object fSolicitud: TfSolicitud
                 end
                 object cxGrid5DBBandedTableView1nombres: TcxGridDBBandedColumn
                   DataBinding.FieldName = 'full_name'
+                  HeaderAlignmentHorz = taCenter
                   Width = 177
                   Position.BandIndex = 0
                   Position.ColIndex = 1
@@ -1295,6 +1292,7 @@ object fSolicitud: TfSolicitud
                 end
                 object cxGrid5DBBandedTableView1tipo: TcxGridDBBandedColumn
                   DataBinding.FieldName = 'tipo'
+                  HeaderAlignmentHorz = taCenter
                   Position.BandIndex = 0
                   Position.ColIndex = 2
                   Position.RowIndex = 0
@@ -1362,11 +1360,12 @@ object fSolicitud: TfSolicitud
               object Label28: TLabel
                 Left = 1
                 Top = 1
-                Width = 68
+                Width = 286
                 Height = 13
                 Align = alTop
                 Alignment = taCenter
                 Caption = 'COMENTARIO'
+                ExplicitWidth = 68
               end
               object DBMemo1: TDBMemo
                 Left = 1
@@ -1673,10 +1672,12 @@ object fSolicitud: TfSolicitud
       FieldName = 'dni'
     end
     object fdAvalesfull_name: TStringField
+      DisplayLabel = 'Nombres'
       FieldName = 'full_name'
       Size = 100
     end
     object fdAvalestipo: TStringField
+      DisplayLabel = 'Tipo'
       FieldName = 'tipo'
     end
   end

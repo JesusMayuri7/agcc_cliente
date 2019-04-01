@@ -72,7 +72,6 @@ type
     IntegerField7: TIntegerField;
     RESTResponseDataSetAdapter4: TRESTResponseDataSetAdapter;
     fdGiroNegociodesc_giro_negocio: TStringField;
-    ImageList1: TImageList;
     fdTipoInfo: TFDMemTable;
     fdTipoInfoid: TIntegerField;
     fdTipoInfodesc_tipo_info_detalle: TStringField;
@@ -89,6 +88,7 @@ type
     RestMenu: TRESTRequest;
     RespMenu: TRESTResponse;
     RESTClient2: TRESTClient;
+    ImageList1: TImageList;
   private
     { Private declarations }
 

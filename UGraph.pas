@@ -33,6 +33,9 @@ uses REST.Response.Adapter, REST.Client,REST.Json,REST.Types,System.JSON,StrUtil
 
 implementation
 
+uses
+  uHelpers;
+
 constructor TGraph.Create(restClient:TRESTClient;dataset:TFDmemtable=nil);
 begin
     //Creacion
@@ -65,12 +68,13 @@ end;
 
 function TGraph.ejecutar(query:string):TJSONObject;
 var request,variable,dataRest,queryRest:TJSONObject;
-var total,limit:string;
+var total,limit,token:string;
 begin
   limit:='0';
-   // si es existe el token
-   // if token
-  // ARESTRequest.addParameter('Authorization','Bearer aaa',TRESTRequestParameterKind.pkHTTPHEADER);
+   token:=uHelpers.cargarToken();
+   ARESTRequest.Params.AddItem('Accept','application/json, */*; q=0.01',TRESTRequestParameterKind.pkHTTPHEADER);
+   ARESTRequest.AddParameter('Authorization','Bearer '+token,TRESTRequestParameterKind.pkHTTPHEADER);
+   ARESTRequest.Params.ParameterByName('Authorization').Options :=[poDoNotEncode];
    result:=TJsonObject.Create();
    request:=TJSONObject.Create();
    queryRest:=TJSONObject.Create();

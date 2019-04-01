@@ -79,6 +79,7 @@ type
     function cargarMenu(token:WideString): TJSONArray;
     procedure habilitarMenu(menu:TJSONArray);
     procedure FormCreate(Sender: TObject);
+    procedure actSalir1Click(Sender: TObject);
 
   private
     { Private declarations }
@@ -205,8 +206,7 @@ begin
         ResultsForm.ShowModal;
       finally
         ResultsForm.Free;
-end;
-
+      end;
 end;
 
 procedure TfMenu.actResolucionExecute(Sender: TObject);
@@ -218,6 +218,11 @@ begin
       finally
         ResultsForm.Free;
 end;
+end;
+
+procedure TfMenu.actSalir1Click(Sender: TObject);
+begin
+Application.Terminate;
 end;
 
 procedure TfMenu.actSolicitudExecute(Sender: TObject);
@@ -303,7 +308,7 @@ begin
   try
     menu:=TStringList.Create;
     Result:=Ini.ReadString('LOGIN','token','');
-    //ShowMessage(result);
+   // ShowMessage(result);
   finally
     FreeAndNil(Ini);
   end;

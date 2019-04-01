@@ -2,7 +2,8 @@ unit uHelpers;
 
 interface
 uses System.JSON,Vcl.StdCtrls,FireDAC.Comp.Client,Data.DB,SysUtils,Rest.Json,System.Math,cxDBLookupComboBox,
-REST.Client,REST.Response.Adapter,Dialogs,Variants,cxGridBandedTableView,Vcl.Forms,Vcl.Buttons;
+REST.Client,REST.Response.Adapter,System.IniFiles,System.classes,
+Dialogs,Variants,cxGridBandedTableView,Vcl.Forms,Vcl.Buttons;
 
 procedure InsertarRegistroDataset(datajson:TJsonObject;dataset:TFDmemtable);
 function calcularTotales(interes:real=0;monto:real=0;plazo:real=0):TJsonArray;
@@ -30,6 +31,7 @@ procedure llenarGridRebatir(grid: TcxGridBandedTableView;cuota, monto, interes: 
 procedure datosAhorro(dataset:TFDmemtable=nil);
 function calcularAhorroResolucion(monto:real;plazo:integer;interes:real;inicial,programado:real;grid:TcxGridBandedTableView=nil):real;
 procedure habilitarPermisos(form:TForm;per:TJSONArray);
+function cargarToken: WideString;
 var
    {variables here}
    aInicial:Real=0;
@@ -40,6 +42,24 @@ implementation
 uses
   uAdapterJson, UGraph, UData;
 
+function cargarToken: WideString;
+var
+  Ini: TIniFile;
+  menu:TStringList;
+  I: Integer;
+  item:TJSONObject;
+begin
+  Ini := TIniFile.Create(ExtractFilePath(Application.ExeName)+'ceop.ini');
+  try
+    menu:=TStringList.Create;
+    Result:=Ini.ReadString('LOGIN','token','');
+   // ShowMessage(result);
+  finally
+    FreeAndNil(Ini);
+  end;
+end;
+
+
 procedure habilitarPermisos(form:TForm;per:TJSONArray);
 var
   I,J: Integer;
@@ -49,33 +69,60 @@ var
 begin
 //  ShowMessage(per.ToString);
   for I := 0 to per.Count-1 do
+  begin
      item:= per.Get(i) as TJSONObject;
+     //ShowMessage(item.Get('formulario').JsonValue.Value);
      if item.Get('formulario').JsonValue.Value=TForm(form).Name then
         begin
-           permiso:=item.Get('permiso').JsonValue as TJsonArray;
-           for J := 0 to permiso.Count-1 do
+        //   permiso:=item.Get('permiso').JsonValue as TJsonArray;
+        //   for J := 0 to permiso.Count-1 do
            begin
-               item:= permiso.Get(J) as TJSONObject;
+        //       item:= permiso.Get(J) as TJSONObject;
                if item.Get('opcion').JsonValue.Value='LISTAR' then
                begin
                  TSpeedButton(form.FindComponent('spbActualizar')).enabled:=True;
+                 if TButton(form.FindComponent('btnBuscar')) is TButton then
+                    TButton(form.FindComponent('btnBuscar')).enabled:=false;
+                 if TButton(form.FindComponent('btnEditar')) is TButton then
+                 TButton(form.FindComponent('btnEditar')).enabled:=false;
+                 if TButton(form.FindComponent('btnNuevo')) is TButton then
+                    TButton(form.FindComponent('btnNuevo')).enabled:=false;
                end;
-               if item.Get('opcion').JsonValue.Value='LISTAR_EDITAR' then
+               if item.Get('opcion').JsonValue.Value='LISTAR_BUSCAR' then
                begin
                  TSpeedButton(form.FindComponent('spbActualizar')).enabled:=True;
-                 TButton(form.FindComponent('btnEditar')).enabled:=True;
+                 if TButton(form.FindComponent('btnBuscar')) is TButton then
+                    TButton(form.FindComponent('btnBuscar')).enabled:=True;
+                 if TButton(form.FindComponent('btnEditar')) is TButton then
+                 TButton(form.FindComponent('btnEditar')).enabled:=false;
+                 if TButton(form.FindComponent('btnNuevo')) is TButton then
+                 TButton(form.FindComponent('btnNuevo')).enabled:=false;
                end;
-               if item.Get('opcion').JsonValue.Value='LISTAR_EDITAR_CREAR' then
+
+               if item.Get('opcion').JsonValue.Value='LISTAR_BUSCAR_EDITAR' then
                begin
                  TSpeedButton(form.FindComponent('spbActualizar')).enabled:=True;
+                 if TButton(form.FindComponent('btnBuscar')) is TButton then
+                    TButton(form.FindComponent('btnBuscar')).enabled:=True;
+                 if TButton(form.FindComponent('btnEditar')) is TButton then
                  TButton(form.FindComponent('btnEditar')).enabled:=True;
+                 if TButton(form.FindComponent('btnNuevo')) is TButton then
+                 TButton(form.FindComponent('btnNuevo')).enabled:=false;
+               end;
+               if item.Get('opcion').JsonValue.Value='LISTAR_BUSCAR_EDITAR_CREAR' then
+               begin
+                 TSpeedButton(form.FindComponent('spbActualizar')).enabled:=True;
+                 if TButton(form.FindComponent('btnBuscar')) is TButton then
+                    TButton(form.FindComponent('btnBuscar')).enabled:=True;
+                 if TButton(form.FindComponent('btnEditar')) is TButton then
+                 TButton(form.FindComponent('btnEditar')).enabled:=True;
+                 if TButton(form.FindComponent('btnNuevo')) is TButton then
                  TButton(form.FindComponent('btnNuevo')).enabled:=True;
                end;
            end;
-        end; // los permisos son
-         // listar,
-         // listar,editar
-         // listar,editar,crear
+           Exit;
+        end;
+  end;
 end;
 
 procedure datosAhorro(dataset:TFDmemtable=nil);

@@ -79,7 +79,6 @@ type
     cxStyle2: TcxStyle;
     cxStyleRepository2: TcxStyleRepository;
     cxStyle3: TcxStyle;
-    ImageList1: TImageList;
     fdAhorrodesc_ahorro: TStringField;
     spbDescripcion: TComboBox;
     procedure FormCreate(Sender: TObject);
@@ -176,6 +175,7 @@ begin
   btnNuevo.Enabled:=true;
   btnEditar.Enabled:=True;
   btnGuardar.Enabled:=false;
+    uHelpers.habilitarPermisos(TForm(TPanel((TButton(Sender).GetParentComponent).GetParentComponent).GetParentComponent),dmData.Permisos);
 end;
 
 procedure TfAhorro.btnEditarClick(Sender: TObject);
@@ -210,6 +210,7 @@ begin
   btnNuevo.Enabled:=true;
   btnEditar.Enabled:=True;
   btnCancelar.Enabled:=false;
+    uHelpers.habilitarPermisos(TForm(TPanel((TButton(Sender).GetParentComponent).GetParentComponent).GetParentComponent),dmData.Permisos);
 end;
 
 procedure TfAhorro.cbbRegistrosChange(Sender: TObject);
@@ -221,9 +222,13 @@ end;
 procedure TfAhorro.FormCreate(Sender: TObject);
 begin
 paginaActual:=1;
-listar();
-dmData.ImageList1.GetBitmap(1, spbActualizar.Glyph);
-
+//listar();
+spbPagsiguiente.Glyph:=nil;
+spbPaginaAnteriorrr.Glyph:=nil;
+dmData.ImageList1.GetBitmap(7, spbActualizar.glyph);
+dmData.ImageList1.GetBitmap(6, spbPagSiguiente.glyph);
+dmData.ImageList1.GetBitmap(5, spbPaginaAnteriorrr.glyph);
+uHelpers.habilitarPermisos(TForm(Sender),dmData.Permisos);
 end;
 
 procedure TfAhorro.Limpiar;
@@ -314,6 +319,7 @@ procedure TfAhorro.spbActualizarClick(Sender: TObject);
 begin
   paginaActual:=1;
   listar();
+
 end;
 
 procedure TfAhorro.spbPaginaAnteriorrrClick(Sender: TObject);

@@ -56,8 +56,6 @@ type
     btnGuardar: TButton;
     spbPagSiguiente: TSpeedButton;
     spbPaginaAnteriorrr: TSpeedButton;
-    cxStyleRepository1: TcxStyleRepository;
-    cxStyle1: TcxStyle;
     Panel2: TPanel;
     edCriterio: TEdit;
     btnBuscar: TButton;
@@ -74,8 +72,6 @@ type
     Label2: TLabel;
     edDescripcion: TEdit;
     fdTipoInfodesc_tipo_info: TStringField;
-    cxStyle2: TcxStyle;
-    ImageList1: TImageList;
     Label7: TLabel;
     chkActivo: TCheckBox;
     cbbInformacion: TComboBox;
@@ -83,6 +79,9 @@ type
     fdTipoInfoactivo: TBooleanField;
     fdTipoInfoinformacion: TStringField;
     gridTipoInfoDBTableView1Column1: TcxGridDBColumn;
+    cxStyleRepository1: TcxStyleRepository;
+    cxStyle1: TcxStyle;
+    cxStyle2: TcxStyle;
     procedure FormCreate(Sender: TObject);
     procedure cbbRegistrosChange(Sender: TObject);
     procedure spbPagSiguienteClick(Sender: TObject);
@@ -195,6 +194,7 @@ begin
          btnGuardar.Enabled:=true;
          edDescripcion.Text:=gridTipoInfoDBTableView1.DataController.Values[gridTipoInfoDBTableView1.Controller.FocusedRecordIndex , 1];
          cbbInformacion.Text:=gridTipoInfoDBTableView1.DataController.Values[gridTipoInfoDBTableView1.Controller.FocusedRecordIndex , 2];
+         uHelpers.habilitarPermisos(TForm(TPanel((TButton(Sender).GetParentComponent).GetParentComponent).GetParentComponent),dmData.Permisos);
      end;
   end;
 end;
@@ -206,11 +206,13 @@ begin
      EditarLinea(edDescripcion.Text,Tag,chkActivo.Checked,cbbInformacion.Items[cbbInformacion.ItemIndex])
   else
      nuevalinea(edDescripcion.Text,chkActivo.Checked,cbbInformacion.Items[cbbInformacion.ItemIndex]);
+
   tabFormulario.TabVisible:=false;
   tabListado.TabVisible:=true;
   btnNuevo.Enabled:=true;
   btnEditar.Enabled:=True;
   btnCancelar.Enabled:=false;
+ uHelpers.habilitarPermisos(TForm(TPanel((TButton(Sender).GetParentComponent).GetParentComponent).GetParentComponent),dmData.Permisos);
 end;
 
 procedure TfTipoInfo.cbbRegistrosChange(Sender: TObject);
@@ -222,7 +224,13 @@ end;
 procedure TfTipoInfo.FormCreate(Sender: TObject);
 begin
 paginaActual:=1;
-listar();
+//listar();
+spbPagsiguiente.Glyph:=nil;
+spbPaginaAnteriorrr.Glyph:=nil;
+dmData.ImageList1.GetBitmap(7, spbActualizar.glyph);
+dmData.ImageList1.GetBitmap(6, spbPagSiguiente.glyph);
+dmData.ImageList1.GetBitmap(5, spbPaginaAnteriorrr.glyph);
+uHelpers.habilitarPermisos(TForm(Sender),dmData.Permisos);
 end;
 
 procedure TfTipoInfo.Limpiar;

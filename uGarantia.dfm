@@ -53,7 +53,6 @@ object fGarantia: TfGarantia
       Width = 23
       Height = 25
       Align = alRight
-      Caption = '>'
       OnClick = spbPagSiguienteClick
       ExplicitLeft = 680
       ExplicitTop = 5
@@ -66,7 +65,6 @@ object fGarantia: TfGarantia
       Width = 23
       Height = 25
       Align = alRight
-      Caption = '<'
       OnClick = spbPaginaAnteriorrrClick
       ExplicitLeft = 680
       ExplicitTop = 5
@@ -79,7 +77,6 @@ object fGarantia: TfGarantia
       Width = 23
       Height = 25
       Align = alLeft
-      Caption = '<'
       OnClick = spbActualizarClick
       ExplicitLeft = 46
       ExplicitTop = 5
@@ -107,7 +104,7 @@ object fGarantia: TfGarantia
         Alignment = taRightJustify
         Caption = '0'
         Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
+        Font.Color = clHotLight
         Font.Height = -13
         Font.Name = 'Tahoma'
         Font.Style = [fsBold]
@@ -133,7 +130,7 @@ object fGarantia: TfGarantia
         Height = 16
         Caption = '0'
         Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
+        Font.Color = clHotLight
         Font.Height = -13
         Font.Name = 'Tahoma'
         Font.Style = [fsBold]
@@ -192,10 +189,6 @@ object fGarantia: TfGarantia
       object tabFormulario: TTabSheet
         Caption = 'Formulario'
         TabVisible = False
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 0
         object GroupBox1: TGroupBox
           Left = 51
           Top = 31
@@ -298,6 +291,7 @@ object fGarantia: TfGarantia
             Top = 10
             Width = 305
             Height = 21
+            CharCase = ecUpperCase
             TabOrder = 0
             TextHint = 'Garantia'
           end

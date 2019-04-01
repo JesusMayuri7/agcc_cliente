@@ -96,7 +96,6 @@ type
     gridTipoProductoDBTableView1activo: TcxGridDBColumn;
     cxStyle2: TcxStyle;
     cxStyle3: TcxStyle;
-    ImageList1: TImageList;
     fdPerfilCliente: TFDMemTable;
     dsPerfilCliente: TDataSource;
     fdTipoProductoperfil_cliente: TMemoField;
@@ -241,7 +240,7 @@ begin
     dataVar.AddPair('interes',TJSONNumber.Create(interes));
     dataVar.AddPair('mora',TJSONNumber.Create(mora));
     dataVar.AddPair('plazo_minimo',TJSONNumber.Create(plazo_minimo));
-    dataVar.AddPair('plazo_maximo',TJSONNumber.Create(plazo_maximo));
+     dataVar.AddPair('plazo_maximo',TJSONNumber.Create(plazo_maximo));
     dataVar.AddPair('activo',TJSONNumber.Create(activo.ToInteger));
     dataVar.AddPair('perfil_cliente',perfil_cliente);
     variables.AddPair('variables',dataVar);
@@ -285,6 +284,7 @@ begin
   btnNuevo.Enabled:=true;
   btnEditar.Enabled:=True;
   btnGuardar.Enabled:=false;
+   uHelpers.habilitarPermisos(TForm(TPanel((TButton(Sender).GetParentComponent).GetParentComponent).GetParentComponent),dmData.Permisos);
 end;
 
 procedure TfTipoProducto.btnEditarClick(Sender: TObject);
@@ -327,6 +327,7 @@ begin
   btnNuevo.Enabled:=true;
   btnEditar.Enabled:=True;
   btnCancelar.Enabled:=false;
+   uHelpers.habilitarPermisos(TForm(TPanel((TButton(Sender).GetParentComponent).GetParentComponent).GetParentComponent),dmData.Permisos);
 end;
 
 procedure TfTipoProducto.cbbRegistrosChange(Sender: TObject);
@@ -340,7 +341,8 @@ var
   AButton: TcxEditButton;
 begin
 paginaActual:=1;
-listar();
+//listar();
+
         with TcxLookupComboBoxProperties(cbbPerfilCliente.Properties) do
         begin
           AButton := Buttons.Add;
@@ -348,6 +350,12 @@ listar();
           AButton.Caption := 'Add';
           OnButtonClick := addClick;
         end;
+spbPagsiguiente.Glyph:=nil;
+spbPaginaAnteriorrr.Glyph:=nil;
+dmData.ImageList1.GetBitmap(7, spbActualizar.glyph);
+dmData.ImageList1.GetBitmap(6, spbPagSiguiente.glyph);
+dmData.ImageList1.GetBitmap(5, spbPaginaAnteriorrr.glyph);
+uHelpers.habilitarPermisos(TForm(Sender),dmData.Permisos);
 end;
 
 procedure TfTipoProducto.Limpiar;

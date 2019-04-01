@@ -83,7 +83,6 @@ type
     gridTipoPrestamoDBTableView1activo: TcxGridDBColumn;
     edDetalle: TEdit;
     cxStyle2: TcxStyle;
-    ImageList1: TImageList;
     procedure FormCreate(Sender: TObject);
     procedure cbbRegistrosChange(Sender: TObject);
     procedure spbPagSiguienteClick(Sender: TObject);
@@ -227,6 +226,11 @@ procedure TfTipoPrestamo.FormCreate(Sender: TObject);
 begin
 paginaActual:=1;
 listar();
+spbPagsiguiente.Glyph:=nil;
+spbPaginaAnteriorrr.Glyph:=nil;
+dmData.ImageList1.GetBitmap(7, spbActualizar.glyph);
+dmData.ImageList1.GetBitmap(6, spbPagSiguiente.glyph);
+dmData.ImageList1.GetBitmap(5, spbPaginaAnteriorrr.glyph);
 end;
 
 procedure TfTipoPrestamo.Limpiar;

@@ -158,6 +158,7 @@ begin
          btnGuardar.Enabled:=false;
          TabFormulario.TabVisible:=false;
          TabListado.Tabvisible:=true;
+         uHelpers.habilitarPermisos(TForm(TPanel((TButton(Sender).GetParentComponent).GetParentComponent).GetParentComponent),dmData.Permisos);
 end;
 
 procedure TfResolucion.btnEditarClick(Sender: TObject);
@@ -231,6 +232,7 @@ begin
        FreeAndNil(resultado);
        FreeAndNil(graph);
     end;
+    uHelpers.habilitarPermisos(TForm(TPanel((TButton(Sender).GetParentComponent).GetParentComponent).GetParentComponent),dmData.Permisos);
 end;
 
 procedure TfResolucion.calcular;
@@ -258,8 +260,12 @@ end;
 
 procedure TfResolucion.FormCreate(Sender: TObject);
 begin
+dmData.ImageList1.GetBitmap(7, spbActualizar.glyph);
+dmData.ImageList1.GetBitmap(6, spbPagSiguiente.glyph);
+dmData.ImageList1.GetBitmap(5, spbPaginaAnteriorrr.glyph);
+uHelpers.habilitarPermisos(TForm(Sender),dmData.Permisos);
 paginaActual:=1;
-listar();
+//listar();
 end;
 
 procedure TfResolucion.listar;

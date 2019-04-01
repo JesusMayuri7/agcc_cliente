@@ -103,7 +103,6 @@ type
     gridClienteDBTableView1telefono: TcxGridDBColumn;
     cxDateEdit1: TcxDateEdit;
     cxStyle2: TcxStyle;
-    ImageList1: TImageList;
     procedure FormCreate(Sender: TObject);
     procedure cbbRegistrosChange(Sender: TObject);
     procedure spbPagSiguienteClick(Sender: TObject);
@@ -209,6 +208,7 @@ begin
   btnNuevo.Enabled:=true;
   btnEditar.Enabled:=True;
   btnGuardar.Enabled:=false;
+  uHelpers.habilitarPermisos(TForm(TPanel((TButton(Sender).GetParentComponent).GetParentComponent).GetParentComponent),dmData.Permisos);
 end;
 
 procedure TfCliente.btnEditarClick(Sender: TObject);
@@ -250,6 +250,7 @@ begin
   btnNuevo.Enabled:=true;
   btnEditar.Enabled:=True;
   btnCancelar.Enabled:=false;
+  uHelpers.habilitarPermisos(TForm(TPanel((TButton(Sender).GetParentComponent).GetParentComponent).GetParentComponent),dmData.Permisos);
 end;
 
 procedure TfCliente.cbbRegistrosChange(Sender: TObject);
@@ -261,7 +262,13 @@ end;
 procedure TfCliente.FormCreate(Sender: TObject);
 begin
 paginaActual:=1;
-listar();
+//listar();
+spbPagsiguiente.Glyph:=nil;
+spbPaginaAnteriorrr.Glyph:=nil;
+dmData.ImageList1.GetBitmap(7, spbActualizar.glyph);
+dmData.ImageList1.GetBitmap(6, spbPagSiguiente.glyph);
+dmData.ImageList1.GetBitmap(5, spbPaginaAnteriorrr.glyph);
+uHelpers.habilitarPermisos(TForm(Sender),dmData.Permisos);
 end;
 
 procedure TfCliente.Limpiar;

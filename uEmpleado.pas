@@ -94,16 +94,22 @@ type
     gridEmpleadoDBTableView1apellido_materno: TcxGridDBColumn;
     gridEmpleadoDBTableView1usuario: TcxGridDBColumn;
     fdEmpleadousuario: TStringField;
-    fdEmpleadopassword: TStringField;
     fdEmpleadoemail: TStringField;
-    gridEmpleadoDBTableView1password: TcxGridDBColumn;
     gridEmpleadoDBTableView1email: TcxGridDBColumn;
     edUsuario: TEdit;
     Label14: TLabel;
     edPassword: TEdit;
     gridEmpleadoDBTableView1dni: TcxGridDBColumn;
     cxStyle2: TcxStyle;
-    ImageList1: TImageList;
+    Label9: TLabel;
+    cbbRol: TcxLookupComboBox;
+    fdRol: TFDMemTable;
+    IntegerField1: TIntegerField;
+    dsRol: TDataSource;
+    fdRoldesc_rol: TStringField;
+    fdEmpleadorol_id: TIntegerField;
+    fdEmpleadorol: TStringField;
+    gridEmpleadoDBTableView1rol: TcxGridDBColumn;
     procedure FormCreate(Sender: TObject);
     procedure cbbRegistrosChange(Sender: TObject);
     procedure spbPagSiguienteClick(Sender: TObject);
@@ -120,9 +126,10 @@ type
     procedure listar;
     procedure Limpiar();
     procedure EditarLinea(dni,nombres,apellido_paterno,apellido_materno,usuario,password,email:string;
-        id:integer;activo:boolean);
+        id:integer;activo:boolean;rol:integer);
     procedure NuevaLinea(dni,nombres,apellido_paterno,apellido_materno,usuario,password,email:string;
-        activo:boolean);
+        activo:Boolean;rol:integer);
+    procedure LlenarRol(dataset: TFDMemTable);
   public
     { Public declarations }
   end;
@@ -140,8 +147,29 @@ uses
 
 { TfLineaCredito }
 
+procedure TfEmpleado.LlenarRol(dataset: TFDMemTable);
+var graph:Tgraph;
+var variables:TJSONObject;
+var dataVar,dataRest,query:TJSONObject;
+var resultado:TJsonObject;
+begin
+    resultado:=TJSONObject.Create;
+    graph:=TGraph.Create(dmdata.RESTClient1,dataset);
+    try  // Cambiar por el query a consultar, hacer pruebas en Insomnia
+    graph.query:='query verRol'+
+    ' { rolQuery'+
+    ' { data {id,desc_rol}}}';
+
+    graph.rootElement:='data.rolQuery.data'; // cambiar por el nombre del Query que buscas linea_creditoQuery
+    resultado:=graph.ejecutar('rolQuery');  // cambiar por el nombre del Query que buscas linea_creditoQuery
+    finally
+       FreeAndNil(resultado);
+       FreeAndNil(graph);
+    end;
+end;
+
 procedure TfEmpleado.EditarLinea(dni,nombres,apellido_paterno,apellido_materno,usuario,password,email:string;
-        id:integer;activo:boolean);
+        id:integer;activo:boolean;rol:integer);
 var graph:Tgraph;
 var variables:TJSONObject;
 var dataVar,dataRest,query:TJSONObject;
@@ -152,10 +180,10 @@ begin
     graph:=TGraph.Create(dmdata.RESTClient1);
     try  // Cambiar por el query a consultar, hacer pruebas en Insomnia
     graph.query:='mutation postEmpleado($id:Int,$dni:String,$nombres:String,$apellido_paterno:'+
-    'String,$apellido_materno:String,$usuario:String,$password:String,$email:String,$activo:Int)'+
+    'String,$apellido_materno:String,$usuario:String,$password:String,$email:String,$activo:Int,$rol_id:Int)'+
     ' { empleadoMutation(id:$id,dni:$dni,nombres:$nombres,apellido_paterno:$apellido_paterno,apellido_materno'+
-    ':$apellido_materno,usuario:$usuario,password:$password,email:$email,activo:$activo)'+
-    ' {id,dni,nombres,apellido_paterno,apellido_materno,usuario,password,email,activo}  } ';
+    ':$apellido_materno,usuario:$usuario,password:$password,email:$email,activo:$activo,rol_id:$rol_id)'+
+    ' {id,dni,nombres,apellido_paterno,apellido_materno,usuario,password,email,activo,rol,rol_id}  } ';
 
     //NO variar
     variables:=TJSONObject.Create;
@@ -168,6 +196,7 @@ begin
     dataVar.AddPair('usuario',TJSONString.Create(usuario));
     dataVar.AddPair('password',TJSONString.Create(password));
     dataVar.AddPair('email',TJSONString.Create(email));
+    dataVar.AddPair('rol_id',TJSONNumber.Create(rol));
     dataVar.AddPair('activo',TJSONNumber.Create(activo.ToInteger));
     variables.AddPair('variables',dataVar);
     graph.variables:=variables;
@@ -209,6 +238,7 @@ begin
   btnNuevo.Enabled:=true;
   btnEditar.Enabled:=True;
   btnGuardar.Enabled:=false;
+   uHelpers.habilitarPermisos(TForm(TPanel((TButton(Sender).GetParentComponent).GetParentComponent).GetParentComponent),dmData.Permisos);
 end;
 
 procedure TfEmpleado.btnEditarClick(Sender: TObject);
@@ -216,22 +246,24 @@ begin
   Limpiar();
   if gridEmpleadoDBTableView1.Controller.SelectedRowCount=1 then
   begin
-     Tag:=gridEmpleadoDBTableView1.DataController.Values[gridEmpleadoDBTableView1.Controller.FocusedRecordIndex , 0];
+     Tag:=fdEmpleado.FieldValues['id'];
      if Tag>0 then
      begin
+         LlenarRol(fdRol);
          btnEditar.Enabled:=false;
          tabListado.TabVisible:=false;
          tabFormulario.TabVisible:=true;
          btnCancelar.Enabled:=true;
          btnGuardar.Enabled:=true;
-         edDni.Text:=gridEmpleadoDBTableView1.DataController.Values[gridEmpleadoDBTableView1.Controller.FocusedRecordIndex , 1];
-         edNombres.Text:=gridEmpleadoDBTableView1.DataController.Values[gridEmpleadoDBTableView1.Controller.FocusedRecordIndex , 2];
-         edPaterno.Text:=gridEmpleadoDBTableView1.DataController.Values[gridEmpleadoDBTableView1.Controller.FocusedRecordIndex , 3];
-         edMaterno.Text:=gridEmpleadoDBTableView1.DataController.Values[gridEmpleadoDBTableView1.Controller.FocusedRecordIndex , 4];
-         edUsuario.Text:=gridEmpleadoDBTableView1.DataController.Values[gridEmpleadoDBTableView1.Controller.FocusedRecordIndex , 5];
-         edPassword.Text:=gridEmpleadoDBTableView1.DataController.Values[gridEmpleadoDBTableView1.Controller.FocusedRecordIndex , 6];
-         edEmail.Text:=gridEmpleadoDBTableView1.DataController.Values[gridEmpleadoDBTableView1.Controller.FocusedRecordIndex , 7];
-         chkActivo.Checked:=gridEmpleadoDBTableView1.DataController.Values[gridEmpleadoDBTableView1.Controller.FocusedRecordIndex , 8];
+         edDni.Text:=VartoStr(fdEmpleado.FieldValues['dni']);
+         edNombres.Text:=VarToStr(fdEmpleado.FieldValues['nombres']);
+         edPaterno.Text:=VarToStr(fdEmpleado.FieldValues['apellido_paterno']);
+         edMaterno.Text:=VarToStr(fdEmpleado.FieldValues['apellido_materno']);
+         edUsuario.Text:=VarToStr(fdEmpleado.FieldValues['usuario']);
+         //edPassword.Text:=gridEmpleadoDBTableView1.DataController.Values[gridEmpleadoDBTableView1.Controller.FocusedRecordIndex , 6];
+         edEmail.Text:=VartoStr(fdEmpleado.FieldValues['email']);
+         cbbRol.EditValue:=fdEmpleado.FieldValues['rol_id'];
+         chkActivo.Checked:=VarToStr(fdEmpleado.FieldValues['activo']).ToBoolean;
      end;
   end;
 end;
@@ -241,15 +273,16 @@ begin
   btnGuardar.Enabled:=false;
   if Tag>0 then
      EditarLinea(edDni.Text,edNombres.Text,edPaterno.Text,edMaterno.Text,edUsuario.Text,
-     edPassword.Text,edEmail.Text,Tag,chkActivo.checked)
+     edPassword.Text,edEmail.Text,Tag,chkActivo.checked,cbbRol.EditValue)
   else
      nuevalinea(edDni.Text,edNombres.Text,edPaterno.Text,edMaterno.Text,edUsuario.Text,
-     edPassword.Text,edEmail.Text,chkActivo.checked);
+     edPassword.Text,edEmail.Text,chkActivo.checked,cbbRol.EditValue);
   tabFormulario.TabVisible:=false;
   tabListado.TabVisible:=true;
   btnNuevo.Enabled:=true;
   btnEditar.Enabled:=True;
   btnCancelar.Enabled:=false;
+   uHelpers.habilitarPermisos(TForm(TPanel((TButton(Sender).GetParentComponent).GetParentComponent).GetParentComponent),dmData.Permisos);
 end;
 
 procedure TfEmpleado.cbbRegistrosChange(Sender: TObject);
@@ -260,8 +293,15 @@ end;
 
 procedure TfEmpleado.FormCreate(Sender: TObject);
 begin
+
 paginaActual:=1;
-listar();
+//listar();
+spbPagsiguiente.Glyph:=nil;
+spbPaginaAnteriorrr.Glyph:=nil;
+dmData.ImageList1.GetBitmap(7, spbActualizar.glyph);
+dmData.ImageList1.GetBitmap(6, spbPagSiguiente.glyph);
+dmData.ImageList1.GetBitmap(5, spbPaginaAnteriorrr.glyph);
+uHelpers.habilitarPermisos(TForm(Sender),dmData.Permisos);
 end;
 
 procedure TfEmpleado.Limpiar;
@@ -288,8 +328,8 @@ begin
     try  // Cambiar por el query a consultar, hacer pruebas en Insomnia
     graph.query:='query verEmpleado($limit:Int,$per_page:Int,$dni:String)'+
      '{ empleadoQuery(limit:$limit,per_page:$per_page,dni:$dni)' +
-     '{ data {id,dni,nombres,apellido_paterno,apellido_materno,usuario,password,email'+
-     ',activo},per_page,total}} ';
+     '{ data {id,dni,nombres,apellido_paterno,apellido_materno,usuario,email'+
+     ',activo,rol_id,rol},per_page,total}} ';
 
     //NO variar
     variables:=TJSONObject.Create;
@@ -316,7 +356,7 @@ begin
 end;
 
 procedure TfEmpleado.NuevaLinea(dni,nombres,apellido_paterno,apellido_materno,usuario,password,email:string;
-        activo:boolean);
+        activo:boolean;rol:integer);
 var graph:Tgraph;
 var variables:TJSONObject;
 var dataVar,dataRest,query:TJSONObject;
@@ -327,11 +367,11 @@ begin
     graph:=TGraph.Create(dmdata.RESTClient1);
     try  // Cambiar por el query a consultar, hacer pruebas en Insomnia
     graph.query:='mutation postEmpleado($dni:String,$nombres:String,$apellido_paterno:String'+
-    ',$apellido_materno:String,$usuario:String,$password:String,$email:String,$activo:Int)'+
+    ',$apellido_materno:String,$usuario:String,$password:String,$email:String,$activo:Int,$rol_id:Int)'+
     ' { empleadoMutation(dni:$dni,nombres:$nombres,apellido_paterno:$apellido_paterno,'+
     'apellido_materno:$apellido_materno,usuario:$usuario,password:$password,email'+
-    ':$email,activo:$activo)'+
-    ' {id,dni,nombres,apellido_paterno,apellido_materno,usuario,password,email,activo}  } ';
+    ':$email,activo:$activo,rol_id:$rol_id)'+
+    ' {id,dni,nombres,apellido_paterno,apellido_materno,usuario,password,email,activo,rol,rol_id}  } ';
 
     //NO variar
     variables:=TJSONObject.Create;
@@ -342,6 +382,7 @@ begin
     dataVar.AddPair('apellido_materno',TJSONString.Create(apellido_materno));
     dataVar.AddPair('usuario',TJSONString.Create(usuario));
     dataVar.AddPair('password',TJSONString.Create(password));
+    dataVar.AddPair('rol_id',TJSONNumber.Create(rol));
     dataVar.AddPair('email',TJSONString.Create(email));
     dataVar.AddPair('activo',TJSONNumber.Create(activo.ToInteger));
     variables.AddPair('variables',dataVar);

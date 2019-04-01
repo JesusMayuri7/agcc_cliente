@@ -613,6 +613,7 @@ begin
   btnNuevo.Enabled:=true;
   btnEditar.Enabled:=True;
   btnGuardar.Enabled:=false;
+   uHelpers.habilitarPermisos(TForm(TPanel((TButton(Sender).GetParentComponent).GetParentComponent).GetParentComponent),dmData.Permisos);
 end;
 
 procedure TfSolicitud.btnEditarClick(Sender: TObject);
@@ -699,6 +700,7 @@ begin
   btnNuevo.Enabled:=true;
   btnEditar.Enabled:=True;
   btnCancelar.Enabled:=false;
+   uHelpers.habilitarPermisos(TForm(TPanel((TButton(Sender).GetParentComponent).GetParentComponent).GetParentComponent),dmData.Permisos);
 end;
 
 procedure TfSolicitud.cbbLineaCreditoPropertiesChange(Sender: TObject);
@@ -814,7 +816,9 @@ var
   AButton: TcxEditButton;
 begin
   // revisar permisos de formulario
-
+  dmData.ImageList1.GetBitmap(7, spbActualizar.glyph);
+dmData.ImageList1.GetBitmap(6, spbPagSiguiente.glyph);
+dmData.ImageList1.GetBitmap(5, spbPaginaAnteriorrr.glyph);
 
   paginaActual:=1;
   tabListado.TabVisible:=true;
@@ -825,7 +829,8 @@ begin
   btnCancelar.Enabled:=false;
   btnGuardar.Enabled:=false;
 
-listar();
+//listar();
+uHelpers.habilitarPermisos(TForm(Sender),dmData.Permisos);
         with TcxLookupComboBoxProperties(cbbGarantia.Properties) do
         begin
           AButton := Buttons.Add;

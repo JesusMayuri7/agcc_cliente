@@ -514,7 +514,7 @@ object fCalcular: TfCalcular
       Top = 1
       Width = 868
       Height = 656
-      ActivePage = pgcRebatir
+      ActivePage = pgcSimple
       Align = alClient
       TabOrder = 1
       object pgcSimple: TTabSheet

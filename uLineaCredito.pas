@@ -93,7 +93,6 @@ type
     cxStyleRepository2: TcxStyleRepository;
     cxStyle2: TcxStyle;
     cxStyle3: TcxStyle;
-    ImageList1: TImageList;
     procedure FormCreate(Sender: TObject);
     procedure cbbRegistrosChange(Sender: TObject);
     procedure spbPagSiguienteClick(Sender: TObject);
@@ -188,14 +187,14 @@ end;
 
 procedure TfLineaCredito.btnCancelarClick(Sender: TObject);
 begin
-  btnCancelar.Enabled:=false;
   Limpiar();
   tabFormulario.TabVisible:=false;
   tabListado.TabVisible:=true;
-  btnNuevo.Enabled:=true;
-  btnEditar.Enabled:=True;
+  //btnNuevo.Enabled:=true;
+  //btnEditar.Enabled:=True;
   btnGuardar.Enabled:=false;
-  habilitarPermisos(TForm(TPanel(TButton(Sender).GetParentComponent).GetParentComponent),dmData.Permisos);
+  uHelpers.habilitarPermisos(TForm(TPanel((TButton(Sender).GetParentComponent).GetParentComponent).GetParentComponent),dmData.Permisos);
+  btnCancelar.Enabled:=false;
 end;
 
 procedure TfLineaCredito.btnEditarClick(Sender: TObject);
@@ -232,6 +231,7 @@ begin
   btnNuevo.Enabled:=true;
   btnEditar.Enabled:=True;
   btnCancelar.Enabled:=false;
+  uHelpers.habilitarPermisos(TForm(TPanel((TButton(Sender).GetParentComponent).GetParentComponent).GetParentComponent),dmData.Permisos);
 end;
 
 procedure TfLineaCredito.cbbRegistrosChange(Sender: TObject);
@@ -242,9 +242,14 @@ end;
 
 procedure TfLineaCredito.FormCreate(Sender: TObject);
 begin
-habilitarPermisos(TForm(Sender),dmData.Permisos);
 paginaActual:=1;
 //listar();
+spbPagsiguiente.Glyph:=nil;
+spbPaginaAnteriorrr.Glyph:=nil;
+dmData.ImageList1.GetBitmap(7, spbActualizar.glyph);
+dmData.ImageList1.GetBitmap(6, spbPagSiguiente.glyph);
+dmData.ImageList1.GetBitmap(5, spbPaginaAnteriorrr.glyph);
+uHelpers.habilitarPermisos(TForm(Sender),dmData.Permisos);
 end;
 
 procedure TfLineaCredito.Limpiar;
@@ -322,8 +327,7 @@ begin
     graph.variables:=variables;
 
     resultado:=graph.ejecutar('linea_creditoMutation');  // cambiar por el nombre del Query que buscas linea_creditoQuery
-    //uHelpers.InsertarRegistroDataset(resultado,fdLineaCredito);
-    listar();
+    uHelpers.InsertarRegistroDataset(resultado,fdLineaCredito);
 //    showmessage(resultado.ToString);
     finally
        FreeAndNil(resultado);

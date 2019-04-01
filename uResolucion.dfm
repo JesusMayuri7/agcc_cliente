@@ -31,6 +31,8 @@ object fResolucion: TfResolucion
       TabOrder = 0
       object tabFormulario: TTabSheet
         Caption = 'Formulario'
+        ExplicitLeft = 6
+        ExplicitTop = 23
         object GroupBox1: TGroupBox
           Left = 35
           Top = 39
@@ -592,6 +594,7 @@ object fResolucion: TfResolucion
       Width = 75
       Height = 25
       Caption = 'Editar'
+      Enabled = False
       ImageIndex = 2
       ImageMargins.Left = 7
       Images = dmData.ImageList1
@@ -633,6 +636,8 @@ object fResolucion: TfResolucion
     Height = 33
     Align = alTop
     TabOrder = 2
+    ExplicitLeft = -2
+    ExplicitTop = 1
     object Label1: TLabel
       Left = 207
       Top = 6
@@ -658,6 +663,7 @@ object fResolucion: TfResolucion
       Height = 25
       Align = alRight
       Caption = '>'
+      Enabled = False
       OnClick = spbPagSiguienteClick
       ExplicitLeft = 680
       ExplicitTop = 5
@@ -672,6 +678,7 @@ object fResolucion: TfResolucion
       Height = 25
       Align = alRight
       Caption = '<'
+      Enabled = False
       OnClick = spbPaginaAnteriorrrClick
       ExplicitLeft = 680
       ExplicitTop = 5
@@ -686,6 +693,7 @@ object fResolucion: TfResolucion
       Height = 25
       Align = alLeft
       Caption = '<'
+      Enabled = False
       OnClick = spbActualizarClick
       ExplicitLeft = 46
       ExplicitTop = 5
@@ -768,6 +776,7 @@ object fResolucion: TfResolucion
         Width = 49
         Height = 21
         Style = csDropDownList
+        Enabled = False
         ItemIndex = 0
         TabOrder = 0
         Text = '5'
