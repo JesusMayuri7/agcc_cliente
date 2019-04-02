@@ -15,7 +15,7 @@ uses
   FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Comp.DataSet,
   FireDAC.Comp.Client, cxContainer, cxTextEdit, cxMaskEdit, cxDropDownEdit,
   cxLookupEdit, cxDBLookupEdit, cxDBLookupComboBox, cxCalendar, cxDBEdit,
-  Vcl.Buttons, cxSpinEdit;
+  Vcl.Buttons, cxSpinEdit, frxClass, frxDBSet;
 
 type
   TfResolucion = class(TForm)
@@ -111,6 +111,12 @@ type
     Label20: TLabel;
     spnInteres2: TcxSpinEdit;
     fdResolucionplazo_maximo: TIntegerField;
+    frxReport1: TfrxReport;
+    frxDBResolucion: TfrxDBDataset;
+    btn1: TButton;
+    dtpDate: TDateTimePicker;
+    fdResolucioncreated_at: TDateField;
+    gridResolucioncreated_at: TcxGridDBColumn;
     procedure spbActualizarClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure btnEditarClick(Sender: TObject);
@@ -120,11 +126,13 @@ type
     procedure spbPaginaAnteriorrrClick(Sender: TObject);
     procedure spbPagSiguienteClick(Sender: TObject);
     procedure SpeedButton1Click(Sender: TObject);
+    procedure btn1Click(Sender: TObject);
+    procedure btnBuscarClick(Sender: TObject);
 
   private
     { Private declarations }
     var paginaActual:integer;
-    procedure listar;
+    procedure listar(criterio:string='';fecha:TDateTimePicker=nil);
     procedure calcular();
   public
     { Public declarations }
@@ -142,6 +150,31 @@ uses
 {$R *.dfm}
 
 { TfLineaCredito }
+
+procedure TfResolucion.btn1Click(Sender: TObject);
+begin
+if gridResolucion.Controller.SelectedRowCount=1 then
+  begin
+//     Tag:=gridSolicitud.DataController.Values[gridSolicitud.Controller.FocusedRecordIndex , 0];
+     Tag:=fdResolucion.FieldValues['id'];
+     if Tag>0 then
+        begin
+        try
+        fdResolucion.Filtered:=False;
+        fdResolucion.Filter:='id='+Tag.ToString;
+        fdResolucion.Filtered:=True;
+        frxReport1.showReport;
+        finally
+          fdResolucion.Filtered:=False;
+        end;
+        end;
+  end;
+end;
+
+procedure TfResolucion.btnBuscarClick(Sender: TObject);
+begin
+listar(edCriterio.Text,dtpDate);
+end;
 
 procedure TfResolucion.btnCancelarClick(Sender: TObject);
 begin
@@ -263,12 +296,13 @@ begin
 dmData.ImageList1.GetBitmap(7, spbActualizar.glyph);
 dmData.ImageList1.GetBitmap(6, spbPagSiguiente.glyph);
 dmData.ImageList1.GetBitmap(5, spbPaginaAnteriorrr.glyph);
+dtpDate.Date:=Now;
 uHelpers.habilitarPermisos(TForm(Sender),dmData.Permisos);
 paginaActual:=1;
 //listar();
 end;
 
-procedure TfResolucion.listar;
+procedure TfResolucion.listar(criterio:string='';fecha:TDateTimePicker=nil);
 var graph:Tgraph;
 var variables:TJSONObject;
 var data,dataVar,query:TJSONObject;
@@ -279,16 +313,20 @@ begin
     resultado:=TJSONObject.Create;
     graph:=TGraph.Create(dmdata.RESTClient1,fdResolucion);
     try
-    graph.query:='query verResolucion { resolucionQuery { data '+
+    graph.query:='query verResolucion($nro_resolucion:String,$created_at:String) { resolucionQuery'+
+    '(nro_resolucion:$nro_resolucion,created_at:$created_at) { data '+
     '{ id,solicitud_id,nro_resolucion,estado,cliente_full_name,empleado_full_name,monto,'+
-    'cuota,plazo,comentario,tipo_interes,interes,ahorro_inicial,ahorro_programado,plazo_maximo } }}';
+    'cuota,plazo,comentario,tipo_interes,interes,ahorro_inicial,ahorro_programado,plazo_maximo,created_at } }}';
 
     variables:=TJSONObject.Create;
     dataVar:=TJSONObject.Create;
     dataVar.AddPair('limit',TJSONNumber.Create(cbbRegistros.Items[cbbRegistros.ItemIndex]));
     dataVar.AddPair('per_page',TJSONNumber.Create(paginaActual));
-    if length(edcriterio.Text)>0 then
-       dataVar.AddPair('desc_linea_credito',TJSONString.Create(edCriterio.Text));// depende el campo en que busques
+    if length(criterio)>0 then
+       dataVar.AddPair('nro_resolucion',TJSONString.Create(Criterio));// depende el campo en que busques
+    if not(fecha=nil) then
+       if fecha.Checked then
+         dataVar.AddPair('created_at',TJSONString.Create(DateToStr(fecha.Date)));// depende el campo en que busques
     variables.AddPair('variables',dataVar);
     graph.variables:=variables;
 

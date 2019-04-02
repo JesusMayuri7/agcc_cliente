@@ -29,7 +29,8 @@ uses
   uTipoInfo in 'uTipoInfo.pas' {fTipoInfo},
   uTipoInfoDetalle in 'uTipoInfoDetalle.pas' {fTipoInfoDetalle},
   uSolicitud in 'uSolicitud.pas' {fSolicitud},
-  uLoginForm in 'uLoginForm.pas' {fLoginForm};
+  uLoginForm in 'uLoginForm.pas' {fLoginForm},
+  ResolucionRpt in 'ResolucionRpt.pas' {Form1};
 
 {$R *.res}
 
@@ -41,8 +42,10 @@ begin
        Application.Initialize;
        Application.MainFormOnTaskbar := True;
        Application.CreateForm(TdmData, dmData);
-       Application.CreateForm(TfMenu, fMenu);
-       Application.Run;
+  Application.CreateForm(TfMenu, fMenu);
+  Application.CreateForm(TForm1, Form1);
+  Application.CreateForm(TForm1, Form1);
+  Application.Run;
    end
    else
    begin

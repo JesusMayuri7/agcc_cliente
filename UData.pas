@@ -10,7 +10,7 @@ uses
   FireDAC.Stan.Pool, FireDAC.Phys, FireDAC.Phys.MySQL, FireDAC.Phys.MySQLDef,
   FireDAC.VCLUI.Wait, IPPeerClient, REST.Client, REST.Response.Adapter,
   Data.Bind.Components, Data.Bind.ObjectScope, REST.Types, System.ImageList,
-  Vcl.ImgList, Vcl.Controls;
+  Vcl.ImgList, Vcl.Controls, frxClass;
 
 type
   TdmData = class(TDataModule)
