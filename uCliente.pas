@@ -103,6 +103,7 @@ type
     gridClienteDBTableView1telefono: TcxGridDBColumn;
     cxDateEdit1: TcxDateEdit;
     cxStyle2: TcxStyle;
+    cbCampo: TComboBox;
     procedure FormCreate(Sender: TObject);
     procedure cbbRegistrosChange(Sender: TObject);
     procedure spbPagSiguienteClick(Sender: TObject);
@@ -113,6 +114,7 @@ type
     procedure btnCancelarClick(Sender: TObject);
     procedure btnGuardarClick(Sender: TObject);
     procedure btnEditarClick(Sender: TObject);
+    procedure cbCampoChange(Sender: TObject);
   private
     { Private declarations }
     var paginaActual:integer;
@@ -150,8 +152,8 @@ begin
     resultado:=TJSONObject.Create;
     graph:=TGraph.Create(dmdata.RESTClient1);
     try  // Cambiar por el query a consultar, hacer pruebas en Insomnia
-    graph.query:='mutation postCliente($id:String,$dni:String,$nombres:String,$apellido_paterno:'+
-    'String,$apellido_materno:String,$direccion:String,$telefono:String,$fecha_nacimiento:String,$activo:Int)'+
+    graph.query:='mutation postCliente($id:String,$dni:String!,$nombres:String!,$apellido_paterno:'+
+    'String!,$apellido_materno:String!,$direccion:String,$telefono:String,$fecha_nacimiento:String,$activo:Int)'+
     ' { clienteMutation(id:$id,dni:$dni,nombres:$nombres,apellido_paterno:$apellido_paterno,apellido_materno'+
     ':$apellido_materno,direccion:$direccion,telefono:$telefono,fecha_nacimiento:$fecha_nacimiento,activo:$activo)'+
     ' {id,dni,nombres,apellido_paterno,apellido_materno,direccion,telefono,fecha_nacimiento,activo}  } ';
@@ -166,15 +168,16 @@ begin
     dataVar.AddPair('apellido_materno',TJSONString.Create(apellido_materno));
     dataVar.AddPair('direccion',TJSONString.Create(direccion));
     dataVar.AddPair('telefono',TJSONString.Create(telefono));
-    dataVar.AddPair('fecha_nacimiento',TJSONString.Create(formatdatetime('yyyy-mm-dd',fecha_nacimiento)));
+    if not(DateToStr(fecha_nacimiento)='00/00/0000') then
+       dataVar.AddPair('fecha_nacimiento',TJSONString.Create(formatdatetime('yyyy-mm-dd',fecha_nacimiento)));
     dataVar.AddPair('activo',TJSONNumber.Create(activo.ToInteger));
     variables.AddPair('variables',dataVar);
     graph.variables:=variables;
 
     resultado:=graph.ejecutar('clienteMutation');  // cambiar por el nombre del Query que buscas linea_creditoQuery
   //    showmessage(resultado.ToString);
-    uHelpers.InsertarRegistroDataset(resultado,fdCliente);
-
+    //uHelpers.InsertarRegistroDataset(resultado,fdCliente);
+    listar();
     finally
        FreeAndNil(resultado);
        FreeAndNil(graph);
@@ -216,7 +219,7 @@ begin
   Limpiar();
   if gridClienteDBTableView1.Controller.SelectedRowCount=1 then
   begin
-     Tag:=gridClienteDBTableView1.DataController.Values[gridClienteDBTableView1.Controller.FocusedRecordIndex , 0];
+     Tag:=fdCliente.FieldValues['id'];
      if Tag>0 then
      begin
          btnEditar.Enabled:=false;
@@ -224,14 +227,17 @@ begin
          tabFormulario.TabVisible:=true;
          btnCancelar.Enabled:=true;
          btnGuardar.Enabled:=true;
-         edDni.Text:=gridClienteDBTableView1.DataController.Values[gridClienteDBTableView1.Controller.FocusedRecordIndex , 1];
-         edNombres.Text:=gridClienteDBTableView1.DataController.Values[gridClienteDBTableView1.Controller.FocusedRecordIndex , 2];
-         edPaterno.Text:=gridClienteDBTableView1.DataController.Values[gridClienteDBTableView1.Controller.FocusedRecordIndex , 3];
-         edMaterno.Text:=gridClienteDBTableView1.DataController.Values[gridClienteDBTableView1.Controller.FocusedRecordIndex , 4];
-         cxDateEdit1.Date:=gridClienteDBTableView1.DataController.Values[gridClienteDBTableView1.Controller.FocusedRecordIndex , 5];
-         edDireccion.Text:=gridClienteDBTableView1.DataController.Values[gridClienteDBTableView1.Controller.FocusedRecordIndex , 6];
-         edTelefono.Text:=gridClienteDBTableView1.DataController.Values[gridClienteDBTableView1.Controller.FocusedRecordIndex , 7];
-         chkActivo.Checked:=gridClienteDBTableView1.DataController.Values[gridClienteDBTableView1.Controller.FocusedRecordIndex , 8];
+         edDni.Text:=VarToStr(fdCliente.FieldValues['dni']);
+         edNombres.Text:=VarToStr(fdCliente.FieldValues['nombres']);
+         edPaterno.Text:=VarToStr(fdCliente.FieldValues['apellido_paterno']);
+         edMaterno.Text:=VarToStr(fdCliente.FieldValues['apellido_materno']);
+         if not(fdCliente.FieldValues['fecha_nacimiento']=null) then
+             cxDateEdit1.Date:=VarToDateTime(fdCliente.FieldValues['fecha_nacimiento'])
+         else
+             cxDateEdit1.EditValue:=null;
+         edDireccion.Text:=VarToStr(fdCliente.FieldValues['direccion']);
+         edTelefono.Text:=VarToStr(fdCliente.FieldValues['telefono']);
+         chkActivo.Checked:=fdCliente.FieldValues['activo'];
      end;
   end;
 end;
@@ -239,6 +245,7 @@ end;
 procedure TfCliente.btnGuardarClick(Sender: TObject);
 begin
   btnGuardar.Enabled:=false;
+  ShowMessage(TAg.ToString);
   if Tag>0 then
      EditarLinea(edDni.Text,edNombres.Text,edPaterno.Text,edMaterno.Text,edDireccion.Text,
      edTelefono.Text,cxDateEdit1.Date,Tag,chkActivo.checked)
@@ -257,6 +264,12 @@ procedure TfCliente.cbbRegistrosChange(Sender: TObject);
 begin
 paginaActual:=1;
 listar();
+end;
+
+procedure TfCliente.cbCampoChange(Sender: TObject);
+begin
+  if cbCampo.ItemIndex=0 then
+     edCriterio.Text:='';
 end;
 
 procedure TfCliente.FormCreate(Sender: TObject);
@@ -293,8 +306,8 @@ begin
     resultado:=TJSONObject.Create;
     graph:=TGraph.Create(dmdata.RESTClient1,fdCliente);
     try  // Cambiar por el query a consultar, hacer pruebas en Insomnia
-    graph.query:='query verCliente($limit:Int,$per_page:Int,$dni:String)'+
-     '{ clienteQuery(limit:$limit,per_page:$per_page,dni:$dni)' +
+    graph.query:='query verCliente($limit:Int,$per_page:Int,$dni:String,$apellido_paterno:String,$apellido_materno:String,$nombres:String)'+
+     '{ clienteQuery(limit:$limit,per_page:$per_page,dni:$dni,apellido_paterno:$apellido_paterno,apellido_materno:$apellido_materno,nombres:$nombres)' +
      '{ data {id,dni,nombres,apellido_paterno,apellido_materno,fecha_nacimiento,direccion,telefono'+
      ',activo},per_page,total}} ';
 
@@ -303,8 +316,8 @@ begin
     dataVar:=TJSONObject.Create;
     dataVar.AddPair('limit',TJSONNumber.Create(cbbRegistros.Items[cbbRegistros.ItemIndex]));
     dataVar.AddPair('per_page',TJSONNumber.Create(paginaActual));
-    if length(edcriterio.Text)>0 then
-       dataVar.AddPair('dni',TJSONString.Create(edCriterio.Text));// depende el campo en que busques
+    if (cbCampo.ItemIndex>0) and (length(edcriterio.Text)>0) then
+       dataVar.AddPair(LowerCase(cbCampo.Items[cbCampo.ItemIndex]),TJSONString.Create(edCriterio.Text));// depende el campo en que busques
     variables.AddPair('variables',dataVar);
     graph.variables:=variables;
 

@@ -309,10 +309,10 @@ object fCliente: TfCliente
           object cxDateEdit1: TcxDateEdit
             Left = 128
             Top = 205
-            EditValue = 0d
             Properties.DisplayFormat = 'YYYY/dd/mm'
             Properties.InputKind = ikStandard
             Properties.ShowTime = False
+            Properties.ShowToday = False
             TabOrder = 5
             Width = 121
           end
@@ -416,17 +416,17 @@ object fCliente: TfCliente
           Align = alTop
           TabOrder = 1
           object edCriterio: TEdit
-            Left = 12
-            Top = 10
-            Width = 305
+            Left = 189
+            Top = 11
+            Width = 254
             Height = 21
             CharCase = ecUpperCase
             TabOrder = 0
             TextHint = 'Cliente'
           end
           object btnBuscar: TButton
-            Left = 330
-            Top = 8
+            Left = 458
+            Top = 10
             Width = 75
             Height = 25
             Caption = 'Buscar'
@@ -435,6 +435,23 @@ object fCliente: TfCliente
             Images = dmData.ImageList1
             TabOrder = 1
             OnClick = btnBuscarClick
+          end
+          object cbCampo: TComboBox
+            Left = 12
+            Top = 11
+            Width = 165
+            Height = 21
+            Style = csDropDownList
+            ItemIndex = 0
+            TabOrder = 2
+            Text = 'SELECCIONE'
+            OnChange = cbCampoChange
+            Items.Strings = (
+              'SELECCIONE'
+              'DNI'
+              'APELLIDO_PATERNO'
+              'APELLIDO_MATERNO'
+              'NOMBRES')
           end
         end
       end

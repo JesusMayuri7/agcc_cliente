@@ -18,7 +18,7 @@ uses
   cxSpinEdit, Vcl.Buttons, cxGridBandedTableView, cxGridDBBandedTableView,
   Data.Bind.EngExt, Vcl.Bind.DBEngExt, System.Rtti, System.Bindings.Outputs,
   Vcl.Bind.Editors, Data.Bind.Components, Data.Bind.DBScope, Vcl.Grids,
-  Vcl.DBGrids, Vcl.Menus, System.Actions, Vcl.ActnList;
+  Vcl.DBGrids, Vcl.Menus, System.Actions, Vcl.ActnList, frxClass, frxDBSet;
 
 type
   TfSolicitud = class(TForm)
@@ -143,7 +143,6 @@ type
     fdSolicitudcuota: TFloatField;
     fdSolicitudinteres: TFloatField;
     fdSolicitudestado: TStringField;
-    gridSolicitudid: TcxGridDBColumn;
     gridSolicitudplazo: TcxGridDBColumn;
     gridSolicitudcuota: TcxGridDBColumn;
     gridSolicitudinteres: TcxGridDBColumn;
@@ -228,6 +227,12 @@ type
     fdSolicitudahorro_programado: TFloatField;
     fdSolicitudtipo_interes: TStringField;
     fdSolicitudresolucion_id: TIntegerField;
+    frxReport1: TfrxReport;
+    frxDBSolicitud: TfrxDBDataset;
+    fdSolicitudnro_resolucion: TIntegerField;
+    gridSolicitudnro_resolucion: TcxGridDBColumn;
+    btn1: TButton;
+    frxDBAvales: TfrxDBDataset;
     procedure FormCreate(Sender: TObject);
     procedure cbbRegistrosChange(Sender: TObject);
     procedure spbPagSiguienteClick(Sender: TObject);
@@ -253,6 +258,7 @@ type
     procedure actCerrarExecute(Sender: TObject);
     procedure actAnularExecute(Sender: TObject);
     procedure actResolucionExecute(Sender: TObject);
+    procedure btn1Click(Sender: TObject);
   private
     { Private declarations }
     var paginaActual:integer;
@@ -523,6 +529,26 @@ begin
     end
     else
         Showmessage('Solicitud deb estar Cerrada, y sin resolucion creada')
+end;
+
+procedure TfSolicitud.btn1Click(Sender: TObject);
+begin
+if gridSolicitud.Controller.SelectedRowCount=1 then
+  begin
+//     Tag:=gridSolicitud.DataController.Values[gridSolicitud.Controller.FocusedRecordIndex , 0];
+     Tag:=fdSolicitud.FieldValues['id'];
+     if Tag>0 then
+        begin
+            try
+            fdSolicitud.Filtered:=False;
+            fdSolicitud.Filter:='id='+Tag.ToString;
+            fdSolicitud.Filtered:=True;
+            frxReport1.showReport;
+            finally
+              fdSolicitud.Filtered:=False;
+            end;
+        end;
+  end;
 end;
 
 procedure TfSolicitud.btnBuscarClick(Sender: TObject);
