@@ -229,10 +229,10 @@ type
     fdSolicitudresolucion_id: TIntegerField;
     frxReport1: TfrxReport;
     frxDBSolicitud: TfrxDBDataset;
-    fdSolicitudnro_resolucion: TIntegerField;
-    gridSolicitudnro_resolucion: TcxGridDBColumn;
     btn1: TButton;
     frxDBAvales: TfrxDBDataset;
+    gridSolicitudnro_solicitud: TcxGridDBColumn;
+    fdSolicitudnro_solicitud: TStringField;
     procedure FormCreate(Sender: TObject);
     procedure cbbRegistrosChange(Sender: TObject);
     procedure spbPagSiguienteClick(Sender: TObject);
@@ -259,6 +259,7 @@ type
     procedure actAnularExecute(Sender: TObject);
     procedure actResolucionExecute(Sender: TObject);
     procedure btn1Click(Sender: TObject);
+    procedure SpeedButton3Click(Sender: TObject);
   private
     { Private declarations }
     var paginaActual:integer;
@@ -561,7 +562,9 @@ procedure TfSolicitud.btnNuevoClick(Sender: TObject);
 begin
 //TODO limpiar campos
 Limpiar();
-btnNuevo.Enabled:=true;
+txtDniCliente.Enabled:=True;
+btnEditar.Enabled:=False;
+btnNuevo.Enabled:=false;
 tabListado.TabVisible:=false;
 tabFormulario.TabVisible:=true;
 btnCancelar.Enabled:=true;
@@ -634,7 +637,7 @@ procedure TfSolicitud.btnCancelarClick(Sender: TObject);
 begin
   btnCancelar.Enabled:=false;
   Limpiar();
-  //tabFormulario.TabVisible:=false;
+  tabFormulario.TabVisible:=false;
   tabListado.TabVisible:=true;
   btnNuevo.Enabled:=true;
   btnEditar.Enabled:=True;
@@ -995,10 +998,8 @@ begin
     graph.rootElement:='data.solicitudQuery.data'; // cambiar por el nombre del Query que buscas linea_creditoQuery
 
     resultado:=graph.ejecutar('solicitudQuery');  // cambiar por el nombre del Query que buscas linea_creditoQuery
-    //avales
-    // showmessage(resultado.ToString);
-   // ShowMessage('avales');
-     uHelpers.LlenarCombo2(fdAvales,VarToStr(fdSolicitud.FieldValues['avales']));
+
+     uHelpers.JsonToDataset(fdAvales,VarToStr(fdSolicitud.FieldValues['avales']));
 
 //    uHelpers.JsonToDataset(fdAvales,TJsonArray((TJsonObject(resultado.Get('data').JsonValue.ToJSON).Get(0)).JsonValue.ToJSON));
     // NO variar
@@ -1115,6 +1116,18 @@ txtDniAval.Text:='';
 txtNombresAval.Text:='';
 end;
 
+procedure TfSolicitud.SpeedButton3Click(Sender: TObject);
+var ResultsForm:TfCliente;
+begin
+     ResultsForm := TfCliente.Create(nil);
+            try
+              //ResultsForm.:=StrToInt( txtDniCliente.Text);
+              ResultsForm.ShowModal;
+            finally
+              ResultsForm.Free;
+            end;
+end;
+
 procedure TfSolicitud.txtDniAvalKeyUp(Sender: TObject; var Key: Word;
   Shift: TShiftState);
      var ResultsForm:TfCliente;
@@ -1166,7 +1179,7 @@ begin
         respuesta:=TJSONObject.Create();
         respuesta:=uHelpers.existeCliente(txtDniCliente.Text);
      //   ShowMessage(respuesta.ToString);
-        if respuesta.TryGetValue('data',data) then
+        if respuesta.TryGetValue('data',data)  and (TJSONArray(data).Count>0) then
            begin
              //  ShowMessage(data.ToString);
              item:=data.Get(0) as TJSONObject;

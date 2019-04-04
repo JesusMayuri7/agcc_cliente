@@ -965,7 +965,7 @@ object fResolucion: TfResolucion
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 43556.860920057900000000
-    ReportOptions.LastChange = 43557.003087175920000000
+    ReportOptions.LastChange = 43557.003087175900000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       ''
@@ -1062,7 +1062,7 @@ object fResolucion: TfResolucion
         object Memo31: TfrxMemoView
           Align = baRight
           AllowVectorExport = True
-          Left = -22.677180000000050000
+          Left = -22.677180000000000000
           Top = 34.015770000000000000
           Width = 740.787880000000000000
           Height = 15.118120000000000000
@@ -1692,7 +1692,7 @@ object fResolucion: TfResolucion
         end
         object Memo46: TfrxMemoView
           AllowVectorExport = True
-          Left = 34.015770000000010000
+          Left = 34.015770000000000000
           Top = 621.622450000000000000
           Width = 83.149660000000000000
           Height = 18.897650000000000000
@@ -1744,7 +1744,7 @@ object fResolucion: TfResolucion
         object Memo33: TfrxMemoView
           AllowVectorExport = True
           Left = 124.724490000000000000
-          Top = 68.031539999999950000
+          Top = 68.031540000000000000
           Width = 166.299320000000000000
           Height = 18.897650000000000000
           Frame.Typ = []
@@ -1754,7 +1754,7 @@ object fResolucion: TfResolucion
         object Memo34: TfrxMemoView
           AllowVectorExport = True
           Left = 351.496290000000000000
-          Top = 68.031539999999950000
+          Top = 68.031540000000000000
           Width = 166.299320000000000000
           Height = 18.897650000000000000
           Frame.Typ = []
@@ -1764,7 +1764,7 @@ object fResolucion: TfResolucion
         object Line1: TfrxLineView
           AllowVectorExport = True
           Left = 120.944960000000000000
-          Top = 52.913419999999970000
+          Top = 52.913420000000000000
           Width = 177.637910000000000000
           Color = clBlack
           Frame.Typ = [ftTop]
@@ -1772,7 +1772,7 @@ object fResolucion: TfResolucion
         object Line2: TfrxLineView
           AllowVectorExport = True
           Left = 351.496290000000000000
-          Top = 52.913419999999970000
+          Top = 52.913420000000000000
           Width = 166.299320000000000000
           Color = clBlack
           Frame.Typ = [ftTop]

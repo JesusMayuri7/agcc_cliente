@@ -72,7 +72,6 @@ object fSolicitud: TfSolicitud
       Width = 23
       Height = 25
       Align = alLeft
-      Caption = '<'
       OnClick = spbActualizarClick
       ExplicitLeft = 3
       ExplicitTop = 5
@@ -801,11 +800,12 @@ object fSolicitud: TfSolicitud
                 Caption = 'Nombres'
               end
               object SpeedButton3: TSpeedButton
-                Left = 405
+                Left = 389
                 Top = 36
                 Width = 42
                 Height = 22
                 Caption = 'Agregar'
+                OnClick = SpeedButton3Click
               end
               object txtDniCliente: TEdit
                 Left = 16
@@ -1117,11 +1117,11 @@ object fSolicitud: TfSolicitud
             OptionsView.GroupByBox = False
             OptionsView.GroupRowStyle = grsOffice11
             Styles.ContentOdd = cxStyle1
-            object gridSolicitudnro_resolucion: TcxGridDBColumn
+            object gridSolicitudnro_solicitud: TcxGridDBColumn
               Caption = '#'
-              DataBinding.FieldName = 'nro_resolucion'
+              DataBinding.FieldName = 'nro_solicitud'
               HeaderAlignmentHorz = taCenter
-              Width = 44
+              Width = 37
             end
             object gridSolicitudlinea_credito: TcxGridDBColumn
               DataBinding.FieldName = 'linea_credito'
@@ -1563,8 +1563,8 @@ object fSolicitud: TfSolicitud
     object fdSolicitudresolucion_id: TIntegerField
       FieldName = 'resolucion_id'
     end
-    object fdSolicitudnro_resolucion: TIntegerField
-      FieldName = 'nro_resolucion'
+    object fdSolicitudnro_solicitud: TStringField
+      FieldName = 'nro_solicitud'
     end
   end
   object dsSolicitud: TDataSource
@@ -1728,8 +1728,6 @@ object fSolicitud: TfSolicitud
   end
   object frxReport1: TfrxReport
     Version = '6.2.1'
-    DataSet = frxDBSolicitud
-    DataSetName = 'frxDBSolicitud'
     DotMatrixReport = False
     IniFile = '\Software\Fast Reports'
     PreviewOptions.Buttons = [pbPrint, pbLoad, pbSave, pbExport, pbZoom, pbFind, pbOutline, pbPageSetup, pbTools, pbEdit, pbNavigator, pbExportQuick, pbCopy, pbSelection]
@@ -1737,15 +1735,15 @@ object fSolicitud: TfSolicitud
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 43556.860920057900000000
-    ReportOptions.LastChange = 43557.919957511600000000
+    ReportOptions.LastChange = 43558.875564895830000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       ''
       'begin'
       ''
       'end.')
-    Left = 872
-    Top = 56
+    Left = 784
+    Top = 72
     Datasets = <
       item
         DataSet = frxDBAvales
@@ -1903,17 +1901,17 @@ object fSolicitud: TfSolicitud
           Top = 100.047310000000000000
           Width = 266.976500000000000000
           Height = 18.897650000000000000
-          DataField = 'nro_resolucion'
+          DataField = 'nro_solicitud'
           DataSet = frxDBSolicitud
           DataSetName = 'frxDBSolicitud'
           Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
+          Font.Color = clBlack
           Font.Height = -13
           Font.Name = 'Arial'
           Font.Style = []
           Frame.Typ = []
           Memo.UTF8W = (
-            '[frxDBSolicitud."nro_resolucion"]')
+            '[frxDBSolicitud."nro_solicitud"]')
           ParentFont = False
           Style = 'Data'
           VAlign = vaCenter
@@ -1926,7 +1924,7 @@ object fSolicitud: TfSolicitud
           Height = 18.897650000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
-          Font.Height = -19
+          Font.Height = -13
           Font.Name = 'Arial'
           Font.Style = []
           Frame.Typ = []
@@ -1954,7 +1952,7 @@ object fSolicitud: TfSolicitud
           DataSet = frxDBSolicitud
           DataSetName = 'frxDBSolicitud'
           Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
+          Font.Color = clBlack
           Font.Height = -13
           Font.Name = 'Arial'
           Font.Style = []
@@ -1973,7 +1971,7 @@ object fSolicitud: TfSolicitud
           Height = 18.897650000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
-          Font.Height = -19
+          Font.Height = -13
           Font.Name = 'Arial'
           Font.Style = []
           Frame.Typ = []
@@ -2001,7 +1999,13 @@ object fSolicitud: TfSolicitud
       object MasterData1: TfrxMasterData
         FillType = ftBrush
         Frame.Typ = []
-        Height = 535.693260000000000000
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -13
+        Font.Name = 'Arial'
+        Font.Style = []
+        Height = 570.386210000000000000
+        ParentFont = False
         Top = 211.653680000000000000
         Width = 718.110700000000000000
         DataSet = frxDBSolicitud
@@ -2010,27 +2014,27 @@ object fSolicitud: TfSolicitud
         object Shape14: TfrxShapeView
           AllowVectorExport = True
           Left = 132.283550000000000000
-          Top = 228.992270000000000000
+          Top = 143.960730000000000000
           Width = 49.133890000000000000
-          Height = 22.677180000000000000
+          Height = 18.897650000000000000
           Fill.BackColor = cl3DLight
           Frame.Typ = []
         end
         object Shape13: TfrxShapeView
           AllowVectorExport = True
           Left = 11.338590000000000000
-          Top = 228.992270000000000000
+          Top = 143.960730000000000000
           Width = 49.133890000000000000
-          Height = 22.677180000000000000
+          Height = 18.897650000000000000
           Fill.BackColor = cl3DLight
           Frame.Typ = []
         end
         object Shape2: TfrxShapeView
           AllowVectorExport = True
           Left = 7.559060000000000000
-          Top = 101.047310000000000000
+          Top = 63.252010000000000000
           Width = 113.385900000000000000
-          Height = 22.677180000000000000
+          Height = 18.897650000000000000
           Fill.BackColor = cl3DLight
           Frame.Typ = []
         end
@@ -2038,15 +2042,15 @@ object fSolicitud: TfSolicitud
           AllowVectorExport = True
           Left = 7.559060000000000000
           Top = 7.559060000000000000
-          Width = 336.378170000000000000
-          Height = 22.677180000000000000
+          Width = 328.819110000000000000
+          Height = 18.897650000000000000
           Fill.BackColor = cl3DLight
           Frame.Typ = []
         end
         object Shape10: TfrxShapeView
           AllowVectorExport = True
-          Left = 22.677180000000000000
-          Top = 501.677490000000000000
+          Left = 15.118120000000000000
+          Top = 540.149970000000000000
           Width = 113.385900000000000000
           Height = 22.677180000000000000
           Fill.BackColor = cl3DLight
@@ -2054,9 +2058,9 @@ object fSolicitud: TfSolicitud
         end
         object Shape7: TfrxShapeView
           AllowVectorExport = True
-          Left = 298.582870000000000000
-          Top = 195.535560000000000000
-          Width = 404.409710000000000000
+          Left = 11.338590000000000000
+          Top = 176.315090000000000000
+          Width = 687.874460000000000000
           Height = 22.677180000000000000
           Fill.BackColor = cl3DLight
           Frame.Typ = []
@@ -2064,50 +2068,50 @@ object fSolicitud: TfSolicitud
         object Shape6: TfrxShapeView
           AllowVectorExport = True
           Left = 589.606680000000000000
-          Top = 101.047310000000000000
+          Top = 63.252010000000000000
           Width = 113.385900000000000000
-          Height = 22.677180000000000000
+          Height = 18.897650000000000000
           Fill.BackColor = cl3DLight
           Frame.Typ = []
         end
         object Shape5: TfrxShapeView
           AllowVectorExport = True
           Left = 427.086890000000000000
-          Top = 101.047310000000000000
+          Top = 63.252010000000000000
           Width = 139.842610000000000000
-          Height = 22.677180000000000000
+          Height = 18.897650000000000000
           Fill.BackColor = cl3DLight
           Frame.Typ = []
         end
         object Shape4: TfrxShapeView
           AllowVectorExport = True
           Left = 294.803340000000000000
-          Top = 101.047310000000000000
+          Top = 63.252010000000000000
           Width = 113.385900000000000000
-          Height = 22.677180000000000000
+          Height = 18.897650000000000000
           Fill.BackColor = cl3DLight
           Frame.Typ = []
         end
         object Shape3: TfrxShapeView
           AllowVectorExport = True
           Left = 154.960730000000000000
-          Top = 101.047310000000000000
+          Top = 63.252010000000000000
           Width = 113.385900000000000000
-          Height = 22.677180000000000000
+          Height = 18.897650000000000000
           Fill.BackColor = cl3DLight
           Frame.Typ = []
         end
         object Memo7: TfrxMemoView
           AllowVectorExport = True
           Left = 11.275510000000000000
-          Top = 34.015770000000000000
-          Width = 336.196970000000000000
+          Top = 33.015770000000000000
+          Width = 324.858380000000000000
           Height = 18.897650000000000000
           DataField = 'cliente_full_name'
           DataSet = frxDBSolicitud
           DataSetName = 'frxDBSolicitud'
           Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
+          Font.Color = clBlack
           Font.Height = -13
           Font.Name = 'Arial'
           Font.Style = []
@@ -2119,35 +2123,35 @@ object fSolicitud: TfSolicitud
         end
         object Memo9: TfrxMemoView
           AllowVectorExport = True
-          Left = 162.456710000000000000
-          Top = 503.559370000000000000
-          Width = 528.953000000000000000
+          Left = 147.338590000000000000
+          Top = 542.031850000000000000
+          Width = 404.228510000000000000
           Height = 18.897650000000000000
-          DataField = 'empleado_full_name'
+          DataField = 'empleado'
           DataSet = frxDBSolicitud
           DataSetName = 'frxDBSolicitud'
           Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
+          Font.Color = clBlack
           Font.Height = -13
           Font.Name = 'Arial'
           Font.Style = []
           Frame.Typ = []
           Memo.UTF8W = (
-            '[frxDBSolicitud."empleado_full_name"]')
+            '[frxDBSolicitud."empleado"]')
           ParentFont = False
           Style = 'Data'
         end
         object Memo11: TfrxMemoView
           AllowVectorExport = True
           Left = 18.834570000000000000
-          Top = 130.283550000000000000
+          Top = 90.488250000000000000
           Width = 78.000000000000000000
           Height = 18.897650000000000000
           DataField = 'monto'
           DataSet = frxDBSolicitud
           DataSetName = 'frxDBSolicitud'
           Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
+          Font.Color = clBlack
           Font.Height = -13
           Font.Name = 'Arial'
           Font.Style = []
@@ -2160,14 +2164,14 @@ object fSolicitud: TfSolicitud
         object Memo13: TfrxMemoView
           AllowVectorExport = True
           Left = 597.102660000000000000
-          Top = 130.283550000000000000
+          Top = 89.488250000000000000
           Width = 78.000000000000000000
           Height = 18.897650000000000000
           DataField = 'cuota'
           DataSet = frxDBSolicitud
           DataSetName = 'frxDBSolicitud'
           Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
+          Font.Color = clBlack
           Font.Height = -13
           Font.Name = 'Arial'
           Font.Style = []
@@ -2180,14 +2184,14 @@ object fSolicitud: TfSolicitud
         object Memo15: TfrxMemoView
           AllowVectorExport = True
           Left = 166.236240000000000000
-          Top = 130.283550000000000000
+          Top = 90.488250000000000000
           Width = 78.000000000000000000
           Height = 18.897650000000000000
           DataField = 'plazo'
           DataSet = frxDBSolicitud
           DataSetName = 'frxDBSolicitud'
           Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
+          Font.Color = clBlack
           Font.Height = -13
           Font.Name = 'Arial'
           Font.Style = []
@@ -2199,15 +2203,15 @@ object fSolicitud: TfSolicitud
         end
         object Memo17: TfrxMemoView
           AllowVectorExport = True
-          Left = 302.299320000000000000
-          Top = 228.992270000000000000
-          Width = 396.669450000000000000
-          Height = 154.960730000000000000
+          Left = 11.275510000000000000
+          Top = 205.992270000000000000
+          Width = 683.913730000000000000
+          Height = 45.354360000000000000
           DataField = 'comentario'
           DataSet = frxDBSolicitud
           DataSetName = 'frxDBSolicitud'
           Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
+          Font.Color = clBlack
           Font.Height = -13
           Font.Name = 'Arial'
           Font.Style = []
@@ -2220,14 +2224,14 @@ object fSolicitud: TfSolicitud
         object Memo19: TfrxMemoView
           AllowVectorExport = True
           Left = 427.023810000000000000
-          Top = 130.283550000000000000
+          Top = 89.488250000000000000
           Width = 128.322820000000000000
           Height = 18.897650000000000000
           DataField = 'tipo_interes'
           DataSet = frxDBSolicitud
           DataSetName = 'frxDBSolicitud'
           Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
+          Font.Color = clBlack
           Font.Height = -13
           Font.Name = 'Arial'
           Font.Style = []
@@ -2240,48 +2244,8 @@ object fSolicitud: TfSolicitud
         object Memo21: TfrxMemoView
           AllowVectorExport = True
           Left = 309.858380000000000000
-          Top = 130.283550000000000000
+          Top = 89.488250000000000000
           Width = 70.440940000000000000
-          Height = 18.897650000000000000
-          DataField = 'interes'
-          DataSet = frxDBSolicitud
-          DataSetName = 'frxDBSolicitud'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -13
-          Font.Name = 'Arial'
-          Font.Style = []
-          Frame.Typ = []
-          Memo.UTF8W = (
-            '[frxDBSolicitud."interes"]')
-          ParentFont = False
-          Style = 'Data'
-        end
-        object Memo23: TfrxMemoView
-          AllowVectorExport = True
-          Left = 67.747990000000000000
-          Top = 230.771800000000000000
-          Width = 47.763760000000000000
-          Height = 18.897650000000000000
-          DataField = 'ahorro_inicial'
-          DataSet = frxDBSolicitud
-          DataSetName = 'frxDBSolicitud'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -13
-          Font.Name = 'Arial'
-          Font.Style = []
-          Frame.Typ = []
-          Memo.UTF8W = (
-            '[frxDBSolicitud."ahorro_inicial"]')
-          ParentFont = False
-          Style = 'Data'
-        end
-        object Memo25: TfrxMemoView
-          AllowVectorExport = True
-          Left = 188.913420000000000000
-          Top = 230.771800000000000000
-          Width = 55.322820000000000000
           Height = 18.897650000000000000
           DataField = 'ahorro_programado'
           DataSet = frxDBSolicitud
@@ -2297,15 +2261,55 @@ object fSolicitud: TfSolicitud
           ParentFont = False
           Style = 'Data'
         end
+        object Memo23: TfrxMemoView
+          AllowVectorExport = True
+          Left = 67.747990000000000000
+          Top = 143.740260000000000000
+          Width = 47.763760000000000000
+          Height = 18.897650000000000000
+          DataField = 'ahorro_inicial'
+          DataSet = frxDBSolicitud
+          DataSetName = 'frxDBSolicitud'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = []
+          Memo.UTF8W = (
+            '[frxDBSolicitud."ahorro_inicial"]')
+          ParentFont = False
+          Style = 'Data'
+        end
+        object Memo25: TfrxMemoView
+          AllowVectorExport = True
+          Left = 188.913420000000000000
+          Top = 143.740260000000000000
+          Width = 55.322820000000000000
+          Height = 18.897650000000000000
+          DataField = 'ahorro_programado'
+          DataSet = frxDBSolicitud
+          DataSetName = 'frxDBSolicitud'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = []
+          Memo.UTF8W = (
+            '[frxDBSolicitud."ahorro_programado"]')
+          ParentFont = False
+          Style = 'Data'
+        end
         object Memo35: TfrxMemoView
           AllowVectorExport = True
           Left = 13.338590000000000000
-          Top = 228.992270000000000000
+          Top = 141.960730000000000000
           Width = 45.354360000000000000
           Height = 18.897650000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
-          Font.Height = -16
+          Font.Height = -13
           Font.Name = 'Arial'
           Font.Style = []
           Frame.Typ = []
@@ -2316,12 +2320,12 @@ object fSolicitud: TfSolicitud
         object Memo36: TfrxMemoView
           AllowVectorExport = True
           Left = 133.283550000000000000
-          Top = 229.992270000000000000
+          Top = 142.960730000000000000
           Width = 45.354360000000000000
-          Height = 18.897650000000000000
+          Height = 15.118120000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
-          Font.Height = -16
+          Font.Height = -13
           Font.Name = 'Arial'
           Font.Style = []
           Frame.Typ = []
@@ -2332,21 +2336,21 @@ object fSolicitud: TfSolicitud
         object Shape1: TfrxShapeView
           AllowVectorExport = True
           Left = 11.338590000000000000
-          Top = 195.535560000000000000
+          Top = 118.504020000000000000
           Width = 234.330860000000000000
-          Height = 22.677180000000000000
+          Height = 18.897650000000000000
           Fill.BackColor = cl3DLight
           Frame.Typ = []
         end
         object Memo37: TfrxMemoView
           AllowVectorExport = True
-          Left = 47.692950000000000000
-          Top = 195.535560000000000000
-          Width = 173.858380000000000000
+          Left = 36.354360000000000000
+          Top = 118.504020000000000000
+          Width = 196.535560000000000000
           Height = 18.897650000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
-          Font.Height = -19
+          Font.Height = -13
           Font.Name = 'Arial'
           Font.Style = []
           Frame.Typ = []
@@ -2362,7 +2366,7 @@ object fSolicitud: TfSolicitud
           Height = 22.677180000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
-          Font.Height = -19
+          Font.Height = -13
           Font.Name = 'Arial'
           Font.Style = []
           Frame.Typ = []
@@ -2373,12 +2377,12 @@ object fSolicitud: TfSolicitud
         object Memo39: TfrxMemoView
           AllowVectorExport = True
           Left = 26.456710000000000000
-          Top = 100.047310000000000000
+          Top = 64.252010000000000000
           Width = 83.149660000000000000
           Height = 18.897650000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
-          Font.Height = -19
+          Font.Height = -13
           Font.Name = 'Arial'
           Font.Style = []
           Frame.Typ = []
@@ -2389,12 +2393,12 @@ object fSolicitud: TfSolicitud
         object Memo40: TfrxMemoView
           AllowVectorExport = True
           Left = 173.858380000000000000
-          Top = 100.047310000000000000
+          Top = 65.252010000000000000
           Width = 83.149660000000000000
-          Height = 18.897650000000000000
+          Height = 15.118120000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
-          Font.Height = -19
+          Font.Height = -13
           Font.Name = 'Arial'
           Font.Style = []
           Frame.Typ = []
@@ -2405,12 +2409,12 @@ object fSolicitud: TfSolicitud
         object Memo41: TfrxMemoView
           AllowVectorExport = True
           Left = 317.480520000000000000
-          Top = 100.047310000000000000
+          Top = 64.252010000000000000
           Width = 83.149660000000000000
           Height = 18.897650000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
-          Font.Height = -19
+          Font.Height = -13
           Font.Name = 'Arial'
           Font.Style = []
           Frame.Typ = []
@@ -2421,12 +2425,12 @@ object fSolicitud: TfSolicitud
         object Memo42: TfrxMemoView
           AllowVectorExport = True
           Left = 442.205010000000000000
-          Top = 100.047310000000000000
+          Top = 64.252010000000000000
           Width = 105.826840000000000000
           Height = 18.897650000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
-          Font.Height = -19
+          Font.Height = -13
           Font.Name = 'Arial'
           Font.Style = []
           Frame.Typ = []
@@ -2437,12 +2441,12 @@ object fSolicitud: TfSolicitud
         object Memo43: TfrxMemoView
           AllowVectorExport = True
           Left = 604.724800000000000000
-          Top = 100.047310000000000000
+          Top = 64.252010000000000000
           Width = 83.149660000000000000
           Height = 18.897650000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
-          Font.Height = -19
+          Font.Height = -13
           Font.Name = 'Arial'
           Font.Style = []
           Frame.Typ = []
@@ -2452,13 +2456,13 @@ object fSolicitud: TfSolicitud
         end
         object Memo44: TfrxMemoView
           AllowVectorExport = True
-          Left = 313.700990000000000000
-          Top = 194.535560000000000000
+          Left = 26.456710000000000000
+          Top = 178.315090000000000000
           Width = 113.385900000000000000
-          Height = 18.897650000000000000
+          Height = 15.118120000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
-          Font.Height = -19
+          Font.Height = -13
           Font.Name = 'Arial'
           Font.Style = []
           Frame.Typ = []
@@ -2468,13 +2472,13 @@ object fSolicitud: TfSolicitud
         end
         object Memo46: TfrxMemoView
           AllowVectorExport = True
-          Left = 34.015770000000000000
-          Top = 500.677490000000000000
+          Left = 30.236240000000000000
+          Top = 540.149970000000000000
           Width = 83.149660000000000000
           Height = 18.897650000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
-          Font.Height = -19
+          Font.Height = -13
           Font.Name = 'Arial'
           Font.Style = []
           Frame.Typ = []
@@ -2482,23 +2486,203 @@ object fSolicitud: TfSolicitud
             'Analista')
           ParentFont = False
         end
+        object Shape20: TfrxShapeView
+          AllowVectorExport = True
+          Left = 362.834880000000000000
+          Top = 6.338590000000000000
+          Width = 158.740260000000000000
+          Height = 18.897650000000000000
+          Fill.BackColor = cl3DLight
+          Frame.Typ = []
+        end
+        object Memo54: TfrxMemoView
+          AllowVectorExport = True
+          Left = 364.834880000000000000
+          Top = 8.338590000000000000
+          Width = 151.181200000000000000
+          Height = 18.897650000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = []
+          Memo.UTF8W = (
+            'Tipo de Prestamo')
+          ParentFont = False
+        end
+        object Shape21: TfrxShapeView
+          AllowVectorExport = True
+          Left = 544.252320000000000000
+          Top = 6.559060000000000000
+          Width = 162.519790000000000000
+          Height = 18.897650000000000000
+          Fill.BackColor = cl3DLight
+          Frame.Typ = []
+        end
+        object Memo55: TfrxMemoView
+          AllowVectorExport = True
+          Left = 555.590910000000000000
+          Top = 7.559060000000000000
+          Width = 136.063080000000000000
+          Height = 18.897650000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = []
+          Memo.UTF8W = (
+            'Tipo de Cliente')
+          ParentFont = False
+        end
+        object Memo56: TfrxMemoView
+          AllowVectorExport = True
+          Left = 362.834880000000000000
+          Top = 33.015770000000000000
+          Width = 162.338590000000000000
+          Height = 18.897650000000000000
+          DataField = 'tipo_prestamo'
+          DataSet = frxDBSolicitud
+          DataSetName = 'frxDBSolicitud'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = []
+          Memo.UTF8W = (
+            '[frxDBSolicitud."tipo_prestamo"]')
+          ParentFont = False
+          Style = 'Data'
+        end
+        object Memo57: TfrxMemoView
+          AllowVectorExport = True
+          Left = 551.811380000000000000
+          Top = 33.015770000000000000
+          Width = 147.220470000000000000
+          Height = 18.897650000000000000
+          DataField = 'perfil_cliente'
+          DataSet = frxDBSolicitud
+          DataSetName = 'frxDBSolicitud'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = []
+          Memo.UTF8W = (
+            '[frxDBSolicitud."perfil_cliente"]')
+          ParentFont = False
+        end
+        object Shape22: TfrxShapeView
+          AllowVectorExport = True
+          Left = 362.834880000000000000
+          Top = 119.504020000000000000
+          Width = 158.740260000000000000
+          Height = 18.897650000000000000
+          Fill.BackColor = cl3DLight
+          Frame.Typ = []
+        end
+        object Memo58: TfrxMemoView
+          AllowVectorExport = True
+          Left = 367.834880000000000000
+          Top = 121.504020000000000000
+          Width = 132.283550000000000000
+          Height = 15.118120000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = []
+          Memo.UTF8W = (
+            'Reputacion Ceop')
+          ParentFont = False
+        end
+        object Shape23: TfrxShapeView
+          AllowVectorExport = True
+          Left = 544.252320000000000000
+          Top = 117.724490000000000000
+          Width = 162.519790000000000000
+          Height = 18.897650000000000000
+          Fill.BackColor = cl3DLight
+          Frame.Typ = []
+        end
+        object Memo59: TfrxMemoView
+          AllowVectorExport = True
+          Left = 574.488560000000000000
+          Top = 118.724490000000000000
+          Width = 86.929190000000000000
+          Height = 18.897650000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = []
+          Memo.UTF8W = (
+            'Infocorp')
+          ParentFont = False
+        end
+        object Memo60: TfrxMemoView
+          AllowVectorExport = True
+          Left = 362.834880000000000000
+          Top = 144.181200000000000000
+          Width = 162.338590000000000000
+          Height = 18.897650000000000000
+          DataField = 'reporte_ceop'
+          DataSet = frxDBSolicitud
+          DataSetName = 'frxDBSolicitud'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = []
+          Memo.UTF8W = (
+            '[frxDBSolicitud."reporte_ceop"]')
+          ParentFont = False
+          Style = 'Data'
+        end
+        object Memo61: TfrxMemoView
+          AllowVectorExport = True
+          Left = 551.811380000000000000
+          Top = 144.181200000000000000
+          Width = 147.220470000000000000
+          Height = 18.897650000000000000
+          DataField = 'reporte_info'
+          DataSet = frxDBSolicitud
+          DataSetName = 'frxDBSolicitud'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = []
+          Memo.UTF8W = (
+            '[frxDBSolicitud."reporte_info"]')
+          ParentFont = False
+        end
       end
       object PageFooter1: TfrxPageFooter
         FillType = ftBrush
         Frame.Typ = []
-        Height = 200.315090000000000000
-        Top = 925.984850000000000000
+        Height = 109.606370000000000000
+        Top = 948.662030000000000000
         Width = 718.110700000000000000
         object Memo28: TfrxMemoView
           Align = baWidth
           AllowVectorExport = True
+          Top = 74.590600000000000000
           Width = 718.110700000000000000
           Frame.Typ = [ftTop]
           Frame.Width = 2.000000000000000000
         end
         object Memo29: TfrxMemoView
           AllowVectorExport = True
-          Top = 1.000000000000000000
+          Left = 3.779530000000000000
+          Top = 79.370130000000000000
           Height = 22.677180000000000000
           AutoWidth = True
           Frame.Typ = []
@@ -2508,9 +2692,9 @@ object fSolicitud: TfSolicitud
         object Memo30: TfrxMemoView
           Align = baRight
           AllowVectorExport = True
-          Left = 642.520100000000000000
-          Top = 1.000000000000000000
-          Width = 75.590600000000000000
+          Left = 612.283860000000000000
+          Top = 79.370130000000000000
+          Width = 105.826840000000000000
           Height = 22.677180000000000000
           Frame.Typ = []
           HAlign = haRight
@@ -2519,8 +2703,8 @@ object fSolicitud: TfSolicitud
         end
         object Memo33: TfrxMemoView
           AllowVectorExport = True
-          Left = 124.724490000000000000
-          Top = 68.031540000000000000
+          Left = 139.842610000000000000
+          Top = 33.015770000000000000
           Width = 166.299320000000000000
           Height = 18.897650000000000000
           Frame.Typ = []
@@ -2529,8 +2713,8 @@ object fSolicitud: TfSolicitud
         end
         object Memo34: TfrxMemoView
           AllowVectorExport = True
-          Left = 351.496290000000000000
-          Top = 68.031540000000000000
+          Left = 366.614410000000000000
+          Top = 33.015770000000000000
           Width = 166.299320000000000000
           Height = 18.897650000000000000
           Frame.Typ = []
@@ -2539,16 +2723,16 @@ object fSolicitud: TfSolicitud
         end
         object Line1: TfrxLineView
           AllowVectorExport = True
-          Left = 120.944960000000000000
-          Top = 52.913420000000000000
+          Left = 136.063080000000000000
+          Top = 17.897650000000000000
           Width = 177.637910000000000000
           Color = clBlack
           Frame.Typ = [ftTop]
         end
         object Line2: TfrxLineView
           AllowVectorExport = True
-          Left = 351.496290000000000000
-          Top = 52.913420000000000000
+          Left = 366.614410000000000000
+          Top = 17.897650000000000000
           Width = 166.299320000000000000
           Color = clBlack
           Frame.Typ = [ftTop]
@@ -2557,8 +2741,8 @@ object fSolicitud: TfSolicitud
       object DetailData1: TfrxDetailData
         FillType = ftBrush
         Frame.Typ = []
-        Height = 94.488250000000000000
-        Top = 771.024120000000000000
+        Height = 83.149660000000000000
+        Top = 805.039890000000000000
         Width = 718.110700000000000000
         DataSet = frxDBAvales
         DataSetName = 'frxDBAvales'
@@ -2567,62 +2751,80 @@ object fSolicitud: TfSolicitud
           IndexTag = 1
           AllowVectorExport = True
           Left = 18.897650000000000000
-          Top = 34.015770000000000000
+          Top = 60.252010000000000000
           Width = 71.811070000000000000
           Height = 18.897650000000000000
           DataField = 'dni'
           DataSet = frxDBAvales
           DataSetName = 'frxDBAvales'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = []
           Frame.Typ = []
           Memo.UTF8W = (
             '[frxDBAvales."dni"]')
+          ParentFont = False
         end
         object frxDBDataset1full_name: TfrxMemoView
           IndexTag = 1
           AllowVectorExport = True
           Left = 120.944960000000000000
-          Top = 34.015770000000000000
+          Top = 60.252010000000000000
           Width = 355.275820000000000000
           Height = 18.897650000000000000
           DataField = 'full_name'
           DataSet = frxDBAvales
           DataSetName = 'frxDBAvales'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = []
           Frame.Typ = []
           Memo.UTF8W = (
             '[frxDBAvales."full_name"]')
+          ParentFont = False
         end
         object frxDBDataset1tipo: TfrxMemoView
           IndexTag = 1
           AllowVectorExport = True
           Left = 506.457020000000000000
-          Top = 34.015770000000000000
+          Top = 60.252010000000000000
           Width = 102.047310000000000000
           Height = 18.897650000000000000
           DataField = 'tipo'
           DataSet = frxDBAvales
           DataSetName = 'frxDBAvales'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = []
           Frame.Typ = []
           Memo.UTF8W = (
             '[frxDBAvales."tipo"]')
+          ParentFont = False
         end
         object Shape15: TfrxShapeView
           AllowVectorExport = True
           Left = 7.559060000000000000
-          Top = 4.779530000000000000
+          Top = 35.015770000000000000
           Width = 94.488250000000000000
-          Height = 22.677180000000000000
+          Height = 18.897650000000000000
           Fill.BackColor = cl3DLight
           Frame.Typ = []
         end
         object Memo50: TfrxMemoView
           AllowVectorExport = True
           Left = 26.456710000000000000
-          Top = 3.779530000000000000
+          Top = 35.015770000000000000
           Width = 64.252010000000000000
           Height = 18.897650000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
-          Font.Height = -19
+          Font.Height = -13
           Font.Name = 'Arial'
           Font.Style = []
           Frame.Typ = []
@@ -2633,21 +2835,21 @@ object fSolicitud: TfSolicitud
         object Shape16: TfrxShapeView
           AllowVectorExport = True
           Left = 124.724490000000000000
-          Top = 4.779530000000000000
+          Top = 35.015770000000000000
           Width = 351.496290000000000000
-          Height = 22.677180000000000000
+          Height = 18.897650000000000000
           Fill.BackColor = cl3DLight
           Frame.Typ = []
         end
         object Memo51: TfrxMemoView
           AllowVectorExport = True
           Left = 143.622140000000000000
-          Top = 3.779530000000000000
+          Top = 34.015770000000000000
           Width = 83.149660000000000000
           Height = 18.897650000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
-          Font.Height = -19
+          Font.Height = -13
           Font.Name = 'Arial'
           Font.Style = []
           Frame.Typ = []
@@ -2658,27 +2860,51 @@ object fSolicitud: TfSolicitud
         object Shape17: TfrxShapeView
           AllowVectorExport = True
           Left = 498.897960000000000000
-          Top = 4.779530000000000000
+          Top = 35.015770000000000000
           Width = 113.385900000000000000
-          Height = 22.677180000000000000
+          Height = 18.897650000000000000
           Fill.BackColor = cl3DLight
           Frame.Typ = []
         end
         object Memo52: TfrxMemoView
           AllowVectorExport = True
           Left = 517.795610000000000000
-          Top = 3.779530000000000000
+          Top = 34.015770000000000000
           Width = 83.149660000000000000
           Height = 18.897650000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
-          Font.Height = -19
+          Font.Height = -13
           Font.Name = 'Arial'
           Font.Style = []
           Frame.Typ = []
           Memo.UTF8W = (
             'Tipo')
           ParentFont = False
+        end
+        object Shape18: TfrxShapeView
+          AllowVectorExport = True
+          Left = 7.559060000000000000
+          Top = 3.779530000000000000
+          Width = 702.992580000000000000
+          Frame.Typ = []
+        end
+        object Shape19: TfrxShapeView
+          AllowVectorExport = True
+          Left = 7.559060000000000000
+          Top = 26.456710000000000000
+          Width = 702.992580000000000000
+          Frame.Typ = []
+        end
+        object Memo53: TfrxMemoView
+          AllowVectorExport = True
+          Left = 7.559060000000000000
+          Top = 7.559060000000000000
+          Width = 94.488250000000000000
+          Height = 18.897650000000000000
+          Frame.Typ = []
+          Memo.UTF8W = (
+            'INTERVIENEN')
         end
       end
     end
@@ -2721,7 +2947,7 @@ object fSolicitud: TfSolicitud
       'ahorro_programado=ahorro_programado'
       'tipo_interes=tipo_interes'
       'resolucion_id=resolucion_id'
-      'nro_resolucion=nro_resolucion')
+      'nro_solicitud=nro_solicitud')
     DataSet = fdSolicitud
     BCDToCurrency = False
     Left = 845
