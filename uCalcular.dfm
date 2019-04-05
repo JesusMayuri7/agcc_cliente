@@ -107,7 +107,6 @@ object fCalcular: TfCalcular
             end>
           Properties.ListFieldIndex = 1
           Properties.ListOptions.SyncMode = True
-          Properties.ListSource = dmData.dsLineaCredito
           Properties.OnChange = cbbLineaCreditoPropertiesChange
           TabOrder = 0
           Width = 231
@@ -129,7 +128,6 @@ object fCalcular: TfCalcular
             end>
           Properties.ListFieldIndex = 1
           Properties.ListOptions.SyncMode = True
-          Properties.ListSource = dmData.dsPerfilCliente
           Properties.OnChange = cbbPerfilClientePropertiesChange
           TabOrder = 1
           Width = 231
@@ -151,7 +149,6 @@ object fCalcular: TfCalcular
             end>
           Properties.ListFieldIndex = 1
           Properties.ListOptions.SyncMode = True
-          Properties.ListSource = dmData.dsTipoProducto
           TabOrder = 2
           Width = 231
         end
@@ -455,7 +452,6 @@ object fCalcular: TfCalcular
           TabOrder = 0
           object cxGrid4DBBandedTableView1: TcxGridDBBandedTableView
             Navigator.Buttons.CustomButtons = <>
-            DataController.DataSource = dmData.dsAhorro
             DataController.Summary.DefaultGroupSummaryItems = <>
             DataController.Summary.FooterSummaryItems = <>
             DataController.Summary.SummaryGroups = <>
@@ -835,6 +831,10 @@ object fCalcular: TfCalcular
       object pgcRebatir: TTabSheet
         Caption = 'Rebatir'
         ImageIndex = 1
+        ExplicitLeft = 0
+        ExplicitTop = 0
+        ExplicitWidth = 0
+        ExplicitHeight = 0
         object GridPanel2: TGridPanel
           Left = 0
           Top = 0
@@ -1229,7 +1229,6 @@ object fCalcular: TfCalcular
     end
   end
   object BindSourceDB1: TBindSourceDB
-    DataSet = dmData.fdLineaCredito
     ScopeMappings = <>
     Left = 696
     Top = 272
@@ -1289,13 +1288,11 @@ object fCalcular: TfCalcular
     end
   end
   object BindSourceDB2: TBindSourceDB
-    DataSet = dmData.fdPerfilCliente
     ScopeMappings = <>
     Left = 744
     Top = 168
   end
   object BindSourceDB3: TBindSourceDB
-    DataSet = dmData.fdTipoProducto
     ScopeMappings = <>
     Left = 784
     Top = 272

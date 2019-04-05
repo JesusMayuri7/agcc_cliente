@@ -179,7 +179,7 @@ object fSolicitud: TfSolicitud
       Top = 1
       Width = 1312
       Height = 737
-      ActivePage = tabLIstado
+      ActivePage = tabFormulario
       Align = alClient
       TabOrder = 0
       object tabFormulario: TTabSheet
@@ -1905,7 +1905,7 @@ object fSolicitud: TfSolicitud
           DataSet = frxDBSolicitud
           DataSetName = 'frxDBSolicitud'
           Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
+          Font.Color = clWindowText
           Font.Height = -13
           Font.Name = 'Arial'
           Font.Style = []
@@ -1952,7 +1952,7 @@ object fSolicitud: TfSolicitud
           DataSet = frxDBSolicitud
           DataSetName = 'frxDBSolicitud'
           Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
+          Font.Color = clWindowText
           Font.Height = -13
           Font.Name = 'Arial'
           Font.Style = []
@@ -2111,7 +2111,7 @@ object fSolicitud: TfSolicitud
           DataSet = frxDBSolicitud
           DataSetName = 'frxDBSolicitud'
           Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
+          Font.Color = clWindowText
           Font.Height = -13
           Font.Name = 'Arial'
           Font.Style = []
@@ -2131,7 +2131,7 @@ object fSolicitud: TfSolicitud
           DataSet = frxDBSolicitud
           DataSetName = 'frxDBSolicitud'
           Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
+          Font.Color = clWindowText
           Font.Height = -13
           Font.Name = 'Arial'
           Font.Style = []
@@ -2151,7 +2151,7 @@ object fSolicitud: TfSolicitud
           DataSet = frxDBSolicitud
           DataSetName = 'frxDBSolicitud'
           Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
+          Font.Color = clWindowText
           Font.Height = -13
           Font.Name = 'Arial'
           Font.Style = []
@@ -2171,7 +2171,7 @@ object fSolicitud: TfSolicitud
           DataSet = frxDBSolicitud
           DataSetName = 'frxDBSolicitud'
           Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
+          Font.Color = clWindowText
           Font.Height = -13
           Font.Name = 'Arial'
           Font.Style = []
@@ -2191,7 +2191,7 @@ object fSolicitud: TfSolicitud
           DataSet = frxDBSolicitud
           DataSetName = 'frxDBSolicitud'
           Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
+          Font.Color = clWindowText
           Font.Height = -13
           Font.Name = 'Arial'
           Font.Style = []
@@ -2211,7 +2211,7 @@ object fSolicitud: TfSolicitud
           DataSet = frxDBSolicitud
           DataSetName = 'frxDBSolicitud'
           Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
+          Font.Color = clWindowText
           Font.Height = -13
           Font.Name = 'Arial'
           Font.Style = []
@@ -2231,7 +2231,7 @@ object fSolicitud: TfSolicitud
           DataSet = frxDBSolicitud
           DataSetName = 'frxDBSolicitud'
           Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
+          Font.Color = clWindowText
           Font.Height = -13
           Font.Name = 'Arial'
           Font.Style = []
@@ -2271,7 +2271,7 @@ object fSolicitud: TfSolicitud
           DataSet = frxDBSolicitud
           DataSetName = 'frxDBSolicitud'
           Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
+          Font.Color = clWindowText
           Font.Height = -13
           Font.Name = 'Arial'
           Font.Style = []
@@ -2291,7 +2291,7 @@ object fSolicitud: TfSolicitud
           DataSet = frxDBSolicitud
           DataSetName = 'frxDBSolicitud'
           Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
+          Font.Color = clWindowText
           Font.Height = -13
           Font.Name = 'Arial'
           Font.Style = []
@@ -2546,7 +2546,7 @@ object fSolicitud: TfSolicitud
           DataSet = frxDBSolicitud
           DataSetName = 'frxDBSolicitud'
           Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
+          Font.Color = clWindowText
           Font.Height = -13
           Font.Name = 'Arial'
           Font.Style = []
@@ -2635,7 +2635,7 @@ object fSolicitud: TfSolicitud
           DataSet = frxDBSolicitud
           DataSetName = 'frxDBSolicitud'
           Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
+          Font.Color = clWindowText
           Font.Height = -13
           Font.Name = 'Arial'
           Font.Style = []
