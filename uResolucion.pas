@@ -15,7 +15,22 @@ uses
   FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Comp.DataSet,
   FireDAC.Comp.Client, cxContainer, cxTextEdit, cxMaskEdit, cxDropDownEdit,
   cxLookupEdit, cxDBLookupEdit, cxDBLookupComboBox, cxCalendar, cxDBEdit,
-  Vcl.Buttons, cxSpinEdit, frxClass, frxDBSet;
+  Vcl.Buttons, cxSpinEdit, frxClass, frxDBSet, dxSkinBlack, dxSkinBlue,
+  dxSkinBlueprint, dxSkinCaramel, dxSkinCoffee, dxSkinDarkRoom, dxSkinDarkSide,
+  dxSkinDevExpressDarkStyle, dxSkinDevExpressStyle, dxSkinFoggy,
+  dxSkinGlassOceans, dxSkinHighContrast, dxSkiniMaginary, dxSkinLilian,
+  dxSkinLiquidSky, dxSkinLondonLiquidSky, dxSkinMcSkin, dxSkinMetropolis,
+  dxSkinMetropolisDark, dxSkinMoneyTwins, dxSkinOffice2007Black,
+  dxSkinOffice2007Blue, dxSkinOffice2007Green, dxSkinOffice2007Pink,
+  dxSkinOffice2007Silver, dxSkinOffice2010Black, dxSkinOffice2010Blue,
+  dxSkinOffice2010Silver, dxSkinOffice2013DarkGray, dxSkinOffice2013LightGray,
+  dxSkinOffice2013White, dxSkinOffice2016Colorful, dxSkinOffice2016Dark,
+  dxSkinPumpkin, dxSkinSeven, dxSkinSevenClassic, dxSkinSharp, dxSkinSharpPlus,
+  dxSkinSilver, dxSkinSpringTime, dxSkinStardust, dxSkinSummer2008,
+  dxSkinTheAsphaltWorld, dxSkinTheBezier, dxSkinsDefaultPainters,
+  dxSkinValentine, dxSkinVisualStudio2013Blue, dxSkinVisualStudio2013Dark,
+  dxSkinVisualStudio2013Light, dxSkinVS2010, dxSkinWhiteprint,
+  dxSkinXmas2008Blue;
 
 type
   TfResolucion = class(TForm)
@@ -265,7 +280,12 @@ begin
        FreeAndNil(resultado);
        FreeAndNil(graph);
     end;
-    uHelpers.habilitarPermisos(TForm(TPanel((TButton(Sender).GetParentComponent).GetParentComponent).GetParentComponent),dmData.Permisos);
+    tabFormulario.TabVisible:=false;
+    tabListado.TabVisible:=true;
+    btnEditar.Enabled:=True;
+    btnCancelar.Enabled:=false;
+    uHelpers.habilitarPermisos(uHelpers.GetFormByName('fResolucion'),dmData.Permisos);
+
 end;
 
 procedure TfResolucion.calcular;
@@ -297,6 +317,10 @@ dmData.ImageList1.GetBitmap(7, spbActualizar.glyph);
 dmData.ImageList1.GetBitmap(6, spbPagSiguiente.glyph);
 dmData.ImageList1.GetBitmap(5, spbPaginaAnteriorrr.glyph);
 dtpDate.Date:=Now;
+  tabFormulario.TabVisible:=false;
+  tabListado.TabVisible:=true;
+  btnEditar.Enabled:=True;
+  btnCancelar.Enabled:=false;
 uHelpers.habilitarPermisos(TForm(Sender),dmData.Permisos);
 paginaActual:=1;
 //listar();

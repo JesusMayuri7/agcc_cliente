@@ -26,7 +26,7 @@ object fResolucion: TfResolucion
       Top = 1
       Width = 956
       Height = 502
-      ActivePage = tabListado
+      ActivePage = tabFormulario
       Align = alClient
       TabOrder = 0
       object tabFormulario: TTabSheet
@@ -719,7 +719,6 @@ object fResolucion: TfResolucion
       Width = 23
       Height = 25
       Align = alLeft
-      Caption = '<'
       Enabled = False
       OnClick = spbActualizarClick
       ExplicitLeft = 46

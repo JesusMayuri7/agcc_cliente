@@ -179,7 +179,7 @@ object fSolicitud: TfSolicitud
       Top = 1
       Width = 1312
       Height = 737
-      ActivePage = tabFormulario
+      ActivePage = tabLIstado
       Align = alClient
       TabOrder = 0
       object tabFormulario: TTabSheet

@@ -32,6 +32,7 @@ procedure datosAhorro(dataset:TFDmemtable=nil);
 function calcularAhorroResolucion(monto:real;plazo:integer;interes:real;inicial,programado:real;grid:TcxGridBandedTableView=nil):real;
 procedure habilitarPermisos(form:TForm;per:TJSONArray);
 function cargarToken: WideString;
+function GetFormByName(const FormName: string): TForm;
 var
    {variables here}
    aInicial:Real=0;
@@ -41,6 +42,21 @@ implementation
 
 uses
   uAdapterJson, UGraph, UData;
+
+function GetFormByName(const FormName: string): TForm;
+var
+  i : Integer;
+begin
+  for i := 0 to Screen.FormCount - 1 do
+  begin
+    if SameText(Screen.Forms[i].Name,FormName) then
+    begin
+      Result := Screen.Forms[i];
+      Exit;
+    end;
+  end;
+  Result := nil;
+end;
 
 function cargarToken: WideString;
 var

@@ -346,8 +346,8 @@ begin
     resultado:=TJSONObject.Create;
     graph:=TGraph.Create(dmdata.RESTClient1);
     try  // Cambiar por el query a consultar, hacer pruebas en Insomnia
-    graph.query:='mutation postCliente($dni:String,$nombres:String,$apellido_paterno:String'+
-    ',$apellido_materno:String,$direccion:String,$telefono:String,$fecha_nacimiento:String,$activo:Int)'+
+    graph.query:='mutation postCliente($dni:String!,$nombres:String!,$apellido_paterno:String!'+
+    ',$apellido_materno:String!,$direccion:String,$telefono:String,$fecha_nacimiento:String,$activo:Int)'+
     ' { clienteMutation(dni:$dni,nombres:$nombres,apellido_paterno:$apellido_paterno,'+
     'apellido_materno:$apellido_materno,direccion:$direccion,telefono:$telefono,fecha_nacimiento'+
     ':$fecha_nacimiento,activo:$activo)'+
@@ -373,7 +373,7 @@ begin
     uHelpers.InsertarRegistroDataset(resultado,fdCliente);
     showmessage(resultado.ToString);
     finally
-       FreeAndNil(resultado);
+     //  FreeAndNil(resultado);
        FreeAndNil(graph);
     end;
 end;

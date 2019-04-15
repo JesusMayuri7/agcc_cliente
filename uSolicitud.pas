@@ -1047,12 +1047,12 @@ uHelpers.aProgramado:=0;
     try  // Cambiar por el query a consultar, hacer pruebas en Insomnia
     graph.query:='mutation postSolicitud($empleado_id:Int,$cliente_id:Int,$id:Int,$interes:Float,$monto:Float,$plazo:Int,'+
     '$cuota:Float,$comentario:String,$reporte_ceop_id:Int,$reporte_info_id:Int,$giro_negocio_id:Int,$tipo_prestamo_id:Int,'+
-    '$perfil_cliente_tipo_producto_id:Int,$garantia_id:Int,$activo:Int,$ahorro_inicial:Float,$ahorro_programado:Float,$tipo_interes:String)'+
+    '$perfil_cliente_tipo_producto_id:Int,$garantia_id:Int,$activo:Int,$ahorro_inicial:Float,$ahorro_programado:Float,$tipo_interes:String,$avales:[avalInputObjectType])'+
     ' { solicitudMutation(empleado_id:$empleado_id,cliente_id:$cliente_id,id:$id,interes:$interes,monto:$monto,plazo:$plazo,cuota:$cuota,'+
     'comentario:$comentario,reporte_ceop_id:$reporte_ceop_id,historial_crediticio_id:$reporte_info_id,'+
     'giro_negocio_id:$giro_negocio_id,tipo_prestamo_id:$tipo_prestamo_id,'+
     'perfil_cliente_tipo_producto_id:$perfil_cliente_tipo_producto_id,garantia_id:$garantia_id,activo:$activo,'+
-    'ahorro_inicial:$ahorro_inicial,ahorro_programado:$ahorro_programado,tipo_interes:$tipo_interes)'+
+    'ahorro_inicial:$ahorro_inicial,ahorro_programado:$ahorro_programado,tipo_interes:$tipo_interes,avales:$avales)'+
     ' {id,activo,monto,plazo,cuota,interes,comentario,reporte_ceop,reporte_ceop_id,reporte_info,'+
     'reporte_info_id,cliente_full_name,garantia,garantia_id,empleado,tipo_producto,tipo_producto_id,'+
     'tipo_prestamo,tipo_prestamo_id,nro_solicitud,estado,perfil_cliente,perfil_cliente_id,'+
