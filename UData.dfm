@@ -6,6 +6,7 @@ object dmData: TdmData
     Accept = 'application/json, text/plain; q=0.9, text/html;q=0.8,'
     AcceptCharset = 'utf-8, *;q=0.8'
     BaseURL = 'http://ceopilo.test/graphql/query'
+    ContentType = 'application/json'
     Params = <>
     RaiseExceptionOn500 = False
     Left = 152

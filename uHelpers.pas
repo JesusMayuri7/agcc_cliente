@@ -374,6 +374,7 @@ begin
   try
     grid.DataController.RecordCount := TJSONArray(datos).Count;
      Size := TJSONArray(datos).Count;
+
    for i:=0 to pred(Size) do
    begin
     item := datos.Get(i) as TJsonObject;

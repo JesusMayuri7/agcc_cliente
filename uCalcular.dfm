@@ -107,6 +107,7 @@ object fCalcular: TfCalcular
             end>
           Properties.ListFieldIndex = 1
           Properties.ListOptions.SyncMode = True
+          Properties.ListSource = dmData.dsLineaCredito
           Properties.OnChange = cbbLineaCreditoPropertiesChange
           TabOrder = 0
           Width = 231
@@ -128,6 +129,7 @@ object fCalcular: TfCalcular
             end>
           Properties.ListFieldIndex = 1
           Properties.ListOptions.SyncMode = True
+          Properties.ListSource = dmData.dsPerfilCliente
           Properties.OnChange = cbbPerfilClientePropertiesChange
           TabOrder = 1
           Width = 231
@@ -149,6 +151,7 @@ object fCalcular: TfCalcular
             end>
           Properties.ListFieldIndex = 1
           Properties.ListOptions.SyncMode = True
+          Properties.ListSource = dmData.dsTipoProducto
           TabOrder = 2
           Width = 231
         end
@@ -831,10 +834,6 @@ object fCalcular: TfCalcular
       object pgcRebatir: TTabSheet
         Caption = 'Rebatir'
         ImageIndex = 1
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 0
         object GridPanel2: TGridPanel
           Left = 0
           Top = 0
