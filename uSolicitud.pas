@@ -33,7 +33,12 @@ uses
   dxSkinSummer2008, dxSkinTheAsphaltWorld, dxSkinTheBezier,
   dxSkinsDefaultPainters, dxSkinValentine, dxSkinVisualStudio2013Blue,
   dxSkinVisualStudio2013Dark, dxSkinVisualStudio2013Light, dxSkinVS2010,
-  dxSkinWhiteprint, dxSkinXmas2008Blue;
+  dxSkinWhiteprint, dxSkinXmas2008Blue, dxPSGlbl, dxPSUtl, dxPSEngn, dxPrnPg,
+  dxBkgnd, dxWrap, dxPrnDev, dxPSCompsProvider, dxPSFillPatterns,
+  dxPSEdgePatterns, dxPSPDFExportCore, dxPSPDFExport, cxDrawTextUtils,
+  dxPSPrVwStd, dxPSPrVwAdv, dxPSPrVwRibbon, dxPScxPageControlProducer,
+  dxPScxGridLnk, dxPScxGridLayoutViewLnk, dxPScxEditorProducers,
+  dxPScxExtEditorProducers, dxPScxCommon, dxPSCore;
 
 type
   TfSolicitud = class(TForm)
@@ -106,9 +111,6 @@ type
     gridAhorroColumn2: TcxGridDBBandedColumn;
     cxGrid4Level1: TcxGridLevel;
     GridPanel2: TGridPanel;
-    GridPanel1: TGridPanel;
-    grid3: TcxGrid;
-    cxGridLevel3: TcxGridLevel;
     Panel9: TPanel;
     grpCliente: TGroupBox;
     GroupBox2: TGroupBox;
@@ -227,13 +229,6 @@ type
     actCerrar: TAction;
     actAnular: TAction;
     actResolucion: TAction;
-    gridInfo: TcxGridDBBandedTableView;
-    gridInfoid: TcxGridDBBandedColumn;
-    gridInfodesc_tipo_info_detalle: TcxGridDBBandedColumn;
-    gridInfotipo_info_id: TcxGridDBBandedColumn;
-    gridInfotipo_info: TcxGridDBBandedColumn;
-    gridInfoinformacion: TcxGridDBBandedColumn;
-    gridInfovalor: TcxGridDBBandedColumn;
     fdSolicitudtipo_info_detalle: TMemoField;
     fdSolicitudcreated_at: TDateField;
     gridSolicitudcreated_at: TcxGridDBColumn;
@@ -248,6 +243,45 @@ type
     frxDBAvales: TfrxDBDataset;
     gridSolicitudnro_solicitud: TcxGridDBColumn;
     fdSolicitudnro_solicitud: TStringField;
+    pgc1: TPageControl;
+    ts1: TTabSheet;
+    GridPanel1: TGridPanel;
+    grid3: TcxGrid;
+    gridInfo: TcxGridDBBandedTableView;
+    gridInfoid: TcxGridDBBandedColumn;
+    gridInfodesc_tipo_info_detalle: TcxGridDBBandedColumn;
+    gridInfotipo_info_id: TcxGridDBBandedColumn;
+    gridInfotipo_info: TcxGridDBBandedColumn;
+    gridInfoinformacion: TcxGridDBBandedColumn;
+    gridInfovalor: TcxGridDBBandedColumn;
+    gridInfotipo: TcxGridDBBandedColumn;
+    cxGridLevel3: TcxGridLevel;
+    cxGrid2: TcxGrid;
+    gridCostoVenta: TcxGridBandedTableView;
+    cxGridBandedColumn2: TcxGridBandedColumn;
+    cxGridBandedColumn1: TcxGridBandedColumn;
+    cxGridLevel4: TcxGridLevel;
+    ts2: TTabSheet;
+    pnl1: TPanel;
+    btn2: TButton;
+    btn3: TButton;
+    cxGrid3DBTableView1: TcxGridDBTableView;
+    cxGrid3Level1: TcxGridLevel;
+    cxGrid3: TcxGrid;
+    fdResumenInfo: TFDMemTable;
+    fdResumenInfodetalle: TStringField;
+    fdResumenInfoinformacion: TStringField;
+    fdResumenInfomonto: TFloatField;
+    dsResumenInfo: TDataSource;
+    cxGrid3DBTableView1detalle: TcxGridDBColumn;
+    cxGrid3DBTableView1informacion: TcxGridDBColumn;
+    cxGrid3DBTableView1monto: TcxGridDBColumn;
+    fdResumenInfotipo: TStringField;
+    cxGrid3DBTableView1tipo: TcxGridDBColumn;
+    dxComponentPrinter1: TdxComponentPrinter;
+    dxComponentPrinter1Link1: TdxCompositionReportLink;
+    dxComponentPrinter1Link2: TdxGridReportLink;
+    dxComponentPrinter1Link3: TdxGridReportLink;
     procedure FormCreate(Sender: TObject);
     procedure cbbRegistrosChange(Sender: TObject);
     procedure spbPagSiguienteClick(Sender: TObject);
@@ -275,9 +309,21 @@ type
     procedure actResolucionExecute(Sender: TObject);
     procedure btn1Click(Sender: TObject);
     procedure SpeedButton3Click(Sender: TObject);
+    procedure cbbGiroNegocioPropertiesChange(Sender: TObject);
+    procedure gridInfovalorPropertiesEditValueChanged(Sender: TObject);
+    procedure gridInfoEditValueChanged(Sender: TcxCustomGridTableView;
+      AItem: TcxCustomGridTableItem);
+    procedure cbbGiroNegocioPropertiesCloseUp(Sender: TObject);
+    procedure gridInfovalorGetDataText(Sender: TcxCustomGridTableItem;
+      ARecordIndex: Integer; var AText: string);
+    procedure btn2Click(Sender: TObject);
+    procedure btn3Click(Sender: TObject);
   private
     { Private declarations }
     var paginaActual:integer;
+    montoCostoVenta:Real;
+    porcentajeCostoVenta:Real;
+    soloInicio:Boolean;
     procedure listar;
     procedure Limpiar();
     procedure EditarSolicitud(id,interes,monto,plazo,cuota:real;
@@ -286,7 +332,7 @@ type
     activo:boolean;avales,tipo_info_detalle:TJsonArray;aInicial,aProgramado:Real;tipo_interes:string);
     procedure NuevaSolicitud(empleado_id,cliente_id:integer;interes,monto,plazo,cuota:real;
     reporte_ceop_id,reporte_info_id,giro_negocio_id,tipo_prestamo_id,
-    perfil_cliente_tipo_producto_id,garantia_id:Variant;comentario:string;activo:boolean;avales:TJsonArray;aIncial,aProgramado:Real;tipo_interes:string);
+    perfil_cliente_tipo_producto_id,garantia_id:Variant;comentario:string;activo:boolean;avales,tipo_info_detalle:TJsonArray;aIncial,aProgramado:Real;tipo_interes:string);
     function calcularAhorro(monto,plazo,interes:real;dataset: TFdMemTable):real;
     procedure CopiarAvales(dataset:TfdMemtable);
     procedure LookupButtonClick(Sender: TObject; AButtonIndex: Integer);
@@ -298,6 +344,9 @@ type
     procedure RendicionParalelo(monto,plazo,interes:real);
     function calcularCuotaParalelo(monto,plazo,interes:real):real;
     procedure distribucionCuotaParalelo(monto,plazo,interes:real);
+    procedure costoVenta();
+    procedure actualizarCostoVenta(ventas,porcentaje:Real);
+    function actualizarResumenInfo(token:WideString;idsolicitud: integer):TJSONArray;
   public
     { Public declarations }
   end;
@@ -488,6 +537,15 @@ begin
     end;
 end;
 
+procedure TfSolicitud.actualizarCostoVenta(ventas,porcentaje:Real);
+var costoVenta:Real;
+begin
+costoVenta:=ventas-(ventas*(porcentaje/100));
+gridCostoVenta.DataController.Values[0,1]:=ventas;
+gridCostoVenta.DataController.Values[1,1]:=porcentaje;
+gridCostoVenta.DataController.Values[2,1]:=costoVenta;
+end;
+
 procedure TfSolicitud.actualizarInfo(dataset:TfdMemtable;aJson:String);
 var
   I,size: Integer;
@@ -512,6 +570,35 @@ begin
      end;
      dataset.Next;
    end;
+end;
+
+function TfSolicitud.actualizarResumenInfo(token:WideString;idsolicitud: integer):TJSONArray;
+var error,exito,param,resultado:TJSONObject;
+var mensaje:string;
+begin
+   Result:=TJSONArray.Create;
+   resultado:=TJSONObject.Create;
+   param:=TJSONObject.Create;
+   param.AddPair('idsolicitud',TJSONNumber.Create(idsolicitud));
+   dmdata.RESTResumenInfo.Params.AddItem('Accept',
+                            'application/json, */*; q=0.01',
+                            TRESTRequestParameterKind.pkHTTPHEADER);
+   dmdata.RESTResumenInfo.AddParameter('Authorization','Bearer '+token,TRESTRequestParameterKind.pkHTTPHEADER);
+   dmdata.RESTResumenInfo.Params.ParameterByName('Authorization').Options :=[poDoNotEncode];
+   dmdata.RESTResumenInfo.AddParameter('body',param.ToString,TRESTRequestParameterKind.pkREQUESTBODY);
+   dmdata.RESTResumenInfo.Params.ParameterByName('body').ContentType:=TRESTContentType.ctAPPLICATION_JSON;
+   dmdata.RESTResumenInfo.Execute;
+
+   resultado:=TJSONObject(dmdata.RespResumenInfo.JSONValue);
+      if resultado.TryGetValue('message',mensaje) then
+      begin
+         if resultado.Get('message').JsonValue.Value='exito' then
+         begin
+             result:=TJSONArray(resultado.Get('data').JsonValue);
+         end;
+      end
+      else
+         ShowMessage('Error al actualizar');
 end;
 
 procedure TfSolicitud.actAnularExecute(Sender: TObject);
@@ -567,6 +654,32 @@ if gridSolicitud.Controller.SelectedRowCount=1 then
   end;
 end;
 
+procedure TfSolicitud.btn2Click(Sender: TObject);
+var data:TJSONArray;
+begin
+if Tag>0 Then
+begin
+data:=actualizarResumenInfo(cargarToken,Tag);
+uHelpers.JsonToDataset(fdResumenInfo,data.ToString);
+end
+else
+  ShowMessage('Disponible cuando editas');
+end;
+
+procedure TfSolicitud.btn3Click(Sender: TObject);
+begin
+  if Tag>0 Then
+  begin
+  dxComponentPrinter1Link1.PrinterPage.PageHeader.CenterTitle.Text:='CLIENTE: '+VartoStr(fdSolicitud.FieldValues['cliente_full_name']);
+  dxComponentPrinter1Link2.ReportTitleText:='MONTO: '+VartoStr(fdSolicitud.FieldValues['monto'])+#13+#10+
+                                            'PLAZO: '+VartoStr(fdSolicitud.FieldValues['plazo'])+#13+#10+
+                                            'CUOTA: '+VartoStr(fdSolicitud.FieldValues['cuota']);
+  dxComponentPrinter1Link1.Preview();
+  end
+else
+  ShowMessage('Disponible cuando editas');
+end;
+
 procedure TfSolicitud.btnBuscarClick(Sender: TObject);
 begin
 paginaActual:=1;
@@ -576,6 +689,7 @@ end;
 procedure TfSolicitud.btnNuevoClick(Sender: TObject);
 begin
 //TODO limpiar campos
+soloInicio:=False;
 Limpiar();
 txtDniCliente.Enabled:=True;
 btnEditar.Enabled:=False;
@@ -600,7 +714,7 @@ btnGuardar.Enabled:=true;
           cbbGarantia.EditValue:=null;
           cbbTipoPrestamo.EditValue:=null;
           cbbGiroNegocio.EditValue:=null;
-           gridInfo.ViewData.Expand(true);
+          gridInfo.ViewData.Expand(true);
 end;
 
 procedure TfSolicitud.Button1Click(Sender: TObject);
@@ -662,12 +776,13 @@ end;
 
 procedure TfSolicitud.btnEditarClick(Sender: TObject);
 begin
-  if gridSolicitud.Controller.SelectedRowCount=1 then
+  if (gridSolicitud.Controller.SelectedRowCount=1) and (fdSolicitud.FieldValues['estado']<>'CERRADO') then
   begin
 //     Tag:=gridSolicitud.DataController.Values[gridSolicitud.Controller.FocusedRecordIndex , 0];
      Tag:=fdSolicitud.FieldValues['id'];
      if Tag>0 then
      begin
+
          btnEditar.Enabled:=false;
          grpCliente.Enabled:=false;
          //tabListado.TabVisible:=false;
@@ -695,6 +810,7 @@ begin
          cbbReporteCeop.EditValue:=fdSolicitud.FieldValues['reporte_ceop_id'];
          cbbReporteInfo.EditValue:=fdSolicitud.FieldValues['reporte_info_id'];
          cbbGiroNegocio.EditValue:=fdSolicitud.FieldValues['giro_negocio_id'];
+         //porcentajeCostoVenta:=dmData.fdGiroNegocio.FieldValues['margen_maximo'];
          spnMonto.Value:=fdSolicitud.FieldValues['monto'];
          spnCuota.Value:=fdSolicitud.FieldValues['cuota'];
          spnPlazo.Value:=fdSolicitud.FieldValues['plazo'];
@@ -705,10 +821,14 @@ begin
          else
             txtComentario.Lines.Text:=fdSolicitud.FieldValues['comentario'];
          copiarAvales(fdAvales);
+         soloInicio:=True;
          actualizarInfo(dmdata.fdTipoInfo,VarToStr(fdSolicitud.FieldValues['tipo_info_detalle']));
          gridInfo.ViewData.Expand(true);
+         actualizarCostoVenta(montoCostoVenta,porcentajeCostoVenta);
      end;
-  end;
+  end
+  else
+    ShowMessage('El registro esta cerrado, seleccione otro');
 end;
 
 procedure TfSolicitud.btnGuardarClick(Sender: TObject);
@@ -729,22 +849,34 @@ begin
       end;
   if Tag>0 then
     begin
-
     EditarSolicitud(tag,interes,spnMonto.Value,spnPlazo.Value,spnCuota.Value,cbbReporteCeop.EditValue,cbbReporteInfo.EditValue,
     cbbGiroNegocio.EditValue,cbbTipoPrestamo.EditValue,cbbTipoProducto.EditValue,cbbGarantia.EditValue,txtcomentario.Lines.Text,true,
     gridToJsonArray(gridAvales),datasetToJsonArray2(dmdata.fdTipoInfo),aInicial,aProgramado,dmdata.fdLineaCredito.FieldValues['tipo_interes']);
     end
   else
+  begin
    NuevaSolicitud(1,txtDniCliente.Tag,interes,spnMonto.Value,spnPlazo.Value,spnCuota.Value,
    cbbReporteCeop.EditValue,cbbReporteInfo.EditValue,
     cbbGiroNegocio.EditValue,cbbTipoPrestamo.EditValue,cbbTipoProducto.EditValue,cbbGarantia.EditValue,
-    txtcomentario.Lines.Text,true,gridToJsonArray(gridAvales),aInicial,aProgramado,dmdata.fdLineaCredito.FieldValues['tipo_interes']);
+    txtcomentario.Lines.Text,true,gridToJsonArray(gridAvales),datasetToJsonArray2(dmdata.fdTipoInfo),aInicial,aProgramado,dmdata.fdLineaCredito.FieldValues['tipo_interes']);
+  end;
   tabFormulario.TabVisible:=false;
   tabListado.TabVisible:=true;
   btnNuevo.Enabled:=true;
   btnEditar.Enabled:=True;
   btnCancelar.Enabled:=false;
-   uHelpers.habilitarPermisos(TForm(TPanel((TButton(Sender).GetParentComponent).GetParentComponent).GetParentComponent),dmData.Permisos);
+  uHelpers.habilitarPermisos(TForm(TPanel((TButton(Sender).GetParentComponent).GetParentComponent).GetParentComponent),dmData.Permisos);
+end;
+
+procedure TfSolicitud.cbbGiroNegocioPropertiesChange(Sender: TObject);
+begin
+porcentajeCostoVenta:=dmdata.fdGiroNegocio.FieldValues['margen_maximo'];
+
+end;
+
+procedure TfSolicitud.cbbGiroNegocioPropertiesCloseUp(Sender: TObject);
+begin
+actualizarCostoVenta(montoCostoVenta,porcentajeCostoVenta);
 end;
 
 procedure TfSolicitud.cbbLineaCreditoPropertiesChange(Sender: TObject);
@@ -850,6 +982,20 @@ begin
   gridAvales.EndUpdate;
 end;
 
+procedure TfSolicitud.costoVenta;
+begin
+//gridCostoVenta.ClearItems;
+gridCostoVenta.DataController.RecordCount:=gridCostoVenta.DataController.RecordCount+1;
+gridCostoVenta.DataController.Values[0,0]:='Estimacion Ventas Mes';;
+gridCostoVenta.DataController.Values[0,1]:=0;
+gridCostoVenta.DataController.RecordCount:=gridCostoVenta.DataController.RecordCount+1;
+gridCostoVenta.DataController.Values[1,0]:='Margen Garancia %';
+gridCostoVenta.DataController.Values[1,1]:=0;
+gridCostoVenta.DataController.RecordCount:=gridCostoVenta.DataController.RecordCount+1;
+gridCostoVenta.DataController.Values[2,0]:='Costo Venta (EVM-(EVM*MG%)';
+gridCostoVenta.DataController.Values[2,1]:=0;
+end;
+
 procedure TfSolicitud.dsSolicitudDataChange(Sender: TObject; Field: TField);
 begin
   uHelpers.JsonToDataset(fdAvales,VarToStr(fdSolicitud.FieldValues['avales']));
@@ -859,11 +1005,12 @@ procedure TfSolicitud.FormCreate(Sender: TObject);
 var
   AButton: TcxEditButton;
 begin
+ soloInicio:=true;
   // revisar permisos de formulario
   dmData.ImageList1.GetBitmap(7, spbActualizar.glyph);
 dmData.ImageList1.GetBitmap(6, spbPagSiguiente.glyph);
 dmData.ImageList1.GetBitmap(5, spbPaginaAnteriorrr.glyph);
-
+  porcentajeCostoVenta:=0;
   paginaActual:=1;
   tabListado.TabVisible:=true;
   pageControl1.ActivePageIndex:=1;
@@ -874,6 +1021,7 @@ dmData.ImageList1.GetBitmap(5, spbPaginaAnteriorrr.glyph);
   btnGuardar.Enabled:=false;
 
 //listar();
+  costoVenta();
 uHelpers.habilitarPermisos(TForm(Sender),dmData.Permisos);
         with TcxLookupComboBoxProperties(cbbGarantia.Properties) do
         begin
@@ -916,6 +1064,47 @@ procedure TfSolicitud.gridAvalesKeyUp(Sender: TObject; var Key: Word;
   Shift: TShiftState);
 begin
 if key=VK_DELETE then
+
+end;
+
+procedure TfSolicitud.gridInfoEditValueChanged(Sender: TcxCustomGridTableView;
+  AItem: TcxCustomGridTableItem);
+begin
+montoCostoVenta:=0;
+ShowMessage(sender.DataController.Values[sender.DataController.EditingRecordIndex, gridInfotipo.Position.ColIndex]);
+ShowMessage(sender.DataController.Values[sender.DataController.EditingRecordIndex, gridInfoinformacion.Position.ColIndex]);
+ShowMessage(sender.DataController.Values[sender.DataController.EditingRecordIndex, gridInfotipo_info.Position.ColIndex]);
+if (sender.DataController.Values[sender.DataController.EditingRecordIndex, gridInfotipo.Position.ColIndex]='INGRESOS')
+AND (sender.DataController.Values[sender.DataController.EditingRecordIndex, gridInfoinformacion.Position.ColIndex]='NEGOCIO')
+AND (sender.DataController.Values[sender.DataController.EditingRecordIndex, gridInfotipo_info.Position.ColIndex]='VENTAS') then
+begin
+//montoCostoVenta:=VarToStr(sender.DataController.Values[sender.DataController.EditingRecordIndex, AItem.Index]).ToDouble;
+montoCostoVenta:=sender.Controller.EditingController.Edit.EditingValue;
+ShowMessage(FloatToStr(montoCostoVenta));
+porcentajeCostoVenta:=dmdata.fdGiroNegocio.FieldValues['margen_maximo'];
+actualizarCostoVenta(montoCostoVenta,porcentajeCostoVenta);
+end;
+end;
+
+procedure TfSolicitud.gridInfovalorGetDataText(Sender: TcxCustomGridTableItem;
+  ARecordIndex: Integer; var AText: string);
+begin
+if soloInicio then
+   begin
+    if (gridInfo.DataController.Values[ARecordIndex, gridInfotipo.Position.ColIndex]='INGRESOS')
+    AND (gridInfo.DataController.Values[ARecordIndex, gridInfoinformacion.Position.ColIndex]='NEGOCIO')
+    AND (gridInfo.DataController.Values[ARecordIndex, gridInfotipo_info.Position.ColIndex]='VENTAS') then
+    begin
+       montoCostoVenta:=gridInfo.DataController.Values[ARecordIndex, gridInfoValor.Position.ColIndex];
+      porcentajeCostoVenta:=dmdata.fdGiroNegocio.FieldValues['margen_maximo'];
+      actualizarCostoVenta(montoCostoVenta,porcentajeCostoVenta);
+    end;
+   end;
+end;
+
+procedure TfSolicitud.gridInfovalorPropertiesEditValueChanged(Sender: TObject);
+begin
+//   ShowMessage(gridInfo.DataController.Values[0,ARecordIndex]);
 
 end;
 
@@ -1030,7 +1219,7 @@ end;
 
 procedure TfSolicitud.NuevaSolicitud(empleado_id,cliente_id:integer;interes,monto,plazo,cuota:real;
     reporte_ceop_id,reporte_info_id,giro_negocio_id,tipo_prestamo_id,
-    perfil_cliente_tipo_producto_id,garantia_id:Variant;comentario:string;activo:boolean;avales:TJsonArray;aIncial,aProgramado:Real;tipo_interes:string);
+    perfil_cliente_tipo_producto_id,garantia_id:Variant;comentario:string;activo:boolean;avales,tipo_info_detalle:TJsonArray;aIncial,aProgramado:Real;tipo_interes:string);
 var graph:Tgraph;
 var variables:TJSONObject;
 var dataVar,dataRest,query:TJSONObject;
@@ -1096,6 +1285,8 @@ uHelpers.aProgramado:=0;
        dataVar.AddPair('garantia_id',TJsonNUll.Create)
     else
        dataVar.AddPair('garantia_id',TJSONNumber.Create(garantia_id));
+    dataVar.AddPair('avales',avales);
+    dataVar.AddPair('tipo_info_detalle',tipo_info_detalle);
     dataVar.AddPair('activo',TJSONNumber.Create(activo.ToInteger));
 
     variables.AddPair('variables',dataVar);

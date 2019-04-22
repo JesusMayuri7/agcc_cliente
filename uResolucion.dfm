@@ -3,7 +3,7 @@ object fResolucion: TfResolucion
   Top = 0
   Caption = 'Resolucion'
   ClientHeight = 594
-  ClientWidth = 958
+  ClientWidth = 1096
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -17,20 +17,23 @@ object fResolucion: TfResolucion
   object pnDetalle: TPanel
     Left = 0
     Top = 39
-    Width = 958
+    Width = 1096
     Height = 504
     Align = alClient
     TabOrder = 0
+    ExplicitWidth = 958
     object PageControl1: TPageControl
       Left = 1
       Top = 1
-      Width = 956
+      Width = 1094
       Height = 502
-      ActivePage = tabFormulario
+      ActivePage = tabListado
       Align = alClient
       TabOrder = 0
+      ExplicitWidth = 956
       object tabFormulario: TTabSheet
         Caption = 'Formulario'
+        ExplicitWidth = 948
         object GroupBox1: TGroupBox
           Left = 35
           Top = 39
@@ -480,13 +483,15 @@ object fResolucion: TfResolucion
       object tabListado: TTabSheet
         Caption = 'Listado'
         ImageIndex = 1
+        ExplicitWidth = 948
         object cxGrid1: TcxGrid
           Left = 0
           Top = 41
-          Width = 763
+          Width = 901
           Height = 433
           Align = alClient
           TabOrder = 0
+          ExplicitWidth = 763
           object gridResolucion: TcxGridDBTableView
             Navigator.Buttons.CustomButtons = <>
             DataController.DataSource = dsResolucion
@@ -501,19 +506,30 @@ object fResolucion: TfResolucion
             OptionsSelection.CellSelect = False
             OptionsView.GroupByBox = False
             object gridResolucionnro_resolucion: TcxGridDBColumn
+              Caption = '#'
               DataBinding.FieldName = 'nro_resolucion'
-              Width = 75
+              PropertiesClassName = 'TcxLabelProperties'
+              Properties.Alignment.Horz = taCenter
+              Properties.Alignment.Vert = taVCenter
+              HeaderAlignmentHorz = taCenter
+              Width = 48
             end
             object gridResolucionestado: TcxGridDBColumn
               DataBinding.FieldName = 'estado'
               Width = 79
             end
-            object gridResolucionsolicitud_id: TcxGridDBColumn
-              DataBinding.FieldName = 'solicitud_id'
-              Width = 82
+            object gridResolucionnro_solicitud: TcxGridDBColumn
+              Caption = 'Solicitud'
+              DataBinding.FieldName = 'nro_solicitud'
+              PropertiesClassName = 'TcxLabelProperties'
+              Properties.Alignment.Horz = taCenter
+              Properties.Alignment.Vert = taVCenter
+              HeaderAlignmentHorz = taCenter
+              Width = 57
             end
             object gridResolucioncliente_full_name: TcxGridDBColumn
               DataBinding.FieldName = 'cliente_full_name'
+              Width = 228
             end
             object gridResolucionmonto: TcxGridDBColumn
               DataBinding.FieldName = 'monto'
@@ -542,13 +558,14 @@ object fResolucion: TfResolucion
           end
         end
         object Panel1: TPanel
-          Left = 763
+          Left = 901
           Top = 41
           Width = 185
           Height = 433
           Align = alRight
           Caption = 'Panel1'
           TabOrder = 1
+          ExplicitLeft = 763
           object DBMemo1: TDBMemo
             Left = 1
             Top = 1
@@ -563,10 +580,11 @@ object fResolucion: TfResolucion
         object Panel5: TPanel
           Left = 0
           Top = 0
-          Width = 948
+          Width = 1086
           Height = 41
           Align = alTop
           TabOrder = 2
+          ExplicitWidth = 948
           object edCriterio: TEdit
             Left = 127
             Top = 11
@@ -601,10 +619,11 @@ object fResolucion: TfResolucion
   object Panel2: TPanel
     Left = 0
     Top = 543
-    Width = 958
+    Width = 1096
     Height = 51
     Align = alBottom
     TabOrder = 1
+    ExplicitWidth = 958
     object btnEditar: TButton
       Left = 145
       Top = 14
@@ -661,10 +680,11 @@ object fResolucion: TfResolucion
     AlignWithMargins = True
     Left = 3
     Top = 3
-    Width = 952
+    Width = 1090
     Height = 33
     Align = alTop
     TabOrder = 2
+    ExplicitWidth = 952
     object Label1: TLabel
       Left = 207
       Top = 6
@@ -684,7 +704,7 @@ object fResolucion: TfResolucion
     object spbPagSiguiente: TSpeedButton
       Tag = 1
       AlignWithMargins = True
-      Left = 925
+      Left = 1063
       Top = 4
       Width = 23
       Height = 25
@@ -699,7 +719,7 @@ object fResolucion: TfResolucion
     object spbPaginaAnteriorrr: TSpeedButton
       Tag = 1
       AlignWithMargins = True
-      Left = 896
+      Left = 1034
       Top = 4
       Width = 23
       Height = 25
@@ -726,12 +746,13 @@ object fResolucion: TfResolucion
     end
     object Panel3: TPanel
       AlignWithMargins = True
-      Left = 745
+      Left = 883
       Top = 4
       Width = 145
       Height = 25
       Align = alRight
       TabOrder = 0
+      ExplicitLeft = 745
       object Label12: TLabel
         Left = 6
         Top = 6
@@ -782,12 +803,13 @@ object fResolucion: TfResolucion
     end
     object Panel4: TPanel
       AlignWithMargins = True
-      Left = 605
+      Left = 743
       Top = 4
       Width = 134
       Height = 25
       Align = alRight
       TabOrder = 1
+      ExplicitLeft = 605
       object Label11: TLabel
         Left = 17
         Top = 6
@@ -818,73 +840,7 @@ object fResolucion: TfResolucion
     end
   end
   object fdResolucion: TFDMemTable
-    Active = True
-    FieldDefs = <
-      item
-        Name = 'id'
-        DataType = ftInteger
-      end
-      item
-        Name = 'solicitud_id'
-        DataType = ftInteger
-      end
-      item
-        Name = 'nro_resolucion'
-        DataType = ftInteger
-      end
-      item
-        Name = 'estado'
-        DataType = ftString
-        Size = 20
-      end
-      item
-        Name = 'cliente_full_name'
-        DataType = ftString
-        Size = 20
-      end
-      item
-        Name = 'empleado_full_name'
-        DataType = ftString
-        Size = 20
-      end
-      item
-        Name = 'monto'
-        DataType = ftFloat
-      end
-      item
-        Name = 'cuota'
-        DataType = ftFloat
-      end
-      item
-        Name = 'plazo'
-        DataType = ftInteger
-      end
-      item
-        Name = 'comentario'
-        DataType = ftString
-        Size = 20
-      end
-      item
-        Name = 'tipo_interes'
-        DataType = ftString
-        Size = 20
-      end
-      item
-        Name = 'interes'
-        DataType = ftFloat
-      end
-      item
-        Name = 'ahorro_inicial'
-        DataType = ftFloat
-      end
-      item
-        Name = 'ahorro_programado'
-        DataType = ftFloat
-      end
-      item
-        Name = 'plazo_maximo'
-        DataType = ftInteger
-      end>
+    FieldDefs = <>
     IndexDefs = <>
     FetchOptions.AssignedValues = [evMode]
     FetchOptions.Mode = fmAll
@@ -944,10 +900,11 @@ object fResolucion: TfResolucion
     object fdResolucionplazo_maximo: TIntegerField
       FieldName = 'plazo_maximo'
     end
+    object fdResolucionnro_solicitud: TStringField
+      FieldName = 'nro_solicitud'
+    end
     object fdResolucioncreated_at: TDateField
-      FieldKind = fkCalculated
       FieldName = 'created_at'
-      Calculated = True
     end
   end
   object dsResolucion: TDataSource
@@ -971,8 +928,8 @@ object fResolucion: TfResolucion
       'begin'
       ''
       'end.')
-    Left = 840
-    Top = 80
+    Left = 792
+    Top = 192
     Datasets = <
       item
         DataSet = frxDBResolucion

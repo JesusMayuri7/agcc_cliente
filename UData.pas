@@ -89,6 +89,9 @@ type
     RespMenu: TRESTResponse;
     RESTClient2: TRESTClient;
     ImageList1: TImageList;
+    fdGiroNegociomargen_maximo: TFloatField;
+    RESTResumenInfo: TRESTRequest;
+    RespResumenInfo: TRESTResponse;
   private
     { Private declarations }
 

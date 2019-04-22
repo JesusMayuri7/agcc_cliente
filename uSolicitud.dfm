@@ -179,7 +179,7 @@ object fSolicitud: TfSolicitud
       Top = 1
       Width = 1312
       Height = 737
-      ActivePage = tabLIstado
+      ActivePage = tabFormulario
       Align = alClient
       TabOrder = 0
       object tabFormulario: TTabSheet
@@ -649,13 +649,13 @@ object fSolicitud: TfSolicitud
             end>
           ControlCollection = <
             item
-              Column = 1
-              Control = GridPanel1
+              Column = 0
+              Control = Panel9
               Row = 0
             end
             item
-              Column = 0
-              Control = Panel9
+              Column = 1
+              Control = pgc1
               Row = 0
             end>
           RowCollection = <
@@ -666,118 +666,13 @@ object fSolicitud: TfSolicitud
               SizeStyle = ssAuto
             end>
           TabOrder = 1
-          object GridPanel1: TGridPanel
-            Left = 520
-            Top = 1
-            Width = 519
-            Height = 707
-            Align = alClient
-            ColumnCollection = <
-              item
-                Value = 100.000000000000000000
-              end>
-            ControlCollection = <
-              item
-                Column = 0
-                Control = grid3
-                Row = 0
-              end>
-            Padding.Left = 10
-            Padding.Top = 10
-            Padding.Right = 10
-            Padding.Bottom = 10
-            RowCollection = <
-              item
-                Value = 100.000000000000000000
-              end>
-            ShowCaption = False
-            TabOrder = 0
-            object grid3: TcxGrid
-              Left = 21
-              Top = 21
-              Width = 477
-              Height = 665
-              Align = alClient
-              Font.Charset = DEFAULT_CHARSET
-              Font.Color = clWindowText
-              Font.Height = -12
-              Font.Name = 'Tahoma'
-              Font.Style = [fsBold]
-              ParentFont = False
-              TabOrder = 0
-              object gridInfo: TcxGridDBBandedTableView
-                Navigator.Buttons.CustomButtons = <>
-                DataController.DataSource = dmData.dsTipoInfo
-                DataController.Summary.DefaultGroupSummaryItems = <>
-                DataController.Summary.FooterSummaryItems = <>
-                DataController.Summary.SummaryGroups = <>
-                Bands = <
-                  item
-                    Caption = 'Informacion del Negocio y Familiar'
-                    Width = 455
-                  end>
-                object gridInfoid: TcxGridDBBandedColumn
-                  DataBinding.FieldName = 'id'
-                  Visible = False
-                  Position.BandIndex = 0
-                  Position.ColIndex = 0
-                  Position.RowIndex = 0
-                end
-                object gridInfodesc_tipo_info_detalle: TcxGridDBBandedColumn
-                  Caption = 'Detalle'
-                  DataBinding.FieldName = 'desc_tipo_info_detalle'
-                  HeaderAlignmentHorz = taCenter
-                  Options.Editing = False
-                  Width = 328
-                  Position.BandIndex = 0
-                  Position.ColIndex = 1
-                  Position.RowIndex = 0
-                end
-                object gridInfotipo_info_id: TcxGridDBBandedColumn
-                  DataBinding.FieldName = 'tipo_info_id'
-                  Visible = False
-                  Position.BandIndex = 0
-                  Position.ColIndex = 2
-                  Position.RowIndex = 0
-                end
-                object gridInfotipo_info: TcxGridDBBandedColumn
-                  DataBinding.FieldName = 'tipo_info'
-                  Visible = False
-                  GroupIndex = 1
-                  Position.BandIndex = 0
-                  Position.ColIndex = 3
-                  Position.RowIndex = 0
-                end
-                object gridInfoinformacion: TcxGridDBBandedColumn
-                  DataBinding.FieldName = 'informacion'
-                  Visible = False
-                  GroupIndex = 0
-                  Position.BandIndex = 0
-                  Position.ColIndex = 4
-                  Position.RowIndex = 0
-                end
-                object gridInfovalor: TcxGridDBBandedColumn
-                  Caption = 'Monto'
-                  DataBinding.FieldName = 'monto'
-                  HeaderAlignmentHorz = taCenter
-                  Width = 81
-                  Position.BandIndex = 0
-                  Position.ColIndex = 5
-                  Position.RowIndex = 0
-                end
-              end
-              object cxGridLevel3: TcxGridLevel
-                GridView = gridInfo
-              end
-            end
-          end
           object Panel9: TPanel
             Left = 1
             Top = 1
             Width = 519
             Height = 707
             Align = alClient
-            TabOrder = 1
+            TabOrder = 0
             object grpCliente: TGroupBox
               Left = 19
               Top = 16
@@ -804,7 +699,7 @@ object fSolicitud: TfSolicitud
                 Top = 36
                 Width = 42
                 Height = 22
-                Caption = 'Agregar'
+                Caption = 'Nuevo'
                 OnClick = SpeedButton3Click
               end
               object txtDniCliente: TEdit
@@ -1073,6 +968,8 @@ object fSolicitud: TfSolicitud
                   end>
                 Properties.ListOptions.SyncMode = True
                 Properties.ListSource = dmData.dsGiroNegocio
+                Properties.OnChange = cbbGiroNegocioPropertiesChange
+                Properties.OnCloseUp = cbbGiroNegocioPropertiesCloseUp
                 TabOrder = 2
                 Width = 191
               end
@@ -1084,6 +981,295 @@ object fSolicitud: TfSolicitud
                 Lines.Strings = (
                   '')
                 TabOrder = 3
+              end
+            end
+          end
+          object pgc1: TPageControl
+            Left = 520
+            Top = 1
+            Width = 519
+            Height = 707
+            ActivePage = ts2
+            Align = alClient
+            TabOrder = 1
+            object ts1: TTabSheet
+              Caption = 'Informacion'
+              ExplicitWidth = 281
+              ExplicitHeight = 165
+              object GridPanel1: TGridPanel
+                Left = 0
+                Top = 0
+                Width = 511
+                Height = 679
+                Align = alClient
+                ColumnCollection = <
+                  item
+                    Value = 100.000000000000000000
+                  end>
+                ControlCollection = <
+                  item
+                    Column = 0
+                    Control = grid3
+                    Row = 0
+                  end
+                  item
+                    Column = 0
+                    Control = cxGrid2
+                    Row = 1
+                  end>
+                Padding.Left = 5
+                Padding.Top = 5
+                Padding.Right = 5
+                Padding.Bottom = 5
+                RowCollection = <
+                  item
+                    Value = 82.402731815365140000
+                  end
+                  item
+                    Value = 17.597268184634860000
+                  end
+                  item
+                    SizeStyle = ssAuto
+                  end>
+                ShowCaption = False
+                TabOrder = 0
+                ExplicitWidth = 281
+                ExplicitHeight = 165
+                object grid3: TcxGrid
+                  Left = 11
+                  Top = 11
+                  Width = 489
+                  Height = 539
+                  Align = alClient
+                  Font.Charset = DEFAULT_CHARSET
+                  Font.Color = clWindowText
+                  Font.Height = -12
+                  Font.Name = 'Tahoma'
+                  Font.Style = [fsBold]
+                  ParentFont = False
+                  TabOrder = 0
+                  ExplicitWidth = 259
+                  ExplicitHeight = 116
+                  object gridInfo: TcxGridDBBandedTableView
+                    Navigator.Buttons.CustomButtons = <>
+                    OnEditValueChanged = gridInfoEditValueChanged
+                    DataController.DataSource = dmData.dsTipoInfo
+                    DataController.Summary.DefaultGroupSummaryItems = <
+                      item
+                        Format = '#,##0.00'
+                        Kind = skSum
+                        FieldName = 'monto'
+                        Column = gridInfovalor
+                      end>
+                    DataController.Summary.FooterSummaryItems = <>
+                    DataController.Summary.SummaryGroups = <>
+                    OptionsView.GroupFooterMultiSummaries = True
+                    OptionsView.GroupFooters = gfAlwaysVisible
+                    OptionsView.GroupSummaryLayout = gslAlignWithColumnsAndDistribute
+                    Bands = <
+                      item
+                        Caption = 'Informacion del Negocio y Familiar'
+                        Width = 455
+                      end>
+                    object gridInfoid: TcxGridDBBandedColumn
+                      DataBinding.FieldName = 'id'
+                      Visible = False
+                      Position.BandIndex = 0
+                      Position.ColIndex = 0
+                      Position.RowIndex = 0
+                    end
+                    object gridInfodesc_tipo_info_detalle: TcxGridDBBandedColumn
+                      Caption = 'Detalle'
+                      DataBinding.FieldName = 'desc_tipo_info_detalle'
+                      HeaderAlignmentHorz = taCenter
+                      Options.Editing = False
+                      Width = 328
+                      Position.BandIndex = 0
+                      Position.ColIndex = 1
+                      Position.RowIndex = 0
+                    end
+                    object gridInfotipo_info_id: TcxGridDBBandedColumn
+                      DataBinding.FieldName = 'tipo_info_id'
+                      Visible = False
+                      Position.BandIndex = 0
+                      Position.ColIndex = 2
+                      Position.RowIndex = 0
+                    end
+                    object gridInfotipo_info: TcxGridDBBandedColumn
+                      DataBinding.FieldName = 'tipo_info'
+                      Visible = False
+                      GroupIndex = 1
+                      Position.BandIndex = 0
+                      Position.ColIndex = 3
+                      Position.RowIndex = 0
+                    end
+                    object gridInfoinformacion: TcxGridDBBandedColumn
+                      DataBinding.FieldName = 'informacion'
+                      Visible = False
+                      GroupIndex = 0
+                      Position.BandIndex = 0
+                      Position.ColIndex = 4
+                      Position.RowIndex = 0
+                    end
+                    object gridInfovalor: TcxGridDBBandedColumn
+                      Caption = 'Monto'
+                      DataBinding.FieldName = 'monto'
+                      PropertiesClassName = 'TcxSpinEditProperties'
+                      Properties.SpinButtons.Visible = False
+                      Properties.OnEditValueChanged = gridInfovalorPropertiesEditValueChanged
+                      OnGetDataText = gridInfovalorGetDataText
+                      HeaderAlignmentHorz = taCenter
+                      Width = 81
+                      Position.BandIndex = 0
+                      Position.ColIndex = 5
+                      Position.RowIndex = 0
+                    end
+                    object gridInfotipo: TcxGridDBBandedColumn
+                      DataBinding.FieldName = 'tipo'
+                      Visible = False
+                      Position.BandIndex = 0
+                      Position.ColIndex = 6
+                      Position.RowIndex = 0
+                    end
+                  end
+                  object cxGridLevel3: TcxGridLevel
+                    GridView = gridInfo
+                  end
+                end
+                object cxGrid2: TcxGrid
+                  Left = 11
+                  Top = 560
+                  Width = 489
+                  Height = 107
+                  Align = alClient
+                  Font.Charset = DEFAULT_CHARSET
+                  Font.Color = clWindowText
+                  Font.Height = -13
+                  Font.Name = 'Tahoma'
+                  Font.Style = [fsBold]
+                  ParentFont = False
+                  TabOrder = 1
+                  ExplicitTop = 137
+                  ExplicitWidth = 259
+                  ExplicitHeight = 16
+                  object gridCostoVenta: TcxGridBandedTableView
+                    OnKeyUp = gridAvalesKeyUp
+                    Navigator.Buttons.CustomButtons = <>
+                    DataController.Summary.DefaultGroupSummaryItems = <>
+                    DataController.Summary.FooterSummaryItems = <>
+                    DataController.Summary.SummaryGroups = <>
+                    OptionsData.CancelOnExit = False
+                    OptionsData.DeletingConfirmation = False
+                    OptionsData.Editing = False
+                    OptionsData.Inserting = False
+                    OptionsSelection.CellSelect = False
+                    OptionsView.GroupByBox = False
+                    Styles.ContentOdd = cxStyle1
+                    Bands = <
+                      item
+                        Caption = 'Calculo Costo Venta'
+                        Width = 407
+                      end>
+                    object cxGridBandedColumn2: TcxGridBandedColumn
+                      Caption = 'Descripcion'
+                      HeaderAlignmentHorz = taCenter
+                      Width = 214
+                      Position.BandIndex = 0
+                      Position.ColIndex = 0
+                      Position.RowIndex = 0
+                    end
+                    object cxGridBandedColumn1: TcxGridBandedColumn
+                      Caption = 'Monto'
+                      DataBinding.ValueType = 'Float'
+                      PropertiesClassName = 'TcxSpinEditProperties'
+                      Properties.DisplayFormat = '#,##0.00'
+                      Properties.SpinButtons.Visible = False
+                      Position.BandIndex = 0
+                      Position.ColIndex = 1
+                      Position.RowIndex = 0
+                    end
+                  end
+                  object cxGridLevel4: TcxGridLevel
+                    GridView = gridCostoVenta
+                  end
+                end
+              end
+            end
+            object ts2: TTabSheet
+              Caption = 'Resumen'
+              ImageIndex = 1
+              object pnl1: TPanel
+                Left = 0
+                Top = 0
+                Width = 511
+                Height = 41
+                Align = alTop
+                TabOrder = 0
+                ExplicitLeft = 112
+                ExplicitTop = 536
+                ExplicitWidth = 185
+                object btn2: TButton
+                  Left = 16
+                  Top = 8
+                  Width = 73
+                  Height = 25
+                  Caption = 'Actualizar'
+                  TabOrder = 0
+                  OnClick = btn2Click
+                end
+                object btn3: TButton
+                  Left = 424
+                  Top = 8
+                  Width = 75
+                  Height = 25
+                  Caption = 'Imprimir'
+                  TabOrder = 1
+                  OnClick = btn3Click
+                end
+              end
+              object cxGrid3: TcxGrid
+                Left = 0
+                Top = 41
+                Width = 511
+                Height = 638
+                Align = alClient
+                TabOrder = 1
+                ExplicitLeft = 2
+                ExplicitTop = 39
+                object cxGrid3DBTableView1: TcxGridDBTableView
+                  Navigator.Buttons.CustomButtons = <>
+                  DataController.DataSource = dsResumenInfo
+                  DataController.Summary.DefaultGroupSummaryItems = <
+                    item
+                      Format = '#,##0.00'
+                      Kind = skSum
+                      FieldName = 'monto'
+                      Column = cxGrid3DBTableView1monto
+                    end>
+                  DataController.Summary.FooterSummaryItems = <>
+                  DataController.Summary.SummaryGroups = <>
+                  OptionsView.Footer = True
+                  OptionsView.GroupSummaryLayout = gslAlignWithColumnsAndDistribute
+                  object cxGrid3DBTableView1informacion: TcxGridDBColumn
+                    DataBinding.FieldName = 'informacion'
+                    Visible = False
+                    GroupIndex = 1
+                  end
+                  object cxGrid3DBTableView1detalle: TcxGridDBColumn
+                    DataBinding.FieldName = 'detalle'
+                    GroupIndex = 0
+                    Width = 204
+                  end
+                  object cxGrid3DBTableView1tipo: TcxGridDBColumn
+                    DataBinding.FieldName = 'tipo'
+                  end
+                  object cxGrid3DBTableView1monto: TcxGridDBColumn
+                    DataBinding.FieldName = 'monto'
+                  end
+                end
+                object cxGrid3Level1: TcxGridLevel
+                  GridView = cxGrid3DBTableView1
+                end
               end
             end
           end
@@ -1711,8 +1897,8 @@ object fSolicitud: TfSolicitud
     end
   end
   object ActionList1: TActionList
-    Left = 309
-    Top = 352
+    Left = 341
+    Top = 288
     object actCerrar: TAction
       Caption = 'Cerrar'
       OnExecute = actCerrarExecute
@@ -1735,15 +1921,15 @@ object fSolicitud: TfSolicitud
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 43556.860920057900000000
-    ReportOptions.LastChange = 43558.875564895830000000
+    ReportOptions.LastChange = 43576.500534965280000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       ''
       'begin'
       ''
       'end.')
-    Left = 784
-    Top = 72
+    Left = 744
+    Top = 96
     Datasets = <
       item
         DataSet = frxDBAvales
@@ -1890,16 +2076,16 @@ object fSolicitud: TfSolicitud
           AllowVectorExport = True
           Left = 7.559060000000000000
           Top = 97.267780000000000000
-          Width = 154.960730000000000000
-          Height = 22.677180000000000000
+          Width = 94.488250000000000000
+          Height = 20.787401574803150000
           Fill.BackColor = cl3DLight
           Frame.Typ = []
         end
         object Memo3: TfrxMemoView
           AllowVectorExport = True
-          Left = 173.795300000000000000
+          Left = 105.763760000000000000
           Top = 100.047310000000000000
-          Width = 266.976500000000000000
+          Width = 187.606370000000000000
           Height = 18.897650000000000000
           DataField = 'nro_solicitud'
           DataSet = frxDBSolicitud
@@ -1920,7 +2106,7 @@ object fSolicitud: TfSolicitud
           AllowVectorExport = True
           Left = 15.118120000000000000
           Top = 99.267780000000000000
-          Width = 132.283550000000000000
+          Width = 79.370130000000000000
           Height = 18.897650000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -1935,10 +2121,10 @@ object fSolicitud: TfSolicitud
         end
         object Shape9: TfrxShapeView
           AllowVectorExport = True
-          Left = 461.102660000000000000
+          Left = 487.559370000000000000
           Top = 96.267780000000000000
-          Width = 113.385900000000000000
-          Height = 22.677180000000000000
+          Width = 83.149660000000000000
+          Height = 20.787401574803150000
           Fill.BackColor = cl3DLight
           Frame.Typ = []
         end
@@ -1965,9 +2151,9 @@ object fSolicitud: TfSolicitud
         end
         object Memo45: TfrxMemoView
           AllowVectorExport = True
-          Left = 472.441250000000000000
+          Left = 502.677490000000000000
           Top = 97.267780000000000000
-          Width = 83.149660000000000000
+          Width = 52.913420000000000000
           Height = 18.897650000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -2004,7 +2190,7 @@ object fSolicitud: TfSolicitud
         Font.Height = -13
         Font.Name = 'Arial'
         Font.Style = []
-        Height = 570.386210000000000000
+        Height = 593.063390000000000000
         ParentFont = False
         Top = 211.653680000000000000
         Width = 718.110700000000000000
@@ -2014,9 +2200,9 @@ object fSolicitud: TfSolicitud
         object Shape14: TfrxShapeView
           AllowVectorExport = True
           Left = 132.283550000000000000
-          Top = 143.960730000000000000
+          Top = 142.866141732283500000
           Width = 49.133890000000000000
-          Height = 18.897650000000000000
+          Height = 18.897637800000000000
           Fill.BackColor = cl3DLight
           Frame.Typ = []
         end
@@ -2025,7 +2211,7 @@ object fSolicitud: TfSolicitud
           Left = 11.338590000000000000
           Top = 143.960730000000000000
           Width = 49.133890000000000000
-          Height = 18.897650000000000000
+          Height = 18.897637795275590000
           Fill.BackColor = cl3DLight
           Frame.Typ = []
         end
@@ -2034,7 +2220,7 @@ object fSolicitud: TfSolicitud
           Left = 7.559060000000000000
           Top = 63.252010000000000000
           Width = 113.385900000000000000
-          Height = 18.897650000000000000
+          Height = 18.897637800000000000
           Fill.BackColor = cl3DLight
           Frame.Typ = []
         end
@@ -2043,16 +2229,7 @@ object fSolicitud: TfSolicitud
           Left = 7.559060000000000000
           Top = 7.559060000000000000
           Width = 328.819110000000000000
-          Height = 18.897650000000000000
-          Fill.BackColor = cl3DLight
-          Frame.Typ = []
-        end
-        object Shape10: TfrxShapeView
-          AllowVectorExport = True
-          Left = 15.118120000000000000
-          Top = 540.149970000000000000
-          Width = 113.385900000000000000
-          Height = 22.677180000000000000
+          Height = 18.897637800000000000
           Fill.BackColor = cl3DLight
           Frame.Typ = []
         end
@@ -2061,7 +2238,7 @@ object fSolicitud: TfSolicitud
           Left = 11.338590000000000000
           Top = 176.315090000000000000
           Width = 687.874460000000000000
-          Height = 22.677180000000000000
+          Height = 18.897637795275590000
           Fill.BackColor = cl3DLight
           Frame.Typ = []
         end
@@ -2070,7 +2247,7 @@ object fSolicitud: TfSolicitud
           Left = 589.606680000000000000
           Top = 63.252010000000000000
           Width = 113.385900000000000000
-          Height = 18.897650000000000000
+          Height = 18.897637800000000000
           Fill.BackColor = cl3DLight
           Frame.Typ = []
         end
@@ -2079,7 +2256,7 @@ object fSolicitud: TfSolicitud
           Left = 427.086890000000000000
           Top = 63.252010000000000000
           Width = 139.842610000000000000
-          Height = 18.897650000000000000
+          Height = 18.897637800000000000
           Fill.BackColor = cl3DLight
           Frame.Typ = []
         end
@@ -2088,7 +2265,7 @@ object fSolicitud: TfSolicitud
           Left = 294.803340000000000000
           Top = 63.252010000000000000
           Width = 113.385900000000000000
-          Height = 18.897650000000000000
+          Height = 18.897637800000000000
           Fill.BackColor = cl3DLight
           Frame.Typ = []
         end
@@ -2097,7 +2274,7 @@ object fSolicitud: TfSolicitud
           Left = 154.960730000000000000
           Top = 63.252010000000000000
           Width = 113.385900000000000000
-          Height = 18.897650000000000000
+          Height = 18.897637800000000000
           Fill.BackColor = cl3DLight
           Frame.Typ = []
         end
@@ -2118,26 +2295,6 @@ object fSolicitud: TfSolicitud
           Frame.Typ = []
           Memo.UTF8W = (
             '[frxDBSolicitud."cliente_full_name"]')
-          ParentFont = False
-          Style = 'Data'
-        end
-        object Memo9: TfrxMemoView
-          AllowVectorExport = True
-          Left = 147.338590000000000000
-          Top = 542.031850000000000000
-          Width = 404.228510000000000000
-          Height = 18.897650000000000000
-          DataField = 'empleado'
-          DataSet = frxDBSolicitud
-          DataSetName = 'frxDBSolicitud'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -13
-          Font.Name = 'Arial'
-          Font.Style = []
-          Frame.Typ = []
-          Memo.UTF8W = (
-            '[frxDBSolicitud."empleado"]')
           ParentFont = False
           Style = 'Data'
         end
@@ -2164,7 +2321,7 @@ object fSolicitud: TfSolicitud
         object Memo13: TfrxMemoView
           AllowVectorExport = True
           Left = 597.102660000000000000
-          Top = 89.488250000000000000
+          Top = 90.330708661417320000
           Width = 78.000000000000000000
           Height = 18.897650000000000000
           DataField = 'cuota'
@@ -2224,7 +2381,7 @@ object fSolicitud: TfSolicitud
         object Memo19: TfrxMemoView
           AllowVectorExport = True
           Left = 427.023810000000000000
-          Top = 89.488250000000000000
+          Top = 90.330708661417320000
           Width = 128.322820000000000000
           Height = 18.897650000000000000
           DataField = 'tipo_interes'
@@ -2244,7 +2401,7 @@ object fSolicitud: TfSolicitud
         object Memo21: TfrxMemoView
           AllowVectorExport = True
           Left = 309.858380000000000000
-          Top = 89.488250000000000000
+          Top = 90.330708661417320000
           Width = 70.440940000000000000
           Height = 18.897650000000000000
           DataField = 'ahorro_programado'
@@ -2264,7 +2421,7 @@ object fSolicitud: TfSolicitud
         object Memo23: TfrxMemoView
           AllowVectorExport = True
           Left = 67.747990000000000000
-          Top = 143.740260000000000000
+          Top = 142.866141732283500000
           Width = 47.763760000000000000
           Height = 18.897650000000000000
           DataField = 'ahorro_inicial'
@@ -2284,7 +2441,7 @@ object fSolicitud: TfSolicitud
         object Memo25: TfrxMemoView
           AllowVectorExport = True
           Left = 188.913420000000000000
-          Top = 143.740260000000000000
+          Top = 142.866141732283500000
           Width = 55.322820000000000000
           Height = 18.897650000000000000
           DataField = 'ahorro_programado'
@@ -2304,7 +2461,7 @@ object fSolicitud: TfSolicitud
         object Memo35: TfrxMemoView
           AllowVectorExport = True
           Left = 13.338590000000000000
-          Top = 141.960730000000000000
+          Top = 142.960730000000000000
           Width = 45.354360000000000000
           Height = 18.897650000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -2361,7 +2518,7 @@ object fSolicitud: TfSolicitud
         object Memo38: TfrxMemoView
           AllowVectorExport = True
           Left = 18.118120000000000000
-          Top = 6.897650000000000000
+          Top = 7.897650000000000000
           Width = 306.141930000000000000
           Height = 22.677180000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -2393,7 +2550,7 @@ object fSolicitud: TfSolicitud
         object Memo40: TfrxMemoView
           AllowVectorExport = True
           Left = 173.858380000000000000
-          Top = 65.252010000000000000
+          Top = 64.251968503937010000
           Width = 83.149660000000000000
           Height = 15.118120000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -2470,26 +2627,10 @@ object fSolicitud: TfSolicitud
             'Comentario')
           ParentFont = False
         end
-        object Memo46: TfrxMemoView
-          AllowVectorExport = True
-          Left = 30.236240000000000000
-          Top = 540.149970000000000000
-          Width = 83.149660000000000000
-          Height = 18.897650000000000000
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -13
-          Font.Name = 'Arial'
-          Font.Style = []
-          Frame.Typ = []
-          Memo.UTF8W = (
-            'Analista')
-          ParentFont = False
-        end
         object Shape20: TfrxShapeView
           AllowVectorExport = True
           Left = 362.834880000000000000
-          Top = 6.338590000000000000
+          Top = 7.559055118110236000
           Width = 158.740260000000000000
           Height = 18.897650000000000000
           Fill.BackColor = cl3DLight
@@ -2497,8 +2638,8 @@ object fSolicitud: TfSolicitud
         end
         object Memo54: TfrxMemoView
           AllowVectorExport = True
-          Left = 364.834880000000000000
-          Top = 8.338590000000000000
+          Left = 376.173470000000000000
+          Top = 7.937007870000000000
           Width = 151.181200000000000000
           Height = 18.897650000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -2514,7 +2655,7 @@ object fSolicitud: TfSolicitud
         object Shape21: TfrxShapeView
           AllowVectorExport = True
           Left = 544.252320000000000000
-          Top = 6.559060000000000000
+          Top = 7.559055118110236000
           Width = 162.519790000000000000
           Height = 18.897650000000000000
           Fill.BackColor = cl3DLight
@@ -2522,8 +2663,8 @@ object fSolicitud: TfSolicitud
         end
         object Memo55: TfrxMemoView
           AllowVectorExport = True
-          Left = 555.590910000000000000
-          Top = 7.559060000000000000
+          Left = 566.929500000000000000
+          Top = 7.937007870000000000
           Width = 136.063080000000000000
           Height = 18.897650000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -2578,7 +2719,7 @@ object fSolicitud: TfSolicitud
         object Shape22: TfrxShapeView
           AllowVectorExport = True
           Left = 362.834880000000000000
-          Top = 119.504020000000000000
+          Top = 118.677165354330700000
           Width = 158.740260000000000000
           Height = 18.897650000000000000
           Fill.BackColor = cl3DLight
@@ -2586,8 +2727,8 @@ object fSolicitud: TfSolicitud
         end
         object Memo58: TfrxMemoView
           AllowVectorExport = True
-          Left = 367.834880000000000000
-          Top = 121.504020000000000000
+          Left = 379.173470000000000000
+          Top = 118.677165350000000000
           Width = 132.283550000000000000
           Height = 15.118120000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -2603,7 +2744,7 @@ object fSolicitud: TfSolicitud
         object Shape23: TfrxShapeView
           AllowVectorExport = True
           Left = 544.252320000000000000
-          Top = 117.724490000000000000
+          Top = 118.677165354330700000
           Width = 162.519790000000000000
           Height = 18.897650000000000000
           Fill.BackColor = cl3DLight
@@ -2628,7 +2769,7 @@ object fSolicitud: TfSolicitud
         object Memo60: TfrxMemoView
           AllowVectorExport = True
           Left = 362.834880000000000000
-          Top = 144.181200000000000000
+          Top = 142.866141732283500000
           Width = 162.338590000000000000
           Height = 18.897650000000000000
           DataField = 'reporte_ceop'
@@ -2648,7 +2789,7 @@ object fSolicitud: TfSolicitud
         object Memo61: TfrxMemoView
           AllowVectorExport = True
           Left = 551.811380000000000000
-          Top = 144.181200000000000000
+          Top = 142.866141732283500000
           Width = 147.220470000000000000
           Height = 18.897650000000000000
           DataField = 'reporte_info'
@@ -2664,25 +2805,124 @@ object fSolicitud: TfSolicitud
             '[frxDBSolicitud."reporte_info"]')
           ParentFont = False
         end
+        object Memo53: TfrxMemoView
+          AllowVectorExport = True
+          Left = 18.897650000000000000
+          Top = 540.472790000000000000
+          Width = 94.488250000000000000
+          Height = 18.897650000000000000
+          Frame.Typ = []
+          Memo.UTF8W = (
+            'INTERVIENEN')
+        end
+        object Shape18: TfrxShapeView
+          AllowVectorExport = True
+          Left = 7.559060000000000000
+          Top = 563.149970000000000000
+          Width = 702.992580000000000000
+          Frame.Typ = []
+        end
+        object Shape19: TfrxShapeView
+          AllowVectorExport = True
+          Left = 7.559060000000000000
+          Top = 536.693260000000000000
+          Width = 702.992580000000000000
+          Frame.Typ = []
+        end
+        object Shape15: TfrxShapeView
+          AllowVectorExport = True
+          Left = 15.118120000000000000
+          Top = 571.709030000000000000
+          Width = 94.488250000000000000
+          Height = 18.897650000000000000
+          Fill.BackColor = cl3DLight
+          Frame.Typ = []
+        end
+        object Memo50: TfrxMemoView
+          AllowVectorExport = True
+          Left = 34.015770000000000000
+          Top = 571.709030000000000000
+          Width = 64.252010000000000000
+          Height = 18.897650000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = []
+          Memo.UTF8W = (
+            'Dni')
+          ParentFont = False
+        end
+        object Shape16: TfrxShapeView
+          AllowVectorExport = True
+          Left = 132.283550000000000000
+          Top = 571.709030000000000000
+          Width = 351.496290000000000000
+          Height = 18.897650000000000000
+          Fill.BackColor = cl3DLight
+          Frame.Typ = []
+        end
+        object Memo51: TfrxMemoView
+          AllowVectorExport = True
+          Left = 151.181200000000000000
+          Top = 570.709030000000000000
+          Width = 83.149660000000000000
+          Height = 18.897650000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = []
+          Memo.UTF8W = (
+            'Nombres')
+          ParentFont = False
+        end
+        object Shape17: TfrxShapeView
+          AllowVectorExport = True
+          Left = 506.457020000000000000
+          Top = 571.709030000000000000
+          Width = 113.385900000000000000
+          Height = 18.897650000000000000
+          Fill.BackColor = cl3DLight
+          Frame.Typ = []
+        end
+        object Memo52: TfrxMemoView
+          AllowVectorExport = True
+          Left = 525.354670000000000000
+          Top = 570.709030000000000000
+          Width = 83.149660000000000000
+          Height = 18.897650000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = []
+          Memo.UTF8W = (
+            'Tipo')
+          ParentFont = False
+        end
       end
       object PageFooter1: TfrxPageFooter
         FillType = ftBrush
         Frame.Typ = []
-        Height = 109.606370000000000000
-        Top = 948.662030000000000000
+        Height = 124.724490000000000000
+        Top = 907.087200000000000000
         Width = 718.110700000000000000
         object Memo28: TfrxMemoView
           Align = baWidth
           AllowVectorExport = True
-          Top = 74.590600000000000000
+          Top = 98.488250000000000000
           Width = 718.110700000000000000
           Frame.Typ = [ftTop]
           Frame.Width = 2.000000000000000000
         end
         object Memo29: TfrxMemoView
           AllowVectorExport = True
-          Left = 3.779530000000000000
-          Top = 79.370130000000000000
+          Left = 11.338590000000000000
+          Top = 102.047310000000000000
           Height = 22.677180000000000000
           AutoWidth = True
           Frame.Typ = []
@@ -2693,7 +2933,7 @@ object fSolicitud: TfSolicitud
           Align = baRight
           AllowVectorExport = True
           Left = 612.283860000000000000
-          Top = 79.370130000000000000
+          Top = 102.047244094488200000
           Width = 105.826840000000000000
           Height = 22.677180000000000000
           Frame.Typ = []
@@ -2704,7 +2944,7 @@ object fSolicitud: TfSolicitud
         object Memo33: TfrxMemoView
           AllowVectorExport = True
           Left = 139.842610000000000000
-          Top = 33.015770000000000000
+          Top = 40.574830000000000000
           Width = 166.299320000000000000
           Height = 18.897650000000000000
           Frame.Typ = []
@@ -2714,7 +2954,7 @@ object fSolicitud: TfSolicitud
         object Memo34: TfrxMemoView
           AllowVectorExport = True
           Left = 366.614410000000000000
-          Top = 33.015770000000000000
+          Top = 40.574830000000000000
           Width = 166.299320000000000000
           Height = 18.897650000000000000
           Frame.Typ = []
@@ -2724,7 +2964,7 @@ object fSolicitud: TfSolicitud
         object Line1: TfrxLineView
           AllowVectorExport = True
           Left = 136.063080000000000000
-          Top = 17.897650000000000000
+          Top = 25.456710000000000000
           Width = 177.637910000000000000
           Color = clBlack
           Frame.Typ = [ftTop]
@@ -2732,17 +2972,62 @@ object fSolicitud: TfSolicitud
         object Line2: TfrxLineView
           AllowVectorExport = True
           Left = 366.614410000000000000
-          Top = 17.897650000000000000
+          Top = 25.456710000000000000
           Width = 166.299320000000000000
           Color = clBlack
           Frame.Typ = [ftTop]
+        end
+        object Shape10: TfrxShapeView
+          AllowVectorExport = True
+          Left = 7.559060000000000000
+          Top = 73.031540000000000000
+          Width = 113.385900000000000000
+          Height = 18.897637795275590000
+          Fill.BackColor = cl3DLight
+          Frame.Typ = []
+        end
+        object Memo9: TfrxMemoView
+          AllowVectorExport = True
+          Left = 139.779530000000000000
+          Top = 74.913420000000000000
+          Width = 404.228510000000000000
+          Height = 18.897650000000000000
+          DataField = 'empleado'
+          DataSet = frxDBSolicitud
+          DataSetName = 'frxDBSolicitud'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = []
+          Memo.UTF8W = (
+            '[frxDBSolicitud."empleado"]')
+          ParentFont = False
+          Style = 'Data'
+        end
+        object Memo46: TfrxMemoView
+          AllowVectorExport = True
+          Left = 22.677180000000000000
+          Top = 73.031540000000000000
+          Width = 83.149660000000000000
+          Height = 18.897650000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = []
+          Memo.UTF8W = (
+            'Analista')
+          ParentFont = False
         end
       end
       object DetailData1: TfrxDetailData
         FillType = ftBrush
         Frame.Typ = []
-        Height = 83.149660000000000000
-        Top = 805.039890000000000000
+        Height = 18.897650000000000000
+        Top = 827.717070000000000000
         Width = 718.110700000000000000
         DataSet = frxDBAvales
         DataSetName = 'frxDBAvales'
@@ -2750,8 +3035,8 @@ object fSolicitud: TfSolicitud
         object frxDBDataset1dni: TfrxMemoView
           IndexTag = 1
           AllowVectorExport = True
-          Left = 18.897650000000000000
-          Top = 60.252010000000000000
+          Left = 22.677180000000000000
+          Top = 2.559060000000000000
           Width = 71.811070000000000000
           Height = 18.897650000000000000
           DataField = 'dni'
@@ -2770,8 +3055,8 @@ object fSolicitud: TfSolicitud
         object frxDBDataset1full_name: TfrxMemoView
           IndexTag = 1
           AllowVectorExport = True
-          Left = 120.944960000000000000
-          Top = 60.252010000000000000
+          Left = 124.724490000000000000
+          Top = 2.559060000000000000
           Width = 355.275820000000000000
           Height = 18.897650000000000000
           DataField = 'full_name'
@@ -2790,8 +3075,8 @@ object fSolicitud: TfSolicitud
         object frxDBDataset1tipo: TfrxMemoView
           IndexTag = 1
           AllowVectorExport = True
-          Left = 506.457020000000000000
-          Top = 60.252010000000000000
+          Left = 510.236550000000000000
+          Top = 2.559060000000000000
           Width = 102.047310000000000000
           Height = 18.897650000000000000
           DataField = 'tipo'
@@ -2806,105 +3091,6 @@ object fSolicitud: TfSolicitud
           Memo.UTF8W = (
             '[frxDBAvales."tipo"]')
           ParentFont = False
-        end
-        object Shape15: TfrxShapeView
-          AllowVectorExport = True
-          Left = 7.559060000000000000
-          Top = 35.015770000000000000
-          Width = 94.488250000000000000
-          Height = 18.897650000000000000
-          Fill.BackColor = cl3DLight
-          Frame.Typ = []
-        end
-        object Memo50: TfrxMemoView
-          AllowVectorExport = True
-          Left = 26.456710000000000000
-          Top = 35.015770000000000000
-          Width = 64.252010000000000000
-          Height = 18.897650000000000000
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -13
-          Font.Name = 'Arial'
-          Font.Style = []
-          Frame.Typ = []
-          Memo.UTF8W = (
-            'Dni')
-          ParentFont = False
-        end
-        object Shape16: TfrxShapeView
-          AllowVectorExport = True
-          Left = 124.724490000000000000
-          Top = 35.015770000000000000
-          Width = 351.496290000000000000
-          Height = 18.897650000000000000
-          Fill.BackColor = cl3DLight
-          Frame.Typ = []
-        end
-        object Memo51: TfrxMemoView
-          AllowVectorExport = True
-          Left = 143.622140000000000000
-          Top = 34.015770000000000000
-          Width = 83.149660000000000000
-          Height = 18.897650000000000000
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -13
-          Font.Name = 'Arial'
-          Font.Style = []
-          Frame.Typ = []
-          Memo.UTF8W = (
-            'Nombres')
-          ParentFont = False
-        end
-        object Shape17: TfrxShapeView
-          AllowVectorExport = True
-          Left = 498.897960000000000000
-          Top = 35.015770000000000000
-          Width = 113.385900000000000000
-          Height = 18.897650000000000000
-          Fill.BackColor = cl3DLight
-          Frame.Typ = []
-        end
-        object Memo52: TfrxMemoView
-          AllowVectorExport = True
-          Left = 517.795610000000000000
-          Top = 34.015770000000000000
-          Width = 83.149660000000000000
-          Height = 18.897650000000000000
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -13
-          Font.Name = 'Arial'
-          Font.Style = []
-          Frame.Typ = []
-          Memo.UTF8W = (
-            'Tipo')
-          ParentFont = False
-        end
-        object Shape18: TfrxShapeView
-          AllowVectorExport = True
-          Left = 7.559060000000000000
-          Top = 3.779530000000000000
-          Width = 702.992580000000000000
-          Frame.Typ = []
-        end
-        object Shape19: TfrxShapeView
-          AllowVectorExport = True
-          Left = 7.559060000000000000
-          Top = 26.456710000000000000
-          Width = 702.992580000000000000
-          Frame.Typ = []
-        end
-        object Memo53: TfrxMemoView
-          AllowVectorExport = True
-          Left = 7.559060000000000000
-          Top = 7.559060000000000000
-          Width = 94.488250000000000000
-          Height = 18.897650000000000000
-          Frame.Typ = []
-          Memo.UTF8W = (
-            'INTERVIENEN')
         end
       end
     end
@@ -2950,15 +3136,138 @@ object fSolicitud: TfSolicitud
       'nro_solicitud=nro_solicitud')
     DataSet = fdSolicitud
     BCDToCurrency = False
-    Left = 845
-    Top = 144
+    Left = 1021
+    Top = 240
   end
   object frxDBAvales: TfrxDBDataset
     UserName = 'frxDBAvales'
     CloseDataSource = False
     DataSet = fdAvales
     BCDToCurrency = False
-    Left = 757
+    Left = 725
     Top = 144
+  end
+  object fdResumenInfo: TFDMemTable
+    FieldDefs = <>
+    IndexDefs = <>
+    FetchOptions.AssignedValues = [evMode]
+    FetchOptions.Mode = fmAll
+    ResourceOptions.AssignedValues = [rvSilentMode]
+    ResourceOptions.SilentMode = True
+    UpdateOptions.AssignedValues = [uvCheckRequired, uvAutoCommitUpdates]
+    UpdateOptions.CheckRequired = False
+    UpdateOptions.AutoCommitUpdates = True
+    StoreDefs = True
+    Left = 1065
+    Top = 313
+    object fdResumenInfodetalle: TStringField
+      FieldName = 'detalle'
+      Size = 50
+    end
+    object fdResumenInfoinformacion: TStringField
+      FieldName = 'informacion'
+    end
+    object fdResumenInfomonto: TFloatField
+      FieldName = 'monto'
+      DisplayFormat = '#,##0.00'
+    end
+    object fdResumenInfotipo: TStringField
+      FieldName = 'tipo'
+    end
+  end
+  object dsResumenInfo: TDataSource
+    DataSet = fdResumenInfo
+    Left = 1065
+    Top = 369
+  end
+  object dxComponentPrinter1: TdxComponentPrinter
+    CurrentLink = dxComponentPrinter1Link3
+    PrintTitle = 'Y AHORA'
+    Version = 0
+    Left = 896
+    Top = 312
+    PixelsPerInch = 96
+    object dxComponentPrinter1Link1: TdxCompositionReportLink
+      Active = True
+      PrinterPage.DMPaper = 1
+      PrinterPage.Footer = 5080
+      PrinterPage.Header = 5080
+      PrinterPage.Margins.Bottom = 12700
+      PrinterPage.Margins.Left = 12700
+      PrinterPage.Margins.Right = 12700
+      PrinterPage.Margins.Top = 12700
+      PrinterPage.PageHeader.CenterTitle.Strings = (
+        'ASDFASDF')
+      PrinterPage.PageHeader.Font.Charset = ANSI_CHARSET
+      PrinterPage.PageHeader.Font.Color = clBlack
+      PrinterPage.PageHeader.Font.Height = -19
+      PrinterPage.PageHeader.Font.Name = 'Times New Roman'
+      PrinterPage.PageHeader.Font.Style = [fsBold]
+      PrinterPage.PageSize.X = 215900
+      PrinterPage.PageSize.Y = 279400
+      PrinterPage._dxMeasurementUnits_ = 0
+      PrinterPage._dxLastMU_ = 2
+      ReportDocument.CreationDate = 43577.502816446760000000
+      ReportDocument.IsCaptionAssigned = True
+      Items = <
+        item
+          ReportLink = dxComponentPrinter1Link2
+          BuiltInCompositionItem = True
+        end
+        item
+          ReportLink = dxComponentPrinter1Link3
+          BuiltInCompositionItem = True
+        end>
+      StartEachItemFromNewPage = False
+      PixelsPerInch = 96
+      BuiltInReportLink = True
+    end
+    object dxComponentPrinter1Link2: TdxGridReportLink
+      Active = True
+      Component = cxGrid3
+      PageNumberFormat = pnfNumeral
+      PrinterPage.DMPaper = 1
+      PrinterPage.Footer = 5080
+      PrinterPage.Header = 5080
+      PrinterPage.Margins.Bottom = 12700
+      PrinterPage.Margins.Left = 12700
+      PrinterPage.Margins.Right = 12700
+      PrinterPage.Margins.Top = 12700
+      PrinterPage.PageHeader.CenterTitle.Strings = (
+        'LEVANTAMIENTO DE INFORMACION')
+      PrinterPage.PageSize.X = 215900
+      PrinterPage.PageSize.Y = 279400
+      PrinterPage._dxMeasurementUnits_ = 0
+      PrinterPage._dxLastMU_ = 2
+      ReportDocument.CreationDate = 43577.505731354170000000
+      ReportDocument.Description = 'LEVANTAMIENTO DE INFORMACION'
+      ReportTitle.Text = 'CLIENTE'
+      TimeFormat = 0
+      OptionsExpanding.ExpandGroupRows = True
+      OptionsOnEveryPage.FilterBar = False
+      OptionsView.FilterBar = False
+      PixelsPerInch = 96
+      BuiltInReportLink = True
+    end
+    object dxComponentPrinter1Link3: TdxGridReportLink
+      Active = True
+      Component = grid3
+      PrinterPage.DMPaper = 1
+      PrinterPage.Footer = 5080
+      PrinterPage.Header = 5080
+      PrinterPage.Margins.Bottom = 12700
+      PrinterPage.Margins.Left = 12700
+      PrinterPage.Margins.Right = 12700
+      PrinterPage.Margins.Top = 12700
+      PrinterPage.PageSize.X = 215900
+      PrinterPage.PageSize.Y = 279400
+      PrinterPage._dxMeasurementUnits_ = 0
+      PrinterPage._dxLastMU_ = 2
+      ReportDocument.CreationDate = 43577.505871875000000000
+      OptionsOnEveryPage.FilterBar = False
+      OptionsView.FilterBar = False
+      PixelsPerInch = 96
+      BuiltInReportLink = True
+    end
   end
 end

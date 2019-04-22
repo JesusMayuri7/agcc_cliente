@@ -30,7 +30,7 @@ uses
   dxSkinTheAsphaltWorld, dxSkinTheBezier, dxSkinsDefaultPainters,
   dxSkinValentine, dxSkinVisualStudio2013Blue, dxSkinVisualStudio2013Dark,
   dxSkinVisualStudio2013Light, dxSkinVS2010, dxSkinWhiteprint,
-  dxSkinXmas2008Blue;
+  dxSkinXmas2008Blue, cxLabel;
 
 type
   TfResolucion = class(TForm)
@@ -59,7 +59,6 @@ type
     fdResolucioncuota: TFloatField;
     fdResolucionplazo: TIntegerField;
     dsResolucion: TDataSource;
-    gridResolucionsolicitud_id: TcxGridDBColumn;
     gridResolucionnro_resolucion: TcxGridDBColumn;
     gridResolucionestado: TcxGridDBColumn;
     gridResolucioncliente_full_name: TcxGridDBColumn;
@@ -130,8 +129,10 @@ type
     frxDBResolucion: TfrxDBDataset;
     btn1: TButton;
     dtpDate: TDateTimePicker;
-    fdResolucioncreated_at: TDateField;
     gridResolucioncreated_at: TcxGridDBColumn;
+    fdResolucionnro_solicitud: TStringField;
+    gridResolucionnro_solicitud: TcxGridDBColumn;
+    fdResolucioncreated_at: TDateField;
     procedure spbActualizarClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure btnEditarClick(Sender: TObject);
@@ -339,7 +340,7 @@ begin
     try
     graph.query:='query verResolucion($nro_resolucion:String,$created_at:String) { resolucionQuery'+
     '(nro_resolucion:$nro_resolucion,created_at:$created_at) { data '+
-    '{ id,solicitud_id,nro_resolucion,estado,cliente_full_name,empleado_full_name,monto,'+
+    '{ id,nro_solicitud,solicitud_id,nro_resolucion,estado,cliente_full_name,empleado_full_name,monto,'+
     'cuota,plazo,comentario,tipo_interes,interes,ahorro_inicial,ahorro_programado,plazo_maximo,created_at } }}';
 
     variables:=TJSONObject.Create;

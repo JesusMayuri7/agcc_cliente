@@ -34,13 +34,14 @@ object dmData: TdmData
           '}}}"},{"query":"query tipoprestamo {tipo_prestamoQuery {data {id' +
           ',desc_tipo_prestamo}}}"}, {"query":"query garantia {garantiaQuer' +
           'y {data {id,desc_garantia}}}"},{"query":"query giro_negocio {gir' +
-          'o_negocioQuery {data {id,desc_giro_negocio}}}"},{"query":"query ' +
-          'verTipoInfoDetalle{ tipo_info_detalleQuery { data {id,solicitud_' +
-          'id,desc_tipo_info_detalle,tipo_info_id,tipo,activo,tipo_info,inf' +
-          'ormacion,monto},per_page,total}}"}]'
+          'o_negocioQuery {data {id,desc_giro_negocio,margen_maximo}}}"},{"' +
+          'query":"query verTipoInfoDetalle{ tipo_info_detalleQuery { data ' +
+          '{id,solicitud_id,desc_tipo_info_detalle,tipo_info_id,tipo,activo' +
+          ',tipo_info,informacion,monto},per_page,total}}"}]'
         ContentType = ctAPPLICATION_JSON
       end>
     Response = RESTResponse1
+    Timeout = 50000
     SynchronizedEvents = False
     Left = 153
     Top = 50
@@ -374,6 +375,9 @@ object dmData: TdmData
     object fdGiroNegociodesc_giro_negocio: TStringField
       FieldName = 'desc_giro_negocio'
     end
+    object fdGiroNegociomargen_maximo: TFloatField
+      FieldName = 'margen_maximo'
+    end
   end
   object RESTResponseDataSetAdapter4: TRESTResponseDataSetAdapter
     Dataset = fdGiroNegocio
@@ -411,6 +415,7 @@ object dmData: TdmData
     end
     object fdTipoInfotipo_info: TStringField
       FieldName = 'tipo_info'
+      Size = 50
     end
     object fdTipoInfoinformacion: TStringField
       FieldName = 'informacion'
@@ -445,7 +450,9 @@ object dmData: TdmData
     Params = <
       item
       end>
+    Resource = 'permisos'
     Response = RespMenu
+    Timeout = 50000
     SynchronizedEvents = False
     Left = 457
     Top = 90
@@ -457,8 +464,8 @@ object dmData: TdmData
   object RESTClient2: TRESTClient
     Accept = 'application/json, text/plain; q=0.9, text/html;q=0.8,'
     AcceptCharset = 'utf-8, *;q=0.8'
-    BaseURL = 'http://ceopilo.test/api/permisos'
-    ContentType = 'application/json'
+    BaseURL = 'http://ceopilo.test/api/'
+    ContentType = 'application/x-www-form-urlencoded'
     Params = <>
     RaiseExceptionOn500 = False
     Left = 464
@@ -467,8 +474,8 @@ object dmData: TdmData
   object ImageList1: TImageList
     ColorDepth = cd32Bit
     BlendColor = clHighlightText
-    Left = 656
-    Top = 128
+    Left = 696
+    Top = 144
     Bitmap = {
       494C010108001800040010001000FFFFFFFF2110FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000003000000001002000000000000030
@@ -872,5 +879,21 @@ object dmData: TdmData
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
       000000000000}
+  end
+  object RESTResumenInfo: TRESTRequest
+    Client = RESTClient2
+    Method = rmPOST
+    Params = <>
+    Resource = 'resumen_info'
+    Response = RespResumenInfo
+    Timeout = 50000
+    SynchronizedEvents = False
+    Left = 553
+    Top = 82
+  end
+  object RespResumenInfo: TRESTResponse
+    ContentType = 'application/json'
+    Left = 561
+    Top = 146
   end
 end
